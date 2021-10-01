@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elamx>
+    <laminates>
+        <laminate name="Laminat 1" symmetric="true" uuid="f5de56bd-8b3c-4e73-808f-d5393ab784ee" with_middle_layer="true">
+            <layer name="Layer 1" uuid="88341339-5188-435e-b40f-276457ff360a">
+                <thickness>0.125</thickness>
+                <angle>45.0</angle>
+                <material>8f6a95dd-7181-419e-b441-750084594165</material>
+            </layer>
+            <layer name="Layer 2" uuid="6c2e8f85-c7cc-402f-9017-0b997e406416">
+                <thickness>0.125</thickness>
+                <angle>-45.0</angle>
+                <material>9f8fe8c2-8354-438f-8dc1-d38499092afa</material>
+            </layer>
+        </laminate>
+    </laminates>
+    <materials>
+        <material class="de.elamx.laminate.DefaultMaterial" name="Material 3" uuid="9f8fe8c2-8354-438f-8dc1-d38499092afa">
+            <Epar>141000.0</Epar>
+            <Enor>10000.0</Enor>
+            <nue12>0.35</nue12>
+            <G>4500.0</G>
+            <rho>1.658</rho>
+            <alphaTPar>0.0</alphaTPar>
+            <alphaTNor>0.0</alphaTNor>
+            <betaPar>0.0</betaPar>
+            <betaNor>0.0</betaNor>
+            <RParTen>1500.0</RParTen>
+            <RParCom>1000.0</RParCom>
+            <RNorTen>150.0</RNorTen>
+            <RNorCom>1000.0</RNorCom>
+            <RShear>70.0</RShear>
+        </material>
+        <material class="de.elamx.laminate.DefaultMaterial" name="CFK-Material" uuid="8f6a95dd-7181-419e-b441-750084594165">
+            <Epar>145200.0</Epar>
+            <Enor>10000.0</Enor>
+            <nue12>0.35</nue12>
+            <G>4500.0</G>
+            <rho>1.658</rho>
+            <alphaTPar>0.0</alphaTPar>
+            <alphaTNor>0.0</alphaTNor>
+            <betaPar>0.0</betaPar>
+            <betaNor>0.0</betaNor>
+            <RParTen>1500.0</RParTen>
+            <RParCom>1000.0</RParCom>
+            <RNorTen>150.0</RNorTen>
+            <RNorCom>1000.0</RNorCom>
+            <RShear>70.0</RShear>
+        </material>
+        <material class="de.elamx.laminate.DefaultMaterial" name="Material 4" uuid="d9b0e206-7714-4ce7-b13f-4b8ce695363c">
+            <Epar>141000.0</Epar>
+            <Enor>10000.0</Enor>
+            <nue12>0.35</nue12>
+            <G>4500.0</G>
+            <rho>1.658</rho>
+            <alphaTPar>0.0</alphaTPar>
+            <alphaTNor>0.0</alphaTNor>
+            <betaPar>0.0</betaPar>
+            <betaNor>0.0</betaNor>
+            <RParTen>1500.0</RParTen>
+            <RParCom>1000.0</RParCom>
+            <RNorTen>150.0</RNorTen>
+            <RNorCom>1000.0</RNorCom>
+            <RShear>70.0</RShear>
+        </material>
+        <material class="de.elamx.laminate.DefaultMaterial" name="ZGFK-Material" uuid="3bc82ecc-668a-4434-8224-3244f492ebf2">
+            <Epar>141000.0</Epar>
+            <Enor>10000.0</Enor>
+            <nue12>0.35</nue12>
+            <G>4500.0</G>
+            <rho>1.658</rho>
+            <alphaTPar>0.0</alphaTPar>
+            <alphaTNor>0.0</alphaTNor>
+            <betaPar>0.0</betaPar>
+            <betaNor>0.0</betaNor>
+            <RParTen>1500.0</RParTen>
+            <RParCom>1000.0</RParCom>
+            <RNorTen>150.0</RNorTen>
+            <RNorCom>1000.0</RNorCom>
+            <RShear>70.0</RShear>
+        </material>
+    </materials>
+</elamx>

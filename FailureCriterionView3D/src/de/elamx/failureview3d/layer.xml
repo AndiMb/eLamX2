@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Windows2">
+        <folder name="Groups">
+            <file name="FailureView3DGroup.wsgrp" url="FailureView3DGroup.xml"/>
+            <folder name="FailureView3DGroup">
+                <file name="FailureView3DTopComponent.wstcgrp" url="FailureView3DTopComponent.xml"/>
+                <file name="FailureView3DPropertiesTopComponent.wstcgrp" url="FailureView3DPropertiesTopComponent.xml"/>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

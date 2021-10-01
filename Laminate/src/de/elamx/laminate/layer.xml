@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="failurecriteria">
+            <file name="Puck.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.failure.Puck.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.Color.b"/>
+            </file>
+        </folder>
+        <folder name="additionalMaterialValues">
+            <file name="de.elamx.laminate.failure.Puck.pspd.add">
+                <attr name="defaultValue" stringvalue="0.3"/>
+                <attr name="minValue" stringvalue="-0.99"/>
+                <attr name="maxValue" stringvalue="0.99"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.pspd.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.pspd.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.pspd.description"/>
+            </file>
+            <file name="de.elamx.laminate.failure.Puck.pspz.add">
+                <attr name="defaultValue" stringvalue="0.35"/>
+                <attr name="minValue" stringvalue="-0.99"/>
+                <attr name="maxValue" stringvalue="0.99"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.pspz.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.pspz.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.pspz.description"/>
+            </file>
+            <file name="de.elamx.laminate.failure.Puck.a0.add">
+                <attr name="defaultValue" stringvalue="0.5"/>
+                <attr name="minValue" stringvalue="0.0"/>
+                <attr name="maxValue" stringvalue="1.0"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.a0.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.a0.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.a0.description"/>
+            </file>
+            <file name="de.elamx.laminate.failure.Puck.lambda_min.add">
+                <attr name="defaultValue" stringvalue="0.5"/>
+                <attr name="minValue" stringvalue="0.0"/>
+                <attr name="maxValue" stringvalue="1.0"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.lambda_min.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.lambda_min.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.failure.Bundle#Puck.lambda_min.description"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

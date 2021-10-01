@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="failurecriteria">
+            <file name="AbaqusTsaiWu.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaAbaqus.AbaqusTsaiWu.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.Color.b"/>
+            </file>
+            <file name="AbaqusAzziTsaiHill.instance">
+                    <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaAbaqus.AbaqusAzziTsaiHill.getDefault"/>
+                    <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                    <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusAzziTsaiHill.displayName"/>
+                    <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusAzziTsaiHill.description"/>
+                    <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusAzziTsaiHill.Color.r"/>
+                    <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusAzziTsaiHill.Color.g"/>
+                    <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusAzziTsaiHill.Color.b"/>
+            </file>
+        </folder>
+        <folder name="additionalMaterialValues">
+            <file name="de.elamx.laminate.addFailureCriteriaAbaqus.AbaqusTsaiWu.f12star.add">
+                <attr name="defaultValue" stringvalue="-0.5"/>
+                <attr name="minValue" stringvalue="-0.99"/>
+                <attr name="maxValue" stringvalue="0.99"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.f12star.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.f12star.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.f12star.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaAbaqus.AbaqusTsaiWu.sigbiax.add">
+                <attr name="defaultValue" stringvalue="0"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="1000"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.sigbiax.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.sigbiax.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAbaqus.Bundle#AbaqusTsaiWu.sigbiax.description"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

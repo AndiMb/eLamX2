@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="failurecriteria">
+            <file name="LSDYNATsaiWu.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNATsaiWu.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNATsaiWu.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNATsaiWu.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNATsaiWu.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNATsaiWu.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNATsaiWu.Color.b"/>
+            </file>
+            <file name="LSDYNADaimlerCamanho.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerCamanho.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.Color.b"/>
+            </file>
+            <file name="LSDYNADaimlerPinho.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerPinho.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerPinho.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerPinho.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerPinho.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerPinho.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerPinho.Color.b"/>
+            </file>
+            <file name="LSDYNAChangChang.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNAChangChang.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNAChangChang.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNAChangChang.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNAChangChang.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNAChangChang.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNAChangChang.Color.b"/>
+            </file>
+        </folder>
+        <folder name="additionalMaterialValues">
+            <file name="de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNATsaiWu.beta.add">
+                <attr name="defaultValue" stringvalue="0"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="1"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNATsaiWu.beta.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNATsaiWu.beta.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNATsaiWu.beta.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNAChangChang.beta.add">
+                <attr name="defaultValue" stringvalue="0"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="1"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNAChangChang.beta.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNAChangChang.beta.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNAChangChang.beta.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerCamanho.g1c.add">
+                <attr name="defaultValue" stringvalue="0.28"/>
+                <attr name="minValue" stringvalue="0.0"/>
+                <attr name="maxValue" stringvalue="99999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.g1c.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.g1c.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.g1c.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerCamanho.g2c.add">
+                <attr name="defaultValue" stringvalue="0.79"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.g2c.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.g2c.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerCamanho.g2c.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerPinho.alp0.add">
+                <attr name="defaultValue" stringvalue="53"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="180"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerPinho.alp0.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerPinho.alp0.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaLSDYNA.Bundle#LSDYNADaimlerPinho.alp0.description"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

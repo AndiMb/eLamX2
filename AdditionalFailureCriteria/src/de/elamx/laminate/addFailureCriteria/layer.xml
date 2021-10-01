@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="failurecriteria">
+            <file name="MaxStress.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.MaxStress.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStress.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStress.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStress.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStress.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStress.Color.b"/>
+            </file>
+            <file name="TsaiWu.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.TsaiWu.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiWu.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiWu.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiWu.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiWu.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiWu.Color.b"/>
+            </file>
+            <file name="TsaiHill.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.TsaiHill.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiHill.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiHill.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiHill.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiHill.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiHill.Color.b"/>
+            </file>
+            <file name="Hoffman.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.Hoffman.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hoffman.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hoffman.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hoffman.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hoffman.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hoffman.Color.b"/>
+            </file>
+             <file name="Christensen.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.Christensen.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Christensen.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Christensen.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Christensen.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Christensen.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Christensen.Color.b"/>
+            </file>    
+            <file name="ZTL.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.ZTL.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#ZTL.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#ZTL.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#ZTL.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#ZTL.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#ZTL.Color.b"/>
+            </file>
+            <file name="Edge.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.Edge.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Edge.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Edge.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Edge.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Edge.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Edge.Color.b"/>
+            </file>
+            <file name="FMC.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.FMC.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.Color.b"/>
+            </file>
+            <file name="Hashin.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.Hashin.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hashin.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hashin.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hashin.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hashin.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Hashin.Color.b"/>
+            </file>
+            <file name="Mayes.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.Mayes.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Mayes.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Mayes.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Mayes.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Mayes.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Mayes.Color.b"/>
+            </file>
+            <file name="Rotem.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.Rotem.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.Color.b"/>
+            </file>
+            <file name="Sun.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.Sun.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Sun.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Sun.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Sun.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Sun.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Sun.Color.b"/>
+            </file>
+            <file name="MaxStrain.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.MaxStrain.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.Color.b"/>
+            </file>
+        </folder>
+        <folder name="additionalMaterialValues">
+            <file name="de.elamx.laminate.addFailureCriteria.TsaiWu.f12star.add">
+                <attr name="defaultValue" stringvalue="-0.5"/>
+                <attr name="minValue" stringvalue="-0.99"/>
+                <attr name="maxValue" stringvalue="0.99"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiWu.f12star.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiWu.f12star.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#TsaiWu.f12star.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.ZTL.f12star.add">
+                <attr name="defaultValue" stringvalue="-0.5"/>
+                <attr name="minValue" stringvalue="-0.99"/>
+                <attr name="maxValue" stringvalue="0.99"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#ZTL.f12star.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#ZTL.f12star.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#ZTL.f12star.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.FMC.muesp.add">
+                <attr name="defaultValue" stringvalue="0.15"/>
+                <attr name="minValue" stringvalue="0.0"/>
+                <attr name="maxValue" stringvalue="0.99"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.muesp.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.muesp.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.muesp.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.FMC.m.add">
+                <attr name="defaultValue" stringvalue="3.1"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.m.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.m.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FMC.m.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.Rotem.em.add">
+                <attr name="defaultValue" stringvalue="4500"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.em.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.em.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.em.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.Rotem.rmc.add">
+                <attr name="defaultValue" stringvalue="50"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.rmc.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.rmc.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.rmc.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.Rotem.rmt.add">
+                <attr name="defaultValue" stringvalue="50"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.rmt.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.rmt.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#Rotem.rmt.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.MaxStrain.eps_x.add">
+                <attr name="defaultValue" stringvalue="0.003"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.eps_x.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.eps_x.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.eps_x.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.MaxStrain.eps_y.add">
+                <attr name="defaultValue" stringvalue="0.003"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.eps_y.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.eps_y.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.eps_y.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.MaxStrain.gamma_xy.add">
+                <attr name="defaultValue" stringvalue="0.006"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.gamma_xy.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.gamma_xy.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.gamma_xy.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteria.MaxStrain.global_lokal.add">
+                <attr name="defaultValue" stringvalue="0.3"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.global_lokal.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.global_lokal.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.global_lokal.description"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

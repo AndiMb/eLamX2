@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="micromechmodel">
+            <file name="Mischungsregel_m.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.micromechanics.models.Mischungsregel_m.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.micromechanics.models.MicroMechModel"/>
+                <attr name="displayName" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.description"/>
+                <attr name="rhoHTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.rhoHTMLDescription"/>
+                <attr name="e11HTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.e11HTMLDescription"/>
+                <attr name="e22HTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.e22HTMLDescription"/>
+                <attr name="nue12HTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.nue12HTMLDescription"/>
+                <attr name="g12HTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.g12HTMLDescription"/>
+                <attr name="color.r" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.micromechanics.models.Bundle#Mischungsregel_m.Color.b"/>
+            </file>
+            <file name="ManualInputDummyModel.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.micromechanics.models.ManualInputDummyModel.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.micromechanics.models.MicroMechModel"/>
+                <attr name="displayName" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.description"/>
+                <attr name="rhoHTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.rhoHTMLDescription"/>
+                <attr name="e11HTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.e11HTMLDescription"/>
+                <attr name="e22HTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.e22HTMLDescription"/>
+                <attr name="nue12HTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.nue12HTMLDescription"/>
+                <attr name="g12HTMLDescription" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.g12HTMLDescription"/>
+                <attr name="color.r" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.micromechanics.models.Bundle#ManualInputDummyModel.Color.b"/>
+            </file>
+        </folder>
+    </folder>    
+</filesystem>

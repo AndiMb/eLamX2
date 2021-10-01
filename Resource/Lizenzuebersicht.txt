@@ -1,0 +1,9 @@
+Netbeans Platform               = Apache License Version 2.0.
+JFreeChart / JCommon            = LGPL
+JOGL / Gluegen                  = New BSD 2-Clause License
+Jogamp's Ardor3D Continuation   = freie Lizenz für kommerziell usw.
+Google Guava                    = Apache License Version 2.0.
+JDOM                            = Apache-style open source license
+ROME                            = Apache 2.0 license
+
+Es sollte somit keine Problem bezüglich nicht-quelloffener Software geben

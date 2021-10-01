@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="micromechmodel">
+            <file name="Abolinsh.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.micromechanics.addmicromechanicmodels.Abolinsh.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.micromechanics.models.MicroMechModel"/>
+                <attr name="displayName" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.description"/>
+                <attr name="rhoHTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.rhoHTMLDescription"/>
+                <attr name="e11HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.e11HTMLDescription"/>
+                <attr name="e22HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.e22HTMLDescription"/>
+                <attr name="nue12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.nue12HTMLDescription"/>
+                <attr name="g12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.g12HTMLDescription"/>
+                <attr name="color.r" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Abolinsh.Color.b"/>
+            </file>
+            <file name="Chamis.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.micromechanics.addmicromechanicmodels.Chamis.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.micromechanics.models.MicroMechModel"/>
+                <attr name="displayName" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.description"/>
+                <attr name="rhoHTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.rhoHTMLDescription"/>
+                <attr name="e11HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.e11HTMLDescription"/>
+                <attr name="e22HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.e22HTMLDescription"/>
+                <attr name="nue12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.nue12HTMLDescription"/>
+                <attr name="g12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.g12HTMLDescription"/>
+                <attr name="color.r" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Chamis.Color.b"/>
+            </file>
+            <file name="HalpinTsai.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.micromechanics.addmicromechanicmodels.HalpinTsai.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.micromechanics.models.MicroMechModel"/>
+                <attr name="displayName" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.description"/>
+                <attr name="rhoHTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.rhoHTMLDescription"/>
+                <attr name="e11HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.e11HTMLDescription"/>
+                <attr name="e22HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.e22HTMLDescription"/>
+                <attr name="nue12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.nue12HTMLDescription"/>
+                <attr name="g12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.g12HTMLDescription"/>
+                <attr name="color.r" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HalpinTsai.Color.b"/>
+            </file>
+            <file name="HopkinsChamis.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.micromechanics.addmicromechanicmodels.HopkinsChamis.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.micromechanics.models.MicroMechModel"/>
+                <attr name="displayName" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.description"/>
+                <attr name="rhoHTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.rhoHTMLDescription"/>
+                <attr name="e11HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.e11HTMLDescription"/>
+                <attr name="e22HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.e22HTMLDescription"/>
+                <attr name="nue12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.nue12HTMLDescription"/>
+                <attr name="g12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.g12HTMLDescription"/>
+                <attr name="color.r" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HopkinsChamis.Color.b"/>
+            </file>
+            <file name="Puck.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.micromechanics.addmicromechanicmodels.Puck.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.micromechanics.models.MicroMechModel"/>
+                <attr name="displayName" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.description"/>
+                <attr name="rhoHTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.rhoHTMLDescription"/>
+                <attr name="e11HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.e11HTMLDescription"/>
+                <attr name="e22HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.e22HTMLDescription"/>
+                <attr name="nue12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.nue12HTMLDescription"/>
+                <attr name="g12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.g12HTMLDescription"/>
+                <attr name="color.r" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.Color.b"/>
+            </file>
+        </folder>
+    </folder>    
+</filesystem>

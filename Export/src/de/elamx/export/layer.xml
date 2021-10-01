@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Menu">
+        <folder name="Export">
+            <attr name="displayName" bundlevalue="de.elamx.export.Bundle#Menu/Export"/>
+            <attr name="position" intvalue="600"/> 
+        </folder>
+    </folder>
+</filesystem>

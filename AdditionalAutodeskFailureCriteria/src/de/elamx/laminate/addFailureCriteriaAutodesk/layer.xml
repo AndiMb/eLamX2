@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="failurecriteria">
+            <file name="AutodeskHashin.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskHashin.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.Color.b"/>
+            </file>
+            <file name="AutodeskTsaiWu.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskTsaiWu.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.Color.b"/>
+            </file>
+        </folder>
+        <folder name="additionalMaterialValues">
+            <file name="de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskHashin.alp.add">
+                <attr name="defaultValue" stringvalue="1"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="1"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.alp.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.alp.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.alp.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskHashin.R23.add">
+                <attr name="defaultValue" stringvalue="150"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="1000"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.R23.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.R23.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskHashin.R23.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskTsaiWu.f12star.add">
+                <attr name="defaultValue" stringvalue="-0.5"/>
+                <attr name="minValue" stringvalue="-0.5"/>
+                <attr name="maxValue" stringvalue="0"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.f12star.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.f12star.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.f12star.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskTsaiWu.sigbiax.add">
+                <attr name="defaultValue" stringvalue="0"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="1000"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.sigbiax.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.sigbiax.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAutodesk.Bundle#AutodeskTsaiWu.sigbiax.description"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

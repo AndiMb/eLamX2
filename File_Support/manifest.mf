@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+OpenIDE-Module: de.elamx.filesupport/1
+OpenIDE-Module-Install: de/elamx/filesupport/Installer.class
+OpenIDE-Module-Layer: de/elamx/filesupport/layer.xml
+OpenIDE-Module-Localizing-Bundle: de/elamx/filesupport/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.6.0
+

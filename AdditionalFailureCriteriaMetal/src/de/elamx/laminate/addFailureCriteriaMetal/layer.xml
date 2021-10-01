@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="failurecriteria">
+            <file name="vonMises.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaMetal.vonMises.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#vonMises.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#vonMises.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#vonMises.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#vonMises.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#vonMises.Color.b"/>
+            </file>
+            <file name="Tresca.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaMetal.Tresca.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#Tresca.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#Tresca.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#Tresca.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#Tresca.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaMetal.Bundle#Tresca.Color.b"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>
+

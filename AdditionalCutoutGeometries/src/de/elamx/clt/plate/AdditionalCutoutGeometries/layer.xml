@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="cutoutgeometrie">
+            <file name="EllipticalCutoutGeometry.instance">
+                <attr name="instanceOf" stringvalue="de.elamx.clt.plate.Cutout.CutoutGeometry"/>
+            </file>
+            <file name="RectangularCutoutGeometry.instance">
+                <attr name="instanceOf" stringvalue="de.elamx.clt.plate.Cutout.CutoutGeometry"/>
+            </file>
+            <file name="SquareCutoutGeometry.instance">
+                <attr name="instanceOf" stringvalue="de.elamx.clt.plate.Cutout.CutoutGeometry"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

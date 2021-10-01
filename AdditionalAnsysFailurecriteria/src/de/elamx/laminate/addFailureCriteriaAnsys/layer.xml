@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="elamx">
+        <folder name="failurecriteria">
+            <file name="AnsysHashin.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaAnsys.AnsysHashin.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHashin.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHashin.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHashin.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHashin.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHashin.Color.b"/>
+            </file>
+            <!-- ANSYS Vorzeichendefinition: wahrscheinlich überflüssig
+            <file name="AnsysHoffman.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaAnsys.AnsysHoffman.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHoffman.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHoffman.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHoffman.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHoffman.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysHoffman.Color.b"/>
+            </file>
+            -->
+            <!-- funktioniert noch nicht
+            <file name="AnsysLaRC03.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.Color.b"/>
+            </file>
+            -->
+        </folder>
+        <folder name="additionalMaterialValues">
+            <file name="de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.g1c.add">
+                <attr name="defaultValue" stringvalue="0.28"/>
+                <attr name="minValue" stringvalue="0.0"/>
+                <attr name="maxValue" stringvalue="99999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.g1c.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.g1c.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.g1c.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.g2c.add">
+                <attr name="defaultValue" stringvalue="0.79"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="999999999"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.g2c.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.g2c.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.g2c.description"/>
+            </file>
+            <file name="de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.alp0.add">
+                <attr name="defaultValue" stringvalue="53"/>
+                <attr name="minValue" stringvalue="0"/>
+                <attr name="maxValue" stringvalue="90"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.alp0.displayName"/>
+                <attr name="htmlName" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.alp0.displayName.html"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteriaAnsys.Bundle#AnsysLaRC03.alp0.description"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Menu">
+        <file name="Edit_hidden"/>
+        <file name="GoTo_hidden"/>
+        <folder name="Laminates">
+            <attr name="displayName" bundlevalue="de.elamx.core.Bundle#Menu/Laminates"/>
+            <attr name="position" intvalue="200"/> 
+        </folder>
+        <folder name="Materials">
+            <attr name="displayName" bundlevalue="de.elamx.core.Bundle#Menu/Materials"/>
+            <attr name="position" intvalue="150"/> 
+        </folder>
+        <folder name="Tools">
+            <file name="org-netbeans-modules-templates-actions-TemplatesAction.shadow_hidden"/>
+        </folder>
+        <folder name="View">
+            <file name="org-netbeans-core-actions-HTMLViewAction.shadow_hidden"/>
+            <file name="org-netbeans-core-actions-LogAction.shadow_hidden"/>
+        </folder>
+        <folder name="Window">
+            <file name="ProgressListAction.shadow_hidden"/>
+            <file name="SwitchToRecentDocumentAction.shadow_hidden"/>
+        </folder>
+    </folder>
+    <folder name="OptionsDialog">
+        <folder name="Advanced">
+            <file name="Files.instance_hidden"/>
+        </folder>
+        <file name="Keymaps.instance_hidden"/>
+    </folder>
+    <folder name="Services">
+        <folder name="AutoupdateType">
+            <file name="de_elamx_core_update_center.instance">
+                <attr name="displayName" bundlevalue="de.elamx.core.Bundle#Services/AutoupdateType/de_elamx_core_update_center.instance"/>
+                <attr name="enabled" boolvalue="true"/>
+                <attr name="instanceCreate" methodvalue="org.netbeans.modules.autoupdate.updateprovider.AutoupdateCatalogFactory.createUpdateProvider"/>
+                <attr name="instanceOf" stringvalue="org.netbeans.spi.autoupdate.UpdateProvider"/>
+                <attr name="url" bundlevalue="de.elamx.core.Bundle#de_elamx_core_update_center"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Toolbars">
+        <file name="Clipboard_hidden"/>
+        <file name="Memory_hidden"/>
+        <folder name="eLamX_Tools">
+            <attr name="displayName" bundlevalue="de.elamx.core.Bundle#Toolbars/eLamX_Tools"/>
+            <attr name="position" intvalue="1100"/> 
+        </folder>
+        <folder name="Materials">
+            <attr name="displayName" bundlevalue="de.elamx.core.Bundle#Toolbars/Materials"/>
+            <attr name="position" intvalue="1200"/> 
+        </folder>
+        <folder name="Laminates">
+            <attr name="displayName" bundlevalue="de.elamx.core.Bundle#Toolbars/Laminates"/>
+            <attr name="position" intvalue="1300"/> 
+        </folder>
+        <folder name="eLamX_Modules_General">
+            <attr name="displayName" bundlevalue="de.elamx.core.Bundle#Toolbars/eLamX_Modules_General"/>
+            <attr name="position" intvalue="1400"/> 
+        </folder>
+        <folder name="eLamX_Modules_Material">
+            <attr name="displayName" bundlevalue="de.elamx.core.Bundle#Toolbars/eLamX_Modules_Material"/>
+            <attr name="position" intvalue="1500"/> 
+        </folder>
+        <folder name="eLamX_Modules_Laminate">
+            <attr name="displayName" bundlevalue="de.elamx.core.Bundle#Toolbars/eLamX_Modules_Laminate"/>
+            <attr name="position" intvalue="1600"/> 
+        </folder>
+        <file name="UndoRedo_hidden"/>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Modes">
+            <file name="explorer.wsmode" url="explorerWsmode.xml"/>
+            <folder name="leftproperties">
+                <file name="properties.wstcref" url="propertiesWstcref_1.xml"/>
+            </folder>
+            <file name="leftproperties.wsmode" url="leftpropertiesWsmode.xml"/>
+            <folder name="properties">
+                <file name="properties.wstcref_hidden"/>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

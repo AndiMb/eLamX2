@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: de.elamx.mathtools/1
+OpenIDE-Module-Localizing-Bundle: de/elamx/mathtools/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.6.0
+

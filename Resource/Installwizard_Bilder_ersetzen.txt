@@ -1,0 +1,4 @@
+Um die Bilder für den Installer Wizard zu ändern, müssen die Bilder in folgenden Ordnern ersetzt werden.
+
+{Netbeans_Install_Folder}/harness/nbi/stub/ext/engine/src/org/mycompany/installer/wizard/components/panels/resources/
+{Netbeans_Install_Folder}/harness/nbi/stub/ext/engine/src/org/mycompany/installer/wizard/

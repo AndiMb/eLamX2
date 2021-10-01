@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+OpenIDE-Module: de.elamx.welcome/1
+OpenIDE-Module-Install: de/elamx/welcome/Installer.class
+OpenIDE-Module-Layer: de/elamx/welcome/layer.xml
+OpenIDE-Module-Localizing-Bundle: de/elamx/welcome/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.5.0
+

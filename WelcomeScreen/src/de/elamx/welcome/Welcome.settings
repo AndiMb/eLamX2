@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE settings PUBLIC "-//NetBeans//DTD Session settings 1.0//EN" "http://www.netbeans.org/dtds/sessionsettings-1_0.dtd">
+<settings version="1.0">
+    <instanceof class="javax.accessibility.Accessible"/>
+    <instanceof class="java.awt.image.ImageObserver"/>
+    <instanceof class="javax.swing.JComponent"/>
+    <instanceof class="org.openide.windows.TopComponent"/>
+    <instanceof class="de.elamx.welcome.WelcomeComponent"/>
+    <instanceof class="java.awt.Component"/>
+    <instanceof class="java.io.Externalizable"/>
+    <instanceof class="java.awt.Container"/>
+    <instanceof class="java.io.Serializable"/>
+    <instanceof class="java.awt.MenuContainer"/>
+    <instanceof class="java.lang.Object"/>
+    <instance class="de.elamx.welcome.WelcomeComponent" method="createComp"/>
+</settings>
