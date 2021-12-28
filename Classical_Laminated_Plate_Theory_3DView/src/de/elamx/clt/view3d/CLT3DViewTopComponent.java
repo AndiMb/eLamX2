@@ -44,12 +44,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import javax.swing.JSpinner;
 import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
 import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.util.Exceptions;
 import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;
@@ -149,6 +147,18 @@ public final class CLT3DViewTopComponent extends TopComponent implements Propert
     public void componentClosed() {
         dataHolder.removePropertyChangeListener(this);
         View3DProperties.getDefault().removePropertyChangeListener(this);
+    }
+
+    @Override
+    protected void componentDeactivated() {
+        super.componentDeactivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(false);
+    }
+
+    @Override
+    protected void componentActivated() {
+        super.componentActivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(true);
     }
 
     void writeProperties(java.util.Properties p) {

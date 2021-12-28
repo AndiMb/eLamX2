@@ -123,6 +123,18 @@ public final class CLT_VibrationTopComponent extends TopComponent implements Loo
         controlPanel.cleanup();
         uniqueVibrationData.remove(data);
     }
+
+    @Override
+    protected void componentDeactivated() {
+        super.componentDeactivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(false);
+    }
+
+    @Override
+    protected void componentActivated() {
+        super.componentActivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(true);
+    }
     
     @Override
     public int getPersistenceType() {

@@ -124,6 +124,18 @@ public final class StressStateViewTopComponent extends TopComponent implements P
         uniqueLayerResultContainer.remove(result);
     }
 
+    @Override
+    protected void componentDeactivated() {
+        super.componentDeactivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D1.setActive(false);
+    }
+
+    @Override
+    protected void componentActivated() {
+        super.componentActivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D1.setActive(true);
+    }
+
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles

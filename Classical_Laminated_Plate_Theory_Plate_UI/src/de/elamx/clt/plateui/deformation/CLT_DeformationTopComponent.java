@@ -118,6 +118,18 @@ public final class CLT_DeformationTopComponent extends TopComponent implements L
         controlPanel.cleanup();
         uniqueDeformationData.remove(data);
     }
+
+    @Override
+    protected void componentDeactivated() {
+        super.componentDeactivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(false);
+    }
+
+    @Override
+    protected void componentActivated() {
+        super.componentActivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(true);
+    }
     
     @Override
     public int getPersistenceType() {

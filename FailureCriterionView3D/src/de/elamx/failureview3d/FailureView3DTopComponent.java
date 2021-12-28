@@ -310,6 +310,18 @@ public final class FailureView3DTopComponent extends TopComponent {
         super.componentHidden();
     }
 
+    @Override
+    protected void componentDeactivated() {
+        super.componentDeactivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(false);
+    }
+
+    @Override
+    protected void componentActivated() {
+        super.componentActivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(true);
+    }
+
     private List<Mesh> shapes;
 
     protected void setMesh(List<Mesh> shapes, double scale) {

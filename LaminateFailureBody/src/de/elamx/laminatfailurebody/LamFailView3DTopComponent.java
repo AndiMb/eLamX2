@@ -217,10 +217,6 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
     private javax.swing.JPanel resultPanel;
     private de.view3d.View3D view3D;
     // End of variables declaration//GEN-END:variables
-    @Override
-    public void componentOpened() {
-        // TODO add custom code on component opening
-    }
 
     @Override
     public void componentClosed() {
@@ -228,6 +224,18 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
         laminate.removePropertyChangeListener(this);
         View3DProperties.getDefault().removePropertyChangeListener(this);
         uniqueLaminates.remove(laminate);
+    }
+
+    @Override
+    protected void componentDeactivated() {
+        super.componentDeactivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(false);
+    }
+
+    @Override
+    protected void componentActivated() {
+        super.componentActivated(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        view3D.setActive(true);
     }
 
     @Override
