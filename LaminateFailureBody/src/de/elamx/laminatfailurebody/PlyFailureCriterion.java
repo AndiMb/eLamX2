@@ -69,6 +69,7 @@ public class PlyFailureCriterion{
     private int betaSteps_   = 200;
     
     private static final double eps = 1.0E-8;
+    private static final double EPS_ZERO = 1.0E-14;
     
     private double scalingFaktor = 0.0;
     
@@ -164,7 +165,6 @@ public class PlyFailureCriterion{
     private double[][][] getPointInformation(){
         int mm,nn;                                      // Hilfvariablen als Zähler
         int numLayers = laminate.getNumberofLayers();   // Anzahl der Lagen
-        int failLayerNum = 0;                           // Anzahl der versagten Lagen
 
         boolean[] ZFB  = new boolean[numLayers];        // Vektor, das definiert welche Lagen aktiv sind
 
@@ -220,8 +220,7 @@ public class PlyFailureCriterion{
                 lastLayerNum = -1.0;
                 
                 boolean firstFB = false;
-
-                failLayerNum = 0;
+                
                 do{
                     // Berechnen der Dehnungen
                     for (mm = 0; mm < 6; mm++){
@@ -272,8 +271,6 @@ public class PlyFailureCriterion{
                                 break;
                             }else if (failTypLay[iii] == ReserveFactor.MATRIX_FAILURE){
                                 ZFB[iii] = true;
-                                // erhöhe den Zähler für die Anzahl der versagten Lagen um 1
-                                failLayerNum++; 
                             }
                         }
                     }
@@ -287,7 +284,7 @@ public class PlyFailureCriterion{
                     
                 } while(ABD_ok); // solange, wie die ABD-Matrix keine Fastnullelemente auf der Hauptdiagonalen hat
                 
-                // Wenn FinalFailure, dann alles rücksetzen, was erneut gebracht wird
+                // Wenn FinalFailure, dann alles rücksetzen, was erneut gebraucht wird
                 if (failureType_ == PlyFailureCriterion.FINAL_FAILURE){
                     for (mm = 0; mm < numLayers; mm++){
                         ZFB[mm] = false;
@@ -329,39 +326,37 @@ public class PlyFailureCriterion{
 
     private double[][] getABDMatInv(CLT_Layer[] layers, boolean[] ZFB){
 
-        int ii, jj;
+        int ii, jj, m, n;
         double thick;
         double[][] Qmat;
         double[][] A = new double[3][3];
         double[][] B = new double[3][3];
         double[][] D = new double[3][3];
-        double factor = 1.0;
+        double[][] ABD = new double[6][6];
         
         double temp, zm;
         CLT_Layer layer;
         for (ii = 0; ii < layers.length; ii++){
             layer = layers[ii];
             if (ZFB[ii]){
-                DefaultMaterial m = (DefaultMaterial)layer.getLayer().getMaterial();
-                m.setEnor(0.0);
-                m.setNue12(0.0);
-                m.setG(0.0);
+                DefaultMaterial mat = (DefaultMaterial)layer.getLayer().getMaterial();
+                mat.setEnor(0.0);
+                mat.setNue12(0.0);
+                mat.setG(0.0);
             }
             layer.refresh();
             Qmat  = layer.getQMatGlobal();
             thick = layer.getLayer().getThickness();
             zm    = layer.getZm();
-            for (int m = 0; m < 3; m++){
-                for (int n = 0; n < 3; n++){
-                    temp = factor * Qmat[m][n] * thick;
+            for (m = 0; m < 3; m++){
+                for (n = 0; n < 3; n++){
+                    temp = Qmat[m][n] * thick;
                     A[m][n] += temp;
                     B[m][n] += temp * zm;
                     D[m][n] += temp * (thick*thick/12.0 + zm*zm);
                 }
             }
         }
-        
-        double[][] ABD = new double[6][6];
         
         for(ii = 0; ii < 3; ii++){
             for(jj = 0; jj <= ii; jj++){
@@ -387,7 +382,7 @@ public class PlyFailureCriterion{
         
         ABD_ok = true;
         for (ii = 0; ii < 6; ii++){
-            if (Math.abs(ABD[ii][ii]) < 1.0E-14 ){
+            if (Math.abs(ABD[ii][ii]) < EPS_ZERO ){
                 ABD_ok = false;
                 break;
             }
