@@ -29,6 +29,7 @@ import com.ardor3d.renderer.state.BlendState;
 import com.ardor3d.renderer.state.MaterialState;
 import com.ardor3d.scenegraph.Mesh;
 import com.ardor3d.scenegraph.MeshData;
+import de.elamx.core.ELamXDecimalFormat;
 import de.elamx.core.GlobalProperties;
 import de.elamx.core.RawDataExportService;
 import de.elamx.core.SnapshotService;
@@ -55,7 +56,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.util.Exceptions;
@@ -77,6 +77,7 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
     private final AttributedString captionZ = new AttributedString("nxy");
     private final LaminateTableModel model = new LaminateTableModel();
     private boolean showMessages = true;
+    private final ELamXDecimalFormat forceFormat = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_FORCE);
 
     public LamFailView3DTopComponent(Laminat laminate) {
         this.laminate = laminate;
@@ -90,6 +91,12 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
         View3DProperties.getDefault().addPropertyChangeListener(this);
         associateLookup(Lookups.fixed(laminate, new Snapshot(), new VTKExport()));
         eLamXLookup.getDefault().addPropertyChangeListener(this);
+        nxpResultLabel.setText(forceFormat.format(0.0));
+        nxmResultLabel.setText(forceFormat.format(0.0));
+        nypResultLabel.setText(forceFormat.format(0.0));
+        nymResultLabel.setText(forceFormat.format(0.0));
+        nxypResultLabel.setText(forceFormat.format(0.0));
+        nxymResultLabel.setText(forceFormat.format(0.0));
     }
 
     /**
@@ -110,6 +117,19 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new AutoRowHeightTable();
         jTable1.setDefaultRenderer(Color.class, new ColorRenderer(true));
+        jPanel1 = new javax.swing.JPanel();
+        nxpLabel = new javax.swing.JLabel();
+        nxpResultLabel = new javax.swing.JLabel();
+        nxmLabel = new javax.swing.JLabel();
+        nxmResultLabel = new javax.swing.JLabel();
+        nymLabel = new javax.swing.JLabel();
+        nypResultLabel = new javax.swing.JLabel();
+        nypLabel = new javax.swing.JLabel();
+        nymResultLabel = new javax.swing.JLabel();
+        nxypLabel = new javax.swing.JLabel();
+        nxypResultLabel = new javax.swing.JLabel();
+        nxymLabel = new javax.swing.JLabel();
+        nxymResultLabel = new javax.swing.JLabel();
         view3D = new View3D(captionX, captionY, captionZ, true);
 
         setLayout(new java.awt.BorderLayout());
@@ -131,7 +151,7 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
                 .addContainerGap()
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lastPlyRButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(firstPlyRButton, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                    .addComponent(firstPlyRButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         inputPanelLayout.setVerticalGroup(
@@ -171,12 +191,89 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
         );
         resultPanelLayout.setVerticalGroup(
             resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 183, Short.MAX_VALUE)
+            .addGap(0, 249, Short.MAX_VALUE)
             .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(resultPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                     .addContainerGap()))
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "ResultPanel.intersection.caption"))); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nxpLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nxpLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nxpResultLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nxpResultLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nxmLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nxmLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nxmResultLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nxmResultLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nymLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nymLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nypResultLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nypResultLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nypLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nypLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nymResultLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nymResultLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nxypLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nxypLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nxypResultLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nxypResultLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nxymLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nxymLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(nxymResultLabel, org.openide.util.NbBundle.getMessage(LamFailView3DTopComponent.class, "LamFailView3DTopComponent.nxymResultLabel.text")); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nxpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nypLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxypLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nypResultLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                    .addComponent(nxpResultLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nxypResultLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nxmLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nymLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxymLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(nxymResultLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                    .addComponent(nymResultLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nxmResultLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nxpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxpResultLabel)
+                    .addComponent(nxmLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxmResultLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nymLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nypResultLabel)
+                    .addComponent(nypLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nymResultLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nxypLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxypResultLabel)
+                    .addComponent(nxymLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxymResultLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
@@ -186,6 +283,7 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
             .addComponent(inputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(drawButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(resultPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,6 +291,8 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
                 .addComponent(inputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(drawButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resultPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -211,9 +311,22 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
     private javax.swing.JButton drawButton;
     private javax.swing.JRadioButton firstPlyRButton;
     private javax.swing.JPanel inputPanel;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton lastPlyRButton;
+    private javax.swing.JLabel nxmLabel;
+    private javax.swing.JLabel nxmResultLabel;
+    private javax.swing.JLabel nxpLabel;
+    private javax.swing.JLabel nxpResultLabel;
+    private javax.swing.JLabel nxymLabel;
+    private javax.swing.JLabel nxymResultLabel;
+    private javax.swing.JLabel nxypLabel;
+    private javax.swing.JLabel nxypResultLabel;
+    private javax.swing.JLabel nymLabel;
+    private javax.swing.JLabel nymResultLabel;
+    private javax.swing.JLabel nypLabel;
+    private javax.swing.JLabel nypResultLabel;
     private javax.swing.JPanel resultPanel;
     private de.view3d.View3D view3D;
     // End of variables declaration//GEN-END:variables
@@ -295,6 +408,12 @@ public final class LamFailView3DTopComponent extends TopComponent implements Pro
                     public void run() {
                         view3D.setShape3D(shapes, 1.0/scalFac);
                         model.setLaminate(laminate, layerColor);
+                        nxpResultLabel.setText(forceFormat.format(result.axisIntersections[0]));
+                        nxmResultLabel.setText(forceFormat.format(result.axisIntersections[1]));
+                        nypResultLabel.setText(forceFormat.format(result.axisIntersections[2]));
+                        nymResultLabel.setText(forceFormat.format(result.axisIntersections[3]));
+                        nxypResultLabel.setText(forceFormat.format(result.axisIntersections[4]));
+                        nxymResultLabel.setText(forceFormat.format(result.axisIntersections[5]));
                         drawButton.setEnabled(true);
                         ph.finish();
                     }

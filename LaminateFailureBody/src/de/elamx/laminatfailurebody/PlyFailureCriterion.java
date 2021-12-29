@@ -68,10 +68,12 @@ public class PlyFailureCriterion{
     private int alphaSteps_  = 200;
     private int betaSteps_   = 200;
     
-    private static final double eps = 1.0E-8;
+    private static final double EPS = 1.0E-8;
     private static final double EPS_ZERO = 1.0E-14;
     
     private double scalingFaktor = 0.0;
+
+    private final double[] axisIntersections = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     
     private boolean ABD_ok = true;
     
@@ -79,8 +81,8 @@ public class PlyFailureCriterion{
         this.laminate   = laminate;
         layerColor_     = layerColor;
         failureType_    = failureType;
-        alphaSteps_     = resolution;
-        betaSteps_      = resolution;
+        alphaSteps_     = (int)(resolution/4.0+0.76)*4;                         // Die Anzahl der Schritte muss durch vier teilbar sein, damit die Schnittpunkte mit den Achsen Teile der Punktwolke sind.
+        betaSteps_      = alphaSteps_;
     }
     
     public FailureSurfaceResult getCriterion(){
@@ -147,7 +149,7 @@ public class PlyFailureCriterion{
 
         mesh.updateModelBound();
 
-        return new FailureSurfaceResult(mesh, scalingFaktor);
+        return new FailureSurfaceResult(mesh, scalingFaktor, axisIntersections);
     }
             
     public ColorRGBA getColor() {
@@ -208,11 +210,11 @@ public class PlyFailureCriterion{
         double maxVal = 0.0;
 
         for (int ii = 0; ii < alphaSteps_+1; ii++){
-            alpha     = dAlpha*ii+ALPHA_END;
-            nVec[0]  = Math.sin(alpha);
+            alpha     = dAlpha*ii+ALPHA_START;
+            nVec[0]   = Math.sin(alpha);
             cos_alpha = Math.cos(alpha);
             for (int jj = 0; jj < betaSteps_+1; jj++){
-                beta = dBeta*jj+BETA_END;
+                beta = dBeta*jj+BETA_START;
                 nVec[1] = Math.sin(beta) * cos_alpha;
                 nVec[2] = Math.cos(beta) * cos_alpha;
 
@@ -265,7 +267,7 @@ public class PlyFailureCriterion{
                       gesucht, die den kleinsten Reservefaktor haben.
                     */
                     for (int iii = 0; iii < numLayers; iii++) {
-                        if (RF * (1+eps) > rfMinLayer[iii]){
+                        if (RF * (1+EPS) > rfMinLayer[iii]){
                             if (failTypLay[iii] == ReserveFactor.FIBER_FAILURE){
                                 firstFB = true;
                                 break;
@@ -305,6 +307,13 @@ public class PlyFailureCriterion{
         }
         
         scalingFaktor = maxVal;
+        
+        axisIntersections[0] = punkte[alphaSteps_][0][0];
+        axisIntersections[1] = punkte[0][0][0];
+        axisIntersections[2] = punkte[alphaSteps_/2][betaSteps_/4][1];
+        axisIntersections[3] = punkte[alphaSteps_/2][3*betaSteps_/4][1];
+        axisIntersections[4] = punkte[alphaSteps_/2][0][2];
+        axisIntersections[5] = punkte[alphaSteps_/2][betaSteps_/2][2];
         
         return punkte;
     }
@@ -415,10 +424,12 @@ public class PlyFailureCriterion{
         
         final Mesh failureBody;
         final double scaleFactor;
+        final double[] axisIntersections;
 
-        public FailureSurfaceResult(Mesh failureBody, double scaleFactor) {
+        public FailureSurfaceResult(Mesh failureBody, double scaleFactor, double[] axisIntersections) {
             this.failureBody = failureBody;
             this.scaleFactor = scaleFactor;
+            this.axisIntersections = axisIntersections;
         }
 
         public Mesh getFailureBody() {
@@ -427,6 +438,10 @@ public class PlyFailureCriterion{
 
         public double getScaleFactor() {
             return scaleFactor;
+        }
+
+        public double[] getAxisIntersections() {
+            return axisIntersections;
         }
         
     }
