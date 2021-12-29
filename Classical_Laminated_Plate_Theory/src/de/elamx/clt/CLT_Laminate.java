@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * Diese Klasse repräsentiert ein gesamten Laminat bestehend aus 
  * Einzelschichten. Diese werden durch <CODE>Layer</CODE>-Objekte definiert. 
  * Diese Klasse stellt alle Eigenschaften eine Laminats zur Verfügung, wie
- * z.B. die ABD-Matrix und die Ingenieurskonstanten.<br /></br />
+ * z.B. die ABD-Matrix und die Ingenieurskonstanten.<br><br>
  * Intern wird das Laminat in einem <CODE>ArrayList&lt;Layer&gt;</CODE> der 
  * Einzelschichten gespeichert. 
  * 
@@ -42,7 +42,7 @@ import java.util.ArrayList;
  */
 public class CLT_Laminate extends CLT_Object{
     
-    private static final double eps = 0.000000000001;
+    private static final double EPS = 0.000000000001;
     
     private final Laminat laminat;
 
@@ -77,7 +77,7 @@ public class CLT_Laminate extends CLT_Object{
      * Bisher wird nur die ABD-Matrix neu bestimmt.
      */
     @Override
-    public void refresh(){
+    public final void refresh(){
         initCLTLayers();
         calcABD();
     }
@@ -144,7 +144,7 @@ public class CLT_Laminate extends CLT_Object{
             }
         }
         isSym = false;
-        if (Bmax < eps*Amax) {
+        if (Bmax < EPS*Amax) {
             isSym = true;
         }
 
@@ -208,7 +208,7 @@ public class CLT_Laminate extends CLT_Object{
     /**
      * Flag, ob der Lagenaufbau symmetrisch ist. Dies wird anhand der Einträge der
      * B-Matrix geprüft. Wenn alle Komponenten der B-Matrix kleiner 
-     * &epsilon; = 0.00000001, sind liefert diese Methode <CODE>true</CODE>.<br />
+     * &epsilon; = 0.00000001, sind liefert diese Methode <CODE>true</CODE>.<br>
      * Es wird nicht am Lagenaufbau direkt geprüft, da der Lagenaufbau nicht zwangweise
      * symmetrisch sein muss, um ein symmetrisches Verhalten zu haben. Wenn z.B.
      * eine Lagen mit Dicke 1mm und zwei mit Dicke 0,5mm enthalten sind, entspricht
