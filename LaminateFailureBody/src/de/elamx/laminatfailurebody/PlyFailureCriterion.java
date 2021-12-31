@@ -169,6 +169,7 @@ public class PlyFailureCriterion{
         int numLayers = laminate.getNumberofLayers();   // Anzahl der Lagen
 
         boolean[] ZFB  = new boolean[numLayers];        // Vektor, das definiert welche Lagen aktiv sind
+        int numZFBLayers = 0;
 
         double alpha, beta, cos_alpha;                  // Hilfsgrößen
         double rfMax;                                   // maximaler Reservefaktor
@@ -196,6 +197,9 @@ public class PlyFailureCriterion{
         
         CLT_Layer[] layers = new CLT_Layer[origLayers.length];
         
+        /*
+        Copy all Layers to be able to change the Stiffness for final failure
+        */
         for (int ii = 0; ii < origLayers.length; ii++){
             Layer oldL = origLayers[ii].getLayer();
             Layer newL = new Layer("1", "noname", getAsDefaultMaterial(oldL.getMaterial()), oldL.getAngle(), oldL.getThickness(), oldL.getCriterion());
@@ -267,21 +271,27 @@ public class PlyFailureCriterion{
                       gesucht, die den kleinsten Reservefaktor haben.
                     */
                     for (int iii = 0; iii < numLayers; iii++) {
-                        if (RF * (1+EPS) > rfMinLayer[iii]){
+                        if (RF * (1.0+EPS) > rfMinLayer[iii]){
                             if (failTypLay[iii] == ReserveFactor.FIBER_FAILURE){
                                 firstFB = true;
                                 break;
                             }else if (failTypLay[iii] == ReserveFactor.MATRIX_FAILURE){
                                 ZFB[iii] = true;
+                                numZFBLayers++;
                             }
                         }
                     }
                     
-                    if (firstFB){
+                    /*
+                    wenn der erste Faserbruch eintritt oder alle Lagen 
+                    auf Zwischenfaserbuch versagt sind, letztes ist insbesondere
+                    für Laminate mit einer Lage wichtig
+                    */
+                    if (firstFB || numZFBLayers == numLayers){
                         break;
                     }
 
-                    // Generieren der inversen A-Matrix
+                    // Generieren der inversen ABD-Matrix
                     ABDmatInv = getABDMatInv(layers, ZFB);
                     
                 } while(ABD_ok); // solange, wie die ABD-Matrix keine Fastnullelemente auf der Hauptdiagonalen hat
@@ -290,6 +300,7 @@ public class PlyFailureCriterion{
                 if (failureType_ == PlyFailureCriterion.FINAL_FAILURE){
                     for (mm = 0; mm < numLayers; mm++){
                         ZFB[mm] = false;
+                        numZFBLayers = 0;
                         layers[mm].getLayer().setMaterial(getAsDefaultMaterial(origLayers[mm].getLayer().getMaterial()));
                     }
                     ABDmatInv = getABDMatInv(layers, ZFB);
