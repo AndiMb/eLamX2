@@ -37,6 +37,7 @@ import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.NotifyDescriptor.Confirmation;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.MIMEResolver;
 import org.openide.loaders.DataNode;
 import org.openide.loaders.DataObjectExistsException;
 import org.openide.loaders.MultiDataObject;
@@ -56,6 +57,11 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+@MIMEResolver.Registration(
+    displayName="de.elamx.filesupport.Bundle#Services/MIMEResolver/eLamXFileResolver.xml",
+    position=0,
+    resource="eLamXFileResolver.xml"
+)
 public class eLamXFileDataObject extends MultiDataObject {
     
     private final Lookup lookup;

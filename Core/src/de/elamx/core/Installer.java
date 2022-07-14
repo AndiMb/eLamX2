@@ -27,6 +27,7 @@ package de.elamx.core;
 
 import javax.swing.UIManager;
 import org.openide.modules.ModuleInstall;
+import org.openide.util.NbPreferences;
 
 public class Installer extends ModuleInstall {
 
@@ -42,5 +43,11 @@ public class Installer extends ModuleInstall {
             UIManager.put("NbMainWindow.showCustomBackground", Boolean.TRUE);
             RootFrame.init();
         }
+    }
+
+    @Override
+    public void validate() throws IllegalStateException {
+        NbPreferences.root().node("laf").put("laf", "com.formdev.flatlaf.FlatLightLaf");
+        super.validate(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
 }

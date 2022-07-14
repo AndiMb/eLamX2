@@ -11,6 +11,14 @@
     <folder name="Loaders">
         <folder name="text">
             <folder name="elamx+xml">
+                <folder name="Factories">
+                    <file name="eLamXFileDataLoader.instance">
+                        <attr name="dataObjectClass" stringvalue="de.elamx.filesupport.eLamXFileDataObject"/>
+                        <attr name="iconBase" stringvalue="de/elamx/filesupport/resources/ilr_icon16.png"/>
+                        <attr name="instanceCreate" methodvalue="org.openide.loaders.DataLoaderPool.factory"/>
+                        <attr name="mimeType" stringvalue="text/elamx+xml"/>
+                    </file>
+                </folder>
                 <folder name="Actions">
                     <file name="org-openide-actions-CopyAction.shadow">
                         <attr name="originalFile" stringvalue="Actions/Edit/org-openide-actions-CopyAction.instance"/>
@@ -69,14 +77,6 @@
                         <attr name="position" intvalue="1200"/>
                     </file>
                 </folder>
-                <folder name="Factories">
-                    <file name="eLamXFileDataLoader.instance">
-                        <attr name="dataObjectClass" stringvalue="de.elamx.filesupport.eLamXFileDataObject"/>
-                        <attr name="iconBase" stringvalue="de/elamx/filesupport/resources/ilr_icon16.png"/>
-                        <attr name="instanceCreate" methodvalue="org.openide.loaders.DataLoaderPool.factory"/>
-                        <attr name="mimeType" stringvalue="text/elamx+xml"/>
-                    </file>
-                </folder>
             </folder>
         </folder>
     </folder>
@@ -90,14 +90,6 @@
             <file name="Separator1.instance_hidden"/>
             <file name="org-netbeans-modules-favorites-templates-TemplatesAction.shadow_hidden"/>
             <file name="org-openide-actions-ToolsAction.shadow_hidden"/>
-        </folder>
-    </folder>
-    <folder name="Services">
-        <folder name="MIMEResolver">
-            <file name="eLamXFileResolver.xml" url="eLamXFileResolver.xml">
-                <attr name="displayName" bundlevalue="de.elamx.filesupport.Bundle#Services/MIMEResolver/eLamXFileResolver.xml"/>
-                <attr name="position" intvalue="0"/> 
-            </file>
         </folder>
     </folder>
 </filesystem>
