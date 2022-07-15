@@ -2,7 +2,103 @@
 <!-- You may freely edit this file. See harness/README in the NetBeans platform -->
 <!-- for some information on what you could do (e.g. targets to override). -->
 <!-- If you delete this file and reopen the project it will be recreated. -->
-<project name="eLamX2" basedir=".">
+<project name="eLamX2" basedir="." xmlns:if="ant:if" xmlns:unless="ant:unless">
     <description>Builds the module suite eLamX2.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <target name="build-zip" depends="build,build-launchers">
+        <mkdir dir="${dist.dir}"/>
+        <!-- pathfileset does not support 'prefix' and 'filemode' parameters,
+        we have to copy them to temp location -->
+        <tempfile property="temp.dir.nbexec" destdir="${suite.build.dir}" deleteonexit="true" prefix="nbexec"/>
+        <tempfile property="temp.dir.rest" destdir="${suite.build.dir}" deleteonexit="delete" prefix="rest"/>
+        <subant genericantfile="${harness.dir}/suite.xml" target="copy-cluster" inheritrefs="true">
+            <property name="dest.dir" value="${temp.dir.rest}"/>
+            <property name="nbexec.dir" value="${temp.dir.nbexec}"/>
+            <property name="build.dir" value="${suite.build.dir}"/>
+            <resources refid="zip.platform.clusters"/>
+        </subant>
+        
+        <loadresource property="jlink-modules">
+            <concat>
+                <union>
+                    <string>java.scripting,</string>
+                    <string>java.desktop,</string>
+                    <string>java.instrument,</string>
+                    <string>java.logging,</string>
+                    <string>java.naming,</string>
+                    <string>jdk.localedata,</string>
+                    <string>jdk.management,</string>
+                    <!-- only to be able to debug the rcp app -->
+                    <string>jdk.jdwp.agent,</string>
+                </union>
+            </concat>
+        </loadresource>
+        
+        <loadresource property="jlink-locales">
+            <concat>
+                <union>
+                    <string>en,</string>
+                    <string>de,</string>
+                </union>
+            </concat>
+        </loadresource>
+        
+        <condition property="jdk.jmods" value="${elamxjdk.jmods.linux}">
+            <contains string="${elamxjdk.os}" substring="linux"/>
+        </condition>
+        
+        <condition property="jdk.jmods" value="${elamxjdk.jmods.windows}">
+            <contains string="${elamxjdk.os}" substring="windows"/>
+        </condition>
+        
+        <condition property="jdk.jmods" value="${elamxjdk.jmods.macosx}">
+            <contains string="${elamxjdk.os}" substring="macosx"/>
+        </condition>
+        
+        <echo level="info">Start creating JRE from ${jdk.jmods}/jmods</echo>
+
+        <exec executable="${elamxjdk.home}/bin/jlink${jlinkext}" failonerror="true">
+            <env key="JAVA_HOME" path="${elamxjdk.home}"/>
+            <arg value="--strip-debug"/>
+            <arg value="--no-header-files"/>
+            <arg value="--no-man-pages"/>
+            <arg value="--output"/>
+            <arg value="${temp.dir.rest}/${elamxjdk.dir}"/>
+            <arg value="--module-path"/>
+            <arg value="${jdk.jmods}/jmods"/>
+            <arg value="--add-modules"/>
+            <arg value="${jlink-modules}"/>
+            <arg value="--include-locales=${jlink-locales}"/>
+        </exec>
+        <echo level="info">Created JRE in ${temp.dir.rest}/${elamxjdk.dir}</echo>
+        
+        <available file="${temp.dir.rest}/${elamxjdk.dir}" property="elamxjre.exist"/>
+        <replace if:set="elamxjre.exist"
+                 file="${build.launcher.dir}/etc/${app.name}.conf"
+                 value="jdkhome=${elamxjdk.dir}">
+            <contains text="#jdkhome"/>
+            <replacetoken><![CDATA[#jdkhome="/path/to/jdk"]]></replacetoken>
+        </replace>
+        
+        <zip destfile="${dist.dir}/${app.name}_${elamxjdk.os}.zip">
+            <zipfileset dir="${build.launcher.dir}/bin/" filemode="755" prefix="${app.name}/bin"/>
+            <zipfileset dir="${build.launcher.dir}/etc/" prefix="${app.name}/etc"/>
+            <zipfileset dir="${temp.dir.nbexec}" filemode="755" prefix="${app.name}"/>
+            <zipfileset dir="${temp.dir.rest}" prefix="${app.name}" filemode="755">
+                <include name="${elamxjdk.dir}/bin/*"/>
+            </zipfileset>
+            <zipfileset dir="${temp.dir.rest}" prefix="${app.name}">
+                <include name="**"/>
+                <exclude name="${elamxjdk.dir}/bin/*"/>
+            </zipfileset>
+
+            <!-- Yes, the doubled app.name is a bit ugly, but better than the alternative; cf. #66441: -->
+            <zipfileset dir="${cluster}" prefix="${app.name}/${app.name}">
+                <exclude name="config/Modules/*.xml_hidden"/>
+            </zipfileset>
+            
+        </zip>
+    </target>
+    
 </project>
