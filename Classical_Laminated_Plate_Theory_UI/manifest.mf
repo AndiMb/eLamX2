@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 OpenIDE-Module: de.elamx.clt.calculation/1
 OpenIDE-Module-Localizing-Bundle: de/elamx/clt/calculation/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.6.0
+OpenIDE-Module-Specification-Version: 1.7.0
 

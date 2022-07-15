@@ -3,5 +3,5 @@ AutoUpdate-Show-In-Client: true
 OpenIDE-Module: de.elamx.laminate.addFailureCriteriaAutodesk/1
 OpenIDE-Module-Layer: de/elamx/laminate/addFailureCriteriaAutodesk/layer.xml
 OpenIDE-Module-Localizing-Bundle: de/elamx/laminate/addFailureCriteriaAutodesk/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.6.0
+OpenIDE-Module-Specification-Version: 1.7.0
 

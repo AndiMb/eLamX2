@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 OpenIDE-Module: de.elamx.micromechanics/1
 OpenIDE-Module-Layer: de/elamx/micromechanics/layer.xml
 OpenIDE-Module-Localizing-Bundle: de/elamx/micromechanics/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.6.0
+OpenIDE-Module-Specification-Version: 1.7.0
 

@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 OpenIDE-Module: de.elamx.micromechanics.addmicromechanicmodels/1
 OpenIDE-Module-Layer: de/elamx/micromechanics/addmicromechanicmodels/layer.xml
 OpenIDE-Module-Localizing-Bundle: de/elamx/micromechanics/addmicromechanicmodels/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.6.0
+OpenIDE-Module-Specification-Version: 1.7.0
 

@@ -3,4 +3,4 @@ OpenIDE-Module: de.elamx.core/1
 OpenIDE-Module-Install: de/elamx/core/Installer.class
 OpenIDE-Module-Layer: de/elamx/core/layer.xml
 OpenIDE-Module-Localizing-Bundle: de/elamx/core/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.6.0
+OpenIDE-Module-Specification-Version: 1.7.0

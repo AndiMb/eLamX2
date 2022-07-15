@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 OpenIDE-Module: de.elamx.clt.cutout/1
 OpenIDE-Module-Localizing-Bundle: de/elamx/clt/cutout/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.6.0
+OpenIDE-Module-Specification-Version: 1.7.0
 
