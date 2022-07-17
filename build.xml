@@ -6,6 +6,20 @@
     <description>Builds the module suite eLamX2.</description>
     <import file="nbproject/build-impl.xml"/>
     
+    <target name="build" depends="build_view3d,suite.build">
+    </target>
+    
+    <target name="build_view3d">
+        <ant antfile="View3DSuite/build.xml" inheritall="false" target="build"/>
+    </target>
+    
+    <target name="clean" depends="suite.clean,clean_view3d">
+    </target>
+    
+    <target name="clean_view3d">
+        <ant antfile="View3DSuite/build.xml" inheritall="false" target="clean"/>
+    </target>
+    
     <target name="build-zip" depends="build,build-launchers">
         <mkdir dir="${dist.dir}"/>
         <!-- pathfileset does not support 'prefix' and 'filemode' parameters,
