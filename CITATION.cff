@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: '{{eLamX² - expandable Laminate Explorer}}'
+message: ' If you use this software, please cite it using the metadata from this file.'
+type: software
+authors:
+  - given-names: Andreas
+    family-names: Hauffe
+    email: andreas.hauffe@tu-dresden.de
+    affiliation: Technische Universität Dresden
+    orcid: 'https://orcid.org/0000-0002-4246-6795'
+repository-code: 'https://github.com/AndiMb/eLamX2'
+url: 'http://www.elamx.de'
+license: GPL-3.0
+version: 2.7.0
+date-released: '2022-07-16'
