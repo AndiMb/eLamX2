@@ -24,4 +24,5 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Build with Ant
-      run: ant -noinput -buildfile build.xml build -Dnbplatform.default.harness.dir=$GITHUB_WORKSPACE/nbmant/harness -Dnbplatform.active.dir=$GITHUB_WORKSPACE/nbmant
+      run: ant -noinput -buildfile build.xml build
+      #run: ant -noinput -buildfile build.xml build -Dnbplatform.default.harness.dir=$GITHUB_WORKSPACE/nbmant/harness -Dnbplatform.active.dir=$GITHUB_WORKSPACE/nbmant
