@@ -35,6 +35,7 @@ import de.elamx.clt.calculation.LayerResultContainer;
 import de.elamx.clt.calculation.calc.ResultTableModel;
 import de.elamx.clt.pressurevessel.PressureVesselInput;
 import de.elamx.core.GlobalProperties;
+import de.elamx.core.RawDataExportService;
 import de.elamx.laminate.Laminat;
 import de.elamx.utilities.AutoRowHeightTable;
 import java.awt.Color;
@@ -48,6 +49,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileWriter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collections;
@@ -59,7 +61,6 @@ import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import org.openide.explorer.ExplorerUtils;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -68,7 +69,6 @@ import org.openide.util.Utilities;
 import org.openide.util.lookup.AbstractLookup;
 import org.openide.util.lookup.InstanceContent;
 import org.openide.util.lookup.Lookups;
-import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 
 /**
@@ -85,7 +85,7 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
     private final PressureVesselModuleData data;
     private final CLT_Laminate clt_lam;
     private final Lookup.Result<PressureVesselModuleData> result;
-    public final static Set<PressureVesselModuleData> uniquePressereVesselData = new HashSet<PressureVesselModuleData>();
+    public final static Set<PressureVesselModuleData> uniquePressereVesselData = new HashSet<>();
     private CLT_LayerResult[] layerResults;
     private final ResultTableModel tabModel = new ResultTableModel();
     
@@ -107,7 +107,7 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
         }
         clt_lam.addCLTRefreshListener(this);
         initComponents();
-        associateLookup(Lookups.fixed(data, data.getLaminat()));
+        associateLookup(Lookups.fixed(data, data.getLaminat(), new RawDataExportImpl()));
         table.setMinimumSize(new Dimension(300, 0));
         for (MouseWheelListener mwl : jScrollPane2.getMouseWheelListeners()) {
             jScrollPane2.removeMouseWheelListener(mwl);
@@ -302,12 +302,18 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
     }//GEN-LAST:event_strainRadioButtonActionPerformed
 
     private void radiusTypeBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radiusTypeBoxItemStateChanged
-        if (radiusTypeBox.getSelectedIndex() == 0){
-            data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_INNER);
-        }else if (radiusTypeBox.getSelectedIndex() == 1){
-            data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_MEAN);
-        }else if (radiusTypeBox.getSelectedIndex() == 2){
-            data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_OUTER);
+        switch (radiusTypeBox.getSelectedIndex()) {
+            case 0:
+                data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_INNER);
+                break;
+            case 1:
+                data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_MEAN);
+                break;
+            case 2:
+                data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_OUTER);
+                break;
+            default:
+                break;
         }
     }//GEN-LAST:event_radiusTypeBoxItemStateChanged
 
@@ -518,6 +524,20 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
+    }
+
+    private class RawDataExportImpl implements RawDataExportService {
+
+        @Override
+        public void export(FileWriter fw) {
+            ResultWriter.writeResults(fw, data.getLaminat(), data.getPressureVesselInput(), layerResults);
+        }
+
+        @Override
+        public String getFileExtension() {
+            return "txt";
+        }
+
     }
 
 }
