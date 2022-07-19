@@ -142,14 +142,14 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
         stressstraingroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        innerScrollPanel = new javax.swing.JPanel();
+        topPanel = new javax.swing.JPanel();
+        resultPanel = new javax.swing.JPanel();
+        epsaxLabel = new javax.swing.JLabel();
+        epsradLabel = new javax.swing.JLabel();
         epsaxField = new javax.swing.JFormattedTextField(df_Strains);
         epsradField = new javax.swing.JFormattedTextField(df_Strains);
-        jPanel3 = new javax.swing.JPanel();
+        inputPanel = new javax.swing.JPanel();
         radiusLabel = new javax.swing.JLabel();
         radiusField = new javax.swing.JFormattedTextField(df_Forces);
         radiusField.setValue(data.getPressureVesselInput().getRadius());
@@ -177,7 +177,7 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
             default:
             radiusTypeBox.setSelectedIndex(1);
         }
-        jPanel2 = new javax.swing.JPanel();
+        tablePanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new AutoRowHeightTable(){
 
@@ -205,52 +205,57 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        innerScrollPanel.setLayout(new java.awt.BorderLayout());
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.jPanel6.border.title"))); // NOI18N
+        resultPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.resultPanel.border.title"))); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.jLabel2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(epsaxLabel, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.epsaxLabel.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.jLabel3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(epsradLabel, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.epsradLabel.text")); // NOI18N
 
+        epsaxField.setEditable(false);
         epsaxField.setColumns(8);
         epsaxField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        epsaxField.setText(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.jFormattedTextField2.text")); // NOI18N
+        epsaxField.setText(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.epsaxField.text")); // NOI18N
 
+        epsradField.setEditable(false);
         epsradField.setColumns(8);
         epsradField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         epsradField.setText(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.epsradField.text")); // NOI18N
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout resultPanelLayout = new javax.swing.GroupLayout(resultPanel);
+        resultPanel.setLayout(resultPanelLayout);
+        resultPanelLayout.setHorizontalGroup(
+            resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(resultPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(epsaxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(epsradField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(resultPanelLayout.createSequentialGroup()
+                        .addComponent(epsaxLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(epsaxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(resultPanelLayout.createSequentialGroup()
+                        .addComponent(epsradLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(epsradField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        resultPanelLayout.setVerticalGroup(
+            resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(resultPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(epsaxLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(epsaxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(epsradLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(epsradField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.jPanel3.border.title"))); // NOI18N
+        inputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.inputPanel.border.title"))); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(radiusLabel, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.radiusLabel.text")); // NOI18N
 
@@ -270,72 +275,69 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout inputPanelLayout = new javax.swing.GroupLayout(inputPanel);
+        inputPanel.setLayout(inputPanelLayout);
+        inputPanelLayout.setHorizontalGroup(
+            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(inputPanelLayout.createSequentialGroup()
                         .addComponent(pressureLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pressureField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputPanelLayout.createSequentialGroup()
+                        .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(radiusLabel)
                             .addComponent(radiusTypeLabel))
                         .addGap(44, 44, 44)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(radiusTypeBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(radiusField))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        inputPanelLayout.setVerticalGroup(
+            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radiusLabel)
                     .addComponent(radiusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radiusTypeLabel)
                     .addComponent(radiusTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pressureLabel)
                     .addComponent(pressureField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
+        topPanel.setLayout(topPanelLayout);
+        topPanelLayout.setHorizontalGroup(
+            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(topPanelLayout.createSequentialGroup()
+                .addComponent(inputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(resultPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+        topPanelLayout.setVerticalGroup(
+            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(inputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(resultPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
+        innerScrollPanel.add(topPanel, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.jPanel2.border.title"))); // NOI18N
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        tablePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.tablePanel.border.title"))); // NOI18N
+        tablePanel.setLayout(new java.awt.BorderLayout());
 
         table.setModel(tabModel);
         jScrollPane2.setViewportView(table);
 
-        jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        tablePanel.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         stressstraingroup.add(stressRadioButton);
         org.openide.awt.Mnemonics.setLocalizedText(stressRadioButton, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.stressRadioButton.text")); // NOI18N
@@ -355,11 +357,11 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
         });
         jPanel4.add(strainRadioButton);
 
-        jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_START);
+        tablePanel.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
+        innerScrollPanel.add(tablePanel, java.awt.BorderLayout.CENTER);
 
-        jScrollPane1.setViewportView(jPanel1);
+        jScrollPane1.setViewportView(innerScrollPanel);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -390,16 +392,13 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField epsaxField;
+    private javax.swing.JLabel epsaxLabel;
     private javax.swing.JFormattedTextField epsradField;
+    private javax.swing.JLabel epsradLabel;
+    private javax.swing.JPanel innerScrollPanel;
+    private javax.swing.JPanel inputPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JFormattedTextField pressureField;
@@ -408,10 +407,13 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
     private javax.swing.JLabel radiusLabel;
     private javax.swing.JComboBox<String> radiusTypeBox;
     private javax.swing.JLabel radiusTypeLabel;
+    private javax.swing.JPanel resultPanel;
     private javax.swing.JRadioButton strainRadioButton;
     private javax.swing.JRadioButton stressRadioButton;
     private javax.swing.ButtonGroup stressstraingroup;
     private javax.swing.JTable table;
+    private javax.swing.JPanel tablePanel;
+    private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
