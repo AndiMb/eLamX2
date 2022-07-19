@@ -89,6 +89,7 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
     private CLT_LayerResult[] layerResults;
     private final ResultTableModel tabModel = new ResultTableModel();
     
+    DecimalFormat df_thickness = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_THICKNESS);
     DecimalFormat df_Forces = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_FORCE);
     DecimalFormat df_Strains = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_STRAIN);
 
@@ -140,7 +141,6 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
     private void initComponents() {
 
         stressstraingroup = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         innerScrollPanel = new javax.swing.JPanel();
         topPanel = new javax.swing.JPanel();
@@ -149,9 +149,31 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
         epsradLabel = new javax.swing.JLabel();
         epsaxField = new javax.swing.JFormattedTextField(df_Strains);
         epsradField = new javax.swing.JFormattedTextField(df_Strains);
+        lengthLabel = new javax.swing.JLabel();
+        lengthField = new javax.swing.JFormattedTextField(df_thickness);
+        lengthField.setValue(0.0);
+        lengthField.addPropertyChangeListener("value", new PropertyChangeListener(){
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setDeltaLength();
+            }
+        });
+        deltaLengthLabel = new javax.swing.JLabel();
+        deltaLengthField = new javax.swing.JFormattedTextField(df_thickness);
+        diameterLabel = new javax.swing.JLabel();
+        diameterField = new javax.swing.JFormattedTextField(df_thickness);
+        diameterField.setValue(0.0);
+        diameterField.addPropertyChangeListener("value", new PropertyChangeListener(){
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setDeltaDiameter();
+            }
+        });
+        deltaDiameterLabel = new javax.swing.JLabel();
+        deltaDiameterField = new javax.swing.JFormattedTextField(df_thickness);
         inputPanel = new javax.swing.JPanel();
         radiusLabel = new javax.swing.JLabel();
-        radiusField = new javax.swing.JFormattedTextField(df_Forces);
+        radiusField = new javax.swing.JFormattedTextField(df_thickness);
         radiusField.setValue(data.getPressureVesselInput().getRadius());
         radiusField.addPropertyChangeListener("value", this);
         pressureLabel = new javax.swing.JLabel();
@@ -201,8 +223,6 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
         stressRadioButton = new javax.swing.JRadioButton();
         strainRadioButton = new javax.swing.JRadioButton();
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.jLabel1.text")); // NOI18N
-
         setLayout(new java.awt.BorderLayout());
 
         innerScrollPanel.setLayout(new java.awt.BorderLayout());
@@ -223,6 +243,32 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
         epsradField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         epsradField.setText(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.epsradField.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(lengthLabel, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.lengthLabel.text")); // NOI18N
+        lengthLabel.setToolTipText(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.lengthLabel.toolTipText")); // NOI18N
+
+        lengthField.setColumns(8);
+        lengthField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        org.openide.awt.Mnemonics.setLocalizedText(deltaLengthLabel, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.deltaLengthLabel.text")); // NOI18N
+
+        deltaLengthField.setEditable(false);
+        deltaLengthField.setColumns(8);
+        deltaLengthField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        deltaLengthField.setText(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.deltaLengthField.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(diameterLabel, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.diameterLabel.text")); // NOI18N
+
+        diameterField.setColumns(8);
+        diameterField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        org.openide.awt.Mnemonics.setLocalizedText(deltaDiameterLabel, org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.deltaDiameterLabel.text")); // NOI18N
+        deltaDiameterLabel.setToolTipText(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.deltaDiameterLabel.toolTipText")); // NOI18N
+
+        deltaDiameterField.setEditable(false);
+        deltaDiameterField.setColumns(8);
+        deltaDiameterField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        deltaDiameterField.setText(org.openide.util.NbBundle.getMessage(CLT_PressureVesselTopComponent.class, "CLT_PressureVesselTopComponent.deltaDiameterField.text")); // NOI18N
+
         javax.swing.GroupLayout resultPanelLayout = new javax.swing.GroupLayout(resultPanel);
         resultPanel.setLayout(resultPanelLayout);
         resultPanelLayout.setHorizontalGroup(
@@ -230,16 +276,29 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
             .addGroup(resultPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lengthLabel)
+                    .addComponent(deltaLengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(epsaxLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(resultPanelLayout.createSequentialGroup()
-                        .addComponent(epsaxLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(epsaxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(34, 34, 34)
+                        .addComponent(epsradLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(resultPanelLayout.createSequentialGroup()
-                        .addComponent(epsradLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(epsradField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(lengthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(diameterLabel))
+                    .addGroup(resultPanelLayout.createSequentialGroup()
+                        .addComponent(deltaLengthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(deltaDiameterLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(epsradField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(diameterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deltaDiameterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         resultPanelLayout.setVerticalGroup(
             resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,11 +306,21 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
                 .addContainerGap()
                 .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(epsaxLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(epsaxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(epsaxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(epsradLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(epsradField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lengthLabel)
+                    .addComponent(lengthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(diameterLabel)
+                    .addComponent(diameterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(resultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deltaLengthLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deltaLengthField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deltaDiameterLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deltaDiameterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -391,16 +460,23 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
     }//GEN-LAST:event_radiusTypeBoxItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField deltaDiameterField;
+    private javax.swing.JLabel deltaDiameterLabel;
+    private javax.swing.JFormattedTextField deltaLengthField;
+    private javax.swing.JLabel deltaLengthLabel;
+    private javax.swing.JFormattedTextField diameterField;
+    private javax.swing.JLabel diameterLabel;
     private javax.swing.JFormattedTextField epsaxField;
     private javax.swing.JLabel epsaxLabel;
     private javax.swing.JFormattedTextField epsradField;
     private javax.swing.JLabel epsradLabel;
     private javax.swing.JPanel innerScrollPanel;
     private javax.swing.JPanel inputPanel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JFormattedTextField lengthField;
+    private javax.swing.JLabel lengthLabel;
     private javax.swing.JFormattedTextField pressureField;
     private javax.swing.JLabel pressureLabel;
     private javax.swing.JFormattedTextField radiusField;
@@ -475,6 +551,24 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
         tabModel.setLayerResults(layerResults);
         epsaxField.setValue(data.getPressureVesselInput().getStrains().getEpsilon_x());
         epsradField.setValue(data.getPressureVesselInput().getStrains().getEpsilon_y());
+        setDeltaLength();
+        setDeltaDiameter();
+    }
+    
+    private void setDeltaLength(){
+        double length = 0.0;
+        if (lengthField.getValue() != null){
+            length = ((Number)lengthField.getValue()).doubleValue();
+        }
+        deltaLengthField.setValue(data.getPressureVesselInput().getStrains().getEpsilon_x()*length);
+    }
+    
+    private void setDeltaDiameter(){
+        double diameter = 0.0;
+        if (diameterField.getValue() != null){
+            diameter = ((Number)diameterField.getValue()).doubleValue();
+        }
+        deltaDiameterField.setValue(data.getPressureVesselInput().getStrains().getEpsilon_y()*diameter);
     }
 
     @Override

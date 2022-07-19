@@ -25,13 +25,6 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="stressstraingroup">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.jLabel1.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
   </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
@@ -90,7 +83,7 @@
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Result">
+                        <TitledBorder title="Results">
                           <ResourceString PropertyName="titleX" bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.resultPanel.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                         </TitledBorder>
                       </Border>
@@ -103,19 +96,35 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lengthLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="deltaLengthLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="epsaxLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="epsaxLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="epsaxField" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                                      <Component id="epsradLabel" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="epsradLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="epsradField" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="lengthField" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                                      <Component id="diameterLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="deltaLengthField" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                                      <Component id="deltaDiameterLabel" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="epsradField" min="-2" max="-2" attributes="0"/>
+                                  <Component id="diameterField" min="-2" max="-2" attributes="0"/>
+                                  <Component id="deltaDiameterField" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="105" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -126,11 +135,22 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="epsaxLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="epsaxField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="epsradLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="epsradField" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="epsradLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="epsradField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lengthLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lengthField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="diameterLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="diameterField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="deltaLengthLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="deltaLengthField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="deltaDiameterLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="deltaDiameterField" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -176,6 +196,86 @@
                       </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(df_Strains);"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lengthLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.lengthLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                        </Property>
+                        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.lengthLabel.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JFormattedTextField" name="lengthField">
+                      <Properties>
+                        <Property name="columns" type="int" value="8"/>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(df_thickness);"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="lengthField.setValue(0.0);&#xd;&#xa;lengthField.addPropertyChangeListener(&quot;value&quot;, new PropertyChangeListener(){&#xd;&#xa;    @Override&#xd;&#xa;    public void propertyChange(PropertyChangeEvent evt) {&#xd;&#xa;        setDeltaLength();&#xd;&#xa;    }&#xd;&#xa;});"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="deltaLengthLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.deltaLengthLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JFormattedTextField" name="deltaLengthField">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="columns" type="int" value="8"/>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.deltaLengthField.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(df_thickness);"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="diameterLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.diameterLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JFormattedTextField" name="diameterField">
+                      <Properties>
+                        <Property name="columns" type="int" value="8"/>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(df_thickness);"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="diameterField.setValue(0.0);&#xd;&#xa;diameterField.addPropertyChangeListener(&quot;value&quot;, new PropertyChangeListener(){&#xd;&#xa;    @Override&#xd;&#xa;    public void propertyChange(PropertyChangeEvent evt) {&#xd;&#xa;        setDeltaDiameter();&#xd;&#xa;    }&#xd;&#xa;});"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="deltaDiameterLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.deltaDiameterLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                        </Property>
+                        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.deltaDiameterLabel.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JFormattedTextField" name="deltaDiameterField">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="columns" type="int" value="8"/>
+                        <Property name="horizontalAlignment" type="int" value="4"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="de/elamx/clt/pressurevesselui/Bundle.properties" key="CLT_PressureVesselTopComponent.deltaDiameterField.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                        </Property>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(df_thickness);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -255,7 +355,7 @@
                         <Property name="horizontalAlignment" type="int" value="4"/>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(df_Forces);"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(df_thickness);"/>
                         <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="radiusField.setValue(data.getPressureVesselInput().getRadius());&#xd;&#xa;radiusField.addPropertyChangeListener(&quot;value&quot;, this);"/>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
                       </AuxValues>
