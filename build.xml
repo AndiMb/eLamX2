@@ -20,7 +20,7 @@
         <ant antfile="View3DSuite/build.xml" inheritall="false" target="clean"/>
     </target>
     
-    <target name="build-zip" depends="build,build-launchers">
+    <target name="build-zip-with_jre" depends="build,build-launchers">
         <mkdir dir="${dist.dir}"/>
         <!-- pathfileset does not support 'prefix' and 'filemode' parameters,
         we have to copy them to temp location -->
