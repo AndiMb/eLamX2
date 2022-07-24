@@ -20,6 +20,45 @@
         <ant antfile="View3DSuite/build.xml" inheritall="false" target="clean"/>
     </target>
     
+    <target name="windows-installer" depends="windows-installer-init,build-zip-with_jre">
+        
+        <!-- Temporären Ordner anlegen -->
+        <tempfile property="temp.dir.windows-installer" destdir="${suite.build.dir}" deleteonexit="true" prefix="windows-installer"/>
+        
+        <!-- zuvor erstellte ZIP-Datei mit JRE wieder in den zurvor angelegten Pfad entpacken -->
+        <unzip src="${dist.dir}/${app.name}_${elamxjdk.os}.zip" dest="${temp.dir.windows-installer}" />
+        
+        <!-- InnoSetup Kontrolldatei in den Ordner kopieren -->
+        <copy file="Resource/elamx2.iss" tofile="${temp.dir.windows-installer}/elamx2.iss"/>
+        
+        <!-- eLamX²-Version in der InnoSetup Kontrolldatei setzen -->
+        <replace file="${temp.dir.windows-installer}/elamx2.iss"
+                 value="${elamxversion}">
+            <contains text="$ELAMXVERSION$"/>
+            <replacetoken><![CDATA[$ELAMXVERSION$]]></replacetoken>
+        </replace>
+        
+        <!-- Icon-Datei in den Ordner kopieren -->
+        <copy file="Resource/elamx2.ico" tofile="${temp.dir.windows-installer}/elamx2/etc/elamx2.ico"/>
+        
+        <!-- Lizenzdatei in den Ordner kopieren -->
+        <copy file="LICENSE" tofile="${temp.dir.windows-installer}/license.txt"/>
+        
+        <!-- Installer mit InnoSetup erstellen -->
+        <exec dir="${temp.dir.windows-installer}" executable="${innosetupexe}">
+            <arg value="elamx2.iss" />
+        </exec>
+        
+        <!-- Installer in den Dist-Ordner kopieren -->
+        <move file="${temp.dir.windows-installer}/Output/eLamX ${elamxversion}.exe" tofile="${dist.dir}/eLamX ${elamxversion}.exe"/>
+    </target>
+    
+    <!-- Hilfstarget, um die windows.properties zu laden -->
+    <target name="windows-installer-init">
+        <property file="nbproject/windows.properties"/>
+    </target>
+    
+    <!-- ZIP-Datei mit eLamX2 und eine Plattformspezifischen JRE erstellen -->
     <target name="build-zip-with_jre" depends="build,build-launchers">
         <mkdir dir="${dist.dir}"/>
         <!-- pathfileset does not support 'prefix' and 'filemode' parameters,
@@ -58,19 +97,7 @@
             </concat>
         </loadresource>
         
-        <condition property="jdk.jmods" value="${elamxjdk.jmods.linux}">
-            <contains string="${elamxjdk.os}" substring="linux"/>
-        </condition>
-        
-        <condition property="jdk.jmods" value="${elamxjdk.jmods.windows}">
-            <contains string="${elamxjdk.os}" substring="windows"/>
-        </condition>
-        
-        <condition property="jdk.jmods" value="${elamxjdk.jmods.macosx}">
-            <contains string="${elamxjdk.os}" substring="macosx"/>
-        </condition>
-        
-        <echo level="info">Start creating JRE from ${jdk.jmods}/jmods</echo>
+        <echo level="info">Start creating JRE from ${elamxjdk.jmods}/jmods</echo>
 
         <exec executable="${elamxjdk.home}/bin/jlink${jlinkext}" failonerror="true">
             <env key="JAVA_HOME" path="${elamxjdk.home}"/>
@@ -80,7 +107,7 @@
             <arg value="--output"/>
             <arg value="${temp.dir.rest}/${elamxjdk.dir}"/>
             <arg value="--module-path"/>
-            <arg value="${jdk.jmods}/jmods"/>
+            <arg value="${elamxjdk.jmods}/jmods"/>
             <arg value="--add-modules"/>
             <arg value="${jlink-modules}"/>
             <arg value="--include-locales=${jlink-locales}"/>
