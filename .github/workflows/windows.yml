@@ -28,3 +28,4 @@ jobs:
       with:
         name: elamx
         path: "dist/*.exe"
+        retention-days: 1
