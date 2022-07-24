@@ -97,17 +97,17 @@
             </concat>
         </loadresource>
         
-        <echo level="info">Start creating JRE from ${elamxjdk.jmods}/jmods</echo>
+        <echo level="info">Start creating JRE from ${java.home}/jmods</echo>
 
-        <exec executable="${elamxjdk.home}/bin/jlink${jlinkext}" failonerror="true">
-            <env key="JAVA_HOME" path="${elamxjdk.home}"/>
+        <exec executable="${java.home}/bin/jlink${jlinkext}" failonerror="true">
+            <env key="JAVA_HOME" path="${java.home}"/>
             <arg value="--strip-debug"/>
             <arg value="--no-header-files"/>
             <arg value="--no-man-pages"/>
             <arg value="--output"/>
             <arg value="${temp.dir.rest}/${elamxjdk.dir}"/>
             <arg value="--module-path"/>
-            <arg value="${elamxjdk.jmods}/jmods"/>
+            <arg value="${java.home}/jmods"/>
             <arg value="--add-modules"/>
             <arg value="${jlink-modules}"/>
             <arg value="--include-locales=${jlink-locales}"/>
