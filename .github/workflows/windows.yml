@@ -22,3 +22,9 @@ jobs:
         
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml windows-installer
+
+    - name: Upload Windows Installer
+      uses: actions/upload-artifact@v3
+      with:
+        name: elamx
+        path: "dist/*.exe"
