@@ -1,5 +1,5 @@
 
-name: windows-installer
+name: Build installer
 
 on: [workflow_dispatch]
 
