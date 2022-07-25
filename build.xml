@@ -82,9 +82,9 @@
         
         <!-- notwendige Dateien in die Ordnerstruktur kopieren (Icon, Desptop-File) -->
         <copy file="Resource/logo_elamx48.png" tofile="${linux-appimage-folder.usr.share.icon}/${app.name}.png"/>
-        <symlink link="${linux-appimage-folder}/${app.name}.png" resource="${linux-appimage-folder.usr.share.icon}/${app.name}.png"/>
+        <symlink link="${linux-appimage-folder}/${app.name}.png" resource="usr/share/icons/hicolor/48x48/apps/${app.name}.png"/>
         <copy file="Resource/Linux.AppImage/elamx2.desktop" tofile="${linux-appimage-folder.usr.share.applications}/${app.name}.desktop"/>
-        <symlink link="${linux-appimage-folder}/${app.name}.desktop" resource="${linux-appimage-folder.usr.share.applications}/${app.name}.desktop"/>
+        <symlink link="${linux-appimage-folder}/${app.name}.desktop" resource="usr/share/applications/${app.name}.desktop"/>
         <copy file="Resource/Linux.AppImage/AppRun" tofile="${linux-appimage-folder}/AppRun"/>
         <chmod file="${linux-appimage-folder}/AppRun" perm="a+x"/>
         
@@ -95,7 +95,7 @@
         <chmod file="${linux-appimage-folder.usr.lib}/${elamxjdk.dir}/bin/*" perm="a+x"/>
         
         <!-- Link auf Startdatei unter /usr/bin/ erstellen -->
-        <symlink link="${linux-appimage-folder.usr.bin}/${app.name}" resource="${linux-appimage-folder.usr.lib}/${app.name}/bin/${app.name}"/>
+        <symlink link="${linux-appimage-folder.usr.bin}/${app.name}" resource="../lib/${app.name}/bin/${app.name}"/>
         <chmod file="${linux-appimage-folder.usr.lib}/${app.name}/bin/${app.name}" perm="a+x"/>
         
         <!-- AppImage-Tool herunterladen -->
