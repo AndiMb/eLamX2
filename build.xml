@@ -20,7 +20,7 @@
         <ant antfile="View3DSuite/build.xml" inheritall="false" target="clean"/>
     </target>
     
-    <target name="windows-installer" depends="windows-installer-init,build-zip-with_jre">
+    <target name="windows-installer" depends="-windows-installer-init,-build-zip-with_jre">
         
         <!-- Temporären Ordner anlegen -->
         <tempfile property="temp.dir.windows-installer" destdir="${suite.build.dir}" deleteonexit="true" prefix="windows-installer"/>
@@ -54,12 +54,71 @@
     </target>
     
     <!-- Hilfstarget, um die windows.properties zu laden -->
-    <target name="windows-installer-init">
+    <target name="-windows-installer-init">
         <property file="nbproject/windows.properties"/>
     </target>
     
+    <target name="linux-appimage" depends="-linux-appimage-init,-build-zip-with_jre">
+        
+        <!-- Temporären Ordner für die App-Struktur anlegen -->
+        <tempfile property="temp.dir.linux-appimage" destdir="${suite.build.dir}" deleteonexit="true" prefix="linux-appimage"/>
+        
+        <!-- App-Struktur anlegen -->
+        <property name="linux-appimage-folder" location="${temp.dir.linux-appimage}/${app.name}.AppDir"/>
+        <property name="linux-appimage-folder.usr" location="${linux-appimage-folder}/usr"/>
+        <property name="linux-appimage-folder.usr.bin" location="${linux-appimage-folder.usr}/bin"/>
+        <property name="linux-appimage-folder.usr.lib" location="${linux-appimage-folder.usr}/lib"/>
+        <property name="linux-appimage-folder.usr.share" location="${linux-appimage-folder.usr}/share"/>
+        <property name="linux-appimage-folder.usr.share.icon" location="${linux-appimage-folder.usr.share}/icons/hicolor/48x48/apps/"/>
+        <property name="linux-appimage-folder.usr.share.applications" location="${linux-appimage-folder.usr.share}/applications/"/>
+        
+        <mkdir dir="${linux-appimage-folder}" />
+        <mkdir dir="${linux-appimage-folder.usr}" />
+        <mkdir dir="${linux-appimage-folder.usr.bin}" />
+        <mkdir dir="${linux-appimage-folder.usr.lib}" />
+        <mkdir dir="${linux-appimage-folder.usr.share}" />
+        <mkdir dir="${linux-appimage-folder.usr.share.icon}" />
+        <mkdir dir="${linux-appimage-folder.usr.share.applications}" />
+        
+        <!-- notwendige Dateien in die Ordnerstruktur kopieren (Icon, Desptop-File) -->
+        <copy file="Resource/logo_elamx48.png" tofile="${linux-appimage-folder.usr.share.icon}/${app.name}.png"/>
+        <symlink link="${linux-appimage-folder}/${app.name}.png" resource="${linux-appimage-folder.usr.share.icon}/${app.name}.png"/>
+        <copy file="Resource/Linux.AppImage/elamx2.desktop" tofile="${linux-appimage-folder.usr.share.applications}/${app.name}.desktop"/>
+        <symlink link="${linux-appimage-folder}/${app.name}.desktop" resource="${linux-appimage-folder.usr.share.applications}/${app.name}.desktop"/>
+        <copy file="Resource/Linux.AppImage/AppRun" tofile="${linux-appimage-folder}/AppRun"/>
+        <chmod file="${linux-appimage-folder}/AppRun" perm="a+x"/>
+        
+        <!-- zuvor erstellte ZIP-Datei mit JRE wieder in den zurvor angelegten Pfad entpacken -->
+        <unzip src="${dist.dir}/${app.name}_${elamxjdk.os}.zip" dest="${linux-appimage-folder.usr.lib}" />
+        <!-- JRE an die richtige Stelle kopieren -->
+        <move file="${linux-appimage-folder.usr.lib}/${app.name}/${elamxjdk.dir}" tofile="${linux-appimage-folder.usr.lib}/${elamxjdk.dir}"/>
+        <chmod file="${linux-appimage-folder.usr.lib}/${elamxjdk.dir}/bin/*" perm="a+x"/>
+        
+        <!-- Link auf Startdatei unter /usr/bin/ erstellen -->
+        <symlink link="${linux-appimage-folder.usr.bin}/${app.name}" resource="${linux-appimage-folder.usr.lib}/${app.name}/bin/${app.name}"/>
+        <chmod file="${linux-appimage-folder.usr.lib}/${app.name}/bin/${app.name}" perm="a+x"/>
+        
+        <!-- AppImage-Tool herunterladen -->
+        <get src="${appimagetool.url}" dest="${temp.dir.linux-appimage}/"/>
+        
+        <!-- AppImage-Tool ausführen -->
+        <chmod file="${temp.dir.linux-appimage}/appimagetool-x86_64.AppImage" perm="a+x"/>
+        <exec executable="./appimagetool-x86_64.AppImage" dir="${temp.dir.linux-appimage}">
+            <arg value="${app.name}.AppDir"/>
+            <env key="ARCH" value="x86_64"/>
+        </exec>
+        
+        <!-- AppImage in den Dist-Ordner kopieren -->
+        <move file="${temp.dir.linux-appimage}/eLamX2-x86_64.AppImage" tofile="${dist.dir}/eLamX2-x86_64.AppImage"/>
+    </target>
+    
+    <!-- Hilfstarget, um die windows.properties zu laden -->
+    <target name="-linux-appimage-init">
+        <property file="nbproject/linux.properties"/>
+    </target>
+    
     <!-- ZIP-Datei mit eLamX2 und eine Plattformspezifischen JRE erstellen -->
-    <target name="build-zip-with_jre" depends="build,build-launchers">
+    <target name="-build-zip-with_jre" depends="build,build-launchers">
         <mkdir dir="${dist.dir}"/>
         <!-- pathfileset does not support 'prefix' and 'filemode' parameters,
         we have to copy them to temp location -->
