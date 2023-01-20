@@ -30,13 +30,23 @@ jobs:
         path: "dist/*.exe"
         retention-days: 1
 
+    - name: Upload Windows Zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: elamx-windows-zip
+        path: "dist/*.zip"
+        retention-days: 1
+
   build-linux:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    
+
+    - name: Install xmllint
+      run: sudo apt-get install -y libfuse2
+
     - name: Checkout submodules
       run: git submodule update --init --recursive
       
@@ -54,4 +64,11 @@ jobs:
       with:
         name: elamx-linux
         path: "dist/eLamX2-x86_64.AppImage"
+        retention-days: 1
+
+    - name: Upload Linux Zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: elamx-linux
+        path: "dist/*.zip"
         retention-days: 1
