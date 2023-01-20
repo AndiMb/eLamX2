@@ -82,7 +82,7 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
     private static final DecimalFormat thicknessFormat = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_THICKNESS);
     private static final DecimalFormat angleFormat = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_ANGLE);
 
-    public final static Set<Laminat> uniqueLaminates = new HashSet<Laminat>();
+    public final static Set<Laminat> uniqueLaminates = new HashSet<>();
     private final Laminat laminat;
     private final ExplorerManager explorerManager = new ExplorerManager();
     private final Lookup.Result<Laminat> laminatResult;
