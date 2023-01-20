@@ -62,13 +62,13 @@ jobs:
     - name: Upload Linux AppIamge
       uses: actions/upload-artifact@v3
       with:
-        name: elamx-linux
+        name: elamx-linux-appimage
         path: "dist/eLamX2-x86_64.AppImage"
         retention-days: 1
 
     - name: Upload Linux Zip
       uses: actions/upload-artifact@v3
       with:
-        name: elamx-linux
+        name: elamx-linux-zip
         path: "dist/*.zip"
         retention-days: 1
