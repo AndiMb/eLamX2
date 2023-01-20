@@ -120,6 +120,15 @@
                 <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.Color.g"/>
                 <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#MaxStrain.Color.b"/>
             </file>
+            <file name="FibreFailure.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.laminate.addFailureCriteria.FibreFailure.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.laminate.failure.Criterion"/>
+                <attr name="displayName" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FibreFailure.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FibreFailure.description"/>
+                <attr name="color.r" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FibreFailure.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FibreFailure.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.laminate.addFailureCriteria.Bundle#FibreFailure.Color.b"/>
+            </file>
         </folder>
         <folder name="additionalMaterialValues">
             <file name="de.elamx.laminate.addFailureCriteria.TsaiWu.f12star.add">
