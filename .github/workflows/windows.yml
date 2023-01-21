@@ -23,6 +23,15 @@ jobs:
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml windows-installer
 
+    - name: Sign die Installer
+      uses: skymatic/code-sign-action@v1
+      with:
+        certificate: '${{ secrets.CERTIFICATE }}'
+        password: '${{ secrets.PASSWORD }}'
+        certificatesha1: '${{ secrets.CERTHASH }}'
+        timestampUrl: 'http://timestamp.digicert.com'
+        folder: "dist"
+
     - name: Upload Windows Installer
       uses: actions/upload-artifact@v3
       with:
@@ -36,16 +45,6 @@ jobs:
         name: elamx-windows-zip
         path: "dist/*.zip"
         retention-days: 1
-
-    - name: Sign die Installer
-      uses: skymatic/code-sign-action@v1
-      with:
-        certificate: '${{ secrets.CERTIFICATE }}'
-        password: '${{ secrets.PASSWORD }}'
-        certificatesha1: '${{ secrets.CERTHASH }}'
-        certificatename: '${{ secrets.CERTNAME }}'
-        timestampUrl: 'http://timestamp.digicert.com'
-        folder: "dist/*.exe"
 
   build-linux:
 
