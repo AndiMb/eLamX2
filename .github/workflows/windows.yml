@@ -24,7 +24,7 @@ jobs:
       run: ant -noinput -buildfile build.xml windows-installer
 
     - name: Sign die Installer
-      uses: skymatic/code-sign-action@v1
+      uses: AndiMb/code-sign-action@v1
       with:
         certificate: '${{ secrets.CERTIFICATE }}'
         password: '${{ secrets.PASSWORD }}'
