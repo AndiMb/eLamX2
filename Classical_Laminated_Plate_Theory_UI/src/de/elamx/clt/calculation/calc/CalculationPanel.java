@@ -494,7 +494,7 @@ public class CalculationPanel extends JPanel implements PropertyChangeListener {
         } else if (evt.getPropertyName().equals(CLT_Input.PROP_M_Y)) {
             forceFields[4].removePropertyChangeListener("value", this);
             forceFields[4].setValue(dataHolder.getLoad().getM_y());
-            forceFields[5].addPropertyChangeListener("value", this);
+            forceFields[4].addPropertyChangeListener("value", this);
         } else if (evt.getPropertyName().equals(CLT_Input.PROP_M_XY)) {
             forceFields[5].removePropertyChangeListener("value", this);
             forceFields[5].setValue(dataHolder.getLoad().getM_xy());
