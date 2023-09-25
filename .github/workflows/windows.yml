@@ -23,14 +23,14 @@ jobs:
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml windows-installer
 
-    - name: Sign die Installer
-      uses: AndiMb/code-sign-action@v1
-      with:
-        certificate: '${{ secrets.CERTIFICATE }}'
-        password: '${{ secrets.PASSWORD }}'
-        certificatename: '${{ secrets.CERTNAME }}'
-        timestampUrl: 'http://timestamp.digicert.com'
-        folder: "dist"
+#    - name: Sign die Installer
+#      uses: AndiMb/code-sign-action@v1
+#      with:
+#        certificate: '${{ secrets.CERTIFICATE }}'
+#        password: '${{ secrets.PASSWORD }}'
+#        certificatename: '${{ secrets.CERTNAME }}'
+#        timestampUrl: 'http://timestamp.digicert.com'
+#        folder: "dist"
 
     - name: Upload Windows Installer
       uses: actions/upload-artifact@v3
