@@ -1,3 +1,4 @@
 [submodule "View3DSuite"]
 	path = View3DSuite
 	url = https://github.com/AndiMb/View3DSuite
+        branch=master
