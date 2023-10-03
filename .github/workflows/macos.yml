@@ -21,7 +21,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Build with Ant
-      run: ant -noinput -buildfile build.xml build-zip-with_jre
+      run: ant -noinput -buildfile build.xml macos-zip
 
     - name: Upload Linux Zip
       uses: actions/upload-artifact@v3
