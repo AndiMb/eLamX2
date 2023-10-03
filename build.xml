@@ -112,11 +112,19 @@
         <move file="${temp.dir.linux-appimage}/eLamX2-x86_64.AppImage" tofile="${dist.dir}/eLamX2-x86_64.AppImage"/>
     </target>
     
-    <!-- Hilfstarget, um die windows.properties zu laden -->
+    <!-- Hilfstarget, um die linux.properties zu laden -->
     <target name="-linux-appimage-init">
         <property file="nbproject/linux.properties"/>
     </target>
     
+    <target name="macos-zip" depends="-macos-init,-build-zip-with_jre">
+    </target>
+    
+    <!-- Hilfstarget, um die macos.properties zu laden -->
+    <target name="-macos-init">
+        <property file="nbproject/macos.properties"/>
+    </target>
+
     <!-- ZIP-Datei mit eLamX2 und eine Plattformspezifischen JRE erstellen -->
     <target name="-build-zip-with_jre" depends="build,build-launchers">
         <mkdir dir="${dist.dir}"/>
