@@ -74,8 +74,8 @@ public class FMC extends Criterion {
         double m = material.getAdditionalValue(M);
 
         double ff;
-        double iff12;
-        double iff3;
+        double iff13;
+        double iff2;
 
         String Text_f_f;
         String Text_f_m;
@@ -90,20 +90,34 @@ public class FMC extends Criterion {
         }
 
         if (stresses[1] >= 0.0) {                                                //Matrixzugversagen
-            iff12 = Math.pow(stresses[1] / material.getRNorTen(), m);
+            iff13 = Math.pow(stresses[1] / material.getRNorTen(), m);
             Text_f_m = "MatrixFailureTension";
         } else {                                                                  //Matrixdruckversagen
-            iff12 = Math.pow(-stresses[1] / material.getRNorCom(), m);
+            iff13 = Math.pow(-stresses[1] / material.getRNorCom(), m);
             Text_f_m = "MatrixFailureCompression";
         }
 
         //Matrixschubversagen
+        /*
+        * Aus der Quelle:
+        * Efficient 3D and 2D failure conditions for UD laminae and their application within the verification of the laminate design; 
+        * R.G. Cuntze; Composites Science and Technology 66 (2006) 1081–1096
+        * wird an dieser Stelle Gleichung 10b statt der in der Quelle bevorzugten Gleichung 11a verwendet. Beide Gleichungen sind nur für eines
+        * Reservefaktor von 1, also für die eigentliche Versagensbedingung identisch.
+        * Bei der Verwendung von Gleichung 11a lässt sich bei einer Multiplikation aller Spannungsanteile mit einem Reservefaktor, dieser
+        * nicht mehr ausklammern. Dies führt dazu, dass bei Verwendung von Gleichung 11a es nicht mehr möglich ist, im Falle eines Reservefaktors
+        * von 0,1 alle Lasten mit einem Faktor 10 zu versehen und damit einen Reservefaktor von 1 zu erreichen. Das Verhalten des Versagenskriteriums
+        * wird durch die Verwendung von Gleichung 11a nicht-linear. Es wird angenommen, dass eLamX²-Nutzende ein solches Verhalten nicht erwarten,
+        * was zu größeren Fehlern führen könnte.
+        * Zudem wird eine Prüfung eingeführt, dass der Zähler grundsätzlich positiv bleiben muss, um mathematisch unzulässige Operationen während
+        * der Potenzbildung mit m zu vermeiden.
+        */
         double stresses2 = Math.abs(stresses[2]);
-        iff3 = stresses2 != 0 && stresses2 + mue_sp * stresses[1] > 0.0 ? Math.pow((stresses2 + mue_sp * stresses[1]) / material.getRShear(), m) : 0.0;
+        iff2 = stresses2 != 0 && stresses2 + mue_sp * stresses[1] > 0.0 ? Math.pow((stresses2 + mue_sp * stresses[1]) / material.getRShear(), m) : 0.0;
         Text_f_sp = "MatrixFailureShear";
 
-        if (ff > iff12) {
-            if (ff > iff3) {
+        if (ff > iff13) {
+            if (ff > iff2) {
                 rf.setFailureName(Text_f_f);
                 rf.setFailureType(ReserveFactor.FIBER_FAILURE);
             } else {
@@ -111,7 +125,7 @@ public class FMC extends Criterion {
                 rf.setFailureType(ReserveFactor.MATRIX_FAILURE);
             }
         } else {
-            if (iff12 > iff3) {
+            if (iff13 > iff2) {
                 rf.setFailureName(Text_f_m);
                 rf.setFailureType(ReserveFactor.MATRIX_FAILURE);
             } else {
@@ -121,7 +135,7 @@ public class FMC extends Criterion {
         }
 
         // Gesamtreservefaktor
-        double f = Math.pow(ff + iff12 + iff3, (-1.0 / m));
+        double f = Math.pow(ff + iff13 + iff2, (-1.0 / m));
 
         rf.setMinimalReserveFactor(f);
 
@@ -274,9 +288,9 @@ public class FMC extends Criterion {
     private double Reservefaktor_Berechnung2D(double Y, double Z, double R_st, double R_sc, double R_sp, double b_sp, double m) {
 
         double iff1 = Y > 0.0 ? Math.pow(Y / R_st, m) : 0.0;
-        double iff2 = Y < 0.0 ? Math.pow(-Y / R_sc, m) : 0.0;
+        double iff3 = Y < 0.0 ? Math.pow(-Y / R_sc, m) : 0.0;
         double zt = Math.abs(Z);
-        double iff3 = zt > 0.00001 && zt + b_sp * Y > 0.0 ? Math.pow((zt + b_sp * Y) / R_sp, m) : 0.0;
+        double iff2 = zt > 0.00001 && zt + b_sp * Y > 0.0 ? Math.pow((zt + b_sp * Y) / R_sp, m) : 0.0;
 
         // Berechnung des resultierenden Reservefaktors
         return Math.pow(iff1 + iff2 + iff3, (-1.0 / m));
