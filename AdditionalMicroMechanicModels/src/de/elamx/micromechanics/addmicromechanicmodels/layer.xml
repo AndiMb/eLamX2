@@ -73,6 +73,20 @@
                 <attr name="color.g" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.Color.g"/>
                 <attr name="color.b" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#Puck.Color.b"/>
             </file>
+            <file name="HSB3710202.instance">
+                <attr name="instanceCreate" methodvalue="de.elamx.micromechanics.addmicromechanicmodels.HSB3710202.getDefault"/>
+                <attr name="instanceOf" stringvalue="de.elamx.micromechanics.models.MicroMechModel"/>
+                <attr name="displayName" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.displayName"/>
+                <attr name="description" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.description"/>
+                <attr name="rhoHTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.rhoHTMLDescription"/>
+                <attr name="e11HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.e11HTMLDescription"/>
+                <attr name="e22HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.e22HTMLDescription"/>
+                <attr name="nue12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.nue12HTMLDescription"/>
+                <attr name="g12HTMLDescription" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.g12HTMLDescription"/>
+                <attr name="color.r" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.Color.r"/>
+                <attr name="color.g" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.Color.g"/>
+                <attr name="color.b" bundlevalue="de.elamx.micromechanics.addmicromechanicmodels.Bundle#HSB3710202.Color.b"/>
+            </file>
         </folder>
     </folder>    
 </filesystem>
