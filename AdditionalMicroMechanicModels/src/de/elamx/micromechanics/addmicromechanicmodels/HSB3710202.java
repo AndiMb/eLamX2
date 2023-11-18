@@ -57,14 +57,7 @@ public class HSB3710202 extends MicroMechModel{
 
     @Override
     public double getE22(Fiber fiber, Matrix matrix, double phi) {
-        double val1 = (1.0 - 2.0 * Math.sqrt(phi/Math.PI));
-        double val2 = Math.PI / (2.0 * (1.0 - matrix.getEnor()/fiber.getEnor()));
-        double val3 = 2.0 / ((1.0 - matrix.getEnor()/fiber.getEnor()) * Math.sqrt(1.0 - 4.0 * phi / Math.PI * (1.0 - matrix.getEnor()/fiber.getEnor()) * (1.0 - matrix.getEnor()/fiber.getEnor())));
-        double val4 = Math.atan(Math.sqrt(
-                (1.0 + 2.0 * Math.sqrt(phi / Math.PI) * (1.0 - matrix.getEnor()/fiber.getEnor())) /
-                (1.0 - 2.0 * Math.sqrt(phi / Math.PI) * (1.0 - matrix.getEnor()/fiber.getEnor()))));
-    
-        return matrix.getEnor() * (val1 - val2 + val3 * val4);
+        return getValue( fiber.getEnor(), matrix.getEnor(), phi);
     }
 
     @Override
@@ -74,13 +67,34 @@ public class HSB3710202 extends MicroMechModel{
 
     @Override
     public double getG12(Fiber fiber, Matrix matrix, double phi) {
+        return getValue( fiber.getG(), matrix.getG(), phi);
+    }
+
+    private double getValue(double valF, double valM, double phi) {
         double val1 = (1.0 - 2.0 * Math.sqrt(phi/Math.PI));
-        double val2 = Math.PI / (2.0 * (1.0 - matrix.getG()/fiber.getG()));
-        double val3 = 2.0 / ((1.0 - matrix.getG()/fiber.getG()) * Math.sqrt(1.0 - 4.0 * phi / Math.PI * (1.0 - matrix.getG()/fiber.getG()) * (1.0 - matrix.getG()/fiber.getG())));
+        double val2 = Math.PI / (2.0 * (1.0 - valM/valF));
+        double val3 = 2.0 / ((1.0 - valM/valF) * Math.sqrt(1.0 - 4.0 * phi / Math.PI * (1.0 - valM/valF) * (1.0 - valM/valF)));
         double val4 = Math.atan(Math.sqrt(
-                (1.0 + 2.0 * Math.sqrt(phi / Math.PI) * (1.0 - matrix.getG()/fiber.getG())) /
-                (1.0 - 2.0 * Math.sqrt(phi / Math.PI) * (1.0 - matrix.getG()/fiber.getG()))));
-    
-        return matrix.getG() * (val1 - val2 + val3 * val4);
+                (1.0 + 2.0 * Math.sqrt(phi / Math.PI) * (1.0 - valM/valF)) /
+                (1.0 - 2.0 * Math.sqrt(phi / Math.PI) * (1.0 - valM/valF))));
+        
+        double returnVal = valM * (val1 - val2 + val3 * val4);
+        
+        /*
+        Es kann passieren, dass der Bruch im arcTan bzw. der Wurzel negativ wird.
+        Dann erhält man NaN als Lösung, was hiermit verhindert wird und der Wert
+        wird auf den Faserwert gesetzt. Dies ist nicht Bestandteil der Quelle.
+        Je nach Verhältnis zwischen Faser- und Matrixwert ändert sich auch der
+        Faservolumengehalt, bei dem NaN die Lösung ist.
+        */
+        if ((1.0 - 2.0 * Math.sqrt(phi / Math.PI) * (1.0 - valM/valF)) < 0.0){
+            returnVal =  valF;
+        }
+        
+        /*
+        Um keinen Sprung in der Funktion zu haben, werden die Werte ab dem 
+        Faserwert abgeschnitten.
+        */
+        return Math.min(valF, returnVal);
     }    
 }
