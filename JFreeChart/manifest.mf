@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 OpenIDE-Module: org.jfree/1
 OpenIDE-Module-Install: org/jfree/Installer.class
 OpenIDE-Module-Localizing-Bundle: org/jfree/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.5.3
+OpenIDE-Module-Specification-Version: 1.5.4
 

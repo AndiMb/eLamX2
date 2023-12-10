@@ -111,8 +111,8 @@
                 <package>org.jfree.data.xy</package>
             </public-packages>
             <class-path-extension>
-                <runtime-relative-path>ext/jfreechart-1.5.3.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/jfreechart-1.5.3.jar</binary-origin>
+                <runtime-relative-path>ext/jfreechart-1.5.4.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/jfreechart-1.5.4.jar</binary-origin>
             </class-path-extension>
         </data>
     </configuration>
