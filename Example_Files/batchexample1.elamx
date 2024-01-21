@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elamx version="1">
+    <laminates>
+        <laminate name="Neues Laminat" offset="0.0" symmetric="false" uuid="e4b85345-ff3f-4be2-87e2-5ef0b207caf9" with_middle_layer="false">
+            <layer name="Neue Lage" uuid="63c53b4b-1624-4c06-b8b7-8c51b3900e86">
+                <thickness>0.125</thickness>
+                <angle>0.0</angle>
+                <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
+                <criterion>de.elamx.laminate.failure.Puck</criterion>
+            </layer>
+            <layer name="Neue Lage" uuid="3cd075e4-2372-4d11-9f44-81275c1783cd">
+                <thickness>0.125</thickness>
+                <angle>-89.0</angle>
+                <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
+                <criterion>de.elamx.laminate.failure.Puck</criterion>
+            </layer>
+            <layer name="Neue Lage" uuid="34305d51-9099-49e3-808e-051a8f22fbf5">
+                <thickness>0.125</thickness>
+                <angle>70.0</angle>
+                <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
+                <criterion>de.elamx.laminate.failure.Puck</criterion>
+            </layer>
+            <layer name="Neue Lage" uuid="1c8528fe-483f-4591-b863-2284eed7de08">
+                <thickness>0.125</thickness>
+                <angle>54.0</angle>
+                <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
+                <criterion>de.elamx.laminate.failure.Puck</criterion>
+            </layer>
+            <layer name="Neue Lage" uuid="646c4262-d3ef-44e9-a83e-ef86a97c2697">
+                <thickness>0.125</thickness>
+                <angle>-60.0</angle>
+                <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
+                <criterion>de.elamx.laminate.failure.Puck</criterion>
+            </layer>
+            <calculation name="Berechnung">
+                <n_x>100.0</n_x>
+                <n_y>0.0</n_y>
+                <n_xy>0.0</n_xy>
+                <m_x>0.0</m_x>
+                <m_y>0.0</m_y>
+                <m_xy>0.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+                <useStrain0>false</useStrain0>
+                <useStrain1>false</useStrain1>
+                <useStrain2>false</useStrain2>
+                <useStrain3>false</useStrain3>
+                <useStrain4>false</useStrain4>
+                <useStrain5>false</useStrain5>
+                <epsilon_x>0.00991733171448283</epsilon_x>
+                <epsilon_y>-0.002259889281521458</epsilon_y>
+                <gamma_xy>-8.749532688625783E-4</gamma_xy>
+                <kappa_x>-0.03184923332095157</kappa_x>
+                <kappa_y>0.017075332664439977</kappa_y>
+                <kappa_xy>0.00360930054109252</kappa_xy>
+            </calculation>
+        </laminate>
+    </laminates>
+    <materials>
+        <material class="de.elamx.laminate.DefaultMaterial" name="Neues Material" uuid="3c4d538c-65a7-4c4e-9c42-905e8df77ae1">
+            <Epar>141000.0</Epar>
+            <Enor>9340.0</Enor>
+            <nue12>0.35</nue12>
+            <G>4500.0</G>
+            <G13>0.0</G13>
+            <G23>0.0</G23>
+            <rho>1.7E-9</rho>
+            <alphaTPar>1.0E-6</alphaTPar>
+            <alphaTNor>3.5E-5</alphaTNor>
+            <betaPar>0.01</betaPar>
+            <betaNor>0.38</betaNor>
+            <RParTen>1500.0</RParTen>
+            <RParCom>1000.0</RParCom>
+            <RNorTen>180.0</RNorTen>
+            <RNorCom>240.0</RNorCom>
+            <RShear>150.0</RShear>
+            <de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskHashin.alp>1.0</de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskHashin.alp>
+            <de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerCamanho.g1c>0.28</de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerCamanho.g1c>
+            <de.elamx.laminate.failure.Puck.lambda_min>0.5</de.elamx.laminate.failure.Puck.lambda_min>
+            <de.elamx.laminate.addFailureCriteria.TsaiWu.f12star>-0.5</de.elamx.laminate.addFailureCriteria.TsaiWu.f12star>
+            <de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.alp0>53.0</de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.alp0>
+            <de.elamx.laminate.failure.Puck.pspd>0.3</de.elamx.laminate.failure.Puck.pspd>
+            <de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNAChangChang.beta>0.0</de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNAChangChang.beta>
+            <de.elamx.laminate.addFailureCriteria.ZTL.f12star>-0.5</de.elamx.laminate.addFailureCriteria.ZTL.f12star>
+            <de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.g1c>0.28</de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.g1c>
+            <de.elamx.laminate.addFailureCriteria.Rotem.rmt>50.0</de.elamx.laminate.addFailureCriteria.Rotem.rmt>
+            <de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskTsaiWu.f12star>-0.5</de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskTsaiWu.f12star>
+            <de.elamx.laminate.addFailureCriteria.MaxStrain.eps_x>0.003</de.elamx.laminate.addFailureCriteria.MaxStrain.eps_x>
+            <de.elamx.laminate.addFailureCriteria.MaxStrain.eps_y>0.003</de.elamx.laminate.addFailureCriteria.MaxStrain.eps_y>
+            <de.elamx.laminate.addFailureCriteriaAbaqus.AbaqusTsaiWu.f12star>-0.5</de.elamx.laminate.addFailureCriteriaAbaqus.AbaqusTsaiWu.f12star>
+            <de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNATsaiWu.beta>0.0</de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNATsaiWu.beta>
+            <de.elamx.laminate.addFailureCriteria.Rotem.rmc>50.0</de.elamx.laminate.addFailureCriteria.Rotem.rmc>
+            <de.elamx.laminate.addFailureCriteria.MaxStrain.gamma_xy>0.006</de.elamx.laminate.addFailureCriteria.MaxStrain.gamma_xy>
+            <de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerCamanho.g2c>0.79</de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerCamanho.g2c>
+            <de.elamx.laminate.addFailureCriteria.FMC.muesp>0.15</de.elamx.laminate.addFailureCriteria.FMC.muesp>
+            <de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskTsaiWu.sigbiax>0.0</de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskTsaiWu.sigbiax>
+            <de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.g2c>0.79</de.elamx.laminate.addFailureCriteriaAnsys.AnsysLaRC03.g2c>
+            <de.elamx.laminate.addFailureCriteria.MaxStrain.global_lokal>0.3</de.elamx.laminate.addFailureCriteria.MaxStrain.global_lokal>
+            <de.elamx.laminate.failure.Puck.pspz>0.35</de.elamx.laminate.failure.Puck.pspz>
+            <de.elamx.laminate.addFailureCriteria.Rotem.em>4500.0</de.elamx.laminate.addFailureCriteria.Rotem.em>
+            <de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerPinho.alp0>53.0</de.elamx.laminate.addFailureCriteriaLSDYNA.LSDYNADaimlerPinho.alp0>
+            <de.elamx.laminate.addFailureCriteria.FMC.m>3.1</de.elamx.laminate.addFailureCriteria.FMC.m>
+            <de.elamx.laminate.failure.Puck.a0>0.5</de.elamx.laminate.failure.Puck.a0>
+            <de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskHashin.R23>150.0</de.elamx.laminate.addFailureCriteriaAutodesk.AutodeskHashin.R23>
+            <de.elamx.laminate.addFailureCriteriaAbaqus.AbaqusTsaiWu.sigbiax>0.0</de.elamx.laminate.addFailureCriteriaAbaqus.AbaqusTsaiWu.sigbiax>
+        </material>
+    </materials>
+    <fibres>
+        <fibre class="de.elamx.micromechanics.Fiber" name="Neues Fasermaterial" uuid="9feceee4-43ea-4698-a797-8df98b288dbd">
+            <Epar>230000.0</Epar>
+            <Enor>15000.0</Enor>
+            <nue12>0.23</nue12>
+            <G>30000.0</G>
+            <G13>0.0</G13>
+            <G23>0.0</G23>
+            <rho>1.8E-9</rho>
+            <alphaTPar>-5.0E-7</alphaTPar>
+            <alphaTNor>1.0E-5</alphaTNor>
+            <betaPar>0.0</betaPar>
+            <betaNor>0.0</betaNor>
+        </fibre>
+    </fibres>
+    <matrices/>
+    <optimizations/>
+</elamx>
