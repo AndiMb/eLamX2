@@ -38,7 +38,14 @@ import org.netbeans.spi.sendopts.OptionProcessor;
 import org.openide.*;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
+import de.elamx.core.outputStreamService;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Andreas Hauffe
@@ -68,25 +75,32 @@ public class eLamXOptionProcessor extends OptionProcessor {
                 eLamXLookup.getDefault().setFileObject(fo, true);
             }
         }
-        Laminat lam = eLamXLookup.getDefault().lookup(Laminat.class);
-        
-        System.out.println("Name: " + lam.getName());
 
-        /*if (maps.containsKey(outputOption)) {
+        PrintStream out = System.out;
+        if (maps.containsKey(outputOption)) {
             String fileName = maps.get(outputOption)[0];
             File outputFile = new File(fileName);
             if (outputFile.exists() && outputFile.isDirectory()) {
-
-                Sandwich sandwich = SandMeshLookup.getDefault().lookup(Sandwich.class);
-
-                if (sandwich != null) {
-                    ModellExport export = new ModellExport(outputFile, ModellExport.EXPORT_DYNA, sandwich, 100000);
-                    Task exportTask = RequestProcessor.getDefault().post(export);
-                    exportTask.waitFinished();
-                    LifecycleManager.getDefault().exit();
+                try {
+                    out = new PrintStream(outputFile);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(eLamXOptionProcessor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }*/
+        }
+
+        for (Laminat lam : eLamXLookup.getDefault().lookupAll(Laminat.class)) {
+            for (outputStreamService tos : Lookup.getDefault().lookupAll(outputStreamService.class)) {
+                tos.writeToStream(lam, out);
+            }
+        }
+
+        if (out != System.out) {
+            out.close();
+        }
+        
+        eLamXLookup.getDefault().setModified(false);
+
         LifecycleManager.getDefault().exit();
     }
 
