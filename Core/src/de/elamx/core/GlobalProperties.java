@@ -66,6 +66,8 @@ public class GlobalProperties{
     private boolean useENUS;
     private boolean showTransShear;
     
+    private boolean headless = false;
+    
     private GlobalProperties(){
         init();
     }
@@ -137,4 +139,11 @@ public class GlobalProperties{
         this.showTransShear = showTransShear;
     }
 
+    public boolean isHeadless() {
+        return headless;
+    }
+
+    public void setHeadless(boolean headless) {
+        this.headless = headless;
+    }
 }

@@ -25,6 +25,7 @@
  */
 package de.elamx.filesupport;
 
+import de.elamx.core.GlobalProperties;
 import org.openide.modules.ModuleInstall;
 import org.openide.windows.WindowManager;
 
@@ -32,6 +33,9 @@ public class Installer extends ModuleInstall {
 
     @Override
     public void restored() {
+        if (GlobalProperties.getDefault().isHeadless()){
+            return;
+        }
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
 
             @Override

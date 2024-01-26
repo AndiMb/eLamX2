@@ -25,6 +25,7 @@
  */
 package de.elamx.core;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.UIManager;
 import org.openide.modules.ModuleInstall;
 import org.openide.util.NbPreferences;
@@ -35,11 +36,13 @@ public class Installer extends ModuleInstall {
     public void restored() {
         String osName = System.getProperty("os.name").toLowerCase();
         boolean isMacOs = osName.startsWith("mac os x");
+        boolean headless = GraphicsEnvironment.isHeadless();
+        GlobalProperties.getDefault().setHeadless(headless);
         
         System.setProperty("nb.useSwingHtmlRendering", "true");
         System.setProperty("ps.quickSearch.disabled.global", "true");
         
-        if (!isMacOs) {
+        if (!isMacOs && !headless) {
             UIManager.put("NbMainWindow.showCustomBackground", Boolean.TRUE);
             RootFrame.init();
         }

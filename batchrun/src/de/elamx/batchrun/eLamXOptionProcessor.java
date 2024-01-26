@@ -71,8 +71,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
             File inputFile = new File(fileName);
             if (inputFile.exists() && inputFile.isFile()) {
                 FileObject fo = FileUtil.toFileObject(inputFile);
-                eLamXLookup.getDefault().setModified(false);
-                eLamXLookup.getDefault().setFileObject(fo, true);
+                eLamXLookup.getDefault().setFileObject(fo);
             }
         }
 

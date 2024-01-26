@@ -47,15 +47,6 @@ public class eLamXLookup extends AbstractLookup implements PropertyChangeListene
     private final InstanceContent content;
     private boolean notifyDataObject = false;
     private boolean changable = true;
-    
-    /*
-    Dieser Flag wird dafür verwendet, dass nach einem Setzen eines FileObjects
-    mit einem eLamX-File, dieses nicht mehr erneut gesetzt/überschrieben werden
-    kann. Dies ist notwendig um im nogui-Mode zu verhindern, dass die leere
-    initiale eLamX-Datei gesetzt wird, nachdem die über die Kommandozeile 
-    übergebene Datei eingelesen wurde.
-    */
-    private boolean fileLocked = false;
 
     private eLamXLookup() {
         this(new InstanceContent());
@@ -137,13 +128,6 @@ public class eLamXLookup extends AbstractLookup implements PropertyChangeListene
     private DataObject dataOb;
     
     public void setFileObject(FileObject fo) {
-        setFileObject(fo, false);
-    }
-
-    public synchronized void setFileObject(FileObject fo, boolean lockFile) {
-        if (fileLocked){
-            return;
-        }
         if (fo != null && fo != fileObject) {
             try {
                 notifyDataObject = false;
@@ -157,7 +141,6 @@ public class eLamXLookup extends AbstractLookup implements PropertyChangeListene
                 dataOb = DataObject.find(fo);
                 firePropertyChanged(new PropertyChangeEvent(this, PROP_FILEOBJECT, null, fileObject));
                 notifyDataObject = true;
-                fileLocked = lockFile;
             } catch (DataObjectNotFoundException | PropertyVetoException ex) {
                 Exceptions.printStackTrace(ex);
             }
