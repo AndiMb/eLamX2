@@ -1,6 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <elamx version="1">
     <laminates>
+        <laminate name="Neues Laminat" offset="0.0" symmetric="true" uuid="fea9435d-840e-4de0-a051-30497e12c6c1" with_middle_layer="false">
+            <layer name="Neue Lage" uuid="dd855e94-bbb7-4dc6-83d7-8f0fd4961881">
+                <thickness>0.125</thickness>
+                <angle>0.0</angle>
+                <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
+                <criterion>de.elamx.laminate.failure.Puck</criterion>
+            </layer>
+            <layer name="Neue Lage" uuid="a1091da1-146f-4404-af9d-cac15984da80">
+                <thickness>0.125</thickness>
+                <angle>45.0</angle>
+                <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
+                <criterion>de.elamx.laminate.failure.Puck</criterion>
+            </layer>
+            <layer name="Neue Lage" uuid="456b111c-cb99-4117-beed-ca41fef60d6d">
+                <thickness>0.125</thickness>
+                <angle>-45.0</angle>
+                <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
+                <criterion>de.elamx.laminate.failure.Puck</criterion>
+            </layer>
+            <layer name="Neue Lage" uuid="7a358131-2a15-4fbb-8274-02f7476680ed">
+                <thickness>0.125</thickness>
+                <angle>90.0</angle>
+                <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
+                <criterion>de.elamx.laminate.failure.Puck</criterion>
+            </layer>
+            <calculation name="Berechnung5">
+                <n_x>0.0</n_x>
+                <n_y>0.0</n_y>
+                <n_xy>0.0</n_xy>
+                <m_x>0.0</m_x>
+                <m_y>0.0</m_y>
+                <m_xy>50.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+                <useStrain0>false</useStrain0>
+                <useStrain1>false</useStrain1>
+                <useStrain2>false</useStrain2>
+                <useStrain3>false</useStrain3>
+                <useStrain4>false</useStrain4>
+                <useStrain5>false</useStrain5>
+                <epsilon_x>-2.3629974861201422E-20</epsilon_x>
+                <epsilon_y>5.938162710138823E-20</epsilon_y>
+                <gamma_xy>-5.302029151926716E-36</gamma_xy>
+                <kappa_x>-9.609481932142936E-4</kappa_x>
+                <kappa_y>-0.008622809300875183</kappa_y>
+                <kappa_xy>0.037917984783058925</kappa_xy>
+            </calculation>
+            <calculation name="Berechnung">
+                <n_x>0.0</n_x>
+                <n_y>0.0</n_y>
+                <n_xy>0.0</n_xy>
+                <m_x>0.0</m_x>
+                <m_y>40.0</m_y>
+                <m_xy>0.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+                <useStrain0>false</useStrain0>
+                <useStrain1>false</useStrain1>
+                <useStrain2>false</useStrain2>
+                <useStrain3>false</useStrain3>
+                <useStrain4>false</useStrain4>
+                <useStrain5>false</useStrain5>
+                <epsilon_x>-1.3736211283172666E-19</epsilon_x>
+                <epsilon_y>-7.497042878092924E-20</epsilon_y>
+                <gamma_xy>6.693912213793817E-36</gamma_xy>
+                <kappa_x>-0.0032056876496307633</kappa_x>
+                <kappa_y>0.022492512196826735</kappa_y>
+                <kappa_xy>-0.006898247440700148</kappa_xy>
+            </calculation>
+            <buckling name="Plattenbeulen">
+                <n_x>1.0</n_x>
+                <n_y>0.0</n_y>
+                <n_xy>0.0</n_xy>
+                <length>500.0</length>
+                <width>500.0</width>
+                <bcx>0</bcx>
+                <bcy>0</bcy>
+                <m>10</m>
+                <n>10</n>
+                <wholed>true</wholed>
+            </buckling>
+            <buckling name="Plattenbeulen2">
+                <n_x>1.0</n_x>
+                <n_y>2.0</n_y>
+                <n_xy>3.0</n_xy>
+                <length>500.0</length>
+                <width>250.0</width>
+                <bcx>0</bcx>
+                <bcy>0</bcy>
+                <m>15</m>
+                <n>15</n>
+                <wholed>true</wholed>
+            </buckling>
+        </laminate>
         <laminate name="Neues Laminat" offset="0.0" symmetric="false" uuid="e4b85345-ff3f-4be2-87e2-5ef0b207caf9" with_middle_layer="false">
             <layer name="Neue Lage" uuid="63c53b4b-1624-4c06-b8b7-8c51b3900e86">
                 <thickness>0.125</thickness>
@@ -32,6 +126,50 @@
                 <material>3c4d538c-65a7-4c4e-9c42-905e8df77ae1</material>
                 <criterion>de.elamx.laminate.failure.Puck</criterion>
             </layer>
+            <calculation name="Berechnung3">
+                <n_x>0.0</n_x>
+                <n_y>0.0</n_y>
+                <n_xy>0.0</n_xy>
+                <m_x>300.0</m_x>
+                <m_y>0.0</m_y>
+                <m_xy>0.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+                <useStrain0>false</useStrain0>
+                <useStrain1>false</useStrain1>
+                <useStrain2>false</useStrain2>
+                <useStrain3>false</useStrain3>
+                <useStrain4>false</useStrain4>
+                <useStrain5>false</useStrain5>
+                <epsilon_x>-0.09554769996285471</epsilon_x>
+                <epsilon_y>0.02603105342198167</epsilon_y>
+                <gamma_xy>0.0070434134878852505</gamma_xy>
+                <kappa_x>0.5445161997247487</kappa_x>
+                <kappa_y>-0.2233595006693759</kappa_y>
+                <kappa_xy>-0.04106474827550832</kappa_xy>
+            </calculation>
+            <calculation name="Berechnung2">
+                <n_x>0.0</n_x>
+                <n_y>2.0</n_y>
+                <n_xy>0.0</n_xy>
+                <m_x>0.0</m_x>
+                <m_y>0.0</m_y>
+                <m_xy>0.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+                <useStrain0>false</useStrain0>
+                <useStrain1>false</useStrain1>
+                <useStrain2>false</useStrain2>
+                <useStrain3>false</useStrain3>
+                <useStrain4>false</useStrain4>
+                <useStrain5>false</useStrain5>
+                <epsilon_x>-4.519778563042916E-5</epsilon_x>
+                <epsilon_y>5.548031422806052E-5</epsilon_y>
+                <gamma_xy>-3.691387463703321E-5</gamma_xy>
+                <kappa_x>1.7354035614654446E-4</kappa_x>
+                <kappa_y>-6.193499197873309E-5</kappa_y>
+                <kappa_xy>-2.2623561269215022E-4</kappa_xy>
+            </calculation>
             <calculation name="Berechnung">
                 <n_x>100.0</n_x>
                 <n_y>0.0</n_y>
@@ -54,6 +192,18 @@
                 <kappa_y>0.017075332664439977</kappa_y>
                 <kappa_xy>0.00360930054109252</kappa_xy>
             </calculation>
+            <buckling name="Plattenbeulen">
+                <n_x>1.0</n_x>
+                <n_y>0.0</n_y>
+                <n_xy>0.0</n_xy>
+                <length>500.0</length>
+                <width>500.0</width>
+                <bcx>0</bcx>
+                <bcy>0</bcy>
+                <m>10</m>
+                <n>10</n>
+                <wholed>true</wholed>
+            </buckling>
         </laminate>
     </laminates>
     <materials>
