@@ -9,13 +9,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Checkout submodules
       run: git submodule update --init --recursive
       
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
@@ -24,14 +24,14 @@ jobs:
       run: ant -noinput -buildfile build.xml windows-installer
 
     - name: Upload Windows Installer
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: elamx-windows
         path: "dist/*.exe"
         retention-days: 1
 
     - name: Upload Windows Zip
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: elamx-windows-zip
         path: "dist/*.zip"
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install xmllint
       run: sudo apt-get install -y libfuse2
@@ -51,7 +51,7 @@ jobs:
       run: git submodule update --init --recursive
       
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
@@ -60,14 +60,14 @@ jobs:
       run: ant -noinput -buildfile build.xml linux-appimage
 
     - name: Upload Linux AppIamge
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: elamx-linux-appimage
         path: "dist/eLamX2-x86_64.AppImage"
         retention-days: 1
 
     - name: Upload Linux Zip
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: elamx-linux-zip
         path: "dist/*.zip"
@@ -77,13 +77,13 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Checkout submodules
       run: git submodule update --init --recursive
       
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
@@ -92,7 +92,7 @@ jobs:
       run: ant -noinput -buildfile build.xml macos-zip
 
     - name: Upload Linux Zip
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: elamx-macos-zip
         path: "dist/*.zip"
