@@ -3,13 +3,11 @@
 
 name: build
 
-on: [workflow_dispatch]
-
-#on:
-#  push:
-#    branches: [ "master" ]
-#  pull_request:
-#    branches: [ "master" ]
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -25,6 +23,13 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Build with Ant
-      run: ant -noinput -buildfile build.xml build
-      #run: ant -noinput -buildfile build.xml build -Dnbplatform.default.harness.dir=$GITHUB_WORKSPACE/nbmant/harness -Dnbplatform.active.dir=$GITHUB_WORKSPACE/nbmant
+    - name: Test with Ant
+      run: ant -noinput -buildfile build.xml test
+    - name: Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Ant Tests
+        path: ./**/build/test/unit/results/*.xml
+        reporter: java-junit
+        fail-on-error: true
