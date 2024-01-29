@@ -32,6 +32,7 @@ import de.elamx.clt.Loads;
 import de.elamx.clt.Strains;
 import de.elamx.core.outputStreamService;
 import de.elamx.laminate.Laminat;
+import de.elamx.utilities.Utilities;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Locale;
@@ -47,6 +48,9 @@ public class CalculationOutputStreamImpl implements outputStreamService {
     @Override
     public void writeToStream(Laminat laminate, PrintStream ps) {
         Collection<? extends CalculationModuleData> col = laminate.getLookup().lookupAll(CalculationModuleData.class);
+        if (col.isEmpty()){
+            return;
+        }
         CLT_Laminate clt_lam = laminate.getLookup().lookup(CLT_Laminate.class);
         if (clt_lam == null) {
             clt_lam = new CLT_Laminate(laminate);
@@ -61,8 +65,8 @@ public class CalculationOutputStreamImpl implements outputStreamService {
     private void writeResults(PrintStream out, CalculationModuleData data, Loads loads, Strains strain, CLT_LayerResult[] results) {
 
         out.println("********************************************************************************");
-        out.println(centeredText("CLASSICAL LAMINATED PLATE THEORY", 80));
-        out.println(centeredText(data.getName(), 80));
+        out.println(Utilities.centeredText("CLASSICAL LAMINATED PLATE THEORY", 80));
+        out.println(Utilities.centeredText(data.getName(), 80));
         out.println("********************************************************************************");
 
         Locale lo = Locale.ENGLISH;
@@ -124,10 +128,5 @@ public class CalculationOutputStreamImpl implements outputStreamService {
         }
         out.println();
         out.println();
-    }
-
-    public String centeredText(String text, int totalWidth) {
-        int padding = (totalWidth - text.length()) / 2;
-        return String.format("%" + padding + "s%s%" + padding + "s", "*".repeat(padding), text, "*".repeat(padding));
     }
 }

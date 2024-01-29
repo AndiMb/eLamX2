@@ -140,4 +140,10 @@ public class Utilities {
         return image;
     }
     
+    public static String centeredText(String text, int totalWidth) {
+        int textLength = text.length();
+        int padding = (totalWidth - textLength) / 2;
+        int deltaPadding = (totalWidth - textLength) % 2;
+        return String.format("%" + padding + "s%s%" + (padding+deltaPadding) + "s", "*".repeat(padding), text, "*".repeat(padding+deltaPadding));
+    }
 }

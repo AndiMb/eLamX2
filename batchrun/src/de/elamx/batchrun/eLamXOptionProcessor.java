@@ -44,6 +44,7 @@ import org.openide.util.lookup.ServiceProvider;
 import de.elamx.core.outputStreamService;
 import de.elamx.laminate.Layer;
 import de.elamx.laminate.Material;
+import de.elamx.utilities.Utilities;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -69,8 +70,18 @@ public class eLamXOptionProcessor extends OptionProcessor {
         return set;
     }
 
+    /**
+     * Verarbeiten der Befehlszeile
+     * @param env Umgebung
+     * @param maps Optionen
+     * @throws CommandException 
+     */
     @Override
     protected void process(Env env, Map<Option, String[]> maps) throws CommandException {
+        /*
+        Öffnen der über die Option "-i" übergebenen *.elamx-Datei und Laden
+        in das globale Lookup.
+        */
         if (maps.containsKey(inputOption)) {
             String fileName = maps.get(inputOption)[0];
             File inputFile = new File(fileName);
@@ -80,7 +91,12 @@ public class eLamXOptionProcessor extends OptionProcessor {
             }
         }
 
+        // Setzen des Output-Streams auf STD-Out
         PrintStream out = System.out;
+        /*
+        Wenn eine Ausgabedatei mit der Option "-o" übergeben wurde, dass 
+        Öffnen des OutputStreams.
+        */
         if (maps.containsKey(outputOption)) {
             String fileName = maps.get(outputOption)[0];
             File outputFile = new File(fileName);
@@ -93,24 +109,43 @@ public class eLamXOptionProcessor extends OptionProcessor {
             }
         }
 
+        // Schreiben des Headers
         writeHeader(out);
         
+        // Schleife über alle in der eLamX-Datei enthaltenen Laminate
         for (Laminat lam : eLamXLookup.getDefault().lookupAll(Laminat.class)) {
+            // Schreiben der Laminatinformationen
             writeLaminateInformation(out, lam);
+            /*
+            Schleife über alle Module-Ausgabe-Service-Klasse, um die jeweiligen
+            Berechnungen und Ausgaben anzustoßen, z.B. das Berechnungsmodul.
+            */
             for (outputStreamService tos : Lookup.getDefault().lookupAll(outputStreamService.class)) {
                 tos.writeToStream(lam, out);
             }
         }
 
+        // Schließen des OutputStreams
         if (out != System.out) {
             out.close();
         }
 
+        /*
+        Falls sich Änderungen hinsichtlich des Inputs und somit in der 
+        eLamX-Datei ergeben haben sollten, diese ignorieren und des Änderungs-
+        status auf false setzen. Aktuell muss eine Änderung des Inputs ein
+        Fehler sein. Da die Datei nicht modifiziert werden sollte.
+        */
         eLamXLookup.getDefault().setModified(false);
 
+        // Beenden von eLamX
         LifecycleManager.getDefault().exit();
     }
 
+    /**
+     * Schreiben allgemeiner Informationen zum eLamX-Lauf.
+     * @param out PrintStream für die Ausgaben
+     */
     private void writeHeader(PrintStream out) {
         out.println("eLamX 2 - Module Calculation");
         out.println("");
@@ -121,12 +156,17 @@ public class eLamXOptionProcessor extends OptionProcessor {
         out.println();
     }
 
+    /**
+     * Herausschreiben der Laminatinformationen
+     * @param out PrintStream für die Ausgaben
+     * @param laminate Laminat, dessen Informationen geschrieben werden sollen
+     */
     private void writeLaminateInformation(PrintStream out, Laminat laminate) {
         
-        out.println("*******************************************************************************");
-        out.println(centeredText("LAMINATE INFORMATION", 80));
-        out.println(centeredText(laminate.getName(), 80));
-        out.println("*******************************************************************************");
+        out.println("********************************************************************************");
+        out.println(Utilities.centeredText("LAMINATE INFORMATION", 80));
+        out.println(Utilities.centeredText(laminate.getName(), 80));
+        out.println("********************************************************************************");
 
         Locale lo = Locale.ENGLISH;   
         
@@ -231,10 +271,5 @@ public class eLamXOptionProcessor extends OptionProcessor {
         out.printf(lo,"  vyx  = %-10.5f    %-10.5f    %-10s    %-10s%n",  clt_laminate.getNuyxSimple(),  clt_laminate.getNuyxBendSimple(), "-", "-");
         out.println();
         out.println();
-    }
-
-    public String centeredText(String text, int totalWidth) {
-        int padding = (totalWidth - text.length()) / 2;
-        return String.format("%" + padding + "s%s%" + padding + "s", "*".repeat(padding), text, "*".repeat(padding));
     }
 }

@@ -30,6 +30,7 @@ import de.elamx.clt.plate.Buckling;
 import de.elamx.clt.plate.BucklingResult;
 import de.elamx.core.outputStreamService;
 import de.elamx.laminate.Laminat;
+import de.elamx.utilities.Utilities;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Locale;
@@ -45,6 +46,9 @@ public class BucklingOutputStreamImpl implements outputStreamService{
     @Override
     public void writeToStream(Laminat laminate, PrintStream ps) {
         Collection<? extends BucklingModuleData> col = laminate.getLookup().lookupAll(BucklingModuleData.class);
+        if (col.isEmpty()){
+            return;
+        }
         CLT_Laminate clt_lam = laminate.getLookup().lookup(CLT_Laminate.class);
         if (clt_lam == null) {
             clt_lam = new CLT_Laminate(laminate);
@@ -59,8 +63,8 @@ public class BucklingOutputStreamImpl implements outputStreamService{
     private void writeResults(PrintStream out, BucklingModuleData data, Laminat laminate, BucklingResult result){
         Locale lo = Locale.ENGLISH;      
         out.println("********************************************************************************");
-        out.println(centeredText("BUCKLING", 80));
-        out.println(centeredText(data.getName(), 80));
+        out.println(Utilities.centeredText("BUCKLING", 80));
+        out.println(Utilities.centeredText(data.getName(), 80));
         out.println("********************************************************************************");
         out.println();
         out.println("Laminat: " + laminate.getName());
@@ -80,10 +84,5 @@ public class BucklingOutputStreamImpl implements outputStreamService{
         out.printf(lo,"  Eigenv5  = %17.10E%n"  , eigenvalues[4]);
         out.println();
         out.println();
-    }
-
-    public String centeredText(String text, int totalWidth) {
-        int padding = (totalWidth - text.length()) / 2;
-        return String.format("%" + padding + "s%s%" + padding + "s", "*".repeat(padding), text, "*".repeat(padding));
     }
 }
