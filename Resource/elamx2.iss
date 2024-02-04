@@ -9,7 +9,7 @@ LicenseFile=license.txt
 
 DefaultDirName="{autopf}\eLamX"
 DisableProgramGroupPage=yes
-OutputBaseFilename="eLamX $ELAMXVERSION$"
+OutputBaseFilename="eLamX.$ELAMXVERSION$"
 SetupIconFile="elamx2\etc\elamx2.ico"
 Compression=lzma
 SolidCompression=yes

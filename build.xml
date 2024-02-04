@@ -50,7 +50,7 @@
         </exec>
         
         <!-- Installer in den Dist-Ordner kopieren -->
-        <move file="${temp.dir.windows-installer}/Output/eLamX ${elamxversion}.exe" tofile="${dist.dir}/eLamX ${elamxversion}.exe"/>
+        <move file="${temp.dir.windows-installer}/Output/eLamX.${elamxversion}.exe" tofile="${dist.dir}/eLamX.${elamxversion}.exe"/>
     </target>
     
     <!-- Hilfstarget, um die windows.properties zu laden -->
