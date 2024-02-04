@@ -94,7 +94,7 @@ public class WelcomeComponent extends TopComponent {
         if( null == content ) {
             WelcomeOptions.getDefault().incrementStartCounter();
 
-            JScrollPane scroll = new JScrollPane(new MainPanel(new FirstStepsPanel(), new NewsPanel(), new HallOfFamePanel()));
+            JScrollPane scroll = new JScrollPane(new MainPanel(new FirstStepsPanel(), new NewsPanel(), new HallOfFamePanel(), new HintsPanel()));
             scroll.setBorder(BorderFactory.createEmptyBorder());
             scroll.getViewport().setOpaque(false);
             scroll.setOpaque(false);
