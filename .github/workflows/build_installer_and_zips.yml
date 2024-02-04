@@ -37,6 +37,11 @@ jobs:
         path: "dist/*.zip"
         retention-days: 1
 
+    - name: Get Nightly Release Date
+      run: |
+        chcp 65001 #set code page to utf-8
+        echo ("NIGHTLYDATE=" + (Get-Date -format "yyyy-MM-dd")) >> $env:GITHUB_ENV
+
     - name: Update Latest Nightly Release
       uses: ncipollo/release-action@v1
       with:
@@ -86,6 +91,11 @@ jobs:
         path: "dist/*.zip"
         retention-days: 1
 
+    - name: Get Nightly Release Date
+      run: |
+        chcp 65001 #set code page to utf-8
+        echo ("NIGHTLYDATE=" + (Get-Date -format "yyyy-MM-dd")) >> $env:GITHUB_ENV
+
     - name: Update Latest Nightly Release
       uses: ncipollo/release-action@v1
       with:
@@ -124,6 +134,11 @@ jobs:
         name: elamx-macos-zip
         path: "dist/*.zip"
         retention-days: 1
+
+    - name: Get Nightly Release Date
+      run: |
+        chcp 65001 #set code page to utf-8
+        echo ("NIGHTLYDATE=" + (Get-Date -format "yyyy-MM-dd")) >> $env:GITHUB_ENV
 
     - name: Update Latest Nightly Release
       uses: ncipollo/release-action@v1
