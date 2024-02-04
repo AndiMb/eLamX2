@@ -37,6 +37,19 @@ jobs:
         path: "dist/*.zip"
         retention-days: 1
 
+    - name: Update Latest Nightly Release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifactErrorsFailBuild: false
+        artifacts: dist\elamx2_windows.zip,dist\eLamX 2.7.exe
+        artifactContentType: "raw"
+        name: Latest Nightly ${{ env.NIGHTLYDATE }}
+        prerelease: true
+        replacesArtifacts: true
+        tag: nightly
+        token: ${{ secrets.GITHUB_TOKEN }}
+
   build-linux:
 
     runs-on: ubuntu-latest
@@ -72,6 +85,20 @@ jobs:
         name: elamx-linux-zip
         path: "dist/*.zip"
         retention-days: 1
+
+    - name: Update Latest Nightly Release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifactErrorsFailBuild: false
+        artifacts: dist\elamx2_linux.zip,dist\eLamX2-x86_64.AppImage
+        artifactContentType: "raw"
+        name: Latest Nightly ${{ env.NIGHTLYDATE }}
+        prerelease: true
+        replacesArtifacts: true
+        tag: nightly
+        token: ${{ secrets.GITHUB_TOKEN }}
+
   build-macos:
 
     runs-on: macos-latest
@@ -97,3 +124,16 @@ jobs:
         name: elamx-macos-zip
         path: "dist/*.zip"
         retention-days: 1
+
+    - name: Update Latest Nightly Release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifactErrorsFailBuild: false
+        artifacts: dist\elamx2_macos.zip
+        artifactContentType: "raw"
+        name: Latest Nightly ${{ env.NIGHTLYDATE }}
+        prerelease: true
+        replacesArtifacts: true
+        tag: nightly
+        token: ${{ secrets.GITHUB_TOKEN }}
