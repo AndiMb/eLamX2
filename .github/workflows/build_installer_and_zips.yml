@@ -1,7 +1,10 @@
 
 name: Build installer
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '15 1 * * *'
 
 jobs:
   build-windows:
