@@ -25,6 +25,13 @@
  */
 package de.elamx.welcome;
 
+import de.elamx.utilities.BrowserLauncher;
+import java.awt.Color;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle;
 
 /**
@@ -39,6 +46,18 @@ public class HintsPanel extends ContentPanel {
     public HintsPanel() {
         super(NbBundle.getMessage(HintsPanel.class, "HintsPanel.title"));
         initComponents();
+        hintsPane.addHyperlinkListener(new HyperlinkListener() {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent hle) {
+                if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {
+                    try {
+                        BrowserLauncher.browse(hle.getURL().toString());
+                    } catch (IOException | URISyntaxException ex) {
+                        Exceptions.printStackTrace(ex);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -50,14 +69,24 @@ public class HintsPanel extends ContentPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        hintsLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1.getViewport().setOpaque(false);
+        hintsPane = new javax.swing.JEditorPane();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        hintsLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(hintsLabel, org.openide.util.NbBundle.getMessage(HintsPanel.class, "HintsPanel.hintsLabel.text")); // NOI18N
-        hintsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        hintsLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setOpaque(false);
+
+        hintsPane.setEditable(false);
+        hintsPane.setBackground(new Color(255,255,255,255));
+        hintsPane.setBorder(null);
+        hintsPane.setContentType("text/html"); // NOI18N
+        hintsPane.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        hintsPane.setText(org.openide.util.NbBundle.getMessage(HintsPanel.class, "HintsPanel.hintsPane.text")); // NOI18N
+        hintsPane.setOpaque(false);
+        jScrollPane1.setViewportView(hintsPane);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -65,20 +94,21 @@ public class HintsPanel extends ContentPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(hintsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(hintsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel hintsLabel;
+    private javax.swing.JEditorPane hintsPane;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
