@@ -93,8 +93,7 @@ jobs:
 
     - name: Get Nightly Release Date
       run: |
-        chcp 65001 #set code page to utf-8
-        echo ("NIGHTLYDATE=" + (Get-Date -format "yyyy-MM-dd")) >> $env:GITHUB_ENV
+        echo "NIGHTLYDATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
 
     - name: Update Latest Nightly Release
       uses: ncipollo/release-action@v1
@@ -137,8 +136,7 @@ jobs:
 
     - name: Get Nightly Release Date
       run: |
-        chcp 65001 #set code page to utf-8
-        echo ("NIGHTLYDATE=" + (Get-Date -format "yyyy-MM-dd")) >> $env:GITHUB_ENV
+        echo "NIGHTLYDATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
 
     - name: Update Latest Nightly Release
       uses: ncipollo/release-action@v1
