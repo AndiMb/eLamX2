@@ -60,7 +60,7 @@ public class ResultWriter {
 
         out.println("eLamX 2 - Module Calculation");
         out.println("");
-        out.println("Technische Unitversitaet Dresden");
+        out.println("Technische Universitaet Dresden");
         out.println("Lehrstuhl fuer Luftfahrzeugtechnik");
         out.println("http://tu-dresden.de/mw/ilr/lft");
         out.println();
@@ -75,7 +75,7 @@ public class ResultWriter {
 
         out.println("Layer   name                          thickness           angle");
         out.println("                                      (nominal)           (deg)");
-        out.println("         ---top---");
+        out.println(laminate.isInvertZ() ? "         ---bottom---" : "         ---top---");
         for (int ii = 0; ii < layerNum; ii++){
             l = layers.get(ii);
             out.printf(lo,"%4d :  %-30s%-20.5f%5.1f%n", (ii+1), l.getName(), l.getThickness(), l.getAngle());
@@ -84,6 +84,7 @@ public class ResultWriter {
             out.println("         ---mid-plane---");
         }else {
             out.println("         ---bottom---");
+            out.println(laminate.isInvertZ() ? "         ---top---" : "         ---bottom---");
         }
 
         // Materialdaten der Einzelschicht

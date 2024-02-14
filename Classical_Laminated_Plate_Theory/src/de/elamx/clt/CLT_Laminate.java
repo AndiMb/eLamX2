@@ -29,6 +29,7 @@ import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
 import de.elamx.mathtools.MatrixTools;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Diese Klasse repräsentiert ein gesamten Laminat bestehend aus 
@@ -197,7 +198,15 @@ public class CLT_Laminate extends CLT_Object{
                 layers[ind++] = new CLT_Layer(orig_layers.get(ii));
             }
         }
-        
+
+        if (laminat.isInvertZ()) {
+            CLT_Layer[] tempLayers = new CLT_Layer[layers.length];
+            for (int ii=0; ii < layers.length; ii++) {
+                tempLayers[ii] = layers[layers.length - 1 - ii];
+            }
+            layers = tempLayers;
+        }
+
         return layers;
     }
     

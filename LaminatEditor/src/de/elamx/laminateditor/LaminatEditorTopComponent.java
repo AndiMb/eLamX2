@@ -111,6 +111,8 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         associateLookup(new ProxyLookup(ExplorerUtils.createLookup(explorerManager, getActionMap()), Lookups.singleton(laminat)));
         updateMaterialComboBox();
         updateFailureComboBox();
+        
+        invertZCheckBox.setSelected(GlobalProperties.getDefault().isInvertZDefault());
 
         //enterKeyListener kl = new enterKeyListener();
         //anglesField.addKeyListener(kl);
@@ -124,9 +126,11 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
                 Layer.PROP_THICKNESS, NbBundle.getMessage(LayerNode.class, "LayerNode.Thickness"),
                 Layer.PROP_MATERIAL, NbBundle.getMessage(LayerNode.class, "LayerNode.Material"),
                 Layer.PROP_CRITERION, NbBundle.getMessage(LayerNode.class, "LayerNode.Criterion"),
-                "Number", NbBundle.getMessage(LayerNode.class, "LayerNode.Number"));
+                "Number", NbBundle.getMessage(LayerNode.class, "LayerNode.Number"),
+                "ZM", NbBundle.getMessage(LayerNode.class, "LayerNode.ZM"));
         ((DefaultOutlineModel) outlineView1.getOutline().getModel()).setNodesColumnLabel(NbBundle.getMessage(LayerNode.class, "LayerNode.Name"));
         outlineView1.getOutline().getColumnModel().moveColumn(5, 0);
+        outlineView1.getOutline().getColumnModel().moveColumn(6, 1);
         outlineView1.getOutline().getColumnModel().getColumn(0).setPreferredWidth(20);
         for (int ii = 1; ii < outlineView1.getOutline().getColumnModel().getColumnCount(); ii++) {
             outlineView1.getOutline().getColumnModel().getColumn(ii).setPreferredWidth(150);
@@ -146,6 +150,7 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         symmetricCheckBox.setSelected(laminat.isSymmetric());
         withMiddleLayerCheckBox.setSelected(laminat.isWithMiddleLayer());
         withMiddleLayerCheckBox.setEnabled(laminat.isSymmetric());
+        invertZCheckBox.setSelected(laminat.isInvertZ());
         offsetField.setValue(laminat.getOffset());
         totThicknessLabel.setText(thicknessFormat.format(laminat.getThickness()));
         numLayersLabel.setText("" + laminat.getNumberofLayers());
@@ -194,6 +199,8 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         totThicknessLabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         numLayersLabel = new javax.swing.JLabel();
+        invertZOptionsPanel = new javax.swing.JPanel();
+        invertZCheckBox = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -468,6 +475,35 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        invertZOptionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.invertZOptionsPanel.border.title"))); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(invertZCheckBox, org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.invertZCheckBox.text_1")); // NOI18N
+        invertZCheckBox.setActionCommand(org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.invertZCheckBox.actionCommand")); // NOI18N
+        invertZCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invertZCheckBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout invertZOptionsPanelLayout = new javax.swing.GroupLayout(invertZOptionsPanel);
+        invertZOptionsPanel.setLayout(invertZOptionsPanelLayout);
+        invertZOptionsPanelLayout.setHorizontalGroup(
+            invertZOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(invertZOptionsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(invertZCheckBox)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        invertZOptionsPanelLayout.setVerticalGroup(
+            invertZOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(invertZOptionsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(invertZCheckBox)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        invertZCheckBox.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.invertZCheckBox.AccessibleContext.accessibleName")); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -476,6 +512,7 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
             .addComponent(symmetryOptionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(addLayerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(invertZOptionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,11 +521,15 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(symmetryOptionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(invertZOptionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(editPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        invertZOptionsPanel.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.invertZOptionsPanel.AccessibleContext.accessibleName")); // NOI18N
 
         jScrollPane2.setViewportView(jPanel2);
 
@@ -524,14 +565,6 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         }
         explorerManager.getRootContext().getCookie(Index.class).reorder(perm);
     }//GEN-LAST:event_invertButtonActionPerformed
-
-    private void withMiddleLayerCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_withMiddleLayerCheckBoxActionPerformed
-        laminat.setWithMiddleLayer(withMiddleLayerCheckBox.isSelected());
-    }//GEN-LAST:event_withMiddleLayerCheckBoxActionPerformed
-
-    private void symmetricCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symmetricCheckBoxActionPerformed
-        laminat.setSymmetric(symmetricCheckBox.isSelected());
-    }//GEN-LAST:event_symmetricCheckBoxActionPerformed
 
     private void addLayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLayerButtonActionPerformed
 
@@ -578,6 +611,18 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         }
     }//GEN-LAST:event_offsetFieldPropertyChange
 
+    private void withMiddleLayerCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_withMiddleLayerCheckBoxActionPerformed
+        laminat.setWithMiddleLayer(withMiddleLayerCheckBox.isSelected());
+    }//GEN-LAST:event_withMiddleLayerCheckBoxActionPerformed
+
+    private void symmetricCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symmetricCheckBoxActionPerformed
+        laminat.setSymmetric(symmetricCheckBox.isSelected());
+    }//GEN-LAST:event_symmetricCheckBoxActionPerformed
+
+    private void invertZCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invertZCheckBoxActionPerformed
+        laminat.setInvertZ(invertZCheckBox.isSelected());
+    }//GEN-LAST:event_invertZCheckBoxActionPerformed
+
     private Double getThickness() {
         ParsePosition pos = new ParsePosition(0);
         double thickness = thicknessFormat.parse(thicknessField.getText(), pos).doubleValue();
@@ -597,6 +642,8 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
     private javax.swing.JComboBox<Criterion> failureComboBox;
     private javax.swing.JLabel failureLabel;
     private javax.swing.JButton invertButton;
+    private javax.swing.JCheckBox invertZCheckBox;
+    private javax.swing.JPanel invertZOptionsPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -653,6 +700,8 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
             withMiddleLayerCheckBox.setEnabled(laminat.isSymmetric());
         } else if (evt.getPropertyName().equals(Laminat.PROP_WITHMIDDLELAYER)) {
             withMiddleLayerCheckBox.setSelected(laminat.isWithMiddleLayer());
+        } else if (evt.getPropertyName().equals(Laminat.PROP_INVERTZ)) {
+            invertZCheckBox.setSelected(laminat.isInvertZ());
         } else if (evt.getPropertyName().equals(Laminat.PROP_NAME)) {
             setName(NbBundle.getMessage(LaminatEditorTopComponent.class, "CTL_LaminatEditorTopComponent", laminat.getName()));
         } else if (evt.getPropertyName().equals(Laminat.PROP_OFFSET)) {

@@ -58,6 +58,7 @@ public class GlobalProperties{
     public static final String FORMAT_TEMPERATURE     = "Format.Temperature";
     public static final String USE_enUS_LOCALE        = "use_en-US_locale";
     public static final String SHOW_TRANSVERSAL_SHEAR = "show_transversal_shear";
+    public static final String INVERT_Z_DEFAULT       = "invert_z_default";
     
     private final HashMap<String, ELamXDecimalFormat> formats = new HashMap<>();
     
@@ -65,6 +66,8 @@ public class GlobalProperties{
     
     private boolean useENUS;
     private boolean showTransShear;
+
+    private boolean invertZDefault;
     
     private boolean headless = false;
     
@@ -137,6 +140,14 @@ public class GlobalProperties{
 
     public void setShowTransShear(boolean showTransShear) {
         this.showTransShear = showTransShear;
+    }
+
+    public boolean isInvertZDefault() {
+        return invertZDefault;
+    }
+
+    public void setInvertZDefault(boolean invertZDefault) {
+        this.invertZDefault = invertZDefault;
     }
 
     public boolean isHeadless() {
