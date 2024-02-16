@@ -73,7 +73,7 @@ public class LaminateLoadSaveImpl implements LoadSaveHook{
                         String name = laminateElem.getAttribute("name");
                         boolean symmetric = Boolean.parseBoolean(laminateElem.getAttribute("symmetric"));
                         boolean wmL       = Boolean.parseBoolean(laminateElem.getAttribute("with_middle_layer"));
-                        boolean invertZ   = Boolean.parseBoolean(laminateElem.getAttribute("invert_z"));
+                        boolean invertZ = laminateElem.hasAttribute("invert_z") ? Boolean.parseBoolean(laminateElem.getAttribute("invert_z")) : false;
                         String sOffset = laminateElem.getAttribute("offset");
                         double  offset    = 0.0;
                         if (sOffset != null && !sOffset.isEmpty()){
