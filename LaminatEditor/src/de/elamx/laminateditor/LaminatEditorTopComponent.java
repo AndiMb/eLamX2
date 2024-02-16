@@ -105,14 +105,13 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         failureResult.addLookupListener(new CriterionLookupListener());
 
         initComponents();
+        invertZCheckBox.setSelected(GlobalProperties.getDefault().isInvertZDefault());
         setName(NbBundle.getMessage(LaminatEditorTopComponent.class, "CTL_LaminatEditorTopComponent", laminat.getName()));
         setToolTipText(NbBundle.getMessage(LaminatEditorTopComponent.class, "HINT_LaminatEditorTopComponent"));
         initView();
         associateLookup(new ProxyLookup(ExplorerUtils.createLookup(explorerManager, getActionMap()), Lookups.singleton(laminat)));
         updateMaterialComboBox();
         updateFailureComboBox();
-        
-        invertZCheckBox.setSelected(GlobalProperties.getDefault().isInvertZDefault());
 
         //enterKeyListener kl = new enterKeyListener();
         //anglesField.addKeyListener(kl);
