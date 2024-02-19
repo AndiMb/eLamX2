@@ -92,6 +92,7 @@ public class GlobalProperties{
         }
         
         showTransShear = Boolean.parseBoolean(NbPreferences.forModule(GlobalProperties.class).get(SHOW_TRANSVERSAL_SHEAR, Boolean.toString(false)));
+        invertZDefault = Boolean.parseBoolean(NbPreferences.forModule(GlobalProperties.class).get(INVERT_Z_DEFAULT, Boolean.toString(false)));
         
         formats.put(FORMAT_DOUBLE, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_DOUBLE, "0.0#####"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_SMALL_DOUBLE, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_SMALL_DOUBLE, "0.0###E0"), new DecimalFormatSymbols(locale)));
