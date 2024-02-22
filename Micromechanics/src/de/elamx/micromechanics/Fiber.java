@@ -297,7 +297,13 @@ public class Fiber extends Material{
                 Enor  == material.getEnor() &&
                 nue12 == material.getNue12() &&
                 G     == material.getG() &&
-                rho   == material.getRho());
+                rho   == material.getRho() &&
+                G13   == material.getG13() &&
+                G23   == material.getG23() &&
+                alphaTNor == material.getAlphaTNor() &&
+                alphaTPar == material.getAlphaTPar() &&
+                betaNor == material.getBetaNor() &&
+                betaPar == material.getBetaPar());
     }
 
     /**
@@ -317,6 +323,8 @@ public class Fiber extends Material{
                                                   rho, 
                                                   true);
 
+        mat.setG13(G13);
+        mat.setG23(G23);
         mat.setAlphaTPar(alphaTPar);
         mat.setAlphaTNor(alphaTNor);
         mat.setBetaPar(betaPar);

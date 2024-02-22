@@ -216,10 +216,11 @@ public class Matrix extends Material{
     public boolean isEqual(Material material) {
         if (!(material instanceof Matrix)) return false;
         return (E  == material.getEpar() &&
-                E  == material.getEnor() &&
                 nue == material.getNue12() &&
                 G     == material.getG() &&
-                rho   == material.getRho());
+                rho   == material.getRho() &&
+                alpha == material.getAlphaTPar() &&
+                beta == material.getBetaPar());
     }
 
     @Override

@@ -387,16 +387,23 @@ public class DefaultMaterial extends LayerMaterial{
     @Override
     public boolean isEqual(Material material) {
         if (!(material instanceof DefaultMaterial)) return false;
-        if (!(Epar  == material.getEpar() &&
+        if (!(getName().equals(material.getName()) &&
+            Epar  == material.getEpar() &&
             Enor  == material.getEnor() &&
             nue12 == material.getNue12() &&
             G     == material.getG() &&
+            G13   == material.getG13() &&
+            G23   == material.getG23() &&
             rho   == material.getRho() &&
             RParTen == material.getRParTen() &&
             RParCom == material.getRParCom() &&
             RNorTen == material.getRNorTen() &&
             RNorCom == material.getRNorCom() &&
-            RShear  == material.getRShear())){
+            RShear  == material.getRShear() &&
+            alphaTNor == material.getAlphaTNor() &&
+            alphaTPar == material.getAlphaTPar() &&
+            betaNor == material.getBetaNor() &&
+            betaPar == material.getBetaPar())){
                 return false;
         }
         if (material.getAdditionalValueKeySet().size() != getAdditionalValueKeySet().size()) return false;
@@ -425,6 +432,8 @@ public class DefaultMaterial extends LayerMaterial{
                                                   rho, 
                                                   true);
 
+        mat.setG13(G13);
+        mat.setG23(G23);
         mat.setAlphaTPar(alphaTPar);
         mat.setAlphaTNor(alphaTNor);
         mat.setBetaPar(betaPar);
@@ -453,6 +462,8 @@ public class DefaultMaterial extends LayerMaterial{
         mat.setEnor(Enor);
         mat.setNue12(nue12);
         mat.setG(G);
+        mat.setG13(G13);
+        mat.setG23(G23);
         mat.setRho(rho);
         mat.setAlphaTPar(alphaTPar);
         mat.setAlphaTNor(alphaTNor);
