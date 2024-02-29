@@ -551,13 +551,13 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
 
     private void rotateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateButtonActionPerformed
         double rotAngle = ((Number) rotationAngleField.getValue()).doubleValue();
-        for (Layer l : laminat.getLayers()) {
+        for (Layer l : laminat.getOriginalLayers()) {
             l.setAngle(rotAngle + l.getAngle());
         }
     }//GEN-LAST:event_rotateButtonActionPerformed
 
     private void invertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invertButtonActionPerformed
-        int size = laminat.getLayers().size();
+        int size = laminat.getOriginalLayers().size();
         int[] perm = new int[size];
         for (int ii = 0; ii < perm.length; ii++) {
             perm[ii] = size - 1 - ii;

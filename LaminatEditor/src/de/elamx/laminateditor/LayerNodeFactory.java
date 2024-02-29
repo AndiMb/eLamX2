@@ -83,7 +83,7 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
 
     @Override
     protected boolean createKeys(List<LayerProxy> toPopulate) {
-        ArrayList<Layer> layTemp = laminat.getLayers();
+        ArrayList<Layer> layTemp = laminat.getOriginalLayers();
 
         int number = 1;
       
@@ -134,7 +134,7 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
     }
 
     public void reorder(int[] perm) {
-        ArrayList<Layer> layers = laminat.getLayers();
+        ArrayList<Layer> layers = laminat.getOriginalLayers();
         Layer[] reordered = new Layer[layers.size()];
 
         // Wenn Ablage im Bereich der Symmetrielagen tue nichts

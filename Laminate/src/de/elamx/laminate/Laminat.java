@@ -325,11 +325,28 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
     /**
      * Liefert die Schichten des Laminats in einer ArrayList zurück. Darin 
      * sind die symmetrischen Schichten NICHT enthalten. Zurückgegeben wird
-     * die originale ArrayList. Somit haben Änderungen darin DIREKTEN Einfluss
-     * auf den Laminataufbau des Laminates.
-     * @return ArrayList mit allen Lagen.
+     * eine Kopie der originalen Arraylist.
+     * @return Kopie der ArrayList mit allen Lagen.
      */
     public ArrayList<Layer> getLayers(){
+        ArrayList<Layer> layTemp = new ArrayList<>();
+        layTemp.addAll(layers);
+
+        if (invertZ){
+            Collections.reverse(layTemp);
+        }
+        
+        return layTemp;
+    }
+    
+    /**
+     * Liefert die Schichten des Laminats in einer ArrayList zurück. Darin 
+     * sind die symmetrischen Schichten NICHT enthalten. Zurückgegeben wird
+     * die originale Arraylist. Somit haben Änderungen darin DIREKTEN Einfluss
+     * auf den Laminataufbau des Laminates.
+     * @return Originale ArrayList mit allen Lagen.
+     */
+    public ArrayList<Layer> getOriginalLayers(){
         return layers;
     }
     

@@ -187,7 +187,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
 
         out.println("Layer   name                          thickness           angle");
         out.println("                                      (nominal)           (deg)");
-        out.println(laminate.isInvertZ() ? "         ---bottom---" : "         ---top---");
+        out.println("         ---top---");
         for (int ii = 0; ii < layerNum; ii++){
             l = layers.get(ii);
             out.printf(lo,"%4d :  %-30s%-20.5f%5.1f%n", (ii+1), l.getName(), l.getThickness(), l.getAngle());
@@ -195,7 +195,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
         if (laminate.isSymmetric()) {
             out.println("         ---mid-plane---");
         }else {
-            out.println(laminate.isInvertZ() ? "         ---top---" : "         ---bottom---");
+            out.println("         ---bottom---");
         }
 
         // Materialdaten der Einzelschicht

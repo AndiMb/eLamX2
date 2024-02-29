@@ -180,7 +180,7 @@ public class LaminateLoadSaveImpl implements LoadSaveHook{
                 attr.setValue(Double.toString(lam.getOffset()));
                 laminate.setAttributeNode(attr);
                 
-                for (Layer lay : lam.getLayers()){
+                for (Layer lay : lam.getOriginalLayers()){
                     Element layer = doc.createElement("layer");
                     attr = doc.createAttribute("uuid");
                     attr.setValue(lay.getUUID());
