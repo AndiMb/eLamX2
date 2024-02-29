@@ -66,8 +66,6 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
     
     private final Lookup.Result<Object> result;
     
-    private boolean changing = false;
-    
     public Laminat(String uid, String name){
         this(uid, name, true);
     }
@@ -379,6 +377,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
         }
         lam.setSymmetric(symmetric);
         lam.setWithMiddleLayer(withMiddleLayer);
+        lam.setInvertZ(invertZ);
         
         return lam;
     }
