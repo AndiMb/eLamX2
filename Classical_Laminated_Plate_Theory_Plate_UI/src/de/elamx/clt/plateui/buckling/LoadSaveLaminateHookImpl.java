@@ -83,6 +83,13 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
 
         input.setWholeD(Boolean.parseBoolean(getTagValue("wholed", BucklingElement)));
 
+        String dTildeString = getTagValue("dtilde", BucklingElement);
+        if (dTildeString != null) {
+            input.setDtilde(Boolean.parseBoolean(dTildeString));
+        } else {
+            input.setDtilde(false);
+        }
+
         LoadSaveStiffeners.loadStiffeners(BucklingElement, input);
 
         return input;
@@ -149,6 +156,7 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
         addValue(doc, "n", Integer.toString(input.getN()), dataElement);
 
         addValue(doc, "wholed", Boolean.toString(input.isWholeD()), dataElement);
+        addValue(doc, "dtilde", Boolean.toString(input.isDtilde()), dataElement);
     }
 
     private static void addValue(Document doc, String eName, String value, Element eElement) {

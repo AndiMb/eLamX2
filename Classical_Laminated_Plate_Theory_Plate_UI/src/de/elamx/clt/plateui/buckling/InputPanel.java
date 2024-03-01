@@ -95,6 +95,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
             nxyField.addPropertyChangeListener("value", this);
             woD16D26CheckBox.setSelected(!input.isWholeD());
             woD16D26CheckBox.addItemListener(this);
+            DtildeCheckBox.setSelected(input.isDtilde());
+            DtildeCheckBox.addItemListener(this);
             termsSpinner.setValue(input.getN());
             termsSpinner.addChangeListener(this);
         }
@@ -132,6 +134,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
         nxField = new javax.swing.JFormattedTextField();
         nyField = new javax.swing.JFormattedTextField();
         nxyField = new javax.swing.JFormattedTextField();
+        DtildeCheckBox = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.jLabel1.text")); // NOI18N
 
@@ -178,6 +181,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
         nxyField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         nxyField.setText(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.nxyField.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(DtildeCheckBox, org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.DtildeCheckBox.text")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,7 +210,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                             .addComponent(widthField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lengthField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(termsSpinner)))
-                    .addComponent(woD16D26CheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(woD16D26CheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DtildeCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -245,10 +251,15 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                     .addComponent(termsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(woD16D26CheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DtildeCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
+
+        DtildeCheckBox.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.DtildeCheckBox.AccessibleContext.accessibleName")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox DtildeCheckBox;
     private javax.swing.JComboBox<Integer> bcxComboBox;
     private javax.swing.JComboBox<Integer> bcyComboBox;
     private javax.swing.JLabel jLabel1;
@@ -293,6 +304,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
             input.setBcy(bcyComboBox.getSelectedIndex());
         } else if (o == woD16D26CheckBox) {
             input.setWholeD(!woD16D26CheckBox.isSelected());
+        } else if (o == DtildeCheckBox) {
+            input.setDtilde(DtildeCheckBox.isSelected());
         }
     }
 
