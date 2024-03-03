@@ -37,7 +37,7 @@ import java.util.ArrayList;
 public class LaminatStringGenerator {
 
     public static String getLaminatAsHTMLString(Laminat laminate) {
-        ArrayList<Layer> layers = laminate.getLayers();
+        ArrayList<Layer> layers = laminate.getOriginalLayers();
 
         String lamString = " ";
 

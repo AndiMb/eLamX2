@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <elamx>
     <laminates>
-        <laminate name="Laminat 1" symmetric="true" uuid="f5de56bd-8b3c-4e73-808f-d5393ab784ee" with_middle_layer="true">
+        <laminate name="Laminat 1" symmetric="true" uuid="f5de56bd-8b3c-4e73-808f-d5393ab784ee" with_middle_layer="true" invert_z="false">
             <layer name="Layer 1" uuid="88341339-5188-435e-b40f-276457ff360a">
                 <thickness>0.125</thickness>
                 <angle>45.0</angle>

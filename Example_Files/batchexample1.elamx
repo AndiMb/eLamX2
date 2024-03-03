@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <elamx version="1">
     <laminates>
-        <laminate name="Neues Laminat" offset="0.0" symmetric="true" uuid="fea9435d-840e-4de0-a051-30497e12c6c1" with_middle_layer="false">
+        <laminate name="Neues Laminat" offset="0.0" symmetric="true" uuid="fea9435d-840e-4de0-a051-30497e12c6c1" with_middle_layer="false" invert_z="false">
             <layer name="Neue Lage" uuid="dd855e94-bbb7-4dc6-83d7-8f0fd4961881">
                 <thickness>0.125</thickness>
                 <angle>0.0</angle>
@@ -95,7 +95,7 @@
                 <wholed>true</wholed>
             </buckling>
         </laminate>
-        <laminate name="Neues Laminat" offset="0.0" symmetric="false" uuid="e4b85345-ff3f-4be2-87e2-5ef0b207caf9" with_middle_layer="false">
+        <laminate name="Neues Laminat" offset="0.0" symmetric="false" uuid="e4b85345-ff3f-4be2-87e2-5ef0b207caf9" with_middle_layer="false" invert_z="false">
             <layer name="Neue Lage" uuid="63c53b4b-1624-4c06-b8b7-8c51b3900e86">
                 <thickness>0.125</thickness>
                 <angle>0.0</angle>

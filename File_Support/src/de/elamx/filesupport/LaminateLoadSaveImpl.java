@@ -73,6 +73,7 @@ public class LaminateLoadSaveImpl implements LoadSaveHook{
                         String name = laminateElem.getAttribute("name");
                         boolean symmetric = Boolean.parseBoolean(laminateElem.getAttribute("symmetric"));
                         boolean wmL       = Boolean.parseBoolean(laminateElem.getAttribute("with_middle_layer"));
+                        boolean invertZ = laminateElem.hasAttribute("invert_z") ? Boolean.parseBoolean(laminateElem.getAttribute("invert_z")) : false;
                         String sOffset = laminateElem.getAttribute("offset");
                         double  offset    = 0.0;
                         if (sOffset != null && !sOffset.isEmpty()){
@@ -82,6 +83,7 @@ public class LaminateLoadSaveImpl implements LoadSaveHook{
                         Laminat laminate = new Laminat(uuid, name);
                         laminate.setSymmetric(symmetric);
                         laminate.setWithMiddleLayer(wmL);
+                        laminate.setInvertZ(invertZ);
                         laminate.setOffset(offset);
 
                         NodeList layerList = laminateElem.getElementsByTagName("layer");
@@ -170,11 +172,15 @@ public class LaminateLoadSaveImpl implements LoadSaveHook{
                 attr.setValue(Boolean.toString(lam.isWithMiddleLayer()));
                 laminate.setAttributeNode(attr);
                 
+                attr = doc.createAttribute("invert_z");
+                attr.setValue(Boolean.toString(lam.isInvertZ()));
+                laminate.setAttributeNode(attr);
+                
                 attr = doc.createAttribute("offset");
                 attr.setValue(Double.toString(lam.getOffset()));
                 laminate.setAttributeNode(attr);
                 
-                for (Layer lay : lam.getLayers()){
+                for (Layer lay : lam.getOriginalLayers()){
                     Element layer = doc.createElement("layer");
                     attr = doc.createAttribute("uuid");
                     attr.setValue(lay.getUUID());

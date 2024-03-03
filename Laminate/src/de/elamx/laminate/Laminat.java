@@ -28,6 +28,7 @@ package de.elamx.laminate;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import org.openide.util.Lookup;
@@ -47,6 +48,10 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
     // Flag, ob das Laminate symmetrisch ist
     private boolean symmetric       = false;
     public static final String PROP_SYMMETRIC = "symmetric";
+
+    // Flag, ob die kleinste z-Koordinate bei der erste Lage liegt
+    private boolean invertZ       = false;
+    public static final String PROP_INVERTZ = "invertZ";
     
     // Flag, ob die symmetrie mit Mittellage oder ohne ist
     private boolean withMiddleLayer = false;
@@ -117,6 +122,25 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
         this.withMiddleLayer = withMiddleLayer;
         checkEmbedded();
         firePropertyChange(PROP_WITHMIDDLELAYER, oldWithMiddleLayer, this.withMiddleLayer);
+    }
+    
+    /**
+     * True, wenn ie erste Lage die kleinste z-Koordinate besitzt
+     * @return true, wenn die erste Lage die kleinste z-Koordinate besitzt
+     */
+    public boolean isInvertZ() {
+        return invertZ;
+    }
+
+    /** 
+     * Setzen des z-Achsen Flags. True, die erste Lage die kleinste z-Koordinate besitzt.
+     * @param invertZ true, wenn die erste Lage die kleinste z-Koordinate besitzt
+     */
+    public void setInvertZ(boolean invertZ) {
+        boolean oldInvertZ = this.invertZ;
+        this.invertZ = invertZ;
+        checkEmbedded();
+        firePropertyChange(PROP_INVERTZ, oldInvertZ, this.invertZ);
     }
 
     /**
@@ -290,6 +314,10 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
                 layTemp.add(layers.get(ii));
             }
         }
+
+        if (invertZ){
+            Collections.reverse(layTemp);
+        }
         
         return layTemp;
     }
@@ -297,11 +325,28 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
     /**
      * Liefert die Schichten des Laminats in einer ArrayList zurück. Darin 
      * sind die symmetrischen Schichten NICHT enthalten. Zurückgegeben wird
-     * die originale ArrayList. Somit haben Änderungen darin DIREKTEN Einfluss
-     * auf den Laminataufbau des Laminates.
-     * @return ArrayList mit allen Lagen.
+     * eine Kopie der originalen Arraylist.
+     * @return Kopie der ArrayList mit allen Lagen.
      */
     public ArrayList<Layer> getLayers(){
+        ArrayList<Layer> layTemp = new ArrayList<>();
+        layTemp.addAll(layers);
+
+        if (invertZ){
+            Collections.reverse(layTemp);
+        }
+        
+        return layTemp;
+    }
+    
+    /**
+     * Liefert die Schichten des Laminats in einer ArrayList zurück. Darin 
+     * sind die symmetrischen Schichten NICHT enthalten. Zurückgegeben wird
+     * die originale Arraylist. Somit haben Änderungen darin DIREKTEN Einfluss
+     * auf den Laminataufbau des Laminates.
+     * @return Originale ArrayList mit allen Lagen.
+     */
+    public ArrayList<Layer> getOriginalLayers(){
         return layers;
     }
     
@@ -322,7 +367,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
      * @return Zusammenfassung des Laminats
      */
     public LaminateSummary getLaminateSummary(){return new LaminateSummary(this);}
-
+    
     @Override
     public int getUpdatePriority() {
         return UPDATE_PRIORITY;
@@ -349,6 +394,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
         }
         lam.setSymmetric(symmetric);
         lam.setWithMiddleLayer(withMiddleLayer);
+        lam.setInvertZ(invertZ);
         
         return lam;
     }

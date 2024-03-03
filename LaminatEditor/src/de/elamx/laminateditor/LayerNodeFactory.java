@@ -83,12 +83,32 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
 
     @Override
     protected boolean createKeys(List<LayerProxy> toPopulate) {
-        ArrayList<Layer> layTemp = laminat.getLayers();
+        ArrayList<Layer> layTemp = laminat.getOriginalLayers();
 
         int number = 1;
+      
+        double tges = laminat.getThickness();
+        double offset = laminat.getOffset();
+        double t, zm, z0, zold;
+
+        if (! laminat.isInvertZ()) {
+            z0 = tges / 2.0 + offset;
+            zold = z0;
+        } else {
+            z0 = -tges / 2.0 + offset;
+            zold = z0;
+        }
 
         for (Layer layer : layTemp) {
-            toPopulate.add(new LayerProxy(layer, false, number++));
+            t     = layer.getThickness();
+            if (! laminat.isInvertZ()) {    
+                zm = zold - t/2.0;
+                zold -= t;
+            } else {
+                zm = zold + t/2.0;
+                zold += t;
+            }
+            toPopulate.add(new LayerProxy(layer, false, number++, zm));
         }
 
         if (laminat.isSymmetric()) {
@@ -96,15 +116,25 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
             if (laminat.isWithMiddleLayer()) {
                 start--;
             }
+            Layer layer;
             for (int ii = start; ii >= 0; ii--) {
-                toPopulate.add(new LayerProxy(layTemp.get(ii), true, number++));
+                layer = layTemp.get(ii);
+                t     = layer.getThickness();
+                if (! laminat.isInvertZ()) {    
+                    zm = zold - t/2.0;
+                    zold -= t;
+                } else {
+                    zm = zold + t/2.0;
+                    zold += t;
+                }
+                toPopulate.add(new LayerProxy(layer, true, number++, zm));
             }
         }
         return true;
     }
 
     public void reorder(int[] perm) {
-        ArrayList<Layer> layers = laminat.getLayers();
+        ArrayList<Layer> layers = laminat.getOriginalLayers();
         Layer[] reordered = new Layer[layers.size()];
 
         // Wenn Ablage im Bereich der Symmetrielagen tue nichts
@@ -130,12 +160,13 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
 
     @Override
     protected Node createNodeForKey(LayerProxy key) {
-        return new LayerNode(Lookups.fixed(key.layer), key.isSymmetryLayer(), key.getNumber());
+        return new LayerNode(Lookups.fixed(key.layer), key.isSymmetryLayer(), key.getNumber(), key.getZM());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (!changing && !evt.getPropertyName().equals(Laminat.PROP_LAYER)) {
+        //if (!changing && !evt.getPropertyName().equals(Laminat.PROP_LAYER)) {
+        if (!changing) {
             this.refresh(true);
         }
     }
@@ -145,11 +176,13 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
         private final Layer layer;
         private final boolean symmetryLayer;
         private final int number;
+        private final double zm;
 
-        public LayerProxy(Layer layer, boolean symmetryLayer, int number) {
+        public LayerProxy(Layer layer, boolean symmetryLayer, int number, double zm) {
             this.layer = layer;
             this.symmetryLayer = symmetryLayer;
             this.number = number;
+            this.zm = zm;
         }
 
         public Layer getLayer() {
@@ -163,6 +196,10 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
         public int getNumber() {
             return number;
         }
+
+        public double getZM() {
+            return zm;
+        }
     }
 
     public class LayerNode extends AbstractNode implements PropertyChangeListener {
@@ -171,13 +208,15 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
         private final Layer layer;
 
         private int number;
+        private double zm;
 
-        public LayerNode(Lookup lookup, boolean symmetryLayer, int number) {
+        public LayerNode(Lookup lookup, boolean symmetryLayer, int number, double zm) {
             super(Children.LEAF, lookup);
             this.symmetryLayer = !symmetryLayer;
             layer = lookup.lookup(Layer.class);
             layer.addPropertyChangeListener(WeakListeners.propertyChange(this, layer));
             this.number = number;
+            this.zm = zm;
         }
 
         /**
@@ -187,6 +226,10 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
          */
         public int getNumber() {
             return number;
+        }
+
+        public double getZM() {
+            return zm;
         }
 
         protected Laminat getLaminate() {
@@ -265,6 +308,13 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
                         return getNumber();
                     }
                 };
+                PropertySupport.ReadOnly<Double> zm = new PropertySupport.ReadOnly<Double>("ZM", Double.class, "", "") {
+
+                    @Override
+                    public Double getValue() {
+                        return getZM();
+                    }
+                };
                 PropertySupport.Reflection<String> nameProp = new PropertySupport.Reflection<String>(layer, String.class, Layer.PROP_NAME) {
                     @Override
                     public boolean canWrite() {
@@ -295,6 +345,7 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
                 generalProp.put(nameProp);
                 generalProp.put(angleProp);
                 generalProp.put(thickProp);
+                generalProp.put(zm);
                 generalProp.put(new MaterialProperty(layer) {
                     @Override
                     public boolean canWrite() {
@@ -347,4 +398,4 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
             return layer.isEmbedded();
         }
     };
-}
+        }
