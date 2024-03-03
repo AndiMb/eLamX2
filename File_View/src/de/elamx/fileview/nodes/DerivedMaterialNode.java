@@ -11,8 +11,9 @@ import de.elamx.core.propertyeditor.HygrothermCoeffPropertyEditorSupport;
 import de.elamx.core.propertyeditor.PoissonRatioPropertyEditorSupport;
 import de.elamx.core.propertyeditor.YieldStressPropertyEditorSupport;
 import de.elamx.core.propertyeditor.YoungsModulusPropertyEditorSupport;
-import de.elamx.fileview.nodefactories.DerivedMaterialsNodeFactory;
+import de.elamx.fileview.nodes.DefaultMaterialNode.MaterialProperty;
 import de.elamx.laminate.DefaultMaterial;
+import de.elamx.laminate.DerivedMaterial;
 import de.elamx.laminate.Material;
 import java.awt.Image;
 import java.beans.PropertyChangeEvent;
@@ -20,14 +21,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyEditor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import javax.swing.Action;
-import org.openide.awt.Actions;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.nodes.PropertySupport;
@@ -35,7 +32,6 @@ import org.openide.nodes.Sheet;
 import org.openide.util.Exceptions;
 import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;
-import org.openide.util.Utilities;
 import org.openide.util.WeakListeners;
 import org.openide.util.lookup.Lookups;
 
@@ -44,7 +40,7 @@ import org.openide.util.lookup.Lookups;
  *
  * @author Andreas Hauffe
  */
-public class DefaultMaterialNode extends AbstractNode implements PropertyChangeListener {
+public class DerivedMaterialNode extends AbstractNode implements PropertyChangeListener {
 
     public static final String PROP_SET_GENERAL = "GeneralProperties";
     public static final String PROP_SET_STIFFNESS = "StiffnessProperties";
@@ -52,12 +48,12 @@ public class DefaultMaterialNode extends AbstractNode implements PropertyChangeL
     public static final String PROP_SET_STRENGTH = "StrengthProperties";
     public static final String PROP_SET_ADDITIONAL = "AdditionalProperties";
 
-    private static final ResourceBundle bundle = NbBundle.getBundle(DefaultMaterialNode.class);
+    private static final ResourceBundle bundle = NbBundle.getBundle(DerivedMaterialNode.class);
 
-    private final DefaultMaterial material;
+    private final DerivedMaterial material;
 
-    public DefaultMaterialNode(DefaultMaterial material) {
-        super(Children.create(new DerivedMaterialsNodeFactory(material), true), Lookups.singleton(material));
+    public DerivedMaterialNode(DerivedMaterial material) {
+        super(Children.LEAF, Lookups.singleton(material));
         this.material = material;
         material.addPropertyChangeListener(WeakListeners.propertyChange(this, material));
     }
@@ -70,7 +66,7 @@ public class DefaultMaterialNode extends AbstractNode implements PropertyChangeL
     public String[] getAllPropertySets() {
         return new String[]{PROP_SET_GENERAL, PROP_SET_STIFFNESS, PROP_SET_HYGROTHERMAL, PROP_SET_STRENGTH, PROP_SET_ADDITIONAL};
     }
-
+    
     @Override
     protected Sheet createSheet() {
 
@@ -272,9 +268,6 @@ public class DefaultMaterialNode extends AbstractNode implements PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals(Material.PROP_DERIVEDMATERIAL)){
-            return;
-        }
         if (evt.getPropertyName().equals(Material.PROP_NAME)) {
             this.fireDisplayNameChange((String) evt.getOldValue(), (String) evt.getNewValue());
             return;
@@ -282,27 +275,22 @@ public class DefaultMaterialNode extends AbstractNode implements PropertyChangeL
         this.firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
     }
 
-    @Override
+    /*@Override
     public Action[] getActions(boolean context) {
         List<Action> laminateActions = new ArrayList<>();
         laminateActions.addAll(Utilities.actionsForPath("eLamXActions/Material"));
         return laminateActions.toArray(new Action[laminateActions.size()]);
-    }
+    }*/
 
     @Override
     public Image getIcon(int type) {
         return ImageUtilities.loadImage("de/elamx/fileview/resources/material.png");
     }
 
-    @Override
-    public Image getOpenedIcon(int i) {
-        return getIcon(i);
-    }
-
-    @Override
+    /*@Override
     public Action getPreferredAction() {
         return Actions.forID("Material", "de.elamx.fileview.PropertiesAction");
-    }
+    }*/
 
     public class MaterialProperty extends PropertySupport.ReadWrite<Double> {
 

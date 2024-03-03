@@ -25,7 +25,9 @@
  */
 package de.elamx.laminate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,8 +37,11 @@ import java.util.Set;
 public abstract class Material extends ELamXObject{
     
     // Eine HashMap für zusätzliche Werte. Hauptsächlich für die Versagenskriterien!
-    private static final HashMap<String, AdditionalValue> defaultAddValues = new HashMap<String, AdditionalValue>();
+    private static final HashMap<String, AdditionalValue> defaultAddValues = new HashMap<>();
     private final HashMap<String, Double> additionalValues = new HashMap<>();
+    
+    private final List<DerivedMaterial> derivedMaterials = new ArrayList<>();
+    public static final String PROP_DERIVEDMATERIAL = "DerivedMaterial";
     
     public Material(String uid, String name, boolean addToLookup){
         super(uid, name, addToLookup);
@@ -66,14 +71,14 @@ public abstract class Material extends ELamXObject{
 
     /**
      * Liefert die Querkontraktionszahl &nu;<sub>12</sub> des Materials. Dabei gilt folgende
-     * Beziehung<br />
+     * Beziehung<br>
      * &nu;<sub>12</sub> * E<sub>&perp;</sub> = &nu;<sub>21</sub> * E<sub>||</sub>
      * @return die Querkontraktionszahl &nu;<sub>12</sub> des Materials
      */
     public abstract double getNue12();
     /**
      * Liefert die Querkontraktionszahl &nu;<sub>21</sub> des Materials. Dabei gilt folgende
-     * Beziehung<br />
+     * Beziehung<br>
      * &nu;<sub>12</sub> * E<sub>&perp;</sub> = &nu;<sub>21</sub> * E<sub>||</sub>
      * @return Querkontraktionszahl &nu;<sub>21</sub> des Materials
      */
@@ -250,5 +255,19 @@ public abstract class Material extends ELamXObject{
         public Double getMinValue() {
             return minValue;
         }
+    }
+    
+    public void addDerivedMaterial(DerivedMaterial mat){
+        derivedMaterials.add(mat);
+        firePropertyChange(PROP_DERIVEDMATERIAL, null, mat);
+    }
+    
+    public void removeDerivedMaterial(DerivedMaterial mat){
+        derivedMaterials.remove(mat);
+        firePropertyChange(PROP_DERIVEDMATERIAL, null, mat);
+    }
+    
+    public List<DerivedMaterial> getDerivedMaterials(){
+        return derivedMaterials;
     }
 }

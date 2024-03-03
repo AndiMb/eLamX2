@@ -41,9 +41,9 @@ import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle;
 
 @ActionID(category = "Material",
-id = "de.elamx.core.DeleteMaterialAction")
+        id = "de.elamx.core.DeleteMaterialAction")
 @ActionRegistration(iconBase = "de/elamx/actions/resources/deletematerial.png",
-displayName = "#CTL_DeleteMaterialAction")
+        displayName = "#CTL_DeleteMaterialAction")
 @ActionReferences({
     @ActionReference(path = "Menu/Materials", position = 1000),
     @ActionReference(path = "eLamXActions/Material", position = 1000)
@@ -60,11 +60,17 @@ public final class DeleteMaterialAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (LayerMaterial material : materials) {
             boolean inUse = false;
-            for (Laminat laminate : eLamXLookup.getDefault().lookupAll(Laminat.class)){
+            for (Laminat laminate : eLamXLookup.getDefault().lookupAll(Laminat.class)) {
                 for (Layer layer : laminate.getLayers()) {
                     if (layer.getMaterial() == material) {
                         inUse = true;
                         break;
+                    }
+                    for (LayerMaterial derivedMaterial : material.getDerivedMaterials()) {
+                        if (layer.getMaterial() == derivedMaterial) {
+                            inUse = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -73,6 +79,9 @@ public final class DeleteMaterialAction implements ActionListener {
                         NbBundle.getMessage(DeleteMaterialAction.class, "MSG_MaterialInUse", material.getName()),
                         NotifyDescriptor.ERROR_MESSAGE));
             } else {
+                for (LayerMaterial derivedMaterial : material.getDerivedMaterials()) {
+                    eLamXLookup.getDefault().remove(derivedMaterial);
+                }
                 eLamXLookup.getDefault().remove(material);
             }
         }
