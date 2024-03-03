@@ -60,7 +60,7 @@ import org.openide.util.lookup.Lookups;
 public class LayerNodeFactory extends ChildFactory<LayerProxy> implements PropertyChangeListener {
 
     private boolean changing = false;
-    private Laminat laminat;
+    private final Laminat laminat;
 
     public LayerNodeFactory(Laminat laminat) {
         this.laminat = laminat;
@@ -301,14 +301,14 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
 
             try {
                 Layer layer = getLookup().lookup(Layer.class);
-                PropertySupport.ReadOnly<Integer> number = new PropertySupport.ReadOnly<Integer>("Number", Integer.class, "", "") {
+                PropertySupport.ReadOnly<Integer> number = new PropertySupport.ReadOnly<Integer>("Number", Integer.class, NbBundle.getMessage(LayerNode.class, "LayerNode.Number"), NbBundle.getMessage(LayerNode.class, "LayerNode.Number.description")) {
 
                     @Override
                     public Integer getValue() {
                         return getNumber();
                     }
                 };
-                PropertySupport.ReadOnly<Double> zm = new PropertySupport.ReadOnly<Double>("ZM", Double.class, "", "") {
+                PropertySupport.ReadOnly<Double> zm = new PropertySupport.ReadOnly<Double>("ZM", Double.class, NbBundle.getMessage(LayerNode.class, "LayerNode.ZM"), NbBundle.getMessage(LayerNode.class, "LayerNode.ZM.description")) {
 
                     @Override
                     public Double getValue() {
