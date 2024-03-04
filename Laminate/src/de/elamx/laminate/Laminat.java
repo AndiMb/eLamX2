@@ -332,7 +332,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
         ArrayList<Layer> layTemp = new ArrayList<>();
         layTemp.addAll(layers);
 
-        if (invertZ){
+        if (invertZ && (!symmetric)){
             Collections.reverse(layTemp);
         }
         
