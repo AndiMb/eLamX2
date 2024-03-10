@@ -60,7 +60,7 @@ public class ResultWriter {
 
         out.println("eLamX 2 - Module Pressure Vessel");
         out.println("");
-        out.println("Technische Unitversitaet Dresden");
+        out.println("Technische Universitaet Dresden");
         out.println("Lehrstuhl fuer Luftfahrzeugtechnik");
         out.println("http://tu-dresden.de/mw/ilr/lft");
         out.println();

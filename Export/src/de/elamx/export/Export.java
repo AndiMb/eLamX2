@@ -29,6 +29,7 @@ import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
 import de.elamx.laminate.Material;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -87,6 +88,10 @@ public abstract class Export<T extends ExportOptions> {
             for (int ii = start; ii >= 0; ii--){
                 layTemp.add(layers.get(ii));
             }
+        }
+
+        if (laminat.isInvertZ()) {
+            Collections.reverse(layTemp);
         }
         
         return layTemp;

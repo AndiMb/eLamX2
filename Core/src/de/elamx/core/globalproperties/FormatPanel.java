@@ -122,6 +122,7 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
         doubleField = new javax.swing.JTextField();
         englishFormatCheckBox = new javax.swing.JCheckBox();
         transShearCheckBox = new javax.swing.JCheckBox();
+        invertZDefaultCheckBox = new javax.swing.JCheckBox();
 
         numberFormatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(FormatPanel.class, "FormatPanel.numberFormatPanel.border.title"))); // NOI18N
 
@@ -231,6 +232,13 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(invertZDefaultCheckBox, org.openide.util.NbBundle.getMessage(FormatPanel.class, "FormatPanel.invertZDefaultCheckBox.text")); // NOI18N
+        invertZDefaultCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invertZDefaultCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout numberFormatPanelLayout = new javax.swing.GroupLayout(numberFormatPanel);
         numberFormatPanel.setLayout(numberFormatPanelLayout);
         numberFormatPanelLayout.setHorizontalGroup(
@@ -286,7 +294,8 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
                                 .addComponent(eigenValField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                                 .addComponent(tempField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                                 .addComponent(smallDoubleField))))
-                    .addComponent(englishFormatCheckBox))
+                    .addComponent(englishFormatCheckBox)
+                    .addComponent(invertZDefaultCheckBox))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         numberFormatPanelLayout.setVerticalGroup(
@@ -370,6 +379,8 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(transShearCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(invertZDefaultCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(62, Short.MAX_VALUE))
         );
@@ -396,6 +407,10 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
         controller.changed();
     }//GEN-LAST:event_transShearCheckBoxActionPerformed
 
+    private void invertZDefaultCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invertZDefaultCheckBoxActionPerformed
+        controller.changed();
+    }//GEN-LAST:event_invertZDefaultCheckBoxActionPerformed
+
     void load() {
         youngsModulusField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_STIFFNESS).toPattern());
         poissonRatioField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_POISSONRATIO).toPattern());
@@ -417,6 +432,7 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
         smallDoubleField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_SMALL_DOUBLE).toPattern());
         englishFormatCheckBox.setSelected(GlobalProperties.getDefault().isUseENUS());
         transShearCheckBox.setSelected(GlobalProperties.getDefault().isShowTransShear());
+        invertZDefaultCheckBox.setSelected(GlobalProperties.getDefault().isInvertZDefault());
     }
 
     void store() {
@@ -498,6 +514,9 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
         GlobalProperties.getDefault().setShowTransShear(transShearCheckBox.isSelected());
         NbPreferences.forModule(FormatPanel.class).put(GlobalProperties.SHOW_TRANSVERSAL_SHEAR, Boolean.toString(transShearCheckBox.isSelected()));
         
+        GlobalProperties.getDefault().setInvertZDefault(invertZDefaultCheckBox.isSelected());
+        NbPreferences.forModule(FormatPanel.class).put(GlobalProperties.INVERT_Z_DEFAULT, Boolean.toString(invertZDefaultCheckBox.isSelected()));
+        
         askForRestart();
     }    
     
@@ -578,6 +597,7 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
     private javax.swing.JLabel frequencyLabel;
     private javax.swing.JTextField hygrothermField;
     private javax.swing.JLabel hygrothermLabel;
+    private javax.swing.JCheckBox invertZDefaultCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel numberFormatPanel;
