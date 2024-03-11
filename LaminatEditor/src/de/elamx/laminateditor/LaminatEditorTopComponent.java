@@ -27,8 +27,8 @@ package de.elamx.laminateditor;
 
 import de.elamx.core.GlobalProperties;
 import de.elamx.core.LaminateStringParser;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.Laminat;
-import de.elamx.laminate.Layer;
 import de.elamx.laminate.LayerMaterial;
 import de.elamx.laminate.eLamXLookup;
 import de.elamx.laminate.failure.Criterion;
@@ -121,10 +121,10 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
     }
 
     private void initView() {
-        outlineView1.setPropertyColumns(Layer.PROP_ANGLE, NbBundle.getMessage(LayerNode.class, "LayerNode.Angle"),
-                Layer.PROP_THICKNESS, NbBundle.getMessage(LayerNode.class, "LayerNode.Thickness"),
-                Layer.PROP_MATERIAL, NbBundle.getMessage(LayerNode.class, "LayerNode.Material"),
-                Layer.PROP_CRITERION, NbBundle.getMessage(LayerNode.class, "LayerNode.Criterion"),
+        outlineView1.setPropertyColumns(DataLayer.PROP_ANGLE, NbBundle.getMessage(LayerNode.class, "LayerNode.Angle"),
+                DataLayer.PROP_THICKNESS, NbBundle.getMessage(LayerNode.class, "LayerNode.Thickness"),
+                DataLayer.PROP_MATERIAL, NbBundle.getMessage(LayerNode.class, "LayerNode.Material"),
+                DataLayer.PROP_CRITERION, NbBundle.getMessage(LayerNode.class, "LayerNode.Criterion"),
                 "Number", NbBundle.getMessage(LayerNode.class, "LayerNode.Number"),
                 "ZM", NbBundle.getMessage(LayerNode.class, "LayerNode.ZM"));
         ((DefaultOutlineModel) outlineView1.getOutline().getModel()).setNodesColumnLabel(NbBundle.getMessage(LayerNode.class, "LayerNode.Name"));
@@ -551,7 +551,7 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
 
     private void rotateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateButtonActionPerformed
         double rotAngle = ((Number) rotationAngleField.getValue()).doubleValue();
-        for (Layer l : laminat.getOriginalLayers()) {
+        for (DataLayer l : laminat.getOriginalLayers()) {
             l.setAngle(rotAngle + l.getAngle());
         }
     }//GEN-LAST:event_rotateButtonActionPerformed
@@ -590,9 +590,9 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
                 return;
             }
 
-            List<Layer> layers = new ArrayList<>(angles.length);
+            List<DataLayer> layers = new ArrayList<>(angles.length);
             for (double a : angles) {
-                layers.add(new Layer(UUID.randomUUID().toString(), name, material, a, thickness, criterion));
+                layers.add(new DataLayer(UUID.randomUUID().toString(), name, material, a, thickness, criterion));
             }
             laminat.addLayers(layers);
         } else {

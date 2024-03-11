@@ -25,9 +25,9 @@
  */
 package de.elamx.elamx1import;
 
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Laminat;
-import de.elamx.laminate.Layer;
 import de.elamx.laminate.eLamXLookup;
 import de.elamx.laminate.failure.Criterion;
 import de.elamx.laminate.failure.Puck;
@@ -107,7 +107,7 @@ public final class ImporteLamX1Action implements ActionListener {
                 int layerInd = 0;
                 while (true){
                     
-                    Layer layer = readLayer(prop, layerInd);
+                    DataLayer layer = readLayer(prop, layerInd);
                     if (layer == null) break;
 
                     lam.addLayer(layer);
@@ -146,7 +146,7 @@ public final class ImporteLamX1Action implements ActionListener {
         }
     }
     
-    private Layer readLayer(Properties prop, int layerInd){
+    private DataLayer readLayer(Properties prop, int layerInd){
         
         String keyPrefix = "Layer" + layerInd + ".";
         
@@ -229,7 +229,7 @@ public final class ImporteLamX1Action implements ActionListener {
             criterion = criterionMap.get(Puck.class.getName());
         }
 
-        Layer layer = new Layer(UUID.randomUUID().toString(), name, material, angle, thick, criterion);
+        DataLayer layer = new DataLayer(UUID.randomUUID().toString(), name, material, angle, thick, criterion);
         
         
         return layer;

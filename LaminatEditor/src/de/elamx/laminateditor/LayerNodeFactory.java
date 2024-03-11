@@ -27,6 +27,7 @@ package de.elamx.laminateditor;
 
 import de.elamx.core.propertyeditor.AnglePropertyEditorSupport;
 import de.elamx.core.propertyeditor.ThicknessPropertyEditorSupport;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
 import de.elamx.laminateditor.LayerNodeFactory.LayerProxy;
@@ -67,14 +68,14 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
         this.laminat.addPropertyChangeListener(this);
     }
 
-    public void addLayer(Layer l) {
+    public void addLayer(DataLayer l) {
         changing = true;
         laminat.addLayer(l);
         refresh(true);
         changing = false;
     }
 
-    private void removeLayer(Layer l) {
+    private void removeLayer(DataLayer l) {
         changing = true;
         laminat.removeLayer(l);
         refresh(true);
@@ -83,7 +84,7 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
 
     @Override
     protected boolean createKeys(List<LayerProxy> toPopulate) {
-        ArrayList<Layer> layTemp = laminat.getOriginalLayers();
+        ArrayList<DataLayer> layTemp = laminat.getOriginalLayers();
 
         int number = 1;
       
@@ -134,8 +135,8 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
     }
 
     public void reorder(int[] perm) {
-        ArrayList<Layer> layers = laminat.getOriginalLayers();
-        Layer[] reordered = new Layer[layers.size()];
+        ArrayList<DataLayer> layers = laminat.getOriginalLayers();
+        DataLayer[] reordered = new DataLayer[layers.size()];
 
         // Wenn Ablage im Bereich der Symmetrielagen tue nichts
         for (int i = 0; i < layers.size(); i++) {
@@ -148,7 +149,7 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
         for (int i = 0; i < layers.size(); i++) {
             int j = perm[i];
 
-            Layer l = layers.get(i);
+            DataLayer l = layers.get(i);
             reordered[j] = l;
         }
         changing = true;
@@ -253,7 +254,7 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
 
         @Override
         public void destroy() throws IOException {
-            removeLayer(getLookup().lookup(Layer.class));
+            removeLayer(getLookup().lookup(DataLayer.class));
         }
 
         @Override
@@ -346,13 +347,13 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
                 generalProp.put(angleProp);
                 generalProp.put(thickProp);
                 generalProp.put(zm);
-                generalProp.put(new MaterialProperty(layer) {
+                generalProp.put(new MaterialProperty((DataLayer) layer) {
                     @Override
                     public boolean canWrite() {
                         return symmetryLayer;
                     }
                 });
-                generalProp.put(new CriterionProperty(layer) {
+                generalProp.put(new CriterionProperty((DataLayer) layer) {
                     @Override
                     public boolean canWrite() {
                         return symmetryLayer;

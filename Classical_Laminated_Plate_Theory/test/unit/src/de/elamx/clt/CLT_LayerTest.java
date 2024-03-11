@@ -25,10 +25,9 @@
  */
 package de.elamx.clt;
 
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Laminat;
-import de.elamx.laminate.Layer;
-import de.elamx.laminate.StressStrainState;
 import de.elamx.laminate.failure.Puck;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,12 +57,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 
@@ -101,12 +100,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 
@@ -180,12 +179,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 
@@ -219,12 +218,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 
@@ -258,12 +257,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 
@@ -297,12 +296,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 
@@ -367,12 +366,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 0.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 70.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
         lam.setInvertZ(true);
@@ -437,12 +436,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 
@@ -476,12 +475,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 
@@ -515,12 +514,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 
@@ -554,12 +553,12 @@ public class CLT_LayerTest {
         mat.putAdditionalValue(Puck.A0, 0.5);
         mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
 
-        List<Layer> layers = new ArrayList<>();
+        List<DataLayer> layers = new ArrayList<>();
 
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
-        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer1", mat, 70.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer2", mat, 90.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer3", mat, 10.0, 0.125));
+        layers.add(new DataLayer(UUID.randomUUID().toString(), "Layer4", mat, 0.0, 0.125));
 
         Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
 

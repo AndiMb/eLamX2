@@ -25,7 +25,7 @@
  */
 package de.elamx.laminateditor;
 
-import de.elamx.laminate.Layer;
+import de.elamx.laminate.DataLayer;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class LaminateNode extends AbstractNode {
                 @Override
                 public Transferable paste() throws IOException {
                     try {
-                        layers.addLayer((Layer) t.getTransferData(LayerFlavor.LAYER_FLAVOR));
+                        layers.addLayer((DataLayer) t.getTransferData(LayerFlavor.LAYER_FLAVOR));
                         final Node node = NodeTransfer.node(t, NodeTransfer.DND_MOVE + NodeTransfer.CLIPBOARD_CUT);
                         if (node != null) {
                             node.destroy();

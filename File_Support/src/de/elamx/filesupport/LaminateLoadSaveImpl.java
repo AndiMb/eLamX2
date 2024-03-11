@@ -25,6 +25,7 @@
  */
 package de.elamx.filesupport;
 
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
 import de.elamx.laminate.LayerMaterial;
@@ -110,7 +111,7 @@ public class LaminateLoadSaveImpl implements LoadSaveHook{
                                     if (criterion == null) {
                                         criterion = criterionMap.get(Puck.class.getName());
                                     }
-                                    Layer layer = new Layer(uuid, name, material, angle, thickness, criterion);
+                                    DataLayer layer = new DataLayer(uuid, name, material, angle, thickness, criterion);
                                     laminate.addLayer(layer);
                                 }
                             }

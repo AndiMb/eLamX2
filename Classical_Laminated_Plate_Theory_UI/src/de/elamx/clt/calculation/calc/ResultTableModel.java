@@ -159,7 +159,7 @@ public class ResultTableModel extends DefaultTableModel {
         if (off == 0) {
             switch (col) {
                 case 0:
-                    return Integer.toString(layInd + 1);
+                    return layerResults[layInd].getLayer().getNumber();
                 case 1:
                     return layerResults[layInd].getLayer().getName();
                 case 2:

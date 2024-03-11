@@ -26,138 +26,62 @@
 package de.elamx.laminate;
 
 import de.elamx.laminate.failure.Criterion;
-import de.elamx.laminate.failure.Puck;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
-import java.util.UUID;
-import org.openide.util.Lookup;
-import org.openide.util.lookup.Lookups;
 
 /**
  * Definiert eine Lage im Laminat.
  *
  * @author Andreas Hauffe
  */
-public class Layer extends ELamXObject implements PropertyChangeListener {
+public abstract class Layer extends ELamXObject implements PropertyChangeListener {
 
+    private int layerNumber = -1;
+    
     private static final int UPDATE_PRIORITY = 200;
-    // Winkel
-    private double angle = 0.0;
+    public static final String PROP_LAYERNUMBER = "layer_number";
     public static final String PROP_ANGLE = "angle";
-    // Dicke der Schicht
-    private double thickness = 0.0;
     public static final String PROP_THICKNESS = "thickness";
-    // Matrial der Lage
-    private LayerMaterial material = null;
     public static final String PROP_MATERIAL = "material";
-    // z-Koordinate der Mittelebene dieser Schicht
-    //private double   zm        = 0.0;
-    //public static final String PROP_ZM = "zm";
-    // Versagenskriterium
-    private Criterion criterion = null;
     public static final String PROP_CRITERION = "criterion";
-    // Flag, ob die Lage oberhalb und unterhalb noch weitere Lagen berührt
-    // für Versagenskriterien wichtig!
-    private boolean embedded;
     public static final String PROP_EMBEDDED = "embedded";
 
-    public Layer(String uid, String name, LayerMaterial material, double angle, double thickness) {
-        this(uid, name, material, angle, thickness, null);
+    public Layer(String uuid, String name) {
+        super(uuid, name, false);
     }
 
-    public Layer(String uid, String name, LayerMaterial material, double angle, double thickness, Criterion criterion) {
-        super(uid, name, false);
-        this.material = material;
-        material.addPropertyChangeListener(this);
-        this.angle = reduceAngle(angle);
-        this.thickness = thickness;
-        this.criterion = criterion;
+    public Layer(String uuid, String name, int layerNumber) {
+        this(uuid, name);
+        this.layerNumber = layerNumber;
+    }
 
-        if (this.criterion == null) {
-            Lookup lkp = Lookups.forPath("elamx/failurecriteria");
-            Collection<? extends Criterion> c = lkp.lookupAll(Criterion.class);
-            for (Criterion crit : c) {
-                if (crit instanceof Puck) {
-                    this.criterion = crit;
-                    break;
-                }
-            }
-        }
+    /**
+     * Liefert die Nummer der Lage.
+     * @return Lagennummer
+     */
+    public int getNumber() {
+        return this.layerNumber;
     }
-    
-    private Layer(String uid, String name, LayerMaterial material, double angle, double thickness, Criterion criterion, boolean withListeners) {
-        super(uid, name, false);
-        this.material = material;
-        if (withListeners){
-            material.addPropertyChangeListener(this);
-        }
-        this.angle = reduceAngle(angle);
-        this.thickness = thickness;
-        this.criterion = criterion;
 
-        if (this.criterion == null) {
-            Lookup lkp = Lookups.forPath("elamx/failurecriteria");
-            Collection<? extends Criterion> c = lkp.lookupAll(Criterion.class);
-            for (Criterion crit : c) {
-                if (crit instanceof Puck) {
-                    this.criterion = crit;
-                    break;
-                }
-            }
-        }
+    /**
+     * Setzt die Nummer der Lage.
+     * @param layerNumber Lagennummer
+     */
+    public void setNumber(int layerNumber) {
+        this.layerNumber = layerNumber;
     }
-    
-/*    public Layer(String uid, String name, LayerMaterial material, double angle, double thickness, Criterion criterion){
-        this(uid, name, material, angle, thickness, criterion, 0.0);
-    }
-    
-    public Layer(String uid, String name, LayerMaterial material, double angle, double thickness, Criterion criterion, double zm){
-        super(uid, name);
-        this.material  = material;
-        this.angle     = reduceAngle(angle);
-        this.thickness = thickness;
-        this.criterion = criterion;
-        this.zm        = zm;
-    }*/
 
     /**
      * Liefert den Winkel der Lage im Laminatsystem im Gradmaß.
      * @return Winkel im Gradmaß
      */
-    public double getAngle() {
-        return angle;
-    }
+    public abstract double getAngle();
     
     /**
      * Liefert den Winkel der Lage im Laminatsystem im Bogenmaß.
      * @return Winkel im Bogenmaß
      */
     public double getRadAngle() {
-        return Math.toRadians(angle);
-    }
-
-    private static double reduceAngle(final double angle) {
-        double sign = Math.signum(angle);
-        double a = Math.abs(angle);
-
-        a %= 180.0;
-        if (a > 90.0) {
-            a -= 180.0;
-        }
-        return sign * a;
-    }
-
-    /**
-     * Setzen den Winkels der Lage im Laminatsystem im Gradmaß. Der Winkel wird
-     * dabei solange mit 180° modifiziert bis -90° &le; angle &le; 90°.
-     *
-     * @param angle Winkel im Gradmaß
-     */
-    public void setAngle(double angle) {
-        double oldAngle = this.angle;
-        this.angle = reduceAngle(angle);
-        firePropertyChange(PROP_ANGLE, oldAngle, this.angle);
+        return Math.toRadians(this.getAngle());
     }
 
     /**
@@ -165,80 +89,21 @@ public class Layer extends ELamXObject implements PropertyChangeListener {
      *
      * @return Materialobjekt
      */
-    public LayerMaterial getMaterial() {
-        return material;
-    }
-
-    /**
-     * Setzen des Materials der Lage.
-     *
-     * @param material Neues Material der Lage
-     */
-    public void setMaterial(LayerMaterial material) {
-        LayerMaterial oldMaterial = this.material;
-        oldMaterial.removePropertyChangeListener(this);
-        this.material = material;
-        this.material.addPropertyChangeListener(this);
-        firePropertyChange(PROP_MATERIAL, oldMaterial, this.material);
-    }
+    public abstract LayerMaterial getMaterial();
 
     /**
      * Liefert die Dicke dieser Lage.
      *
      * @return Dicke der Lage
      */
-    public double getThickness() {
-        return thickness;
-    }
+    public abstract double getThickness();
 
-    /**
-     * Setzen der Dicke der Lage.
-     *
-     * @param thickness Dicke der Lage
-     */
-    public void setThickness(double thickness) {
-        double oldThickness = this.thickness;
-        this.thickness = thickness;
-        firePropertyChange(PROP_THICKNESS, oldThickness, this.thickness);
-    }
-
-    /**
-     * Liefert die Z-Position der Lage im Laminat
-     *
-     * @return z-Position der Lage im Laminat
-     */
-    /*public double getZm() {
-     return zm;
-     }*/
-    /**
-     * Setzen der z-Position der Lage im Laminat.
-     *
-     * @param zm z-Position der Lage im Laminat
-     */
-    /*public void setZm(double zm) {
-     double oldZm = this.zm;
-     this.zm = zm;
-     firePropertyChange(PROP_ZM, oldZm, this.zm);
-     }*/
     /**
      * Liefert das Versagenskriterium zurück.
      *
      * @return Versagenskriterium
      */
-    public Criterion getCriterion() {
-        return criterion;
-    }
-
-    /**
-     * Setzen des Versagenskriteriums der Lage im Laminat.
-     *
-     * @param criterion Versagenskriterium der Lages
-     */
-    public void setCriterion(Criterion criterion) {
-        Criterion oldCriterion = this.criterion;
-        this.criterion = criterion;
-        firePropertyChange(PROP_CRITERION, oldCriterion, this.criterion);
-    }
+    public abstract Criterion getCriterion();
     
     /**
      * Liefert zurück, ob die Lage von weiteren Lagen umgeben ist oder am
@@ -246,21 +111,7 @@ public class Layer extends ELamXObject implements PropertyChangeListener {
      *
      * @return true, wenn die Lage von weiteren Lagen umgeben ist
      */
-    public boolean isEmbedded() {
-        return embedded;
-    }
-
-    /**
-     * Setzt, ob die Lage von weiteren Lagen umgeben ist oder am
-     * Rand des Laminats liegt.
-     *
-     * @param embedded new value of embedded
-     */
-    protected void setEmbedded(boolean embedded) {
-        boolean oldEmbedded = this.embedded;
-        this.embedded = embedded;
-        firePropertyChange(PROP_EMBEDDED, oldEmbedded, embedded);
-    }
+    public abstract boolean isEmbedded();
 
     /**
      * Liefert ein neues
@@ -268,21 +119,12 @@ public class Layer extends ELamXObject implements PropertyChangeListener {
      *
      * @return Kopie dieser Lage
      */
-    public Layer getCopy() {
-        return new Layer(UUID.randomUUID().toString(), getName(), material, angle, thickness, criterion);
-    }
+    public abstract Layer getCopy();
     
-    public Layer getCopyWithoutListeners(double angle) {
-        return new Layer("", getName(), material, angle, thickness, criterion, false);
-    }
+    public abstract Layer getCopyWithoutListeners(double angle);
 
     @Override
     public int getUpdatePriority() {
         return UPDATE_PRIORITY;
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        this.firePropertyChange(PROP_MATERIAL, null, material);
     }
 }

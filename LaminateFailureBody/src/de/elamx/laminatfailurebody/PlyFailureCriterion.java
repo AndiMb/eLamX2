@@ -33,6 +33,7 @@ import com.ardor3d.scenegraph.MeshData;
 import com.ardor3d.util.geom.BufferUtils;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.CLT_Layer;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
@@ -202,7 +203,7 @@ public class PlyFailureCriterion{
         */
         for (int ii = 0; ii < origLayers.length; ii++){
             Layer oldL = origLayers[ii].getLayer();
-            Layer newL = new Layer("1", "noname", getAsDefaultMaterial(oldL.getMaterial()), oldL.getAngle(), oldL.getThickness(), oldL.getCriterion());
+            Layer newL = new DataLayer("1", "noname", getAsDefaultMaterial(oldL.getMaterial()), oldL.getAngle(), oldL.getThickness(), oldL.getCriterion());
             layers[ii] = new CLT_Layer(newL);
             layers[ii].setZm(origLayers[ii].getZm());
             ZFB[ii]    = false;
@@ -301,7 +302,7 @@ public class PlyFailureCriterion{
                     for (mm = 0; mm < numLayers; mm++){
                         ZFB[mm] = false;
                         numZFBLayers = 0;
-                        layers[mm].getLayer().setMaterial(getAsDefaultMaterial(origLayers[mm].getLayer().getMaterial()));
+                        ((DataLayer) layers[mm].getLayer()).setMaterial(getAsDefaultMaterial(origLayers[mm].getLayer().getMaterial()));
                     }
                     ABDmatInv = getABDMatInv(layers, ZFB);
                 }

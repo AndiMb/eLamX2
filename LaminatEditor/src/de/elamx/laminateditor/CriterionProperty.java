@@ -25,7 +25,7 @@
  */
 package de.elamx.laminateditor;
 
-import de.elamx.laminate.Layer;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.failure.Criterion;
 import java.awt.Component;
 import java.awt.event.ItemEvent;
@@ -54,10 +54,10 @@ import org.openide.util.lookup.Lookups;
  */
 public class CriterionProperty extends PropertySupport.ReadWrite<Criterion> {
 
-    Layer layer;
+    DataLayer layer;
 
-    public CriterionProperty(Layer layer) {
-        super(Layer.PROP_CRITERION, Criterion.class, NbBundle.getMessage(LayerNodeFactory.class, "LayerNode.Criterion"), NbBundle.getMessage(LayerNodeFactory.class, "LayerNode.Criterion.description"));
+    public CriterionProperty(DataLayer layer) {
+        super(DataLayer.PROP_CRITERION, Criterion.class, NbBundle.getMessage(LayerNodeFactory.class, "LayerNode.Criterion"), NbBundle.getMessage(LayerNodeFactory.class, "LayerNode.Criterion.description"));
         this.layer = layer;
     }
 
@@ -78,9 +78,9 @@ public class CriterionProperty extends PropertySupport.ReadWrite<Criterion> {
 
     private class CriterionPropertyEditorSupport extends PropertyEditorSupport implements ExPropertyEditor, InplaceEditor.Factory {
 
-        private final Layer layer;
+        private final DataLayer layer;
 
-        private CriterionPropertyEditorSupport(Layer layer) {
+        private CriterionPropertyEditorSupport(DataLayer layer) {
             this.layer = layer;
         }
 
@@ -116,11 +116,11 @@ public class CriterionProperty extends PropertySupport.ReadWrite<Criterion> {
     private class Inplace extends JComboBox<Criterion> implements InplaceEditor {
 
         private PropertyEditor editor = null;
-        private final Layer layer;
+        private final DataLayer layer;
         private final ItemListener myItemList = new MyItemListener();
         private boolean connecting = false;
 
-        private Inplace(final Layer layer) {
+        private Inplace(final DataLayer layer) {
             this.layer = layer;
         }
 

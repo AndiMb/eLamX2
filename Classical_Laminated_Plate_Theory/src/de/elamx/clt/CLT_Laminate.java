@@ -176,7 +176,7 @@ public class CLT_Laminate extends CLT_Object{
     private CLT_Layer[] initCLTLayers(){
         layers = new CLT_Layer[laminat.getNumberofLayers()];
         
-        ArrayList<Layer> orig_layers = laminat.getLayers();
+        ArrayList<Layer> orig_layers = laminat.getAllLayers();
         
         CLT_Layer tempLayer;
         int ind = 0;
@@ -185,16 +185,6 @@ public class CLT_Laminate extends CLT_Object{
                 layers[ind++] = new CLT_Layer(l);
             }else{
                 layers[ind++] = tempLayer;
-            }
-        }
-        
-        if (laminat.isSymmetric()){
-            int start = orig_layers.size()-1;
-            if (laminat.isWithMiddleLayer()) {
-                start--;
-            }
-            for (int ii = start; ii >= 0; ii--){
-                layers[ind++] = new CLT_Layer(orig_layers.get(ii));
             }
         }
 
