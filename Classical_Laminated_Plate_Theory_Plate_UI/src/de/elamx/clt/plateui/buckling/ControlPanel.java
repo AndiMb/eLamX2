@@ -157,6 +157,10 @@ public class ControlPanel extends javax.swing.JPanel {
             DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(ControlPanel.class, "Warning.ffff-boundaryconditions"), NotifyDescriptor.ERROR_MESSAGE));
             return false;
         }
+        if (input.isDtilde() && laminat.hasNegativeDtildeEntries()) {
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(ControlPanel.class, "Warning.negativedtildeentries"), NotifyDescriptor.ERROR_MESSAGE));
+            return false;
+        }
         if (!laminat.isSymmetric()) {
             DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(ControlPanel.class, "Warning.unsymmetriclaminate"), NotifyDescriptor.WARNING_MESSAGE));
         }

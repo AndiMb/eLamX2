@@ -51,8 +51,11 @@ public class CLT_Laminate extends CLT_Object{
     private final double[][] D      = new double[3][3];  // D-Matrix
     private final double[][] ABD    = new double[6][6];  // ABD-Matrix
     private double[][] ABDInv = new double[6][6];  // Inverse ABD-Matrix
+    private double[][] Dtilde = new double[3][3];  // Dtilde-Matrix für Stabilitätsanalyse
     private double  tges      = 0.0;               // Gesamtdicke des Laminats
     private boolean isSym     = false;             // Flag, ob das Laminat symmetrisch aufgebaut ist
+
+    private boolean negativeDtildeEntries;         // Flag, ob Dtilde-Matrix negative Einträge besitzt
     
     //private double I0, I1, I2;                     // Mass moments of inertia
     
@@ -80,6 +83,7 @@ public class CLT_Laminate extends CLT_Object{
     public final void refresh(){
         initCLTLayers();
         calcABD();
+        calcDtilde();
     }
     
     public CLT_Layer[] getCLTLayers(){
@@ -172,6 +176,25 @@ public class CLT_Laminate extends CLT_Object{
 
         ABDInv = MatrixTools.getInverse(ABD);
     }
+
+    private void calcDtilde() {
+        // Berechnen von D tilde
+        double [][] Btransp = MatrixTools.MatTransp(B);
+        double [][] Ainv    = this.getaMatrix();
+
+        double [][] helpMat1    = MatrixTools.MatMult(Btransp, Ainv);
+        double [][] helpMat2    = MatrixTools.MatMult(helpMat1, B);
+        
+        negativeDtildeEntries = false;
+        for (int ii = 0; ii < Dtilde.length; ii++) {
+            for (int jj = 0; jj < Dtilde[0].length; jj++) {
+                Dtilde[ii][jj] = D[ii][jj] - helpMat2[ii][jj];
+                if ((!negativeDtildeEntries) && (Dtilde[ii][jj] < 0.)) {
+                    negativeDtildeEntries = true;
+                }
+            }
+        }
+    }
     
     private CLT_Layer[] initCLTLayers(){
         layers = new CLT_Layer[laminat.getNumberofLayers()];
@@ -234,6 +257,12 @@ public class CLT_Laminate extends CLT_Object{
      * @return D-Matrix des Laminates. (3x3)
      */
     public double[][] getDMatrix(){return D;}
+    
+    /**
+     * Liefert die D-Tilde-Matrix des Laminates.
+     * @return D-Tilde-Matrix des Laminates. (3x3)
+     */
+    public double[][] getDtildeMatrix(){return Dtilde;}
 
     /**
      * Liefert die inverse ABD-Matrix zurück.
@@ -307,6 +336,14 @@ public class CLT_Laminate extends CLT_Object{
         }
 
         return dmat;
+    }
+
+    /**
+     * Liefert zurück, ob die D-Tilde Matrix negative Einträge besitzt.
+     * @return true, wenn D-Tilde Matrix einen oder mehrere negative Einträge besitzt
+     */
+    public boolean hasNegativeDtildeEntries() {
+        return negativeDtildeEntries;
     }
     
     /**

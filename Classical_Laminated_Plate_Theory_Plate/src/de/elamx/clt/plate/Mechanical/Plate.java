@@ -126,7 +126,13 @@ public class Plate {
     public void addStiffness(CLT_Laminate laminat, double[][] kmat, int m, int n, boolean wholeD, boolean Dtilde, Boundary bx, Boundary by){
 
         // Hier wird die D-Matrix des Laminates gespeichert.
-        double [][] dmattemp = laminat.getDMatrix();
+        // Gegebenenfalls Nutzung von D-Tilde anstelle von D Matrix
+        double [][] dmattemp;
+        if (Dtilde) {
+            dmattemp = laminat.getDtildeMatrix();
+        } else {
+            dmattemp = laminat.getDMatrix();
+        }
 
         // Die D-Matrix des Laminates muss umgespeichert werden, um eine Kopie zu erstellen.
         // Tut man das nicht, werden beim Nullsetzen der D16 und D26 Terme, die
@@ -143,22 +149,6 @@ public class Plate {
             dmat[1][2] = 0.0;
             dmat[2][0] = 0.0;
             dmat[2][1] = 0.0;
-        }
-
-        // Berechnen von D tilde
-        if (Dtilde) {
-            double [][] Bmat       = laminat.getBMatrix();
-            double [][] BmatTransp = MatrixTools.MatTransp(Bmat);
-            double [][] AmatInv    = laminat.getaMatrix();
-
-            double [][] helpMat1    = MatrixTools.MatMult(BmatTransp, AmatInv);
-            double [][] helpMat2    = MatrixTools.MatMult(helpMat1, Bmat);
-           
-            for (int ii = 0; ii < dmat.length; ii++) {
-                for (int jj = 0; jj < dmat[0].length; jj++) {
-                    dmat[ii][jj] -= helpMat2[ii][jj];
-                }
-            }
         }
 
         int k = -1; // Laufvariable (1. Index) für die Steifigkeitsmatrix
