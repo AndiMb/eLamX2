@@ -634,14 +634,10 @@ public class MatrixTools {
      * @return multiplizierte Matrix
      */
     public static double[][] MatMult(double[][] A, double[][] B) {
+        // Initialisierung der Ergebnismatrix
+        // Achtung: An dieser Stelle wäre in anderen Programmiersprachen ein Nullsetzen
+        // der Matrixeinträge notwendig. Java macht dies intern automatrisch.
         double[][] rs = new double[A.length][B[0].length];
-
-        System.out.println("Matmul: " + rs.length + " x " + rs[0].length);
-        
-        // Initialisiere Ergebnismatrix zu Null
-        for (double[] r : rs) {
-            Arrays.fill(r, 0.);
-        }
 
         // Führe Matrixmultiplikation aus
         for (int ii = 0; ii < rs.length; ii++) {
