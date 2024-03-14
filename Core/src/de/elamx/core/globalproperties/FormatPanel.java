@@ -60,6 +60,7 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
         angleField.getDocument().addDocumentListener(this);
         densityField.getDocument().addDocumentListener(this);
         hygrothermField.getDocument().addDocumentListener(this);
+        nondimdField.getDocument().addDocumentListener(this);
         forceField.getDocument().addDocumentListener(this);
         stressField.getDocument().addDocumentListener(this);
         strainField.getDocument().addDocumentListener(this);
@@ -123,6 +124,8 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
         englishFormatCheckBox = new javax.swing.JCheckBox();
         transShearCheckBox = new javax.swing.JCheckBox();
         invertZDefaultCheckBox = new javax.swing.JCheckBox();
+        nondimdLabel = new javax.swing.JLabel();
+        nondimdField = new javax.swing.JTextField();
 
         numberFormatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(FormatPanel.class, "FormatPanel.numberFormatPanel.border.title"))); // NOI18N
 
@@ -239,6 +242,11 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(nondimdLabel, org.openide.util.NbBundle.getMessage(FormatPanel.class, "FormatPanel.nondimdLabel.text")); // NOI18N
+
+        nondimdField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        nondimdField.setText(org.openide.util.NbBundle.getMessage(FormatPanel.class, "FormatPanel.nondimdField.text")); // NOI18N
+
         javax.swing.GroupLayout numberFormatPanelLayout = new javax.swing.GroupLayout(numberFormatPanel);
         numberFormatPanel.setLayout(numberFormatPanelLayout);
         numberFormatPanelLayout.setHorizontalGroup(
@@ -259,7 +267,8 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
                                 .addComponent(poissonsRatioLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(thicknessLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(yieldStressLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(densityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(densityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nondimdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(doubleField)
@@ -270,7 +279,8 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
                                 .addComponent(angleField)
                                 .addComponent(densityField)
                                 .addComponent(hygrothermField)
-                                .addComponent(forceField))
+                                .addComponent(forceField)
+                                .addComponent(nondimdField))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -333,6 +343,10 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
                             .addComponent(hygrothermField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nondimdLabel)
+                            .addComponent(nondimdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(forceLabel)
                             .addComponent(forceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(numberFormatPanelLayout.createSequentialGroup()
@@ -366,14 +380,15 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tempLabel)
-                            .addComponent(tempField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tempField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tempLabel1)
+                            .addComponent(smallDoubleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(doubleLabel)
-                        .addComponent(doubleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tempLabel1))
-                    .addComponent(smallDoubleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(numberFormatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(doubleLabel)
+                    .addComponent(doubleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(englishFormatCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -384,6 +399,8 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(62, Short.MAX_VALUE))
         );
+
+        nondimdLabel.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(FormatPanel.class, "FormatPanel.nondimdLabel.AccessibleContext.accessibleName")); // NOI18N
 
         jScrollPane1.setViewportView(numberFormatPanel);
 
@@ -418,6 +435,7 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
         angleField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_ANGLE).toPattern());
         densityField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_DENSITY).toPattern());
         hygrothermField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_HYGROTHERMCOEFF).toPattern());
+        nondimdField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_NONDIMDMATPARAM).toPattern());
         yieldStressField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_YIELDSTRESS).toPattern());
         forceField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_FORCE).toPattern());
         stressField.setText(GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_STRESS).toPattern());
@@ -463,6 +481,10 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
         temp = hygrothermField.getText();
         GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_HYGROTHERMCOEFF).applyPattern(temp);
         NbPreferences.forModule(FormatPanel.class).put(GlobalProperties.FORMAT_HYGROTHERMCOEFF, temp);
+        
+        temp = nondimdField.getText();
+        GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_NONDIMDMATPARAM).applyPattern(temp);
+        NbPreferences.forModule(FormatPanel.class).put(GlobalProperties.FORMAT_NONDIMDMATPARAM, temp);
         
         temp = forceField.getText();
         GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_FORCE).applyPattern(temp);
@@ -561,6 +583,7 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
             df.applyPattern(angleField.getText());
             df.applyPattern(densityField.getText());
             df.applyPattern(hygrothermField.getText());
+            df.applyPattern(nondimdField.getText());
             df.applyPattern(forceField.getText());
             df.applyPattern(stressField.getText());
             df.applyPattern(strainField.getText());
@@ -600,6 +623,8 @@ final class FormatPanel extends javax.swing.JPanel implements DocumentListener{
     private javax.swing.JCheckBox invertZDefaultCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nondimdField;
+    private javax.swing.JLabel nondimdLabel;
     private javax.swing.JPanel numberFormatPanel;
     private javax.swing.JTextField percField;
     private javax.swing.JLabel percLabel;

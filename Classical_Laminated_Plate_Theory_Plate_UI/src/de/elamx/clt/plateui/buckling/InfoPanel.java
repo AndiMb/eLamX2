@@ -40,7 +40,7 @@ public class InfoPanel extends javax.swing.JPanel implements PropertyChangeListe
 
     private final BucklingModuleData data;
     private CLT_Laminate clt_lam;
-    private final static DecimalFormat DF = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_FORCE);
+    private final static DecimalFormat DF = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_NONDIMDMATPARAM);
 
     public InfoPanel() {
         this(null);

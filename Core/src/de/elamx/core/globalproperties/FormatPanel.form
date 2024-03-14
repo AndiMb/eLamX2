@@ -61,6 +61,7 @@
                                       <Component id="thicknessLabel" alignment="0" max="32767" attributes="0"/>
                                       <Component id="yieldStressLabel" alignment="0" max="32767" attributes="0"/>
                                       <Component id="densityLabel" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="nondimdLabel" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -73,6 +74,7 @@
                                       <Component id="densityField" max="32767" attributes="0"/>
                                       <Component id="hygrothermField" max="32767" attributes="0"/>
                                       <Component id="forceField" max="32767" attributes="0"/>
+                                      <Component id="nondimdField" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -151,6 +153,11 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="nondimdLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="nondimdField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="forceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="forceField" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -195,16 +202,17 @@
                                   <Component id="tempLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="tempField" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="tempLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="smallDoubleField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="doubleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="doubleField" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="tempLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="smallDoubleField" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="doubleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="doubleField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="englishFormatCheckBox" min="-2" max="-2" attributes="0"/>
@@ -526,6 +534,26 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="invertZDefaultCheckBoxActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="nondimdLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="de/elamx/core/globalproperties/Bundle.properties" key="FormatPanel.nondimdLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                </Property>
+              </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="de/elamx/core/globalproperties/Bundle.properties" key="FormatPanel.nondimdLabel.AccessibleContext.accessibleName" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                </Property>
+              </AccessibilityProperties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="nondimdField">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="de/elamx/core/globalproperties/Bundle.properties" key="FormatPanel.nondimdField.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

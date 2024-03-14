@@ -35,7 +35,7 @@ import java.text.DecimalFormat;
  */
 public class NonDimensionalParametersPanel extends javax.swing.JPanel {
 
-    private final DecimalFormat df = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_HYGROTHERMCOEFF);
+    private final DecimalFormat df = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_NONDIMDMATPARAM);
 
     /**
      * Creates new form HygrothermalCoefficientPanel

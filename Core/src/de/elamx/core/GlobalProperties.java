@@ -47,6 +47,7 @@ public class GlobalProperties{
     public static final String FORMAT_ANGLE         = "Format.Angle";
     public static final String FORMAT_DENSITY       = "Format.Density";
     public static final String FORMAT_HYGROTHERMCOEFF = "Format.HygroThermCoefficient";
+    public static final String FORMAT_NONDIMDMATPARAM = "Format.NondimDmatParam";
     public static final String FORMAT_FORCE           = "Format.Force";
     public static final String FORMAT_STRAIN          = "Format.Strain";
     public static final String FORMAT_STRESS          = "Format.Stress";
@@ -104,6 +105,7 @@ public class GlobalProperties{
         formats.put(FORMAT_ANGLE, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_ANGLE, "0.0"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_DENSITY, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_DENSITY, "0.0###E0"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_HYGROTHERMCOEFF, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_HYGROTHERMCOEFF, "0.0###E0"), new DecimalFormatSymbols(locale)));
+        formats.put(FORMAT_NONDIMDMATPARAM, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_NONDIMDMATPARAM, "0.0#####"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_FORCE, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_FORCE, "0.0##"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_STRAIN, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_STRAIN, "0.0#####"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_STRESS, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_STRESS, "0.0##"), new DecimalFormatSymbols(locale)));
