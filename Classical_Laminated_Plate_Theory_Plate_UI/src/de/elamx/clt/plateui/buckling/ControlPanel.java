@@ -77,6 +77,7 @@ public class ControlPanel extends javax.swing.JPanel {
         stiffenerPanel1 = new StiffenerPanel(data != null ? data.getBucklingInput() : null);
         jButton1 = new javax.swing.JButton();
         resultPanel1 = new ResultPanel(data, view3D);
+        infoPanel1 = new de.elamx.clt.plateui.buckling.InfoPanel(data);
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(ControlPanel.class, "ControlPanel.inputPanel.TabConstraints.tabTitle"), inputPanel); // NOI18N
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(ControlPanel.class, "ControlPanel.stiffenerPanel1.TabConstraints.tabTitle"), stiffenerPanel1); // NOI18N
@@ -95,6 +96,7 @@ public class ControlPanel extends javax.swing.JPanel {
             .addComponent(jTabbedPane1)
             .addComponent(resultPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(infoPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +106,9 @@ public class ControlPanel extends javax.swing.JPanel {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resultPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(infoPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -134,6 +138,7 @@ public class ControlPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private de.elamx.clt.plateui.buckling.InfoPanel infoPanel1;
     private de.elamx.clt.plateui.buckling.InputPanel inputPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JTabbedPane jTabbedPane1;
