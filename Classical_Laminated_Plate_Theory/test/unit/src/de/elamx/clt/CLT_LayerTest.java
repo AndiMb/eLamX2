@@ -355,6 +355,77 @@ public class CLT_LayerTest {
 
     /**
      * KLT-Beispiel aus HSB 37103-01, Entwurf Issue E
+     * Prüfung der ABD-Matrix des Laminats mit aktivierter Option invertZ,
+     * sodass erste Laminatlage bei kleinster z-Koordinate liegt
+     */
+    @Test
+    public void HSB37103_01_E_ABDMatrix_invertZ() {
+
+        DefaultMaterial mat = new DefaultMaterial(UUID.randomUUID().toString(), "Mat1", 132700.0, 9300.0, 0.28, 4600.0, 0.0, false);
+        mat.putAdditionalValue(Puck.PSPD, 0.3);
+        mat.putAdditionalValue(Puck.PSPZ, 0.35);
+        mat.putAdditionalValue(Puck.A0, 0.5);
+        mat.putAdditionalValue(Puck.LAMBDA_MIN, 0.5);
+
+        List<Layer> layers = new ArrayList<>();
+
+        layers.add(new Layer(UUID.randomUUID().toString(), "Layer1", mat, 0.0, 0.125));
+        layers.add(new Layer(UUID.randomUUID().toString(), "Layer2", mat, 10.0, 0.125));
+        layers.add(new Layer(UUID.randomUUID().toString(), "Layer3", mat, 90.0, 0.125));
+        layers.add(new Layer(UUID.randomUUID().toString(), "Layer4", mat, 70.0, 0.125));
+
+        Laminat lam = new Laminat(UUID.randomUUID().toString(), "Laminat1", false);
+        lam.setInvertZ(true);
+
+        lam.addLayers(layers);
+
+        CLT_Laminate clt_lam = new CLT_Laminate(lam);
+        
+        double[][] ABDMat = clt_lam.getABDMatrix();
+        
+        assertEquals(35069.0, ABDMat[0][0], 0.5);
+        assertEquals( 3283.0, ABDMat[0][1], 0.5);
+        assertEquals( 3182.0, ABDMat[0][2], 0.5);
+        assertEquals( 3283.0, ABDMat[1][0], 0.5);
+        assertEquals(32376.0, ABDMat[1][1], 0.5);
+        assertEquals( 4455.0, ABDMat[1][2], 0.5);
+        assertEquals( 3182.0, ABDMat[2][0], 0.5);
+        assertEquals( 4455.0, ABDMat[2][1], 0.5);
+        assertEquals( 4274.0, ABDMat[2][2], 0.5);
+        
+        assertEquals(-3769.0, ABDMat[0][3], 0.5);
+        assertEquals(  261.0, ABDMat[0][4], 0.5);
+        assertEquals(  -34.0, ABDMat[0][5], 0.5);
+        assertEquals(  261.0, ABDMat[1][3], 0.5);
+        assertEquals( 3247.0, ABDMat[1][4], 0.5);
+        assertEquals(  803.0, ABDMat[1][5], 0.5);
+        assertEquals(  -34.0, ABDMat[2][3], 0.5);
+        assertEquals(  803.0, ABDMat[2][4], 0.5);
+        assertEquals(  261.0, ABDMat[2][5], 0.5);
+        
+        assertEquals(-3769.0, ABDMat[3][0], 0.5);
+        assertEquals(  261.0, ABDMat[3][1], 0.5);
+        assertEquals(  -34.0, ABDMat[3][2], 0.5);
+        assertEquals(  261.0, ABDMat[4][0], 0.5);
+        assertEquals( 3247.0, ABDMat[4][1], 0.5);
+        assertEquals(  803.0, ABDMat[4][2], 0.5);
+        assertEquals(  -34.0, ABDMat[5][0], 0.5);
+        assertEquals(  803.0, ABDMat[5][1], 0.5);
+        assertEquals(  261.0, ABDMat[5][2], 0.5);
+        
+        assertEquals(749.0, ABDMat[3][3], 0.5);
+        assertEquals( 86.0, ABDMat[3][4], 0.5);
+        assertEquals( 37.0, ABDMat[3][5], 0.5);
+        assertEquals( 86.0, ABDMat[4][3], 0.5);
+        assertEquals(622.0, ABDMat[4][4], 0.5);
+        assertEquals(158.0, ABDMat[4][5], 0.5);
+        assertEquals( 37.0, ABDMat[5][3], 0.5);
+        assertEquals(158.0, ABDMat[5][4], 0.5);
+        assertEquals(106.0, ABDMat[5][5], 0.5);
+    }
+
+    /**
+     * KLT-Beispiel aus HSB 37103-01, Entwurf Issue E
      * Prüfung der inversen A-Matrix des Laminats
      */
     @Test

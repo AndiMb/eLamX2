@@ -19,6 +19,7 @@
           <Component id="jTabbedPane1" max="32767" attributes="0"/>
           <Component id="resultPanel1" alignment="0" max="32767" attributes="0"/>
           <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+          <Component id="infoPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -30,6 +31,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="resultPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="infoPanel1" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -82,6 +85,11 @@
     <Component class="de.elamx.clt.plateui.buckling.ResultPanel" name="resultPanel1">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ResultPanel(data, view3D);"/>
+      </AuxValues>
+    </Component>
+    <Component class="de.elamx.clt.plateui.buckling.InfoPanel" name="infoPanel1">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new de.elamx.clt.plateui.buckling.InfoPanel(data)"/>
       </AuxValues>
     </Component>
   </SubComponents>

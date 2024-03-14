@@ -84,6 +84,7 @@ public final class CLT_InfoTopComponent extends TopComponent implements LookupLi
         ABDMatrixPanel = new de.elamx.clt.calculation.info.ABDMatrixPanel();
         invABDMatrixPanel = new de.elamx.clt.calculation.info.InvABDMatrixPanel();
         laminateSummaryPanel1 = new de.elamx.clt.calculation.info.LaminateSummaryPanel();
+        nonDimensionalParametersPanel = new de.elamx.clt.calculation.info.NonDimensionalParametersPanel();
 
         setAutoscrolls(true);
         setLayout(new java.awt.BorderLayout());
@@ -95,23 +96,27 @@ public final class CLT_InfoTopComponent extends TopComponent implements LookupLi
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(ABDMatrixPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(engineeringConstantsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(engineeringConstantsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
             .addComponent(hygrothermalCoefficientPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(invABDMatrixPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(laminateSummaryPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(nonDimensionalParametersPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(ABDMatrixPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ABDMatrixPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                 .addGap(4, 4, 4)
-                .addComponent(invABDMatrixPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(invABDMatrixPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(engineeringConstantsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(engineeringConstantsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(hygrothermalCoefficientPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(hygrothermalCoefficientPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(laminateSummaryPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(nonDimensionalParametersPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(laminateSummaryPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -126,6 +131,7 @@ public final class CLT_InfoTopComponent extends TopComponent implements LookupLi
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private de.elamx.clt.calculation.info.LaminateSummaryPanel laminateSummaryPanel1;
+    private de.elamx.clt.calculation.info.NonDimensionalParametersPanel nonDimensionalParametersPanel;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -155,6 +161,7 @@ public final class CLT_InfoTopComponent extends TopComponent implements LookupLi
     private void setValues() {
         engineeringConstantsPanel.setValues(clt_lam);
         hygrothermalCoefficientPanel.setValues(clt_lam);
+        nonDimensionalParametersPanel.setValues(clt_lam);
         ABDMatrixPanel.setValues(clt_lam);
         invABDMatrixPanel.setValues(clt_lam);
         laminateSummaryPanel1.setValues(laminat);

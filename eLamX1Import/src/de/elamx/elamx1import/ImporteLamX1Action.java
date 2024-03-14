@@ -135,6 +135,8 @@ public final class ImporteLamX1Action implements ActionListener {
                         lam.setWithMiddleLayer(false);
                         break;
                 }
+
+                lam.setInvertZ(false);
                 
                 eLamXLookup.getDefault().add(lam);
                 

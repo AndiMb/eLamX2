@@ -56,6 +56,11 @@ public class CLT_Laminate extends CLT_Object{
     private boolean isSym     = false;             // Flag, ob das Laminat symmetrisch aufgebaut ist
 
     private boolean negativeDtildeEntries;         // Flag, ob Dtilde-Matrix negative Einträge besitzt
+
+    // Dimensionslose Parameter der D-Matrix
+    private double beta_D;                           // Seydel's orthotropy parameter
+    private double nu_D;                             // Transverse contraction parameter
+    private double gamma_D, delta_D;                 // Anisotropy parameters
     
     //private double I0, I1, I2;                     // Mass moments of inertia
     
@@ -84,6 +89,7 @@ public class CLT_Laminate extends CLT_Object{
         initCLTLayers();
         calcABD();
         calcDtilde();
+        calculateNonDimensionalParameters();
     }
     
     public CLT_Layer[] getCLTLayers(){
@@ -195,6 +201,16 @@ public class CLT_Laminate extends CLT_Object{
             }
         }
     }
+      
+    private void calculateNonDimensionalParameters() {
+        //Seydel's orthotropy parameter
+        this.beta_D = (D[0][1] + 2. * D[2][2])/Math.sqrt(D[0][0] * D[1][1]);
+        // Transverse contraction parameter
+        this.nu_D = D[0][1]/Math.sqrt(D[0][0] * D[1][1]);
+        //Anisotropy parameters
+        this.gamma_D = D[0][2]/Math.pow((Math.pow(D[0][0], 3.) * D[1][1]), 0.25);
+        this.delta_D = D[1][2]/Math.pow((D[0][0] * Math.pow(D[1][1], 3.)), 0.25);
+    }
     
     private CLT_Layer[] initCLTLayers(){
         layers = new CLT_Layer[laminat.getNumberofLayers()];
@@ -220,7 +236,7 @@ public class CLT_Laminate extends CLT_Object{
                 layers[ind++] = new CLT_Layer(orig_layers.get(ii));
             }
         }
-        
+
         return layers;
     }
     
@@ -344,6 +360,37 @@ public class CLT_Laminate extends CLT_Object{
      */
     public boolean hasNegativeDtildeEntries() {
         return negativeDtildeEntries;
+    }
+
+    /** Liefert Seydels Orthotropieparameter der D-Matrix des Laminats.
+     * @return Seydels Orthotropieparameter der D-Matrix des Laminats
+     */
+    public double getBetaD() {
+        return this.beta_D;
+    }
+
+    /**
+     * Liefert den transversalen Kontraktionsparameter der D-Matrix des Laminats.
+     * @return Transversaler Kontraktionsparameter der D-Matrix des Laminats
+     */
+    public double getNuD() {
+        return this.nu_D;
+    }
+
+    /**
+     * Liefert den Anisotropieparameter gamma_D der D-Matrix des Laminats.
+     * @return Anisotropieparameter gamma_D der D-Matrix des Laminats
+     */
+    public double getGammaD() {
+        return this.gamma_D;
+    }
+
+    /**
+     * Liefert den Anisotropieparameter delta_D der D-Matrix des Laminats.
+     * @return Anisotropieparameter delta_D der D-Matrix des Laminats
+     */
+    public double getDeltaD() {
+        return this.delta_D;
     }
     
     /**
