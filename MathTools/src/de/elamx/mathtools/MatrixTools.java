@@ -25,6 +25,8 @@
  */
 package de.elamx.mathtools;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Andreas Hauffe
@@ -618,6 +620,49 @@ public class MatrixTools {
             rs[ii] = 0.0;
             for (int jj = 0; jj < A[0].length; jj++) {
                 rs[ii] += A[ii][jj] * b[jj];
+            }
+        }
+
+        return rs;
+    }
+
+    /**
+     * Berechnung Matrix mal Matrix (AB).
+     *
+     * @param A eingabewerte der Matrix A
+     * @param B eingabewerte der Matrix B
+     * @return multiplizierte Matrix
+     */
+    public static double[][] MatMult(double[][] A, double[][] B) {
+        // Initialisierung der Ergebnismatrix
+        // Achtung: An dieser Stelle wäre in anderen Programmiersprachen ein Nullsetzen
+        // der Matrixeinträge notwendig. Java macht dies intern automatrisch.
+        double[][] rs = new double[A.length][B[0].length];
+
+        // Führe Matrixmultiplikation aus
+        for (int ii = 0; ii < rs.length; ii++) {
+            for (int jj = 0; jj < rs[0].length; jj++) {
+                for (int kk = 0; kk < A[0].length; kk++) {
+                    rs[ii][jj] += A[ii][jj] * B[jj][kk];
+                }
+            }
+        }
+
+        return rs;
+    }
+
+    /**
+     * Berechnung der Transponierten Matrix transp(A).
+     *
+     * @param A eingabewerte der Matrix A
+     * @return transponierte Matrix
+     */
+    public static double[][] MatTransp(double[][] A) {
+        double[][] rs = new double[A[0].length][A.length];
+
+        for (int ii = 0; ii < rs.length; ii++) {
+            for (int jj = 0; jj < rs[0].length; jj++) {
+                rs[ii][jj] = A[jj][ii];
             }
         }
 

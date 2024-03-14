@@ -34,23 +34,27 @@ import de.elamx.clt.plate.Stiffener.Properties.StiffenerProperties;
  */
 public class BucklingInput extends Input{
 
+    public static final String PROP_DTILDE = "Dtilde";
+
     public static final String PROP_NX = "nx";
     public static final String PROP_NY = "ny";
     public static final String PROP_NXY = "nxy";
     private double nx;
     private double ny;
     private double nxy;
+    private boolean Dtilde;
 
     public BucklingInput() {
-        this(500.0, 500.0, 1.0, 0.0, 0.0, true, 0, 0, 10, 10);
+        this(500.0, 500.0, 1.0, 0.0, 0.0, true, false, 0, 0, 10, 10);
     }
 
-    public BucklingInput(double length, double width, double nx, double ny, double nxy, boolean wholeD,
+    public BucklingInput(double length, double width, double nx, double ny, double nxy, boolean wholeD, boolean Dtilde,
             int bcx, int bcy, int m, int n) {
         super(length, width, wholeD, bcx, bcy, m, n);
         this.nx = nx;
         this.ny = ny;
         this.nxy = nxy;
+        this.Dtilde = Dtilde;
     }
 
     /**
@@ -101,9 +105,25 @@ public class BucklingInput extends Input{
         firePropertyChange(PROP_NXY, oldNxy, nxy);
     }
 
+    /**
+     * @return the Dtilde
+     */
+    public boolean isDtilde() {
+        return Dtilde;
+    }
+
+    /**
+     * @param Dtilde the Dtilde to set
+     */
+    public void setDtilde(boolean Dtilde) {
+        boolean oldDtilde = this.Dtilde;
+        this.Dtilde = Dtilde;
+        firePropertyChange(PROP_DTILDE, oldDtilde, Dtilde);
+    }
+
     @Override
     public Input copy() {
-        Input in = new BucklingInput(getLength(), getWidth(), nx, ny, nxy, isWholeD(), getBcx(), getBcy(), getM(), getN());
+        Input in = new BucklingInput(getLength(), getWidth(), nx, ny, nxy, isWholeD(), isDtilde(), getBcx(), getBcy(), getM(), getN());
         for (StiffenerProperties ss : getStiffenerProperties()){
             in.addStiffenerProperty(ss.getCopy());
         }

@@ -146,7 +146,7 @@ public class Buckling {
         double[][] kgmat = new double[m_ * n_][m_ * n_]; // geometrische Steifigkeitsmatrix
 
         // Aufruf der Methoden add für Platte, Last zum Füllen von Kmat und Kgmat
-        plate_.addStiffness(laminat, kmat, m_, n_, input.isWholeD(), bx, by); // fill stiffness matrix from Plate.class
+        plate_.addStiffness(laminat, kmat, m_, n_, input.isWholeD(), input.isDtilde(), bx, by); // fill stiffness matrix from Plate.class
         load_.add(kgmat, m_, n_, bx, by);                  // fill geometric stiffness matrix from Load.class
 
         

@@ -28,6 +28,7 @@ package de.elamx.clt.plate.Mechanical;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.CLT_Laminate.MassMoments;
 import de.elamx.clt.plate.Boundary.Boundary;
+import de.elamx.mathtools.MatrixTools;
 
 /*
  * To change this template, choose Tools | Templates
@@ -106,9 +107,32 @@ public class Plate {
      * @param by Randbedingungsobjekt in y-Richtung
      */
     public void addStiffness(CLT_Laminate laminat, double[][] kmat, int m, int n, boolean wholeD, Boundary bx, Boundary by){
+        this.addStiffness(laminat, kmat, m, n, wholeD, false, bx, by);
+    }
+    
+    /**
+     * Fügt die Eigenschaften der Platte der Steifigkeitsmatix basierend auf den
+     * Randbedingungen hinzu. Dabei werden die Werte auf die entsprechenden Terme
+     * addiert. Deshalb muss die Steifigkeitsmatrix am Anfang null gesetzt werden.
+     * @param laminat Laminat der Platte
+     * @param kmat Steifigkeitsmatrix (m*n x m*n)
+     * @param m Anzahl der Terme für den Ritz-Ansatz in x-Richtung
+     * @param n Anzahl der Terme für den Ritz-Ansatz in y-Richtung
+     * @param wholeD Flag, ob die D16 und D26 Terme der D-Matrix des Laminates null gesetzt werden sollen
+     * @param Dtilde Flag, die D-Matrix durch D-Tilde-Matrix ersetzt werden soll
+     * @param bx Randbedingungsobjekt in x-Richtung
+     * @param by Randbedingungsobjekt in y-Richtung
+     */
+    public void addStiffness(CLT_Laminate laminat, double[][] kmat, int m, int n, boolean wholeD, boolean Dtilde, Boundary bx, Boundary by){
 
         // Hier wird die D-Matrix des Laminates gespeichert.
-        double [][] dmattemp = laminat.getDMatrix();
+        // Gegebenenfalls Nutzung von D-Tilde anstelle von D Matrix
+        double [][] dmattemp;
+        if (Dtilde) {
+            dmattemp = laminat.getDtildeMatrix();
+        } else {
+            dmattemp = laminat.getDMatrix();
+        }
 
         // Die D-Matrix des Laminates muss umgespeichert werden, um eine Kopie zu erstellen.
         // Tut man das nicht, werden beim Nullsetzen der D16 und D26 Terme, die
@@ -126,7 +150,7 @@ public class Plate {
             dmat[2][0] = 0.0;
             dmat[2][1] = 0.0;
         }
-        
+
         int k = -1; // Laufvariable (1. Index) für die Steifigkeitsmatrix
         int l = -1; // Laufvariable (2. Index) für die Steifigkeitsmatrix
         for (int pp = 0; pp < m; pp++){
@@ -188,9 +212,13 @@ public class Plate {
     }
     
     public void addStiffnessAndMass(CLT_Laminate laminat, double[][] kmat, double[][] mmat, int m, int n, boolean wholeD, Boundary bx, Boundary by){
+        this.addStiffnessAndMass(laminat, kmat, mmat, m, n, wholeD, false, bx, by);
+    }
+    
+    public void addStiffnessAndMass(CLT_Laminate laminat, double[][] kmat, double[][] mmat, int m, int n, boolean wholeD, boolean Dtilde, Boundary bx, Boundary by){
         
         addMass(laminat, mmat, m, n, bx, by);
-        addStiffness(laminat, kmat, m, n, wholeD, bx, by);
+        addStiffness(laminat, kmat, m, n, wholeD, Dtilde, bx, by);
         
     }
 }
