@@ -78,6 +78,7 @@ public class InfoPanel extends javax.swing.JPanel implements PropertyChangeListe
         setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(InfoPanel.class, "InfoPanel.border.title"))); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(InfoPanel.class, "InfoPanel.jLabel2.text")); // NOI18N
+        jLabel2.setToolTipText(org.openide.util.NbBundle.getMessage(InfoPanel.class, "InfoPanel.alphabarLabel.toolTipText")); // NOI18N
 
         alphabarLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         org.openide.awt.Mnemonics.setLocalizedText(alphabarLabel, org.openide.util.NbBundle.getMessage(InfoPanel.class, "InfoPanel.alphabarLabel.text")); // NOI18N

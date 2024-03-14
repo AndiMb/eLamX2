@@ -76,20 +76,28 @@ public class NonDimensionalParametersPanel extends javax.swing.JPanel {
         setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.border.title"))); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel1.text")); // NOI18N
+        jLabel1.setToolTipText(org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel1.toolTipText")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(betadLabel, org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.betadLabel.text")); // NOI18N
+        betadLabel.setToolTipText(org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel1.toolTipText")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel2.text")); // NOI18N
+        jLabel2.setToolTipText(org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel2.toolTipText")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(deltadLabel, org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.deltadLabel.text")); // NOI18N
+        deltadLabel.setToolTipText(org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel2.toolTipText")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(nudLabel, org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.nudLabel.text")); // NOI18N
+        nudLabel.setToolTipText(org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel4.toolTipText")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel3.text")); // NOI18N
+        jLabel3.setToolTipText(org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel3.toolTipText")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel4.text")); // NOI18N
+        jLabel4.setToolTipText(org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel4.toolTipText")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(gammadLabel, org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.gammadLabel.text")); // NOI18N
+        gammadLabel.setToolTipText(org.openide.util.NbBundle.getMessage(NonDimensionalParametersPanel.class, "NonDimensionalParametersPanel.jLabel3.toolTipText")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
