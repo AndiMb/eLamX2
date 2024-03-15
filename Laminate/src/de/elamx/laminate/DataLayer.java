@@ -241,12 +241,16 @@ public class DataLayer extends Layer {
      */
     @Override
     public DataLayer getCopy() {
-        return new DataLayer(UUID.randomUUID().toString(), getName(), material, angle, thickness, criterion);
+        DataLayer dataLayerCopy = new DataLayer(UUID.randomUUID().toString(), getName(), material, angle, thickness, criterion);
+        dataLayerCopy.setNumber(this.getNumber());
+        return dataLayerCopy;
     }
     
     @Override
     public DataLayer getCopyWithoutListeners(double angle) {
-        return new DataLayer("", getName(), material, angle, thickness, criterion, false);
+        DataLayer dataLayerCopy = new DataLayer("", getName(), material, angle, thickness, criterion, false);
+        dataLayerCopy.setNumber(this.getNumber());
+        return dataLayerCopy;
     }
 
     @Override

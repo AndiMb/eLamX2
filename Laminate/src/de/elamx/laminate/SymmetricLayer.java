@@ -101,7 +101,9 @@ public class SymmetricLayer extends Layer {
      */
     @Override
     public SymmetricLayer getCopy() {
-        return new SymmetricLayer(UUID.randomUUID().toString(), getName(), dataLayer);
+        SymmetricLayer symmetricLayerCopy = new SymmetricLayer(UUID.randomUUID().toString(), getName(), dataLayer);
+        symmetricLayerCopy.setNumber(this.getNumber());
+        return symmetricLayerCopy;
     }
 
     @Override
