@@ -87,12 +87,12 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
         ArrayList<DataLayer> layTemp = laminat.getOriginalLayers();
 
         int number = 1;
-      
+
         double tges = laminat.getThickness();
         double offset = laminat.getOffset();
         double t, zm, z0, zold;
 
-        if (! laminat.isInvertZ()) {
+        if (!laminat.isInvertZ()) {
             z0 = tges / 2.0 + offset;
             zold = z0;
         } else {
@@ -101,12 +101,12 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
         }
 
         for (Layer layer : layTemp) {
-            t     = layer.getThickness();
-            if (! laminat.isInvertZ()) {    
-                zm = zold - t/2.0;
+            t = layer.getThickness();
+            if (!laminat.isInvertZ()) {
+                zm = zold - t / 2.0;
                 zold -= t;
             } else {
-                zm = zold + t/2.0;
+                zm = zold + t / 2.0;
                 zold += t;
             }
             toPopulate.add(new LayerProxy(layer, false, number++, zm));
@@ -120,12 +120,12 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
             Layer layer;
             for (int ii = start; ii >= 0; ii--) {
                 layer = layTemp.get(ii);
-                t     = layer.getThickness();
-                if (! laminat.isInvertZ()) {    
-                    zm = zold - t/2.0;
+                t = layer.getThickness();
+                if (!laminat.isInvertZ()) {
+                    zm = zold - t / 2.0;
                     zold -= t;
                 } else {
-                    zm = zold + t/2.0;
+                    zm = zold + t / 2.0;
                     zold += t;
                 }
                 toPopulate.add(new LayerProxy(layer, true, number++, zm));
@@ -386,7 +386,7 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
     }
 
     private class EmbeddedPropertySupport extends PropertySupport.ReadOnly<Boolean> {
-        
+
         private final Layer layer;
 
         public EmbeddedPropertySupport(Layer layer) {
@@ -399,4 +399,4 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
             return layer.isEmbedded();
         }
     };
-        }
+}
