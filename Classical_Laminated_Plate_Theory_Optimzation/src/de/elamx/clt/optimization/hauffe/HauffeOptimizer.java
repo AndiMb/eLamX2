@@ -28,6 +28,7 @@ package de.elamx.clt.optimization.hauffe;
 import de.elamx.clt.optimization.OptimizationInput;
 import de.elamx.clt.optimization.Optimizer;
 import de.elamx.clt.optimization.sda.SequentialDecisionApproach;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
@@ -64,7 +65,7 @@ public class HauffeOptimizer extends Optimizer {
         double[] angles = input.getAngles();
         ArrayList<MinimalReserveFactorCalculator> calculators = input.getCalculators();
 
-        Layer baseLayer = new Layer("", "", input.getMaterial(), 0.0, input.getThickness(), input.getCriterion());
+        DataLayer baseLayer = new DataLayer("", "", input.getMaterial(), 0.0, input.getThickness(), input.getCriterion());
 
         boolean isSymmetricLaminateNeeded = false;
 
@@ -88,7 +89,7 @@ public class HauffeOptimizer extends Optimizer {
         params.setMaxLayerNum(sdaLam.getLayers().size() + params.getDeltaMaxLayerNum());
 
         // Bestimmung der minimalen Lagenanzahl mittels Superlagen
-        Layer superLayer = getSuperlayer();
+        DataLayer superLayer = getSuperlayer();
 
         Laminat laminat = new Laminat("", "", false);
         laminat.setSymmetric(isSymmetricLaminateNeeded || input.isSymmetricLaminat());
@@ -233,7 +234,7 @@ public class HauffeOptimizer extends Optimizer {
         return new Individuum(numLayer, angles);
     }
 
-    private void evalObjectiv(OptimizationInput input, Individuum indiv, Layer baseLayer, boolean isSymmetryNeeded) {
+    private void evalObjectiv(OptimizationInput input, Individuum indiv, DataLayer baseLayer, boolean isSymmetryNeeded) {
 
         Laminat laminat = IndividuumToLaminat(indiv, baseLayer, isSymmetryNeeded);
 
@@ -248,12 +249,12 @@ public class HauffeOptimizer extends Optimizer {
         indiv.setMinReserveFactor(minResFac);
     }
 
-    private Laminat IndividuumToLaminat(Individuum indiv, Layer baseLayer, boolean isSymmetryNeeded) {
+    private Laminat IndividuumToLaminat(Individuum indiv, DataLayer baseLayer, boolean isSymmetryNeeded) {
         Laminat laminat = new Laminat("", "", false);
         laminat.setSymmetric(isSymmetryNeeded || input.isSymmetricLaminat());
 
         double[] angles = indiv.getAngles();
-        Layer[] layers = new Layer[indiv.getNumLayers()];
+        DataLayer[] layers = new DataLayer[indiv.getNumLayers()];
 
         for (int ii = 0; ii < indiv.getNumLayers(); ii++) {
             layers[ii] = baseLayer.getCopyWithoutListeners(angles[ii]);
@@ -264,7 +265,7 @@ public class HauffeOptimizer extends Optimizer {
         return laminat;
     }
 
-    private Individuum permuteIndividuum(Individuum indiv, Layer baseLayer, boolean isSymmetryNeeded) {
+    private Individuum permuteIndividuum(Individuum indiv, DataLayer baseLayer, boolean isSymmetryNeeded) {
         double[] angles = input.getAngles();
         Individuum bestIndiv = indiv;
         for (int layNum = 0; layNum < indiv.getNumLayers(); layNum++) {
@@ -287,7 +288,7 @@ public class HauffeOptimizer extends Optimizer {
         return false;
     }
 
-    private Layer getSuperlayer() {
+    private DataLayer getSuperlayer() {
         double EPar = input.getMaterial().getEpar();
         double nue = 0.0;
         double G = EPar / (2.0 * (1.0 + nue));
@@ -314,6 +315,6 @@ public class HauffeOptimizer extends Optimizer {
             }
         }
 
-        return new Layer("", "Superlayer", superMaterial, 0.0, input.getThickness(), criterion);
+        return new DataLayer("", "Superlayer", superMaterial, 0.0, input.getThickness(), criterion);
     }
 }

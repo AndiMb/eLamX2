@@ -25,6 +25,7 @@
  */
 package de.elamx.laminateditor;
 
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.Layer;
 import de.elamx.laminateditor.LayerNodeFactory.LayerNode;
 import java.awt.Dialog;
@@ -73,10 +74,10 @@ public final class CloneLayersAction implements ActionListener {
                         if (ev.getSource() == DialogDescriptor.OK_OPTION) {
                             try {
                                 int n = numberPanel.getNumber();
-                                ArrayList<Layer> newLayers = new ArrayList<>(context.size() * n);
+                                ArrayList<DataLayer> newLayers = new ArrayList<>(context.size() * n);
                                 for (int ii = 0; ii < n; ii++) {
                                     for (LayerNode layerNode : context) {
-                                        newLayers.add(layerNode.getLookup().lookup(Layer.class).getCopy());
+                                        newLayers.add(layerNode.getLookup().lookup(DataLayer.class).getCopy());
                                     }
                                 }
                                 context.get(0).getLaminate().addLayers(newLayers);

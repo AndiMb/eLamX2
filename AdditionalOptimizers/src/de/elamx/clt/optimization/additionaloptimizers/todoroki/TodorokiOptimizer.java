@@ -29,9 +29,9 @@ import de.elamx.clt.optimization.OptimizationInput;
 import de.elamx.clt.optimization.Optimizer;
 import de.elamx.clt.optimization.additionaloptimizers.DummyBundle;
 import de.elamx.clt.optimization.sda.SequentialDecisionApproach;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Laminat;
-import de.elamx.laminate.Layer;
 import de.elamx.laminate.addFailureCriteria.MaxStress;
 import de.elamx.laminate.failure.Criterion;
 import de.elamx.laminate.optimization.MinimalReserveFactorCalculator;
@@ -66,9 +66,9 @@ public class TodorokiOptimizer extends Optimizer{
         double[] angles = input.getAngles();
         ArrayList<MinimalReserveFactorCalculator> calculators = input.getCalculators();
 
-        Layer baseLayer = new Layer("", NbBundle.getMessage(DummyBundle.class, "Optimized_Layer") + " " + atomicLayerCounter.incrementAndGet(), input.getMaterial(), 0.0, input.getThickness(), input.getCriterion());
+        DataLayer baseLayer = new DataLayer("", NbBundle.getMessage(DummyBundle.class, "Optimized_Layer") + " " + atomicLayerCounter.incrementAndGet(), input.getMaterial(), 0.0, input.getThickness(), input.getCriterion());
         
-        Layer superLayer = getSuperlayer();
+        DataLayer superLayer = getSuperlayer();
         
         Laminat laminat = new Laminat(UUID.randomUUID().toString(), NbBundle.getMessage(DummyBundle.class, "Optimized_Laminate") + " " + atomicLaminateCounter.incrementAndGet(), false);
 
@@ -204,11 +204,11 @@ public class TodorokiOptimizer extends Optimizer{
         return bestIndiv.laminat;
     }
     
-    private Individuum[] createSubLaminates(Individuum indiv, Layer baseLayer, double[] angles){
+    private Individuum[] createSubLaminates(Individuum indiv, DataLayer baseLayer, double[] angles){
         Individuum[] newIndivs = new Individuum[angles.length];
         for(int ii = 0; ii < angles.length; ii++){
             Laminat lam = indiv.getLaminat().getCopyWithoutListener(false);
-            Layer newLayer = baseLayer.getCopyWithoutListeners(baseLayer.getAngle());
+            DataLayer newLayer = baseLayer.getCopyWithoutListeners(baseLayer.getAngle());
             newLayer.setAngle(angles[ii]);
             lam.setLayer(indiv.getOutestSuperLayerPosition(), newLayer);
             newIndivs[ii] = new Individuum(lam,indiv.getOutestSuperLayerPosition()+1);
@@ -226,7 +226,7 @@ public class TodorokiOptimizer extends Optimizer{
         return true;
     }
     
-    private Layer getSuperlayer(){
+    private DataLayer getSuperlayer(){
         double EPar = input.getMaterial().getEpar();
         double nue  = 0.0;
         double G    = EPar/(2.0*(1.0+nue));
@@ -253,7 +253,7 @@ public class TodorokiOptimizer extends Optimizer{
                 }
             }
         
-        return new Layer("", "Superlayer", superMaterial,  0.0, input.getThickness(), criterion);
+        return new DataLayer("", "Superlayer", superMaterial,  0.0, input.getThickness(), criterion);
     }
     
     private class Individuum{

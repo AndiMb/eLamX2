@@ -28,8 +28,8 @@ package de.elamx.clt.optimization.additionaloptimizers.branchandbound;
 import de.elamx.clt.optimization.OptimizationInput;
 import de.elamx.clt.optimization.Optimizer;
 import de.elamx.clt.optimization.additionaloptimizers.DummyBundle;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.Laminat;
-import de.elamx.laminate.Layer;
 import de.elamx.laminate.optimization.MinimalReserveFactorCalculator;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +57,7 @@ public class BranchAndBoundOptimizer extends Optimizer{
         double[] angles = input.getAngles();
         ArrayList<MinimalReserveFactorCalculator> calculators = input.getCalculators();
 
-        Layer baseLayer = new Layer("", NbBundle.getMessage(DummyBundle.class, "Optimized_Layer") + " " + atomicLayerCounter.incrementAndGet(), input.getMaterial(), 0.0, input.getThickness(), input.getCriterion());
+        DataLayer baseLayer = new DataLayer("", NbBundle.getMessage(DummyBundle.class, "Optimized_Layer") + " " + atomicLayerCounter.incrementAndGet(), input.getMaterial(), 0.0, input.getThickness(), input.getCriterion());
 
         Laminat laminat = new Laminat(UUID.randomUUID().toString(), NbBundle.getMessage(DummyBundle.class, "Optimized_Laminate") + " " + atomicLaminateCounter.incrementAndGet(), false);
 
@@ -132,11 +132,11 @@ public class BranchAndBoundOptimizer extends Optimizer{
         return bestLam;
     }
     
-    private Laminat[] createSubLaminates(Laminat laminate, Layer baseLayer, double[] angles){
+    private Laminat[] createSubLaminates(Laminat laminate, DataLayer baseLayer, double[] angles){
         Laminat[] newLaminates = new Laminat[angles.length];
         for(int ii = 0; ii < angles.length; ii++){
             newLaminates[ii] = laminate.getCopyWithoutListener(false);
-            Layer newLayer = baseLayer.getCopyWithoutListeners(angles[ii]);
+            DataLayer newLayer = baseLayer.getCopyWithoutListeners(angles[ii]);
             newLaminates[ii].addLayer(newLayer);
         }
         return newLaminates;

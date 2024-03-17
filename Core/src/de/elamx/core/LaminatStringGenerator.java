@@ -25,8 +25,8 @@
  */
 package de.elamx.core;
 
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.Laminat;
-import de.elamx.laminate.Layer;
 import java.util.ArrayList;
 
 /**
@@ -37,7 +37,7 @@ import java.util.ArrayList;
 public class LaminatStringGenerator {
 
     public static String getLaminatAsHTMLString(Laminat laminate) {
-        ArrayList<Layer> layers = laminate.getOriginalLayers();
+        ArrayList<DataLayer> layers = laminate.getOriginalLayers();
 
         String lamString = " ";
 

@@ -43,7 +43,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
     
     private static final int UPDATE_PRIORITY = 300;
     
-    private ArrayList<Layer> layers = new ArrayList<>(); // Array, das alle Lagen enthält (bei Symmetrie nur eine Hälfte)
+    private ArrayList<DataLayer> layers = new ArrayList<>(); // Array, das alle Lagen enthält (bei Symmetrie nur eine Hälfte)
     
     // Flag, ob das Laminate symmetrisch ist
     private boolean symmetric       = false;
@@ -168,14 +168,14 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
      * Hinzufügen einer Schicht zum Laminat. Die Schicht wird ans Ende angehängt.
      * @param layer Schicht, die angehängt werden soll
      */
-    public void addLayer(Layer layer){
+    public void addLayer(DataLayer layer){
         layers.add(layer);
         layer.addPropertyChangeListener(this);
         checkEmbedded();
         firePropertyChange(PROP_STACKING, null, this);
     }
     
-    public void addLayer(int index, Layer layer){
+    public void addLayer(int index, DataLayer layer){
         layers.add(index, layer);
         layer.addPropertyChangeListener(this);
         checkEmbedded();
@@ -188,7 +188,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
      * @param index Index, an den die Schicht eingefügt werden soll
      * @param layer Schicht
      */
-    public void setLayer(int index, Layer layer){
+    public void setLayer(int index, DataLayer layer){
         layers.get(index).removePropertyChangeListener(this);
         layers.set(index, layer);
         layers.get(index).addPropertyChangeListener(this);
@@ -220,7 +220,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
         firePropertyChange(PROP_STACKING, null, this);
     }
     
-    public void removeLayers(List<Layer> layer){
+    public void removeLayers(List<DataLayer> layer){
         for (Layer l : layer){
             if (layers.remove(l)){
                 l.removePropertyChangeListener(this);
@@ -235,8 +235,8 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
      * Schichtaufbaus angehängt.
      * @param layer 
      */
-    public void addLayers(List<Layer> layer){
-        for (Layer l : layer) {
+    public void addLayers(List<DataLayer> layer){
+        for (DataLayer l : layer) {
             l.addPropertyChangeListener(this);
         }
         layers.addAll(layer);
@@ -311,14 +311,19 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
                 start--;
             }
             for (int ii = start; ii >= 0; ii--){
-                layTemp.add(layers.get(ii));
+                DataLayer dataLayer = layers.get(ii);
+                layTemp.add(new SymmetricLayer(UUID.randomUUID().toString(), dataLayer.getName(), dataLayer));
             }
+        }
+
+        for (int ind=0; ind<layTemp.size();  ind++) {
+            layTemp.get(ind).setNumber(ind + 1);
         }
 
         if (invertZ){
             Collections.reverse(layTemp);
         }
-        
+
         return layTemp;
     }
     
@@ -332,10 +337,14 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
         ArrayList<Layer> layTemp = new ArrayList<>();
         layTemp.addAll(layers);
 
-        if (invertZ && (!symmetric)){
+        for (int ind=0; ind<layTemp.size();  ind++) {
+            layTemp.get(ind).setNumber(ind + 1);
+        }
+
+        if (invertZ){
             Collections.reverse(layTemp);
         }
-        
+
         return layTemp;
     }
     
@@ -346,7 +355,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
      * auf den Laminataufbau des Laminates.
      * @return Originale ArrayList mit allen Lagen.
      */
-    public ArrayList<Layer> getOriginalLayers(){
+    public ArrayList<DataLayer> getOriginalLayers(){
         return layers;
     }
     
@@ -389,7 +398,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
     
     public Laminat getCopy(boolean addToLookup){
         Laminat lam = new Laminat(UUID.randomUUID().toString(), this.getName(), addToLookup);
-        for(Layer l : layers){
+        for(DataLayer l : layers){
             lam.addLayer(l.getCopy());
         }
         lam.setSymmetric(symmetric);
@@ -401,7 +410,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
     
     public Laminat getCopyWithoutListener(boolean addToLookup){
         Laminat lam = new Laminat(UUID.randomUUID().toString(), this.getName(), addToLookup);
-        for(Layer l : layers){
+        for(DataLayer l : layers){
             lam.addLayer(l.getCopyWithoutListeners(l.getAngle()));
         }
         lam.setSymmetric(symmetric);
@@ -416,7 +425,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
     private void checkEmbedded() {
         if (symmetric) {
             int i = 0;
-            for (Layer l : layers) {
+            for (DataLayer l : layers) {
                 if (i == 0) {
                     l.setEmbedded(false);
                 } else {
@@ -426,7 +435,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
             }
         } else {
             int i = 0;
-            for (Layer l : layers) {
+            for (DataLayer l : layers) {
                 if (i == 0 | i == (layers.size() - 1)) {
                     l.setEmbedded(false);
                 } else{

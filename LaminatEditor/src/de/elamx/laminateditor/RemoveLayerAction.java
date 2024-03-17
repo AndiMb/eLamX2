@@ -25,7 +25,7 @@
  */
 package de.elamx.laminateditor;
 
-import de.elamx.laminate.Layer;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminateditor.LayerNodeFactory.LayerNode;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,10 +56,10 @@ public final class RemoveLayerAction implements ActionListener {
             return;
         }
         
-        ArrayList<Layer> layers = new ArrayList<>(context.size());
+        ArrayList<DataLayer> layers = new ArrayList<>(context.size());
         
         for (LayerNode layerNode : context) {
-            layers.add(layerNode.getLookup().lookup(Layer.class));
+            layers.add(layerNode.getLookup().lookup(DataLayer.class));
         }
         
         context.get(0).getLaminate().removeLayers(layers);

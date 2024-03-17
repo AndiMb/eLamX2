@@ -25,7 +25,7 @@
  */
 package de.elamx.laminateditor;
 
-import de.elamx.laminate.Layer;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.LayerMaterial;
 import de.elamx.laminate.eLamXLookup;
 import java.awt.Component;
@@ -53,10 +53,10 @@ import org.openide.util.NbBundle;
  */
 public class MaterialProperty extends PropertySupport.ReadWrite<LayerMaterial> {
 
-    Layer layer;
+    DataLayer layer;
 
-    public MaterialProperty(Layer layer) {
-        super(Layer.PROP_MATERIAL, LayerMaterial.class, NbBundle.getMessage(LayerNodeFactory.class, "LayerNode.Material"), NbBundle.getMessage(LayerNodeFactory.class, "LayerNode.Material.description"));
+    public MaterialProperty(DataLayer layer) {
+        super(DataLayer.PROP_MATERIAL, LayerMaterial.class, NbBundle.getMessage(LayerNodeFactory.class, "LayerNode.Material"), NbBundle.getMessage(LayerNodeFactory.class, "LayerNode.Material.description"));
         this.layer = layer;
     }
 
@@ -77,9 +77,9 @@ public class MaterialProperty extends PropertySupport.ReadWrite<LayerMaterial> {
 
     private class MaterialPropertyEditorSupport extends PropertyEditorSupport implements ExPropertyEditor, InplaceEditor.Factory {
 
-        private final Layer layer;
+        private final DataLayer layer;
 
-        private MaterialPropertyEditorSupport(Layer layer) {
+        private MaterialPropertyEditorSupport(DataLayer layer) {
             this.layer = layer;
         }
 
@@ -115,11 +115,11 @@ public class MaterialProperty extends PropertySupport.ReadWrite<LayerMaterial> {
     private class Inplace extends JComboBox<LayerMaterial> implements InplaceEditor {
 
         private PropertyEditor editor = null;
-        private final Layer layer;
+        private final DataLayer layer;
         private final ItemListener myItemList = new MyItemListener();
         private boolean connecting = false;
 
-        private Inplace(final Layer layer) {
+        private Inplace(final DataLayer layer) {
             this.layer = layer;
         }
 

@@ -27,8 +27,8 @@ package de.elamx.clt.optimization.sda;
 
 import de.elamx.clt.optimization.OptimizationInput;
 import de.elamx.clt.optimization.Optimizer;
+import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.Laminat;
-import de.elamx.laminate.Layer;
 import de.elamx.laminate.optimization.MinimalReserveFactorCalculator;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -58,7 +58,7 @@ public class SequentialDecisionApproach extends Optimizer{
         double[] angles = input.getAngles();
         ArrayList<MinimalReserveFactorCalculator> calculators = input.getCalculators();
 
-        Layer baseLayer = new Layer("", NbBundle.getMessage(Optimizer.class, "Optimized_Layer") + " " + atomicLayerCounter.incrementAndGet(), input.getMaterial(), 0.0, input.getThickness(), input.getCriterion());
+        DataLayer baseLayer = new DataLayer("", NbBundle.getMessage(Optimizer.class, "Optimized_Layer") + " " + atomicLayerCounter.incrementAndGet(), input.getMaterial(), 0.0, input.getThickness(), input.getCriterion());
 
         Laminat laminat = new Laminat(UUID.randomUUID().toString(), NbBundle.getMessage(Optimizer.class, "Optimized_Laminate") + " " + atomicLaminateCounter.incrementAndGet(), false);
 
@@ -84,7 +84,7 @@ public class SequentialDecisionApproach extends Optimizer{
         int numberOfConstraintEvals = 0;
 
         while (minReserveFactor < 1.0) {
-            Layer actLayer = baseLayer.getCopyWithoutListeners(baseLayer.getAngle());
+            DataLayer actLayer = baseLayer.getCopyWithoutListeners(baseLayer.getAngle());
 
             laminat.addLayer(laminat.getNumberofLayers()/2,actLayer);
 
