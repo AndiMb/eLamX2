@@ -25,7 +25,10 @@
  */
 package de.elamx.clt;
 
+import de.elamx.laminate.DataLayer;
+import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Layer;
+import de.elamx.laminate.LayerMaterial;
 import de.elamx.laminate.Material;
 import de.elamx.laminate.StressStrainState;
 import de.elamx.laminate.failure.ReserveFactor;
@@ -263,5 +266,51 @@ public class CLT_Calculator {
         }
 
         return rs;
+    }
+
+    public static void determineValuesLastPlyFailure(CLT_Laminate lam, Loads loads, Strains strains, boolean[] useStrain) {
+         
+        CLT_Layer[] origLayers = lam.getCLTLayers();
+
+        CLT_Layer[] layers = new CLT_Layer[origLayers.length];
+        
+        int numLayers = origLayers.length;   // Anzahl der Lagen
+        
+        double[] RF_ZFB  = new double[numLayers];
+        double[] RF_FB  = new double[numLayers];
+
+        /*
+        Copy all Layers to be able to change the Stiffness for final failure
+         */
+        for (int ii = 0; ii < numLayers; ii++) {
+            Layer oldL = origLayers[ii].getLayer();
+            Layer newL = new DataLayer("1", "noname", getAsDefaultMaterial(oldL.getMaterial()), oldL.getAngle(), oldL.getThickness(), oldL.getCriterion());
+            layers[ii] = new CLT_Layer(newL);
+            layers[ii].setZm(origLayers[ii].getZm());
+            RF_ZFB[ii] = Double.NaN;
+            RF_FB[ii] = Double.NaN;
+        }
+        
+        
+    }
+
+    private static DefaultMaterial getAsDefaultMaterial(LayerMaterial material) {
+        DefaultMaterial mat = new DefaultMaterial("1", "",
+                material.getEpar(),
+                material.getEnor(),
+                material.getNue12(),
+                material.getG(),
+                0.0,
+                false);
+
+        mat.setRNorCom(material.getRNorCom());
+        mat.setRNorTen(material.getRNorTen());
+        mat.setRParCom(material.getRParCom());
+        mat.setRParTen(material.getRParTen());
+        mat.setRShear(material.getRShear());
+        for (String key : mat.getAdditionalValueKeySet()) {
+            mat.putAdditionalValue(key, mat.getAdditionalValue(key));
+        }
+        return mat;
     }
 }
