@@ -58,7 +58,7 @@ public class CalculationOutputStreamImpl implements outputStreamService {
         for (CalculationModuleData data : col) {
             CLT_Calculator.determineValues(clt_lam, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), data.getDataHolder().isUseStrains());
             CLT_LayerResult[] layerResults = CLT_Calculator.getLayerResults(data.getLaminat().getLookup().lookup(CLT_Laminate.class), data.getDataHolder().getLoad(), data.getDataHolder().getStrains());
-            writeResults(System.out, data, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), layerResults);
+            writeResults(ps, data, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), layerResults);
         }
     }
 

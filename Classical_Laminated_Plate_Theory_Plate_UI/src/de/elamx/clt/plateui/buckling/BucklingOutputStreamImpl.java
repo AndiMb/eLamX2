@@ -56,7 +56,7 @@ public class BucklingOutputStreamImpl implements outputStreamService{
         
         for (BucklingModuleData data : col){
             BucklingResult result = Buckling.calc(clt_lam, data.getBucklingInput());
-            writeResults(System.out, data, data.getLaminat(), result);
+            writeResults(ps, data, data.getLaminat(), result);
         }
     }
     
