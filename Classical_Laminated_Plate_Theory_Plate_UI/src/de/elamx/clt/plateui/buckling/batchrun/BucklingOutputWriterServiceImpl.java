@@ -23,9 +23,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.plateui.buckling;
+package de.elamx.clt.plateui.buckling.batchrun;
 
 import de.elamx.clt.plate.BucklingResult;
+import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.Laminat;
 import de.elamx.utilities.Utilities;
 import java.io.PrintStream;
@@ -36,7 +37,7 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Andreas Hauffe
  */
-@ServiceProvider(service=BucklingOutputWriterService.class)
+@ServiceProvider(service=BucklingOutputWriterService.class, position=1)
 public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterService{
     
     @Override

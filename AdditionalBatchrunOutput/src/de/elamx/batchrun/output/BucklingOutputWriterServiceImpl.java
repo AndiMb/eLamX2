@@ -23,41 +23,25 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.plateui.buckling;
+package de.elamx.batchrun.output;
 
-import de.elamx.clt.CLT_Laminate;
-import de.elamx.clt.plate.Buckling;
 import de.elamx.clt.plate.BucklingResult;
+import de.elamx.clt.plateui.buckling.BucklingModuleData;
+import de.elamx.clt.plateui.buckling.batchrun.BucklingOutputWriterService;
 import de.elamx.laminate.Laminat;
 import java.io.PrintStream;
-import java.util.Collection;
 import org.openide.util.lookup.ServiceProvider;
-import de.elamx.core.BatchRunService;
-import org.openide.util.Lookup;
 
 /**
  *
  * @author Andreas Hauffe
  */
-@ServiceProvider(service=BatchRunService.class)
-public class BucklingBatchRunServiceImpl implements BatchRunService{
+@ServiceProvider(service=BucklingOutputWriterService.class, position=1000)
+public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterService{
 
     @Override
-    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps) {
-        Collection<? extends BucklingModuleData> col = laminate.getLookup().lookupAll(BucklingModuleData.class);
-        if (col.isEmpty()){
-            return;
-        }
-        CLT_Laminate clt_lam = laminate.getLookup().lookup(CLT_Laminate.class);
-        if (clt_lam == null) {
-            clt_lam = new CLT_Laminate(laminate);
-        }
-        
-        BucklingOutputWriterService outputWriter = Lookup.getDefault().lookup(BucklingOutputWriterService.class);
-        
-        for (BucklingModuleData data : col){
-            BucklingResult result = Buckling.calc(clt_lam, data.getBucklingInput());
-            outputWriter.writeResults(ps, data, data.getLaminat(), result);
-        }
+    public void writeResults(PrintStream out, BucklingModuleData data, Laminat laminate, BucklingResult result) {
+        out.println("Buckling Output for " + data.getLaminat().getName());
     }
+    
 }

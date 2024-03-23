@@ -23,15 +23,18 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.core;
+package de.elamx.clt.calculation.batchrun;
 
-import de.elamx.laminate.Laminat;
+import de.elamx.clt.CLT_LayerResult;
+import de.elamx.clt.Loads;
+import de.elamx.clt.Strains;
+import de.elamx.clt.calculation.CalculationModuleData;
 import java.io.PrintStream;
 
 /**
  *
  * @author Andreas Hauffe
  */
-public interface BatchRunService {
-    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, int outputType);
+public interface CalculationOutputWriterService {
+    public void writeResults(PrintStream out, CalculationModuleData data, Loads loads, Strains strain, CLT_LayerResult[] results);
 }

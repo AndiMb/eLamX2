@@ -23,16 +23,28 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.plateui.buckling;
+package de.elamx.batchrun.output;
 
-import de.elamx.clt.plate.BucklingResult;
+import de.elamx.core.GeneralOutputWriterService;
 import de.elamx.laminate.Laminat;
 import java.io.PrintStream;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Andreas Hauffe
  */
-public interface BucklingOutputWriterService {
-    public void writeResults(PrintStream out, BucklingModuleData data, Laminat laminate, BucklingResult result);
+@ServiceProvider(service=GeneralOutputWriterService.class, position=1000)
+public class GeneralOutputWriterServiceImpl implements GeneralOutputWriterService{
+
+    @Override
+    public void writeHeader(PrintStream out) {
+        out.println("Header");
+    }
+
+    @Override
+    public void writeLaminateInformation(PrintStream out, Laminat laminate) {
+        out.println("LaminatInfo" + laminate.getName());
+    }
+    
 }

@@ -23,28 +23,31 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.calculation;
+package de.elamx.clt.plateui.buckling.batchrun;
 
-import de.elamx.clt.CLT_Calculator;
 import de.elamx.clt.CLT_Laminate;
-import de.elamx.clt.CLT_LayerResult;
+import de.elamx.clt.plate.Buckling;
+import de.elamx.clt.plate.BucklingResult;
+import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.Laminat;
 import java.io.PrintStream;
 import java.util.Collection;
 import org.openide.util.lookup.ServiceProvider;
 import de.elamx.core.BatchRunService;
+import java.util.ArrayList;
+import java.util.List;
 import org.openide.util.Lookup;
 
 /**
  *
  * @author Andreas Hauffe
  */
-@ServiceProvider(service = BatchRunService.class)
-public class CalculationBatchRunServiceImpl implements BatchRunService {
+@ServiceProvider(service=BatchRunService.class)
+public class BucklingBatchRunServiceImpl implements BatchRunService{
 
     @Override
-    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps) {
-        Collection<? extends CalculationModuleData> col = laminate.getLookup().lookupAll(CalculationModuleData.class);
+    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, int outputType) {
+        Collection<? extends BucklingModuleData> col = laminate.getLookup().lookupAll(BucklingModuleData.class);
         if (col.isEmpty()){
             return;
         }
@@ -53,12 +56,12 @@ public class CalculationBatchRunServiceImpl implements BatchRunService {
             clt_lam = new CLT_Laminate(laminate);
         }
         
-        CalculationOutputWriterServiceImpl outputWriter = Lookup.getDefault().lookup(CalculationOutputWriterServiceImpl.class);
+        List<BucklingOutputWriterService> writerServices = new ArrayList<>(Lookup.getDefault().lookupAll(BucklingOutputWriterService.class));
+        BucklingOutputWriterService outputWriter = writerServices.get(Math.min(Math.max(outputType, 0),writerServices.size()-1));
         
-        for (CalculationModuleData data : col) {
-            CLT_Calculator.determineValues(clt_lam, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), data.getDataHolder().isUseStrains());
-            CLT_LayerResult[] layerResults = CLT_Calculator.getLayerResults(data.getLaminat().getLookup().lookup(CLT_Laminate.class), data.getDataHolder().getLoad(), data.getDataHolder().getStrains());
-            outputWriter.writeResults(ps, data, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), layerResults);
+        for (BucklingModuleData data : col){
+            BucklingResult result = Buckling.calc(clt_lam, data.getBucklingInput());
+            outputWriter.writeResults(ps, data, data.getLaminat(), result);
         }
     }
 }

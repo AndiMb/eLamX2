@@ -40,10 +40,9 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Andreas Hauffe
  */
-@ServiceProvider(service=GeneralOutputWriterService.class)
+@ServiceProvider(service=GeneralOutputWriterService.class, position=1)
 public class GeneralOutputWriterServiceImpl implements GeneralOutputWriterService{
     
-
     /**
      * Schreiben allgemeiner Informationen zum eLamX-Lauf.
      *

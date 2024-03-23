@@ -46,6 +46,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import de.elamx.core.BatchRunService;
 import de.elamx.core.GeneralOutputWriterService;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -55,13 +57,15 @@ import de.elamx.core.GeneralOutputWriterService;
 public class eLamXOptionProcessor extends OptionProcessor {
 
     private final Option inputOption = Option.requiredArgument('i', "input");
-    private final Option outputOption = Option.requiredArgument('o', "output");
+    private final Option outputOption = Option.optionalArgument('o', "output");
+    private final Option outputTypeOption = Option.optionalArgument('t', "outputtype");
 
     @Override
     protected Set<Option> getOptions() {
         Set<Option> set = new HashSet<>();
         set.add(inputOption);
         set.add(outputOption);
+        set.add(outputTypeOption);
         return set;
     }
 
@@ -103,7 +107,13 @@ public class eLamXOptionProcessor extends OptionProcessor {
             }
         }
         
-        GeneralOutputWriterService writerService = Lookup.getDefault().lookup(GeneralOutputWriterService.class);
+        int outputType = 0;
+        if (maps.containsKey(outputTypeOption)) {
+            outputType = Integer.parseInt(maps.get(outputTypeOption)[0]);
+        }
+        
+        List<GeneralOutputWriterService> writerServices = new ArrayList<>(Lookup.getDefault().lookupAll(GeneralOutputWriterService.class));
+        GeneralOutputWriterService writerService = writerServices.get(Math.min(Math.max(outputType, 0),writerServices.size()-1));
 
         // Schreiben des Headers
         writerService.writeHeader(out);
@@ -117,7 +127,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
             Berechnungen und Ausgaben anzustoßen, z.B. das Berechnungsmodul.
              */
             for (BatchRunService tos : Lookup.getDefault().lookupAll(BatchRunService.class)) {
-                tos.performBatchTasksAndOutput(lam, out);
+                tos.performBatchTasksAndOutput(lam, out, outputType);
             }
         }
 

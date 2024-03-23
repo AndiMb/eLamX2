@@ -23,11 +23,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.calculation;
+package de.elamx.clt.calculation.batchrun;
 
 import de.elamx.clt.CLT_LayerResult;
 import de.elamx.clt.Loads;
 import de.elamx.clt.Strains;
+import de.elamx.clt.calculation.CalculationModuleData;
 import de.elamx.utilities.Utilities;
 import java.io.PrintStream;
 import java.util.Locale;
@@ -37,7 +38,7 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Andreas Hauffe
  */
-@ServiceProvider(service=CalculationOutputWriterService.class)
+@ServiceProvider(service=CalculationOutputWriterService.class, position=1)
 public class CalculationOutputWriterServiceImpl implements CalculationOutputWriterService{
 
     @Override
