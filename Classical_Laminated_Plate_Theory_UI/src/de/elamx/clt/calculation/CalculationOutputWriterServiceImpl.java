@@ -25,16 +25,11 @@
  */
 package de.elamx.clt.calculation;
 
-import de.elamx.clt.CLT_Calculator;
-import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.CLT_LayerResult;
 import de.elamx.clt.Loads;
 import de.elamx.clt.Strains;
-import de.elamx.core.outputStreamService;
-import de.elamx.laminate.Laminat;
 import de.elamx.utilities.Utilities;
 import java.io.PrintStream;
-import java.util.Collection;
 import java.util.Locale;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -42,27 +37,11 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Andreas Hauffe
  */
-@ServiceProvider(service = outputStreamService.class)
-public class CalculationOutputStreamImpl implements outputStreamService {
+@ServiceProvider(service=CalculationOutputWriterService.class)
+public class CalculationOutputWriterServiceImpl implements CalculationOutputWriterService{
 
     @Override
-    public void writeToStream(Laminat laminate, PrintStream ps) {
-        Collection<? extends CalculationModuleData> col = laminate.getLookup().lookupAll(CalculationModuleData.class);
-        if (col.isEmpty()){
-            return;
-        }
-        CLT_Laminate clt_lam = laminate.getLookup().lookup(CLT_Laminate.class);
-        if (clt_lam == null) {
-            clt_lam = new CLT_Laminate(laminate);
-        }
-        for (CalculationModuleData data : col) {
-            CLT_Calculator.determineValues(clt_lam, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), data.getDataHolder().isUseStrains());
-            CLT_LayerResult[] layerResults = CLT_Calculator.getLayerResults(data.getLaminat().getLookup().lookup(CLT_Laminate.class), data.getDataHolder().getLoad(), data.getDataHolder().getStrains());
-            writeResults(ps, data, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), layerResults);
-        }
-    }
-
-    private void writeResults(PrintStream out, CalculationModuleData data, Loads loads, Strains strain, CLT_LayerResult[] results) {
+    public void writeResults(PrintStream out, CalculationModuleData data, Loads loads, Strains strain, CLT_LayerResult[] results) {
 
         out.println("********************************************************************************");
         out.println(Utilities.centeredText("CLASSICAL LAMINATED PLATE THEORY", 80));
@@ -129,4 +108,5 @@ public class CalculationOutputStreamImpl implements outputStreamService {
         out.println();
         out.println();
     }
+    
 }

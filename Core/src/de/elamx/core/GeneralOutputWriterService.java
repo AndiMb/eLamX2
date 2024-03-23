@@ -32,6 +32,9 @@ import java.io.PrintStream;
  *
  * @author Andreas Hauffe
  */
-public interface outputStreamService {
-    public void writeToStream(Laminat laminate, PrintStream ps);
+public interface GeneralOutputWriterService {
+    
+    public void writeHeader(PrintStream out);
+    
+    public void writeLaminateInformation(PrintStream out, Laminat laminate);
 }
