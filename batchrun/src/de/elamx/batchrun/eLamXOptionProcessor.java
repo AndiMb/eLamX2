@@ -106,14 +106,14 @@ public class eLamXOptionProcessor extends OptionProcessor {
                 Logger.getLogger(eLamXOptionProcessor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         int outputType = 0;
         if (maps.containsKey(outputTypeOption)) {
             outputType = Integer.parseInt(maps.get(outputTypeOption)[0]);
         }
-        
+
         List<GeneralOutputWriterService> writerServices = new ArrayList<>(Lookup.getDefault().lookupAll(GeneralOutputWriterService.class));
-        GeneralOutputWriterService writerService = writerServices.get(Math.min(Math.max(outputType, 0),writerServices.size()-1));
+        GeneralOutputWriterService writerService = writerServices.get(Math.min(Math.max(outputType, 0), writerServices.size() - 1));
 
         // Schreiben des Headers
         writerService.writeHeader(out);
