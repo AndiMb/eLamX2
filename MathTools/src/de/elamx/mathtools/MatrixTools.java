@@ -25,8 +25,6 @@
  */
 package de.elamx.mathtools;
 
-import java.util.Arrays;
-
 /**
  *
  * @author Andreas Hauffe

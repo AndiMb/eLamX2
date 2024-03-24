@@ -29,20 +29,16 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javax.swing.Action;
 import javax.swing.UIManager;
 import org.openide.ErrorManager;
-import org.openide.awt.HtmlBrowser;
 import org.openide.cookies.InstanceCookie;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.modules.Places;
 import org.openide.util.Exceptions;
-import org.openide.util.NbBundle;
 
 /**
  *

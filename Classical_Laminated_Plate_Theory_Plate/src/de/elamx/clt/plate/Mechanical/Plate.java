@@ -28,7 +28,6 @@ package de.elamx.clt.plate.Mechanical;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.CLT_Laminate.MassMoments;
 import de.elamx.clt.plate.Boundary.Boundary;
-import de.elamx.mathtools.MatrixTools;
 
 /*
  * To change this template, choose Tools | Templates

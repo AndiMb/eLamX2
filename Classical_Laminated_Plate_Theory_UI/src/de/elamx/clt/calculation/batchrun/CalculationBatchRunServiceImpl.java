@@ -29,14 +29,14 @@ import de.elamx.clt.CLT_Calculator;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.CLT_LayerResult;
 import de.elamx.clt.calculation.CalculationModuleData;
+import de.elamx.core.BatchRunService;
 import de.elamx.laminate.Laminat;
 import java.io.PrintStream;
-import java.util.Collection;
-import org.openide.util.lookup.ServiceProvider;
-import de.elamx.core.BatchRunService;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.openide.util.Lookup;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *

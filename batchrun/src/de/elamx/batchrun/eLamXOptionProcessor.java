@@ -25,12 +25,20 @@
  */
 package de.elamx.batchrun;
 
+import de.elamx.core.BatchRunService;
+import de.elamx.core.GeneralOutputWriterService;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.eLamXLookup;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.netbeans.api.sendopts.CommandException;
 import org.netbeans.spi.sendopts.Env;
 import org.netbeans.spi.sendopts.Option;
@@ -40,14 +48,6 @@ import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import de.elamx.core.BatchRunService;
-import de.elamx.core.GeneralOutputWriterService;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

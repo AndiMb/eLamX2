@@ -14,7 +14,6 @@ import java.util.Objects;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.axis.TickUnit;
 import org.jfree.chart.axis.TickUnitSource;
-import org.jfree.chart.util.ObjectUtils;
 
 /**
  * A tick unit source implementation that returns NumberTickUnit instances 
