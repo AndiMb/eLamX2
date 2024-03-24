@@ -26,7 +26,6 @@
 package de.elamx.laminateditor;
 
 import de.elamx.laminate.DataLayer;
-import de.elamx.laminate.Layer;
 import de.elamx.laminateditor.LayerNodeFactory.LayerNode;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;

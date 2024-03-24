@@ -32,8 +32,8 @@ import de.elamx.laminate.failure.Puck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  *

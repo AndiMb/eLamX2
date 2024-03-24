@@ -57,7 +57,6 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.eLamXChartPanel;
 import org.jfree.eLamXNumberTickUnitSource;
 import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.util.Lookup;

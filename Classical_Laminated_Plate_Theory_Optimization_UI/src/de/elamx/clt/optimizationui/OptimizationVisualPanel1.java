@@ -33,7 +33,6 @@ import de.elamx.laminate.eLamXLookup;
 import de.elamx.laminate.failure.Criterion;
 import de.elamx.laminate.failure.Puck;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Collections;

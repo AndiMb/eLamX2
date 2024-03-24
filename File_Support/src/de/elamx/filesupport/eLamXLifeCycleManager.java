@@ -56,7 +56,7 @@ public class eLamXLifeCycleManager extends LifecycleManager {
     @Override
     public void exit() {
         boolean close = true;
-        if (eLamXLookup.getDefault().getDataObject().isModified()) {
+        if (eLamXLookup.getDefault().getDataObject() != null && eLamXLookup.getDefault().getDataObject().isModified()) {
             NotifyDescriptor.Confirmation message = new NotifyDescriptor.Confirmation(NbBundle.getMessage(Installer.class, "SaveFileMessage", eLamXLookup.getDefault().getFileObject().getName()),
                     NotifyDescriptor.YES_NO_CANCEL_OPTION,
                     NotifyDescriptor.QUESTION_MESSAGE);

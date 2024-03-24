@@ -25,8 +25,8 @@
  */
 package de.elamx.clt.optimizationui.actions;
 
-import de.elamx.clt.optimizationui.OptimizationTopComponent;
 import de.elamx.clt.optimizationui.OptimizationModuleData;
+import de.elamx.clt.optimizationui.OptimizationTopComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.openide.awt.ActionID;

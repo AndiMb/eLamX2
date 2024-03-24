@@ -23,8 +23,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.core;
+package de.elamx.clt.plateui.buckling.batchrun;
 
+import de.elamx.clt.plate.BucklingResult;
+import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.Laminat;
 import java.io.PrintStream;
 
@@ -32,6 +34,6 @@ import java.io.PrintStream;
  *
  * @author Andreas Hauffe
  */
-public interface outputStreamService {
-    public void writeToStream(Laminat laminate, PrintStream ps);
+public interface BucklingOutputWriterService {
+    public void writeResults(PrintStream out, BucklingModuleData data, Laminat laminate, BucklingResult result);
 }

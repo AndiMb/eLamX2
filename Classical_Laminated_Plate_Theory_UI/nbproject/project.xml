@@ -153,6 +153,7 @@
             </module-dependencies>
             <public-packages>
                 <package>de.elamx.clt.calculation</package>
+                <package>de.elamx.clt.calculation.batchrun</package>
                 <package>de.elamx.clt.calculation.calc</package>
                 <package>de.elamx.clt.calculation.interfaces</package>
             </public-packages>

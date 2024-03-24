@@ -265,9 +265,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                             .addComponent(widthField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lengthField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(termsSpinner)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(DmatrixOptionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(DmatrixOptionsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

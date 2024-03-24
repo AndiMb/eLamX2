@@ -33,7 +33,6 @@ import de.elamx.clt.plateui.stiffenerui.StiffenerPanel;
 import de.view3d.View3D;
 import java.awt.EventQueue;
 import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.util.Lookup;

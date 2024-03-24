@@ -25,11 +25,6 @@
  */
 package de.elamx.laminate.addFailureCriteriaLSDYNA;
 
-import com.ardor3d.math.Vector3;
-import com.ardor3d.renderer.IndexMode;
-import com.ardor3d.scenegraph.Mesh;
-import com.ardor3d.scenegraph.MeshData;
-import com.ardor3d.util.geom.BufferUtils;
 import de.elamx.laminate.Layer;
 import de.elamx.laminate.Material;
 import de.elamx.laminate.StressStrainState;
