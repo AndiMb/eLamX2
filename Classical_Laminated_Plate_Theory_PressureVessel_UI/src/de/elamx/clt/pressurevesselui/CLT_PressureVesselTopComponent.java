@@ -30,7 +30,6 @@ import de.elamx.clt.CLT_Calculator;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.CLT_LayerResult;
 import de.elamx.clt.Loads;
-import de.elamx.clt.calculation.CalculationModuleData;
 import de.elamx.clt.calculation.LayerResultContainer;
 import de.elamx.clt.calculation.calc.ResultTableModel;
 import de.elamx.clt.pressurevessel.PressureVesselInput;
@@ -528,7 +527,7 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
             data.getPressureVesselInput().setPressure(((Number)pressureField.getValue()).doubleValue());
             data.getPressureVesselInput().setRadius(((Number)radiusField.getValue()).doubleValue());
         } else if (evt.getSource() instanceof Laminat && evt.getPropertyName().equals(Laminat.PROP_NAME)
-                || evt.getSource() instanceof CalculationModuleData && evt.getPropertyName().equals(CalculationModuleData.PROP_NAME)) {
+                || evt.getSource() instanceof PressureVesselModuleData && evt.getPropertyName().equals(PressureVesselModuleData.PROP_NAME)) {
             setName(this.data.getName() + " - " + this.data.getLaminat().getName());
         } else if (evt.getSource() instanceof PressureVesselInput) {
             recalc();
