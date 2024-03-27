@@ -27,6 +27,7 @@ package de.elamx.clt;
 
 import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.DefaultMaterial;
+import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
 import de.elamx.laminate.LayerMaterial;
 import de.elamx.laminate.Material;
@@ -269,29 +270,51 @@ public class CLT_Calculator {
     }
 
     public static void determineValuesLastPlyFailure(CLT_Laminate lam, Loads loads, Strains strains, boolean[] useStrain) {
-         
-        CLT_Layer[] origLayers = lam.getCLTLayers();
 
-        CLT_Layer[] layers = new CLT_Layer[origLayers.length];
-        
-        int numLayers = origLayers.length;   // Anzahl der Lagen
-        
-        double[] RF_ZFB  = new double[numLayers];
-        double[] RF_FB  = new double[numLayers];
+        double matReductionFactor = 0.01;
 
-        /*
-        Copy all Layers to be able to change the Stiffness for final failure
-         */
-        for (int ii = 0; ii < numLayers; ii++) {
-            Layer oldL = origLayers[ii].getLayer();
-            Layer newL = new DataLayer("1", "noname", getAsDefaultMaterial(oldL.getMaterial()), oldL.getAngle(), oldL.getThickness(), oldL.getCriterion());
-            layers[ii] = new CLT_Layer(newL);
-            layers[ii].setZm(origLayers[ii].getZm());
-            RF_ZFB[ii] = Double.NaN;
-            RF_FB[ii] = Double.NaN;
+        int numLayers = lam.getCLTLayers().length;   // Anzahl der Lagen
+
+        // Kopieren des Laminats
+        Laminat tempLam = lam.getLaminat().getCopy(false);
+        for (Layer lay : tempLam.getLayers()) {
+            if (lay instanceof DataLayer dataLayer) {
+                dataLayer.setMaterial(getAsDefaultMaterial(lay.getMaterial()));
+            }
         }
-        
-        
+        CLT_Laminate clt_lam = new CLT_Laminate(tempLam);
+
+        for (int iter = 0; iter < 2 * numLayers; iter++) {
+            determineValues(clt_lam, loads, strains, useStrain);
+
+            CLT_LayerResult[] layerResults = getLayerResults(clt_lam, loads, strains);
+
+            ReserveFactor rf_min = null;
+            int minLayerIndex = -1;
+            for (int ii = 0; ii < layerResults.length; ii++) {
+                ReserveFactor rf_lower_min = layerResults[ii].getRr_lower();
+                ReserveFactor rf_upper_min = layerResults[ii].getRr_upper();
+
+                if (rf_min == null || rf_min.getMinimalReserveFactor() > rf_lower_min.getMinimalReserveFactor()) {
+                    rf_min = rf_lower_min;
+                    minLayerIndex = ii;
+                }
+                if (rf_min.getMinimalReserveFactor() > rf_upper_min.getMinimalReserveFactor()) {
+                    rf_min = rf_upper_min;
+                    minLayerIndex = ii;
+                }
+            }
+
+            DefaultMaterial mat = (DefaultMaterial) layerResults[minLayerIndex].getLayer().getMaterial();
+            mat.setEnor(matReductionFactor * mat.getEnor());
+            mat.setG(matReductionFactor * mat.getG());
+
+            if (rf_min.getFailureType() == ReserveFactor.GENERAL_MATERIAL_FAILURE || rf_min.getFailureType() == ReserveFactor.FIBER_FAILURE) {
+                mat.setEpar(matReductionFactor * mat.getEpar());
+            }
+
+            clt_lam.refresh();
+        }
     }
 
     private static DefaultMaterial getAsDefaultMaterial(LayerMaterial material) {

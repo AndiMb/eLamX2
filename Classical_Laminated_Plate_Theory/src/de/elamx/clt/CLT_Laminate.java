@@ -79,6 +79,10 @@ public class CLT_Laminate extends CLT_Object{
         refresh();
         this.laminat.getLookup().add(this);
     }
+    
+    protected Laminat getLaminat(){
+        return laminat;
+    }
 
     /**
      * Alle notwendigen Daten des Laminates werden neu berechnet.
