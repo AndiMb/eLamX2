@@ -98,19 +98,48 @@ public final class CLT_LastPlyFailureTopComponentTopComponent extends TopCompone
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        calculationButton = new javax.swing.JButton();
+
+        org.openide.awt.Mnemonics.setLocalizedText(calculationButton, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponentTopComponent.class, "CLT_LastPlyFailureTopComponentTopComponent.calculationButton.text")); // NOI18N
+        calculationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculationButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(calculationButton)
+                .addContainerGap(315, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(calculationButton)
+                .addContainerGap(271, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void calculationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculationButtonActionPerformed
+        
+        Loads loads = new Loads();
+        loads.setN_x(1.0);
+        loads.setN_y(1.0);
+        loads.setN_xy(1.0);
+        Strains strains = new Strains();
+        boolean[] useStrain = new boolean[]{false,false,false,false,false,false};
+        
+        CLT_Calculator.determineValuesLastPlyFailure(clt_lam, loads, strains, useStrain);
+        
+    }//GEN-LAST:event_calculationButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton calculationButton;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {

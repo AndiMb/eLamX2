@@ -284,6 +284,14 @@ public class CLT_Calculator {
         }
         CLT_Laminate clt_lam = new CLT_Laminate(tempLam);
 
+        boolean[] zfw_fail = new boolean[numLayers];
+        boolean[] fb_fail = new boolean[numLayers];
+
+        for (int ii = 0; ii < numLayers; ii++) {
+            zfw_fail[ii] = false;
+            fb_fail[ii] = false;
+        }
+
         for (int iter = 0; iter < 2 * numLayers; iter++) {
             determineValues(clt_lam, loads, strains, useStrain);
 
@@ -306,14 +314,33 @@ public class CLT_Calculator {
             }
 
             DefaultMaterial mat = (DefaultMaterial) layerResults[minLayerIndex].getLayer().getMaterial();
-            mat.setEnor(matReductionFactor * mat.getEnor());
-            mat.setG(matReductionFactor * mat.getG());
+            if (!zfw_fail[minLayerIndex]) {
+                if (rf_min.getFailureType() == ReserveFactor.MATRIX_FAILURE) {
+                    mat.setEnor(matReductionFactor * mat.getEnor());
+                    mat.setG(matReductionFactor * mat.getG());
+                    zfw_fail[minLayerIndex] = true;
+                }
+            }
 
-            if (rf_min.getFailureType() == ReserveFactor.GENERAL_MATERIAL_FAILURE || rf_min.getFailureType() == ReserveFactor.FIBER_FAILURE) {
-                mat.setEpar(matReductionFactor * mat.getEpar());
+            if (!fb_fail[minLayerIndex]) {
+                if (rf_min.getFailureType() == ReserveFactor.GENERAL_MATERIAL_FAILURE || rf_min.getFailureType() == ReserveFactor.FIBER_FAILURE) {
+                    mat.setEpar(matReductionFactor * mat.getEpar());
+                    mat.setEnor(matReductionFactor * mat.getEnor());
+                    mat.setG(matReductionFactor * mat.getG());
+                    zfw_fail[minLayerIndex] = true;
+                    fb_fail[minLayerIndex] = true;
+                }
             }
 
             clt_lam.refresh();
+
+            System.out.println("RF_min:      " + rf_min.getMinimalReserveFactor());
+            System.out.println("FailureType: " + rf_min.getFailureName());
+            System.out.println("Layer:       " + layerResults[minLayerIndex].getLayer().getNumber());
+            for (int ii = 0; ii < numLayers; ii++) {
+                System.out.println("Layerfailure " + fb_fail[ii] + " " + zfw_fail[ii]);
+            }
+            System.out.println("");
         }
     }
 
