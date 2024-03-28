@@ -104,7 +104,7 @@ public class LastPlyFailureDataNode extends AbstractNode implements PropertyChan
 
     @Override
     public Action getPreferredAction() {
-        return Actions.forID("Pressurevessel", "de.elamx.clt.calculation.lastplyfailure.actions.OpenLastPlyFailureAction");
+        return Actions.forID("Lastplyfailure", "de.elamx.clt.calculation.lastplyfailure.actions.OpenLastPlyFailureAction");
     }
 
     @Override

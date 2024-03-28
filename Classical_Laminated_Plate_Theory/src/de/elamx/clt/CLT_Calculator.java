@@ -271,7 +271,7 @@ public class CLT_Calculator {
 
     public static void determineValuesLastPlyFailure(CLT_Laminate lam, Loads loads, Strains strains, boolean[] useStrain) {
 
-        double matReductionFactor = 0.01;
+        double matReductionFactor = 0.0001;
 
         int numLayers = lam.getCLTLayers().length;   // Anzahl der Lagen
 
@@ -292,6 +292,7 @@ public class CLT_Calculator {
             fb_fail[ii] = false;
         }
 
+        boolean lastIteration = false;
         for (int iter = 0; iter < 2 * numLayers; iter++) {
             determineValues(clt_lam, loads, strains, useStrain);
 
@@ -314,33 +315,42 @@ public class CLT_Calculator {
             }
 
             DefaultMaterial mat = (DefaultMaterial) layerResults[minLayerIndex].getLayer().getMaterial();
-            if (!zfw_fail[minLayerIndex]) {
-                if (rf_min.getFailureType() == ReserveFactor.MATRIX_FAILURE) {
+            if (rf_min.getFailureType() == ReserveFactor.MATRIX_FAILURE) {
+                if (!zfw_fail[minLayerIndex]) {
                     mat.setEnor(matReductionFactor * mat.getEnor());
                     mat.setG(matReductionFactor * mat.getG());
                     zfw_fail[minLayerIndex] = true;
+                } else {
+                    lastIteration = true;
                 }
             }
 
-            if (!fb_fail[minLayerIndex]) {
-                if (rf_min.getFailureType() == ReserveFactor.GENERAL_MATERIAL_FAILURE || rf_min.getFailureType() == ReserveFactor.FIBER_FAILURE) {
+            if (rf_min.getFailureType() == ReserveFactor.GENERAL_MATERIAL_FAILURE || rf_min.getFailureType() == ReserveFactor.FIBER_FAILURE) {
+                if (!fb_fail[minLayerIndex]) {
                     mat.setEpar(matReductionFactor * mat.getEpar());
                     mat.setEnor(matReductionFactor * mat.getEnor());
                     mat.setG(matReductionFactor * mat.getG());
                     zfw_fail[minLayerIndex] = true;
                     fb_fail[minLayerIndex] = true;
+                } else {
+                    lastIteration = true;
                 }
             }
 
-            clt_lam.refresh();
-
-            System.out.println("RF_min:      " + rf_min.getMinimalReserveFactor());
-            System.out.println("FailureType: " + rf_min.getFailureName());
-            System.out.println("Layer:       " + layerResults[minLayerIndex].getLayer().getNumber());
+            System.out.println("Result für Iteration #" + (iter+1));
+            System.out.println("  Layer:       " + layerResults[minLayerIndex].getLayer().getNumber());
+            System.out.println("  RF_min:      " + rf_min.getMinimalReserveFactor());
+            System.out.println("  FailureType: " + rf_min.getFailureName());
             for (int ii = 0; ii < numLayers; ii++) {
-                System.out.println("Layerfailure " + fb_fail[ii] + " " + zfw_fail[ii]);
+                System.out.println("  Layerfailure " + fb_fail[ii] + " " + zfw_fail[ii]);
             }
             System.out.println("");
+            
+            if (lastIteration){
+                break;
+            }
+
+            clt_lam.refresh();
         }
     }
 

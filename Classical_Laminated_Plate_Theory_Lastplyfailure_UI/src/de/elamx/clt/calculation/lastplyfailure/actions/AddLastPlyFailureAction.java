@@ -43,8 +43,8 @@ id = "de.elamx.clt.calculation.lastplyfailure.actions.AddLastPlyFailureAction")
 @ActionRegistration(iconBase = "de/elamx/clt/calculation/lastplyfailure/resources/kcalc.png",
 displayName = "#CTL_AddCLT_LastPlyFailureAction")
 @ActionReferences({
-    @ActionReference(path = "eLamXActions/Laminate", position = 950),
-    @ActionReference(path = "Toolbars/eLamX_Modules_Laminate", position = 550)
+    @ActionReference(path = "eLamXActions/Laminate", position = 505),
+    @ActionReference(path = "Toolbars/eLamX_Modules_Laminate", position = 110)
 })
 public class AddLastPlyFailureAction implements ActionListener {
 
