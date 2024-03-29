@@ -58,7 +58,7 @@
     <Component class="javax.swing.JButton" name="calculationButton">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="de/elamx/clt/calculation/lastplyfailure/Bundle.properties" key="CLT_LastPlyFailureTopComponentTopComponent.calculationButton.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="de/elamx/clt/calculation/lastplyfailureui/Bundle.properties" key="CLT_LastPlyFailureTopComponentTopComponent.calculationButton.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>

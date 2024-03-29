@@ -23,9 +23,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.calculation.lastplyfailure.actions;
+package de.elamx.clt.calculation.lastplyfailureui.actions;
 
-import de.elamx.clt.calculation.lastplyfailure.LastPlyFailureModuleData;
+import de.elamx.clt.calculation.lastplyfailureui.LastPlyFailureModuleData;
 import de.elamx.laminate.Laminat;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,8 +39,8 @@ import org.openide.awt.ActionRegistration;
  * @author Andreas Hauffe
  */
 @ActionID(category = "Laminate",
-id = "de.elamx.clt.calculation.lastplyfailure.actions.AddLastPlyFailureAction")
-@ActionRegistration(iconBase = "de/elamx/clt/calculation/lastplyfailure/resources/kcalc.png",
+id = "de.elamx.clt.calculation.lastplyfailureui.actions.AddLastPlyFailureAction")
+@ActionRegistration(iconBase = "de/elamx/clt/calculation/lastplyfailureui/resources/kcalc.png",
 displayName = "#CTL_AddCLT_LastPlyFailureAction")
 @ActionReferences({
     @ActionReference(path = "eLamXActions/Laminate", position = 505),

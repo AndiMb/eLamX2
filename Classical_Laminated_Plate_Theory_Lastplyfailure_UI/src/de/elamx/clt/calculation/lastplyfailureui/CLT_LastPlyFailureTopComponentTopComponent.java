@@ -23,7 +23,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.calculation.lastplyfailure;
+package de.elamx.clt.calculation.lastplyfailureui;
 
 import de.elamx.clt.*;
 import de.elamx.laminate.Laminat;
@@ -36,6 +36,7 @@ import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import org.openide.util.NbBundle;
 import org.openide.util.lookup.InstanceContent;
+import org.openide.util.lookup.Lookups;
 import org.openide.windows.TopComponent;
 
 /**
@@ -67,6 +68,7 @@ public final class CLT_LastPlyFailureTopComponentTopComponent extends TopCompone
         }
         clt_lam.addCLTRefreshListener(this);
         initComponents();
+        associateLookup(Lookups.fixed(data, data.getLaminat()));
         /*associateLookup(Lookups.fixed(data, data.getLaminat(), new RawDataExportImpl()));
         table.setMinimumSize(new Dimension(300, 0));
         for (MouseWheelListener mwl : jScrollPane2.getMouseWheelListeners()) {

@@ -23,34 +23,34 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.calculation.lastplyfailure;
+package de.elamx.clt.calculation.lastplyfailureui;
 
+import de.elamx.fileview.eLamXModuleDataNodeProvider;
 import de.elamx.laminate.Laminat;
-import de.elamx.laminate.eLamXLookup;
 import de.elamx.laminate.modules.eLamXModuleData;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import org.openide.util.NbBundle;
+import java.util.Collection;
+import org.openide.nodes.Node;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Andreas Hauffe
  */
-public class LastPlyFailureModuleData extends eLamXModuleData implements PropertyChangeListener {
+@ServiceProvider(service = eLamXModuleDataNodeProvider.class)
+public class LastPlyFailureNodeProviderImpl implements eLamXModuleDataNodeProvider{
 
-    public static final String PROP_RESULT = "PROP_RESULT";
-
-    public LastPlyFailureModuleData(Laminat laminat) {
-        super(laminat, NbBundle.getMessage(LastPlyFailureModuleData.class, "LastPlyFailureModule.name"));
+    @Override
+    public eLamXModuleData[] geteLamXModuleData(Laminat laminat) {
+        Collection<? extends LastPlyFailureModuleData> col = laminat.getLookup().lookupAll(LastPlyFailureModuleData.class);
+        return col.toArray(new LastPlyFailureModuleData[col.size()]);
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        eLamXLookup.getDefault().setModified(true);
+    public Node getNodes(eLamXModuleData moduleData) {
+        if (moduleData instanceof LastPlyFailureModuleData) {
+            return new LastPlyFailureDataNode((LastPlyFailureModuleData)moduleData);
+        }
+        return null;
     }
-
-    @Override
-    public LastPlyFailureModuleData copy(Laminat laminate) {
-        return new LastPlyFailureModuleData(laminate);
-    }
+    
 }

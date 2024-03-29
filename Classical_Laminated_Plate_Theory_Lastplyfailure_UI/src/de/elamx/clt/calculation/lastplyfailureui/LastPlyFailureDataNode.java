@@ -23,7 +23,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.calculation.lastplyfailure;
+package de.elamx.clt.calculation.lastplyfailureui;
 
 import de.elamx.laminate.modules.eLamXModuleData;
 import de.elamx.laminate.modules.eLamXModuleDataFlavor;
@@ -104,12 +104,12 @@ public class LastPlyFailureDataNode extends AbstractNode implements PropertyChan
 
     @Override
     public Action getPreferredAction() {
-        return Actions.forID("Lastplyfailure", "de.elamx.clt.calculation.lastplyfailure.actions.OpenLastPlyFailureAction");
+        return Actions.forID("Lastplyfailure", "de.elamx.clt.calculation.lastplyfailureui.actions.OpenLastPlyFailureAction");
     }
 
     @Override
     public Image getIcon(int type) {
-        return ImageUtilities.loadImage("de/elamx/clt/calculation/lastplyfailure/resources/kcalc.png");
+        return ImageUtilities.loadImage("de/elamx/clt/calculation/lastplyfailureui/resources/kcalc.png");
     }
 
     @Override

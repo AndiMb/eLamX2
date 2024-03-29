@@ -23,10 +23,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.calculation.lastplyfailure.actions;
+package de.elamx.clt.calculation.lastplyfailureui.actions;
 
-import de.elamx.clt.calculation.lastplyfailure.CLT_LastPlyFailureTopComponentTopComponent;
-import de.elamx.clt.calculation.lastplyfailure.LastPlyFailureModuleData;
+import de.elamx.clt.calculation.lastplyfailureui.CLT_LastPlyFailureTopComponentTopComponent;
+import de.elamx.clt.calculation.lastplyfailureui.LastPlyFailureModuleData;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.openide.awt.ActionID;
@@ -41,8 +41,8 @@ import org.openide.windows.WindowManager;
  * @author Andreas Hauffe
  */
 @ActionID(category = "Lastplyfailure",
-id = "de.elamx.clt.calculation.lastplyfailure.actions.OpenLastPlyFailureAction")
-@ActionRegistration(iconBase = "de/elamx/clt/calculation/lastplyfailure/resources/kcalc.png",
+id = "de.elamx.clt.calculation.lastplyfailureui.actions.OpenLastPlyFailureAction")
+@ActionRegistration(iconBase = "de/elamx/clt/calculation/lastplyfailureui/resources/kcalc.png",
 displayName = "#CTL_OpenCLT_LastPlyFailureAction")
 @ActionReferences({
     @ActionReference(path = "eLamXActions/Lastplyfailure", position = 0)
