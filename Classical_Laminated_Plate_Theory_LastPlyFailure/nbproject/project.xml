@@ -5,8 +5,20 @@
         <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
             <code-name-base>de.elamx.clt.calculation.lastplyfailure</code-name-base>
             <suite-component/>
-            <module-dependencies/>
-            <public-packages/>
+            <module-dependencies>
+                <dependency>
+                    <code-name-base>de.elamx.clt</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <release-version>1</release-version>
+                        <specification-version>1.7.0</specification-version>
+                    </run-dependency>
+                </dependency>
+            </module-dependencies>
+            <public-packages>
+                <package>de.elamx.clt.calculation.lastplyfailure</package>
+            </public-packages>
         </data>
     </configuration>
 </project>

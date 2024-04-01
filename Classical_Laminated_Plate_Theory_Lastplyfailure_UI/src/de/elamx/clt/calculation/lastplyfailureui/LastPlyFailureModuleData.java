@@ -25,12 +25,14 @@
  */
 package de.elamx.clt.calculation.lastplyfailureui;
 
+import de.elamx.clt.calculation.lastplyfailure.LastPlyFailureInput;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.eLamXLookup;
 import de.elamx.laminate.modules.eLamXModuleData;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.util.NbBundle;
+import org.openide.util.WeakListeners;
 
 /**
  *
@@ -39,10 +41,20 @@ import org.openide.util.NbBundle;
 public class LastPlyFailureModuleData extends eLamXModuleData implements PropertyChangeListener {
 
     public static final String PROP_RESULT = "PROP_RESULT";
+    
+    private final LastPlyFailureInput  input;
 
     public LastPlyFailureModuleData(Laminat laminat) {
-        super(laminat, NbBundle.getMessage(LastPlyFailureModuleData.class, "LastPlyFailureModule.name"));
+        this(laminat, new LastPlyFailureInput());
     }
+
+    public LastPlyFailureModuleData(Laminat laminat, LastPlyFailureInput input) {
+        super(laminat, NbBundle.getMessage(LastPlyFailureModuleData.class, "LastPlyFailureModule.name"));
+        this.input = input;
+        this.input.addPropertyChangeListener(WeakListeners.propertyChange(this, this.input));
+    }
+    
+    public LastPlyFailureInput getLastPlyFailureInput() {return input;}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -51,6 +63,6 @@ public class LastPlyFailureModuleData extends eLamXModuleData implements Propert
 
     @Override
     public LastPlyFailureModuleData copy(Laminat laminate) {
-        return new LastPlyFailureModuleData(laminate);
+        return new LastPlyFailureModuleData(laminate, input.copy());
     }
 }

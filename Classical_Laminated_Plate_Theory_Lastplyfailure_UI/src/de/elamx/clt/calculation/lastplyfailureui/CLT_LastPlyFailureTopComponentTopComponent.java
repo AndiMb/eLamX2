@@ -26,9 +26,12 @@
 package de.elamx.clt.calculation.lastplyfailureui;
 
 import de.elamx.clt.*;
+import de.elamx.clt.calculation.lastplyfailure.LastPlyFailureInput;
+import de.elamx.core.GlobalProperties;
 import de.elamx.laminate.Laminat;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
 import org.openide.util.Lookup;
@@ -54,6 +57,8 @@ public final class CLT_LastPlyFailureTopComponentTopComponent extends TopCompone
     private final CLT_Laminate clt_lam;
     private final Lookup.Result<LastPlyFailureModuleData> result;
     public final static Set<LastPlyFailureModuleData> uniqueLastPlyFailureData = new HashSet<>();
+    
+    DecimalFormat df_Forces = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_FORCE);
 
     public CLT_LastPlyFailureTopComponentTopComponent(LastPlyFailureModuleData data) {
         this.data = data;
@@ -75,7 +80,7 @@ public final class CLT_LastPlyFailureTopComponentTopComponent extends TopCompone
             jScrollPane2.removeMouseWheelListener(mwl);
         }
         stressRadioButton.setSelected(tabModel.isShowStresses());*/
-        
+
         result = data.getLaminat().getLookup().lookupResult(LastPlyFailureModuleData.class);
         result.addLookupListener(this);
         data.addPropertyChangeListener(this);
@@ -101,6 +106,31 @@ public final class CLT_LastPlyFailureTopComponentTopComponent extends TopCompone
     private void initComponents() {
 
         calculationButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        nxField = new javax.swing.JFormattedTextField(df_Forces);
+        nxField.setValue(data.getLastPlyFailureInput().getLoad().getN_x());
+        nxField.addPropertyChangeListener("value", this);
+        jLabel2 = new javax.swing.JLabel();
+        nyField = new javax.swing.JFormattedTextField(df_Forces);
+        nyField.setValue(data.getLastPlyFailureInput().getLoad().getN_y());
+        nyField.addPropertyChangeListener("value", this);
+        jLabel3 = new javax.swing.JLabel();
+        nxyField = new javax.swing.JFormattedTextField(df_Forces);
+        nxyField.setValue(data.getLastPlyFailureInput().getLoad().getN_xy());
+        nxyField.addPropertyChangeListener("value", this);
+        jLabel4 = new javax.swing.JLabel();
+        mxyField = new javax.swing.JFormattedTextField(df_Forces);
+        mxyField.setValue(data.getLastPlyFailureInput().getLoad().getM_xy());
+        mxyField.addPropertyChangeListener("value", this);
+        jLabel5 = new javax.swing.JLabel();
+        mxField = new javax.swing.JFormattedTextField(df_Forces);
+        mxField.setValue(data.getLastPlyFailureInput().getLoad().getM_x());
+        mxField.addPropertyChangeListener("value", this);
+        jLabel6 = new javax.swing.JLabel();
+        myField = new javax.swing.JFormattedTextField(df_Forces);
+        myField.setValue(data.getLastPlyFailureInput().getLoad().getM_y());
+        myField.addPropertyChangeListener("value", this);
 
         org.openide.awt.Mnemonics.setLocalizedText(calculationButton, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponentTopComponent.class, "CLT_LastPlyFailureTopComponentTopComponent.calculationButton.text")); // NOI18N
         calculationButton.addActionListener(new java.awt.event.ActionListener() {
@@ -109,39 +139,141 @@ public final class CLT_LastPlyFailureTopComponentTopComponent extends TopCompone
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponentTopComponent.class, "CLT_LastPlyFailureTopComponentTopComponent.jPanel1.border.title"))); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponentTopComponent.class, "CLT_LastPlyFailureTopComponentTopComponent.jLabel1.text")); // NOI18N
+
+        nxField.setColumns(8);
+        nxField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponentTopComponent.class, "CLT_LastPlyFailureTopComponentTopComponent.jLabel2.text")); // NOI18N
+
+        nyField.setColumns(8);
+        nyField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponentTopComponent.class, "CLT_LastPlyFailureTopComponentTopComponent.jLabel3.text")); // NOI18N
+
+        nxyField.setColumns(8);
+        nxyField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponentTopComponent.class, "CLT_LastPlyFailureTopComponentTopComponent.jLabel4.text")); // NOI18N
+
+        mxyField.setColumns(8);
+        mxyField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponentTopComponent.class, "CLT_LastPlyFailureTopComponentTopComponent.jLabel5.text")); // NOI18N
+
+        mxField.setColumns(8);
+        mxField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponentTopComponent.class, "CLT_LastPlyFailureTopComponentTopComponent.jLabel6.text")); // NOI18N
+
+        myField.setColumns(8);
+        myField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(myField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(myField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(mxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(calculationButton)
-                .addContainerGap(315, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(calculationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(calculationButton)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void calculationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculationButtonActionPerformed
-        
-        Loads loads = new Loads();
-        loads.setN_x(1.0);
-        loads.setN_y(1.0);
-        loads.setN_xy(1.0);
-        Strains strains = new Strains();
-        boolean[] useStrain = new boolean[]{false,false,false,false,false,false};
-        
-        CLT_Calculator.determineValuesLastPlyFailure(clt_lam, loads, strains, useStrain);
-        
+        data.getLastPlyFailureInput().removePropertyChangeListener(this);
+
+        CLT_Calculator.determineValuesLastPlyFailure(
+                clt_lam,
+                data.getLastPlyFailureInput().getLoad(),
+                data.getLastPlyFailureInput().getStrain(),
+                data.getLastPlyFailureInput().isUseStrains()
+        );
+
+        data.getLastPlyFailureInput().addPropertyChangeListener(this);
     }//GEN-LAST:event_calculationButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton calculationButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JFormattedTextField mxField;
+    private javax.swing.JFormattedTextField mxyField;
+    private javax.swing.JFormattedTextField myField;
+    private javax.swing.JFormattedTextField nxField;
+    private javax.swing.JFormattedTextField nxyField;
+    private javax.swing.JFormattedTextField nyField;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
@@ -186,9 +318,23 @@ public final class CLT_LastPlyFailureTopComponentTopComponent extends TopCompone
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getSource() instanceof Laminat && evt.getPropertyName().equals(Laminat.PROP_NAME) ||
-            evt.getSource() instanceof LastPlyFailureModuleData && evt.getPropertyName().equals(LastPlyFailureModuleData.PROP_NAME)) {
+        if (evt.getSource() instanceof Laminat && evt.getPropertyName().equals(Laminat.PROP_NAME)
+                || evt.getSource() instanceof LastPlyFailureModuleData && evt.getPropertyName().equals(LastPlyFailureModuleData.PROP_NAME)) {
             setName(this.data.getName() + " - " + this.data.getLaminat().getName());
+        }else if (evt.getPropertyName().equals("value")){
+            if (evt.getSource() == nxField){
+                data.getLastPlyFailureInput().getLoad().setN_x(((Number)nxField.getValue()).doubleValue());
+            }else if (evt.getSource() == nyField){
+                data.getLastPlyFailureInput().getLoad().setN_y(((Number)nyField.getValue()).doubleValue());
+            }else if (evt.getSource() == nxyField){
+                data.getLastPlyFailureInput().getLoad().setN_xy(((Number)nxyField.getValue()).doubleValue());
+            }else if (evt.getSource() == mxField){
+                data.getLastPlyFailureInput().getLoad().setM_x(((Number)mxField.getValue()).doubleValue());
+            }else if (evt.getSource() == myField){
+                data.getLastPlyFailureInput().getLoad().setM_y(((Number)myField.getValue()).doubleValue());
+            }else if (evt.getSource() == mxyField){
+                data.getLastPlyFailureInput().getLoad().setM_xy(((Number)mxyField.getValue()).doubleValue());
+            }
         }
     }
 }
