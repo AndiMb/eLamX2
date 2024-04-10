@@ -34,6 +34,8 @@ import de.elamx.laminate.Material;
 import de.elamx.laminate.StressStrainState;
 import de.elamx.laminate.failure.ReserveFactor;
 import de.elamx.mathtools.MatrixTools;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -269,18 +271,24 @@ public class CLT_Calculator {
         return rs;
     }
 
-    public static void determineValuesLastPlyFailure(CLT_Laminate lam, Loads loads, Strains strains, boolean[] useStrain) {
+    public static CLT_LastPlyFailureResult determineValuesLastPlyFailure(CLT_Laminate lam, Loads loads, Strains strains, boolean[] useStrain) {
 
-        double matReductionFactor = 0.0001;
+        double matReductionFactor = 0.000001;
 
         int numLayers = lam.getCLTLayers().length;   // Anzahl der Lagen
 
         // Kopieren des Laminats
-        Laminat tempLam = lam.getLaminat().getCopy(false);
-        for (Layer lay : tempLam.getLayers()) {
-            if (lay instanceof DataLayer dataLayer) {
-                dataLayer.setMaterial(getAsDefaultMaterial(lay.getMaterial()));
-            }
+        Laminat tempLam = new Laminat("", "", false);
+        for (Layer lay : lam.getLaminat().getAllLayers()) {
+            DataLayer layer = new DataLayer(
+                    "", 
+                    "", 
+                    getAsDefaultMaterial(lay.getMaterial()), 
+                    lay.getAngle(),
+                    lay.getThickness(), 
+                    lay.getCriterion()
+            );
+            tempLam.addLayer(layer);
         }
         CLT_Laminate clt_lam = new CLT_Laminate(tempLam);
 
@@ -291,6 +299,13 @@ public class CLT_Calculator {
             zfw_fail[ii] = false;
             fb_fail[ii] = false;
         }
+
+        List<CLT_LayerResult[]> layerResultList = new ArrayList<>(2 * numLayers);
+        List<boolean[]> zfw_failList = new ArrayList<>(2 * numLayers);
+        List<boolean[]> fb_failList = new ArrayList<>(2 * numLayers);
+        List<Integer> layerNumberList = new ArrayList<>(2 * numLayers);
+        List<Double> rf_minList = new ArrayList<>(2 * numLayers);
+        List<String> FailureTypeList = new ArrayList<>(2 * numLayers);
 
         boolean lastIteration = false;
         for (int iter = 0; iter < 2 * numLayers; iter++) {
@@ -337,7 +352,7 @@ public class CLT_Calculator {
                 }
             }
 
-            System.out.println("Result für Iteration #" + (iter+1));
+            System.out.println("Result für Iteration #" + (iter + 1));
             System.out.println("  Layer:       " + layerResults[minLayerIndex].getLayer().getNumber());
             System.out.println("  RF_min:      " + rf_min.getMinimalReserveFactor());
             System.out.println("  FailureType: " + rf_min.getFailureName());
@@ -346,12 +361,35 @@ public class CLT_Calculator {
             }
             System.out.println("");
             
-            if (lastIteration){
+            layerResultList.add(layerResults);
+            boolean[] zfw_failTemp = new boolean[numLayers];
+            System.arraycopy(zfw_fail, 0, zfw_failTemp, 0, numLayers);
+            zfw_failList.add(zfw_failTemp);
+            boolean[] fb_failTemp = new boolean[numLayers];
+            System.arraycopy(fb_fail, 0, fb_failTemp, 0, numLayers);
+            fb_failList.add(fb_failTemp);
+            layerNumberList.add(layerResults[minLayerIndex].getLayer().getNumber());
+            rf_minList.add(rf_min.getMinimalReserveFactor());
+            FailureTypeList.add(rf_min.getFailureName());
+
+            if (lastIteration) {
                 break;
             }
 
+            clt_lam.getCLTLayers()[minLayerIndex].refresh();
             clt_lam.refresh();
         }
+        
+        CLT_LastPlyFailureResult lpfResult = new CLT_LastPlyFailureResult(
+                layerResultList.toArray(CLT_LayerResult[][]::new), 
+                zfw_failList.toArray(boolean[][]::new), 
+                fb_failList.toArray(boolean[][]::new), 
+                layerNumberList.toArray(Integer[]::new), 
+                rf_minList.toArray(Double[]::new), 
+                FailureTypeList.toArray(String[]::new)
+        );
+        
+        return lpfResult;
     }
 
     private static DefaultMaterial getAsDefaultMaterial(LayerMaterial material) {

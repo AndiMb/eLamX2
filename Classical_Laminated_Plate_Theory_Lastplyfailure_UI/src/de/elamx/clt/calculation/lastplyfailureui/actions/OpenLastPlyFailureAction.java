@@ -25,7 +25,7 @@
  */
 package de.elamx.clt.calculation.lastplyfailureui.actions;
 
-import de.elamx.clt.calculation.lastplyfailureui.CLT_LastPlyFailureTopComponentTopComponent;
+import de.elamx.clt.calculation.lastplyfailureui.CLT_LastPlyFailureTopComponent;
 import de.elamx.clt.calculation.lastplyfailureui.LastPlyFailureModuleData;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,13 +57,13 @@ public class OpenLastPlyFailureAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        if (CLT_LastPlyFailureTopComponentTopComponent.uniqueLastPlyFailureData.add(context)) {
-            CLT_LastPlyFailureTopComponentTopComponent letc = new CLT_LastPlyFailureTopComponentTopComponent(context);
+        if (CLT_LastPlyFailureTopComponent.uniqueLastPlyFailureData.add(context)) {
+            CLT_LastPlyFailureTopComponent letc = new CLT_LastPlyFailureTopComponent(context);
             letc.open();
             letc.requestActive();
         } else { //In this case, the TopComponent is already open, but needs to become active:
             for (TopComponent tc : WindowManager.getDefault().findMode("editor").getTopComponents()){
-                if (tc instanceof CLT_LastPlyFailureTopComponentTopComponent && tc.getLookup().lookup(LastPlyFailureModuleData.class) == context){
+                if (tc instanceof CLT_LastPlyFailureTopComponent && tc.getLookup().lookup(LastPlyFailureModuleData.class) == context){
                     tc.requestActive();
                 }
             }

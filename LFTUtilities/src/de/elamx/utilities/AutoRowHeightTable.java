@@ -89,6 +89,7 @@ public class AutoRowHeightTable extends JTable {
      * by the default painting methods because they need to be painted across
      * two rows.
      */
+    @Override
     public void paint(Graphics g) {
         if (needCalcRowHeight) {
             calcRowHeight(g);
