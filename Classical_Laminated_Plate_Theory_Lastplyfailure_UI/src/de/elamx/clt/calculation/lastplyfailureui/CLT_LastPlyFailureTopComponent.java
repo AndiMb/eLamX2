@@ -31,17 +31,22 @@ import de.elamx.clt.calculation.calc.ResultTableModel;
 import de.elamx.core.GlobalProperties;
 import de.elamx.laminate.Laminat;
 import de.elamx.utilities.AutoRowHeightTable;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelListener;
+import java.awt.font.TextAttribute;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.AttributedString;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collections;
@@ -52,6 +57,16 @@ import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.eLamXChartPanel;
+import org.jfree.eLamXNumberTickUnitSource;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -89,6 +104,10 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     private final JPopupMenu popupMenu;
     private final AbstractLookup lu = new AbstractLookup(ic);
 
+    private XYSeriesCollection minResDataset = null;
+    private JFreeChart chart = null;
+    private ChartPanel chartPanel;
+
     public CLT_LastPlyFailureTopComponent(LastPlyFailureModuleData data) {
         this.data = data;
         setName(this.data.getName() + " - " + this.data.getLaminat().getName());
@@ -119,6 +138,8 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         table.addMouseListener(popupListener);
         // Add the listener specifically to the header:
         table.getTableHeader().addMouseListener(popupListener);
+
+        initChart();
     }
 
     /**
@@ -167,6 +188,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         layerNumberField = new javax.swing.JTextField();
         previewsButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
+        chartHolderPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new AutoRowHeightTable(){
@@ -321,7 +343,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel8)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,7 +366,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                     .addComponent(layerNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RFminField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -368,6 +390,8 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             }
         });
 
+        chartHolderPanel.setLayout(new java.awt.BorderLayout());
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -384,21 +408,26 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                         .addGap(87, 87, 87)
                         .addComponent(nextButton))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chartHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(calculationButton)
-                    .addComponent(previewsButton)
-                    .addComponent(nextButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chartHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(calculationButton)
+                            .addComponent(previewsButton)
+                            .addComponent(nextButton))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         add(jPanel3, java.awt.BorderLayout.PAGE_START);
@@ -412,11 +441,11 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -434,23 +463,36 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
 
         data.getLastPlyFailureInput().addPropertyChangeListener(this);
         actualIterationNumber = 0;
-        maxIterationNumber = lpfResult.getLayerResult().length-1;
+        maxIterationNumber = lpfResult.getLayerResult().length - 1;
         setIterationResults(actualIterationNumber);
+
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                minResDataset.removeAllSeries();
+                minResDataset.addSeries(new XYSeries(NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "LastPlyFailureChart.yaxis.caption")));
+                int intNum = 1;
+                for (Double rfMin : lpfResult.getRf_min()) {
+                    minResDataset.getSeries(0).add(intNum++, rfMin);
+                }
+            }
+        });
     }//GEN-LAST:event_calculationButtonActionPerformed
 
     private void previewsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previewsButtonActionPerformed
-        actualIterationNumber = Math.max(0, actualIterationNumber-1);
+        actualIterationNumber = Math.max(0, actualIterationNumber - 1);
         setIterationResults(actualIterationNumber);
     }//GEN-LAST:event_previewsButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        actualIterationNumber = Math.min(maxIterationNumber, actualIterationNumber+1);
+        actualIterationNumber = Math.min(maxIterationNumber, actualIterationNumber + 1);
         setIterationResults(actualIterationNumber);
     }//GEN-LAST:event_nextButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField RFminField;
     private javax.swing.JButton calculationButton;
+    private javax.swing.JPanel chartHolderPanel;
     private javax.swing.JTextField failureTypeField;
     private javax.swing.JTextField iterationField;
     private javax.swing.JLabel jLabel1;
@@ -527,8 +569,8 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
 
             nextButton.setEnabled(iter < maxIterationNumber);
             previewsButton.setEnabled(iter > 0);
-            
-            iterationField.setText(Integer.toString(iter+1));
+
+            iterationField.setText(Integer.toString(iter + 1));
             layerNumberField.setText(Integer.toString(lpfResult.getLayerNumber()[iter]));
             RFminField.setText(df_RF.format(lpfResult.getRf_min()[iter]));
             failureTypeField.setText(lpfResult.getFailureType()[iter]);
@@ -555,6 +597,43 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 data.getLastPlyFailureInput().getLoad().setM_xy(((Number) mxyField.getValue()).doubleValue());
             }
         }
+    }
+
+    private void initChart() {
+
+        minResDataset = new XYSeriesCollection();
+
+        chart = ChartFactory.createXYLineChart(
+                "", // chart title
+                NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "LastPlyFailureChart.xaxis.caption"), // x axis label
+                NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "LastPlyFailureChart.yaxis.caption"), // y axis label
+                minResDataset, // data
+                PlotOrientation.VERTICAL,
+                false, // include legend
+                true, // tooltips
+                true // urls
+        );
+
+        chart.getXYPlot().getDomainAxis().setLowerMargin(0.0);
+        chart.getXYPlot().getDomainAxis().setUpperMargin(0.0);
+        chart.getXYPlot().getDomainAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+        Font font = chart.getXYPlot().getDomainAxis().getLabelFont();
+        AttributedString captionY = new AttributedString(NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "LastPlyFailureChart.yaxis.caption"));
+        captionY.addAttribute(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD, 0, 2);
+        captionY.addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB, 2, 5);
+        captionY.addAttribute(TextAttribute.SIZE, font.getSize());
+        chart.getXYPlot().getRangeAxis().setAttributedLabel(captionY);
+
+        chart.getXYPlot().getRangeAxis().setStandardTickUnits(new eLamXNumberTickUnitSource());
+
+        chart.getXYPlot().getRenderer(0).setSeriesPaint(0, Color.BLACK);
+
+        chartPanel = new eLamXChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(10, 10));
+        chartPanel.setMinimumSize(new Dimension(10, 10));
+
+        chartHolderPanel.add(chartPanel, BorderLayout.CENTER);
     }
 
     /**
