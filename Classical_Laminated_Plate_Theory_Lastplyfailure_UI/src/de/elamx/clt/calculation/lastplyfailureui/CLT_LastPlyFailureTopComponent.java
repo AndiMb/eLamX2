@@ -103,18 +103,14 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         clt_lam.addCLTRefreshListener(this);
         initComponents();
         associateLookup(Lookups.fixed(data, data.getLaminat()));
-        /*associateLookup(Lookups.fixed(data, data.getLaminat(), new RawDataExportImpl()));*/
         table.setMinimumSize(new Dimension(300, 0));
         for (MouseWheelListener mwl : jScrollPane1.getMouseWheelListeners()) {
             jScrollPane1.removeMouseWheelListener(mwl);
         }
-        /*stressRadioButton.setSelected(tabModel.isShowStresses());*/
 
         result = data.getLaminat().getLookup().lookupResult(LastPlyFailureModuleData.class);
         result.addLookupListener(this);
         data.addPropertyChangeListener(this);
-        /*refreshed();
-        recalc();*/
 
         popupMenu = Utilities.actionsToPopup(Utilities.actionsForPath("eLamXActions/LayerResultContainer").toArray(new Action[0]), lu);
 

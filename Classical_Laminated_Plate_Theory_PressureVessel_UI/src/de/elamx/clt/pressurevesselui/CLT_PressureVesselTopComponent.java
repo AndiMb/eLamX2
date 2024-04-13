@@ -443,17 +443,11 @@ public final class CLT_PressureVesselTopComponent extends TopComponent implement
 
     private void radiusTypeBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radiusTypeBoxItemStateChanged
         switch (radiusTypeBox.getSelectedIndex()) {
-            case 0:
-                data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_INNER);
-                break;
-            case 1:
-                data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_MEAN);
-                break;
-            case 2:
-                data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_OUTER);
-                break;
-            default:
-                break;
+            case 0 -> data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_INNER);
+            case 1 -> data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_MEAN);
+            case 2 -> data.getPressureVesselInput().setRadiusType(PressureVesselInput.RADIUSTYPE_OUTER);
+            default -> {
+            }
         }
     }//GEN-LAST:event_radiusTypeBoxItemStateChanged
 
