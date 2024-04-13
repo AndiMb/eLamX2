@@ -82,7 +82,7 @@ import org.openide.windows.TopComponent;
  */
 @TopComponent.Description(
         preferredID = "CLT_LastPlyFailureTopComponentTopComponent",
-        iconBase = "de/elamx/clt/calculation/lastplyfailure/resources/kcalc.png"
+        iconBase = "de/elamx/clt/calculation/lastplyfailureui/resources/kcalc.png"
 )
 public final class CLT_LastPlyFailureTopComponent extends TopComponent implements LookupListener, CLTRefreshListener, PropertyChangeListener {
 
@@ -105,6 +105,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     private final AbstractLookup lu = new AbstractLookup(ic);
 
     private XYSeriesCollection minResDataset = null;
+    private XYSeriesCollection actRFminDataset = null;
     private JFreeChart chart = null;
     private ChartPanel chartPanel;
 
@@ -475,6 +476,8 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 for (Double rfMin : lpfResult.getRf_min()) {
                     minResDataset.getSeries(0).add(intNum++, rfMin);
                 }
+                actRFminDataset.getSeries(0).remove(0);
+                actRFminDataset.getSeries(0).add(1, lpfResult.getRf_min()[0]);
             }
         });
     }//GEN-LAST:event_calculationButtonActionPerformed
@@ -574,6 +577,11 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             layerNumberField.setText(Integer.toString(lpfResult.getLayerNumber()[iter]));
             RFminField.setText(df_RF.format(lpfResult.getRf_min()[iter]));
             failureTypeField.setText(lpfResult.getFailureType()[iter]);
+
+            if (!actRFminDataset.getSeries(0).isEmpty()) {
+                actRFminDataset.getSeries(0).remove(0);
+            }
+            actRFminDataset.getSeries(0).add(iter + 1, lpfResult.getRf_min()[iter]);
         }
     }
 
@@ -602,6 +610,8 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     private void initChart() {
 
         minResDataset = new XYSeriesCollection();
+        actRFminDataset = new XYSeriesCollection();
+        actRFminDataset.addSeries(new XYSeries(NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "LastPlyFailureChart.yaxis.caption")));
 
         chart = ChartFactory.createXYLineChart(
                 "", // chart title
@@ -613,6 +623,8 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 true, // tooltips
                 true // urls
         );
+
+        chart.getXYPlot().setDataset(1, actRFminDataset);
 
         chart.getXYPlot().getDomainAxis().setLowerMargin(0.0);
         chart.getXYPlot().getDomainAxis().setUpperMargin(0.0);
@@ -628,6 +640,10 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         chart.getXYPlot().getRangeAxis().setStandardTickUnits(new eLamXNumberTickUnitSource());
 
         chart.getXYPlot().getRenderer(0).setSeriesPaint(0, Color.BLACK);
+
+        final XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer(false, true);
+        chart.getXYPlot().setRenderer(1, renderer2);
+        chart.getXYPlot().getRenderer(1).setSeriesPaint(0, Color.RED);
 
         chartPanel = new eLamXChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(10, 10));
