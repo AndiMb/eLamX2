@@ -34,10 +34,12 @@ public class ExportPanel extends javax.swing.JPanel {
     /**
      * Creates new form ExportPanel
      */
+    @SuppressWarnings("this-escape")
     public ExportPanel() {
         initComponents();
     }
     
+    @SuppressWarnings("this-escape")
     public ExportPanel(String data){
         this();
         setString(data);

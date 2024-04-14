@@ -53,6 +53,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -92,7 +93,7 @@ public class Utils {
         try {
             HtmlBrowser.URLDisplayer displayer = HtmlBrowser.URLDisplayer.getDefault();
             if (displayer != null) {
-                displayer.showURL(new URL(href));
+                displayer.showURL(URI.create(href).toURL());
             }
         } catch (Exception e) {}
     }

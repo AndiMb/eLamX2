@@ -63,7 +63,7 @@ public class BrowserLauncher {
 
     @Override
     protected Object convertUrl(String url) throws URISyntaxException, MalformedURLException {
-      return new URL(url).toURI();  
+      return URI.create(url);  
     }
   }
 
@@ -180,8 +180,13 @@ public class BrowserLauncher {
    */
   private static class WindowsLauncher implements Launcher {
 
+    @Override
     public void browse(String url) throws IOException {
-      Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+      Runtime.getRuntime().exec(new String[]{
+            "rundll32",
+           "url.dll,FileProtocolHandler",
+           url
+      });
       // TODO(jat): do we need to wait for it to exit and check exit status?
     }
   }

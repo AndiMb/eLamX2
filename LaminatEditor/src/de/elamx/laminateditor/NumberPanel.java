@@ -34,6 +34,7 @@ public class NumberPanel extends javax.swing.JPanel {
     /**
      * Creates new form numberPanel
      */
+    @SuppressWarnings("this-escape")
     public NumberPanel() {
         initComponents();
     }

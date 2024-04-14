@@ -63,6 +63,7 @@ public class LayerResultContainer {
         propertyChangeSupport.firePropertyChange(PROP_LAYERRESULT, oldLayerResult, layerResult);
     }
 
+    @SuppressWarnings("this-escape")
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

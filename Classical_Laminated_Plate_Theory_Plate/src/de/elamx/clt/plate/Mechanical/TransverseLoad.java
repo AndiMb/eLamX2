@@ -69,6 +69,7 @@ public abstract class TransverseLoad {
     }
 
     public abstract TransverseLoad getCopy();
+    @SuppressWarnings("this-escape")
     protected transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

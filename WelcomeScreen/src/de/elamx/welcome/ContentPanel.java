@@ -34,6 +34,7 @@ import javax.swing.JPanel;
  */
 public abstract class ContentPanel extends JPanel{
     
+    @SuppressWarnings("this-escape")
     public ContentPanel( String title ) {
         super( new BorderLayout() );
         setName( title );

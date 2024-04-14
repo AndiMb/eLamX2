@@ -224,7 +224,7 @@ public class CLT_Input{
         fireIndexedPropertyChange(PROP_USESTRAINS, index, oldUseStrains, newUseStrains);
     }
 
-    
+    @SuppressWarnings("this-escape")
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

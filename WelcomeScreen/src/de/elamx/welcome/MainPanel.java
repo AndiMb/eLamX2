@@ -46,6 +46,7 @@ public class MainPanel extends javax.swing.JPanel {
     /**
      * Creates new form FirstStepsPanel
      */
+    @SuppressWarnings("this-escape")
     public MainPanel(JComponent ... tabs) {
         
         this.tabs = tabs;

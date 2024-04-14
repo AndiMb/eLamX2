@@ -16,6 +16,7 @@ public class PropertiesPanel extends javax.swing.JPanel {
     /**
      * Creates new form PropertiesPanel
      */
+    @SuppressWarnings("this-escape")
     public PropertiesPanel() {
         initComponents();
     }

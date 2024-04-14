@@ -48,6 +48,7 @@ public class WebLink extends LinkButton {
         setUsageTrackingId(url);
     }*/
 
+    @SuppressWarnings("this-escape")
     public WebLink( String label, String url, Color foreground, boolean showBorder ) {
         super( label, foreground, showBorder, url );
         this.url = url;

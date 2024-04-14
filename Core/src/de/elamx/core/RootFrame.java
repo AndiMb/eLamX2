@@ -46,6 +46,7 @@ public class RootFrame extends javax.swing.JFrame {
     /**
      * Creates new form RootFrame
      */
+    @SuppressWarnings("this-escape")
     public RootFrame() {
 
         bgimage = ImageUtilities.loadImage("de/elamx/core/resources/bg_logo.png");

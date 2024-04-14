@@ -36,6 +36,7 @@ public class FirstStepsPanel extends ContentPanel {
     /**
      * Creates new form FirstStepsPanel
      */
+    @SuppressWarnings("this-escape")
     public FirstStepsPanel() {
         super(NbBundle.getMessage(FirstStepsPanel.class, "FirstStepsPanel.title"));
         initComponents();

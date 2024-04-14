@@ -41,12 +41,14 @@ public abstract class ELamXObject {
     private       String name;                  // Name des Objekts
     public static final String PROP_NAME = "name";
     
+    @SuppressWarnings("this-escape")
     private transient PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     
     private final DynamicLookup lookup = new DynamicLookup();
     
     private boolean changed = false;
 
+    @SuppressWarnings("this-escape")
     public ELamXObject(String uuid, String name, boolean addToLookup) {
         this.uuid = uuid;
         this.name = name;

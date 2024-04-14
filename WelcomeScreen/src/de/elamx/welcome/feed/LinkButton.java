@@ -69,6 +69,7 @@ public abstract class LinkButton extends JButton
         this( label, foreground, false, usageTrackingId );
     }
 
+    @SuppressWarnings("this-escape")
     public LinkButton( String label, Color foreground, boolean showBorder, String usageTrackingId ) {
         super( label );
         this.defaultForeground = foreground;

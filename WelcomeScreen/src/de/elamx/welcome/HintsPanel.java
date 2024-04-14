@@ -43,6 +43,7 @@ public class HintsPanel extends ContentPanel {
     /**
      * Creates new form HintsPanel
      */
+    @SuppressWarnings("this-escape")
     public HintsPanel() {
         super(NbBundle.getMessage(HintsPanel.class, "HintsPanel.title"));
         initComponents();

@@ -20,6 +20,7 @@ public class eLamXChartPanel extends ChartPanel{
     private static final int DEFAULT_MAXIMUM_DRAW_WIDTH  = 3840;
     private static final int DEFAULT_MAXIMUM_DRAW_HEIGHT = 2160;
 
+    @SuppressWarnings("this-escape")
     public eLamXChartPanel(JFreeChart chart) {
         super(chart);
 

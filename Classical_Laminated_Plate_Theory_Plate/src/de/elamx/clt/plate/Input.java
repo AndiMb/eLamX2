@@ -55,6 +55,7 @@ public abstract class Input{
     private int     m;
     private int     n;
     private boolean notify = true;
+    @SuppressWarnings("this-escape")
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
     
     private final ArrayList<StiffenerProperties> stiffProps = new ArrayList<>();

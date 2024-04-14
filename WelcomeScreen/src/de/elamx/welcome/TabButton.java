@@ -50,6 +50,7 @@ public class TabButton extends javax.swing.JPanel {
     /**
      * Creates new form TabButton
      */
+    @SuppressWarnings("this-escape")
     public TabButton(String text, int tabIndex) {
         this.tabIndex = tabIndex;
         initComponents();

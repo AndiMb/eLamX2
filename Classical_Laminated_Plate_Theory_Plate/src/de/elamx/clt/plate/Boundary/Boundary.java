@@ -70,6 +70,7 @@ public abstract class Boundary {
      * @param length Länge
      * @param m maximale Anzahl der Halbwellen
      */
+    @SuppressWarnings("this-escape")
     public Boundary (double length, int m){
         m_ = Math.min(m, 20);
         a_ = length;

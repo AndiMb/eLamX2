@@ -38,6 +38,7 @@ public class NewsPanel extends ContentPanel {
     /**
      * Creates new form NewsPanel
      */
+    @SuppressWarnings("this-escape")
     public NewsPanel() {
         super(NbBundle.getMessage(NewsPanel.class, "NewsPanel.title"));
         initComponents();

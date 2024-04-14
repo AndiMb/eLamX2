@@ -80,6 +80,7 @@ public class ConstraintDefinitionHolder implements NodeListener {
         propertyChangeSupport.firePropertyChange(PROP_NODES, nodes, null);
     }
 
+    @SuppressWarnings("this-escape")
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

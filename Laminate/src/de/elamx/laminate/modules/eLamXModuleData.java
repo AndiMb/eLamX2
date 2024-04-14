@@ -73,6 +73,7 @@ public abstract class eLamXModuleData {
         eLamXLookup.getDefault().setModified(true);
     }
 
+    @SuppressWarnings("this-escape")
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

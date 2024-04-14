@@ -69,6 +69,7 @@ public class eLamXFileDataObject extends MultiDataObject {
 
     private static final int acteLamXFileVersion = 1;
 
+    @SuppressWarnings("this-escape")
     public eLamXFileDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException, IOException {
         super(pf, loader);
         lookup = new ProxyLookup(getCookieSet().getLookup(), new AbstractLookup(lookupContents));

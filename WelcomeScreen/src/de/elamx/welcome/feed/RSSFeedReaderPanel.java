@@ -34,6 +34,7 @@ public class RSSFeedReaderPanel extends JPanel implements PropertyChangeListener
     private static final int FEED_PANEL_MAX_WIDTH = 600;
 
     /** Creates a new instance of AbstractFeedReaderPanel */
+    @SuppressWarnings("this-escape")
     public RSSFeedReaderPanel( String url ) {
         super( new BorderLayout() );
         setOpaque(false);

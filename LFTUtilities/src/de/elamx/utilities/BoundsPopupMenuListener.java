@@ -97,6 +97,7 @@ public class BoundsPopupMenuListener implements PopupMenuListener {
      * @param popupAbove display the popup above the combo box
      *
      */
+    @SuppressWarnings("this-escape")
     public BoundsPopupMenuListener(boolean scrollBarRequired, boolean popupWider, int maximumWidth, boolean popupAbove) {
         setScrollBarRequired(scrollBarRequired);
         setPopupWider(popupWider);

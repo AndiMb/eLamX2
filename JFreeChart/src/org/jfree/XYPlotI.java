@@ -85,6 +85,7 @@ public class XYPlotI extends XYPlot {
      *              permitted).
      */
     @Override
+    @SuppressWarnings("unchecked")
     public void draw(Graphics2D g2, Rectangle2D area, Point2D anchor,
             PlotState parentState, PlotRenderingInfo info) {
 

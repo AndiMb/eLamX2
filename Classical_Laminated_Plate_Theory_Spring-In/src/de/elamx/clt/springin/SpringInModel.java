@@ -74,6 +74,7 @@ public abstract class SpringInModel {
     
     public abstract String checkInput(CLT_Laminate laminat);
 
+    @SuppressWarnings("this-escape")
     protected transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

@@ -47,6 +47,7 @@ public class Logo extends JLabel implements MouseListener{
         this("no url");
     }
     
+    @SuppressWarnings("this-escape")
     public Logo(String url){
         this.url = url;
         addMouseListener( this );

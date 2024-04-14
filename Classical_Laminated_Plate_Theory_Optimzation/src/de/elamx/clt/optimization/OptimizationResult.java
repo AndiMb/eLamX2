@@ -197,6 +197,7 @@ public class OptimizationResult {
         propertyChangeSupport.firePropertyChange(PROP_ALLRESULTS, null, bestLaminate);
     }
 
+    @SuppressWarnings("this-escape")
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

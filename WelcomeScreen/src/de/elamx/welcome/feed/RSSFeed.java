@@ -42,6 +42,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketException;
+import java.net.URI;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
@@ -122,6 +123,7 @@ public class RSSFeed extends JPanel implements Constants, PropertyChangeListener
         return cacheStore;
     }
     
+    @SuppressWarnings("this-escape")
     public RSSFeed( String url, boolean showProxyButton ) {
         super( new BorderLayout() );
         setOpaque(false);
@@ -167,7 +169,7 @@ public class RSSFeed extends JPanel implements Constants, PropertyChangeListener
         reader.setEntityResolver( new RSSEntityResolver() );
         reader.setErrorHandler( new ErrorCatcher() );
 
-        InputSource is = findInputSource(new URL(url));
+        InputSource is = findInputSource(URI.create(url).toURL());
         reader.parse( is );
 
         return handler.getItemList();
@@ -219,7 +221,7 @@ public class RSSFeed extends JPanel implements Constants, PropertyChangeListener
         } else if( httpCon.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP ) {
             String newUrl = httpCon.getHeaderField( "Location"); //NOI18N
             if( null != newUrl && !newUrl.isEmpty() ) {
-                return findInputSource( new URL(newUrl) );
+                return findInputSource( URI.create(newUrl).toURL() );
             }
             throw new IOException( "Invalid redirection" ); //NOI18N
         }
@@ -368,7 +370,7 @@ public class RSSFeed extends JPanel implements Constants, PropertyChangeListener
 
     protected void clearCache() {
         try {
-            NbPreferences.forModule( RSSFeed.class ).remove( url2path( new URL(url))) ;
+            NbPreferences.forModule( RSSFeed.class ).remove( url2path( URI.create(url).toURL())) ;
         } catch( MalformedURLException mE ) {
             //ignore
         }

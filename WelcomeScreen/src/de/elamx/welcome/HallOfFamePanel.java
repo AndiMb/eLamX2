@@ -36,6 +36,7 @@ public class HallOfFamePanel extends ContentPanel {
     /**
      * Creates new form HallOfFamePanel
      */
+    @SuppressWarnings("this-escape")
     public HallOfFamePanel() {
         super(NbBundle.getMessage(HallOfFamePanel.class, "HallOfFamePanel.title"));
         initComponents();

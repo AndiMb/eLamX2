@@ -138,6 +138,7 @@ public abstract class StiffenerProperties {
     public abstract double getRho();
 
     public abstract StiffenerProperties getCopy();
+    @SuppressWarnings("this-escape")
     protected transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**
