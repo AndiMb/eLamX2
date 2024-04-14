@@ -66,6 +66,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
     /**
      * Creates new form InputPanel
      */
+    @SuppressWarnings("this-escape")
     public InputPanel(DeformationModuleData data) {
         bc_icons = new ImageIcon[boundary_cond.length];
         Image image;

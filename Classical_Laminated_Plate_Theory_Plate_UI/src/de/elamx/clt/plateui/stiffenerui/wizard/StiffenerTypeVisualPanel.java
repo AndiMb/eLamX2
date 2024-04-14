@@ -42,6 +42,7 @@ public class StiffenerTypeVisualPanel extends JPanel{
     private javax.swing.ButtonGroup buttonGroup1;
     private JToggleButton[] toggleButtons;
 
+    @SuppressWarnings("this-escape")
     public StiffenerTypeVisualPanel() {
         initComponents();
     }

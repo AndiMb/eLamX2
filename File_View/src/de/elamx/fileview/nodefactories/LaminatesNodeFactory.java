@@ -24,6 +24,7 @@ public class LaminatesNodeFactory extends ChildFactory<Laminat> implements Looku
 
     private Lookup.Result<Laminat> result = null;
     
+    @SuppressWarnings("this-escape")
     public LaminatesNodeFactory() {
         result = eLamXLookup.getDefault().lookupResult(Laminat.class);
         result.addLookupListener(this);

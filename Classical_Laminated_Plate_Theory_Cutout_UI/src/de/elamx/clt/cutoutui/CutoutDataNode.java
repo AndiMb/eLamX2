@@ -57,6 +57,7 @@ public class CutoutDataNode extends AbstractNode implements PropertyChangeListen
     
     private final CutoutModuleData data;
 
+    @SuppressWarnings("this-escape")
     public CutoutDataNode(CutoutModuleData data) {
         super(Children.LEAF, Lookups.singleton(data));
         this.data = data;

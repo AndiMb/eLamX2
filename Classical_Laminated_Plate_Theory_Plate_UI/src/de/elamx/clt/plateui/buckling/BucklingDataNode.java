@@ -57,6 +57,7 @@ public class BucklingDataNode extends AbstractNode implements PropertyChangeList
 
     private final BucklingModuleData data;
 
+    @SuppressWarnings("this-escape")
     public BucklingDataNode(BucklingModuleData data) {
         super(Children.LEAF, Lookups.singleton(data));
         this.data = data;

@@ -49,6 +49,7 @@ public class DeformationModuleData extends eLamXModuleData implements PropertyCh
         this(laminat, new DeformationInput());
     }
 
+    @SuppressWarnings("this-escape")
     public DeformationModuleData(Laminat laminat, DeformationInput input) {
         super(laminat, NbBundle.getMessage(DeformationModuleData.class, "DeformationModule.name"));
         this.input = input;

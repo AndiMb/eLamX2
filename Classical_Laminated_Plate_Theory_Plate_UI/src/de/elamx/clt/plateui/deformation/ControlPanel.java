@@ -51,6 +51,7 @@ public class ControlPanel extends javax.swing.JPanel {
     /**
      * Creates new form ControlPanel
      */
+    @SuppressWarnings("this-escape")
     public ControlPanel() {
         this.data = null;
         this.view3D = null;
@@ -60,6 +61,7 @@ public class ControlPanel extends javax.swing.JPanel {
     /**
      * Creates new form ControlPanel
      */
+    @SuppressWarnings("this-escape")
     public ControlPanel(DeformationModuleData data, View3D view3D) {
         this.data = data;
         this.view3D = view3D;

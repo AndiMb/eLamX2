@@ -70,6 +70,7 @@ public class Laminat extends ELamXObject implements PropertyChangeListener, Look
         this(uid, name, true);
     }
     
+    @SuppressWarnings("this-escape")
     public Laminat(String uid, String name, boolean addToLookup){
         super(uid, name, addToLookup);
         result = this.getLookup().lookupResult(Object.class);

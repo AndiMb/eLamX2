@@ -46,6 +46,7 @@ public class CLT_Layer extends CLT_Object {
 
     private double zm = 0.0;
 
+    @SuppressWarnings("this-escape")
     public CLT_Layer(Layer layer) {
         this.layer = layer;
         refresh();

@@ -389,6 +389,7 @@ public final class FailureView3DPropertiesTopComponent extends TopComponent impl
         Border selectedBorder = null;
         boolean isBordered = true;
 
+        @SuppressWarnings("this-escape")
         public ColorRenderer(boolean isBordered) {
             this.isBordered = isBordered;
             setOpaque(true); //MUST do this for background to show up.

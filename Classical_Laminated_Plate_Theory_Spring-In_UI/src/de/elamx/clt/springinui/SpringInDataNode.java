@@ -57,6 +57,7 @@ public class SpringInDataNode extends AbstractNode implements PropertyChangeList
     
     private final SpringInModuleData data;
 
+    @SuppressWarnings("this-escape")
     public SpringInDataNode(SpringInModuleData data) {
         super(Children.LEAF, Lookups.singleton(data));
         this.data = data;

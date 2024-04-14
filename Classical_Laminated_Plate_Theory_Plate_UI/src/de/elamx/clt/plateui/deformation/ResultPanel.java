@@ -72,6 +72,7 @@ public class ResultPanel extends javax.swing.JPanel implements PropertyChangeLis
     /**
      * Creates new form ResultPanel
      */
+    @SuppressWarnings("this-escape")
     public ResultPanel(DeformationModuleData data, View3D view3D) {
         this.data = data;
         this.view3D = view3D;

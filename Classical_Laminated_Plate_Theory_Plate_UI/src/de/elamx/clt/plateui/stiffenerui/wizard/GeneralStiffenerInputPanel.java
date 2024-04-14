@@ -42,6 +42,7 @@ public class GeneralStiffenerInputPanel extends javax.swing.JPanel {
     /**
      * Creates new form GeneralStiffenerInputPanel
      */
+    @SuppressWarnings("this-escape")
     public GeneralStiffenerInputPanel() {
         initComponents();
         directionComboBox.setModel(new DefaultComboBoxModel<>(new String[] { StiffenerProperties.X_DIRECTION_STRING, StiffenerProperties.Y_DIRECTION_STRING }));

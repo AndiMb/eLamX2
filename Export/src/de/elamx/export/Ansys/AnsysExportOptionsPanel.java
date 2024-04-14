@@ -42,6 +42,7 @@ public class AnsysExportOptionsPanel extends ExportOptionsPanel {
     /**
      * Creates new form AnsysExportOptionsPanel
      */
+    @SuppressWarnings("this-escape")
     public AnsysExportOptionsPanel() {
         initComponents();
     }

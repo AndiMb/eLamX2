@@ -45,6 +45,7 @@ public class CalculationModuleData extends eLamXModuleData implements PropertyCh
         this(laminat, new CLT_Input());
     }
 
+    @SuppressWarnings("this-escape")
     public CalculationModuleData(Laminat laminat, CLT_Input dataHolder) {
         super(laminat, NbBundle.getMessage(CalculationModuleData.class, "CalculationModule.name"));
         this.dataHolder = dataHolder;

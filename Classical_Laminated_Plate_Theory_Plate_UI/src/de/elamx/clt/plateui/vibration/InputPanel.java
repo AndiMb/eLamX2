@@ -65,7 +65,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
         this(null);
     }
     
-    
+    @SuppressWarnings("this-escape")
     public InputPanel(VibrationModuleData data) {
         bc_icons = new ImageIcon[boundary_cond.length];
         Image image;

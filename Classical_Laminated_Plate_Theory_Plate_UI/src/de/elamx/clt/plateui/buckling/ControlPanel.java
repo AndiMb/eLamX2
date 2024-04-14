@@ -48,6 +48,7 @@ public class ControlPanel extends javax.swing.JPanel {
     private final BucklingModuleData data;
     private final View3D view3D;
 
+    @SuppressWarnings("this-escape")
     public ControlPanel() {
         this.data = null;
         this.view3D = null;
@@ -57,6 +58,7 @@ public class ControlPanel extends javax.swing.JPanel {
     /**
      * Creates new form ControlPanel
      */
+    @SuppressWarnings("this-escape")
     public ControlPanel(BucklingModuleData data, View3D view3D) {
         this.data = data;
         this.view3D = view3D;

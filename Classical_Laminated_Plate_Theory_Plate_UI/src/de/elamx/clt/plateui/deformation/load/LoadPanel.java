@@ -64,6 +64,7 @@ public class LoadPanel extends javax.swing.JPanel implements ExplorerManager.Pro
     /**
      * Creates new form LoadPanel
      */
+    @SuppressWarnings("this-escape")
     public LoadPanel(DeformationInput input) {
         this.input = input;
         lookup = ExplorerUtils.createLookup(explorerManager, new ActionMap());

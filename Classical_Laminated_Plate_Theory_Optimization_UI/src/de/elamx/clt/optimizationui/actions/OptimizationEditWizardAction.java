@@ -63,6 +63,7 @@ public final class OptimizationEditWizardAction implements ActionListener {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void actionPerformed(ActionEvent e) {
         List<WizardDescriptor.Panel<WizardDescriptor>> panels = new ArrayList<>();
         panels.add(new OptimizationWizardPanel1());

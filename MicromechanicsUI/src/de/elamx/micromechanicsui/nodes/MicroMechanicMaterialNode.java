@@ -82,6 +82,7 @@ public class MicroMechanicMaterialNode extends AbstractNode implements PropertyC
     
     private final MicroMechanicMaterial material;
 
+    @SuppressWarnings("this-escape")
     public MicroMechanicMaterialNode(MicroMechanicMaterial material) {
         super(Children.LEAF, Lookups.singleton(material));
         this.material = material;

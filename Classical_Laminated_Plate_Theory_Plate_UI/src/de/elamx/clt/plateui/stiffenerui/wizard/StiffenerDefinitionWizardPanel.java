@@ -79,6 +79,7 @@ public class StiffenerDefinitionWizardPanel implements WizardDescriptor.Panel<Wi
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void readSettings(WizardDescriptor wiz) {
         StiffenerDefinitionService actStiff = (StiffenerDefinitionService)wiz.getProperty("stiffener");
         

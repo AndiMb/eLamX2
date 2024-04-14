@@ -77,6 +77,7 @@ public class StiffenerTypeWizardPanel implements WizardDescriptor.Panel<WizardDe
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void readSettings(WizardDescriptor wiz) {
         Class<? extends StiffenerDefinitionService> stiffenerType = (Class<? extends StiffenerDefinitionService>)wiz.getProperty("stiffenertype");
         if (stiffenerType == null){

@@ -42,6 +42,7 @@ public class StiffenersNode extends AbstractNode implements PropertyChangeListen
     private final Input input;
     private boolean wasEmpty = false;
 
+    @SuppressWarnings("this-escape")
     public StiffenersNode(Input input) {
         super(input.getStiffenerProperties().isEmpty() ? Children.LEAF : Children.create(new StiffenerNodeFactory(input), false), Lookups.fixed(input));
         this.input = input;

@@ -44,6 +44,7 @@ public class TransverseLoadNodeFactory extends ChildFactory<TransverseLoad> impl
     
     private final DeformationInput input;
 
+    @SuppressWarnings("this-escape")
     public TransverseLoadNodeFactory(DeformationInput input) {
         this.input = input;
         input.addPropertyChangeListener(DeformationInput.PROP_LOAD_PROP, WeakListeners.propertyChange(this, input));

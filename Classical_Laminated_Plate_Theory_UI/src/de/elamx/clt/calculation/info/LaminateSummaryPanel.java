@@ -48,6 +48,7 @@ public class LaminateSummaryPanel extends javax.swing.JPanel {
     /**
      * Creates new customizer LaminateSummaryPanel
      */
+    @SuppressWarnings("this-escape")
     public LaminateSummaryPanel() {
         initComponents();
     }

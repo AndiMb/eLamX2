@@ -41,6 +41,7 @@ import org.openide.util.Utilities;
  */
 public class FibresNode extends AbstractNode {
 
+    @SuppressWarnings("this-escape")
     public FibresNode() {
         super(Children.create(new FibresNodeFactory(), true));
         this.setName(NbBundle.getMessage(FibresNode.class,"FibresNode.name"));

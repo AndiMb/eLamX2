@@ -47,6 +47,7 @@ public class MaterialImportPanel extends javax.swing.JPanel implements ExplorerM
     /**
      * Creates new form MaterialImportPanel
      */
+    @SuppressWarnings("this-escape")
     public MaterialImportPanel() {
         initComponents();
         initView();

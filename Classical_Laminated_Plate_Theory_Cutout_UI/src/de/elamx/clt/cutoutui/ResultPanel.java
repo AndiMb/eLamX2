@@ -120,6 +120,7 @@ public class ResultPanel extends javax.swing.JPanel implements PropertyChangeLis
         this(null, null);
     }
 
+    @SuppressWarnings("this-escape")
     public ResultPanel(CutoutModuleData data, JFreeChart chart) {
         this.data = data;
         this.chart = chart;

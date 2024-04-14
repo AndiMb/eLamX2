@@ -52,6 +52,7 @@ public class ControlPanel extends javax.swing.JPanel {
     /**
      * Creates new form ControlPanel
      */
+    @SuppressWarnings("this-escape")
     public ControlPanel(SpringInModuleData data, JFreeChart chart) {
         this.data = data;
         this.chart = chart;

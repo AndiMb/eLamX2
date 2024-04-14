@@ -57,6 +57,7 @@ public class VibrationDataNode extends AbstractNode implements PropertyChangeLis
     
     private final VibrationModuleData data;
 
+    @SuppressWarnings("this-escape")
     public VibrationDataNode(VibrationModuleData data) {
         super(Children.LEAF, Lookups.singleton(data));
         this.data = data;

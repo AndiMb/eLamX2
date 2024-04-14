@@ -41,6 +41,7 @@ public class LoadsNode extends AbstractNode implements PropertyChangeListener {
     private final DeformationInput input;
     private boolean wasEmpty = false;
 
+    @SuppressWarnings("this-escape")
     public LoadsNode(DeformationInput input) {
         super(input.getLoads().isEmpty() ? Children.LEAF : Children.create(new TransverseLoadNodeFactory(input), false));
         this.input = input;

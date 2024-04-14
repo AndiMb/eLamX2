@@ -50,6 +50,7 @@ public class CutoutInput implements PropertyChangeListener {
     private Loads loads;
 
     private final boolean notify = true;
+    @SuppressWarnings("this-escape")
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 
     public CutoutInput() {
@@ -62,6 +63,7 @@ public class CutoutInput implements PropertyChangeListener {
         this(cg, new Loads(nxx, nyy, nxy, mxx, myy, mxy), values);
     }
 
+    @SuppressWarnings("this-escape")
     public CutoutInput(CutoutGeometry cg, Loads loads, int values) {
         setCutoutGeometry(cg);
         this.loads = loads;
@@ -71,6 +73,7 @@ public class CutoutInput implements PropertyChangeListener {
     /**
      * @param val plate force resultant in x-direction
      */
+    @SuppressWarnings("this-escape")
     public final void setCutoutGeometry(CutoutGeometry val) {
         CutoutGeometry oldval = cg;
         cg = val;

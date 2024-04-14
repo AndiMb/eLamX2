@@ -142,6 +142,7 @@ public class MicroMechanicMaterial extends LayerMaterial implements PropertyChan
     private double RShear  = 0.0;
     public static final String PROP_RSHEAR = "RShear";
 
+    @SuppressWarnings("this-escape")
     public MicroMechanicMaterial(String uid, String name, Fiber fibre, Matrix matrix, double phi, boolean addToLookup) {
         super(uid, name, addToLookup);
         this.fibre = fibre;

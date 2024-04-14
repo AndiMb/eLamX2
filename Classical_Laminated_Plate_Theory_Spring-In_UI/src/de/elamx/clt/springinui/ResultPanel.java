@@ -60,6 +60,7 @@ public class ResultPanel extends javax.swing.JPanel implements PropertyChangeLis
     /**
      * Creates new form ResultPanel
      */
+    @SuppressWarnings("this-escape")
     public ResultPanel(SpringInModuleData data, JFreeChart chart) {
         this.data = data;
         this.chart = chart;

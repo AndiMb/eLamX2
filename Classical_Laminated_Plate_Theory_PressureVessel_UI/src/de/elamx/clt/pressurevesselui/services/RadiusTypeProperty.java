@@ -60,6 +60,7 @@ public class RadiusTypeProperty extends PropertySupport.ReadWrite<Integer> {
 
     boolean showHtml = Boolean.getBoolean("nb.useSwingHtmlRendering");
 
+    @SuppressWarnings("this-escape")
     public RadiusTypeProperty(PressureVesselInput input) {
         super(PressureVesselInput.PROP_RADIUSTYPE, Integer.class, NbBundle.getMessage(RadiusTypeProperty.class, "RadiusTypeProperty.RadiusType"), NbBundle.getMessage(RadiusTypeProperty.class, "RadiusTypeProperty.RadiusType.description"));
         this.htmlName = NbBundle.getMessage(RadiusTypeProperty.class, "RadiusTypeProperty.RadiusType.html");

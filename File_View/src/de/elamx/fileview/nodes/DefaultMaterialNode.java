@@ -55,6 +55,7 @@ public class DefaultMaterialNode extends AbstractNode implements PropertyChangeL
 
     private final DefaultMaterial material;
 
+    @SuppressWarnings("this-escape")
     public DefaultMaterialNode(DefaultMaterial material) {
         super(Children.LEAF, Lookups.singleton(material));
         this.material = material;

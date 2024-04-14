@@ -61,6 +61,7 @@ public abstract class Plate <T extends Input>{
     protected double length;
     protected final T input;
 
+    @SuppressWarnings("this-escape")
     public Plate(T input) {
         this.input = input;
         init();

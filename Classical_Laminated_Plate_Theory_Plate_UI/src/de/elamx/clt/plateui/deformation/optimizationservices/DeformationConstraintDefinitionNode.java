@@ -67,6 +67,7 @@ public class DeformationConstraintDefinitionNode extends AbstractNode implements
         this(new MinimalDeformationReserveFactorImpl());
     }
     
+    @SuppressWarnings("this-escape")
     public DeformationConstraintDefinitionNode(MinimalDeformationReserveFactorImpl impl){
         super(Children.LEAF, Lookups.singleton(impl));
         data = this.getLookup().lookup(MinimalDeformationReserveFactorImpl.class);

@@ -52,6 +52,7 @@ public class LaminateNode extends AbstractNode implements PropertyChangeListener
     private final Laminat laminate;
     private String stackSeq = "";
 
+    @SuppressWarnings("this-escape")
     public LaminateNode(Laminat laminate) {
         super(Children.create(new eLamXModuleDataNodeFactory(laminate), true), Lookups.singleton(laminate));
         this.laminate = laminate;

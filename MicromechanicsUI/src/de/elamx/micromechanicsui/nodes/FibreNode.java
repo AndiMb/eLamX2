@@ -68,6 +68,7 @@ public class FibreNode extends AbstractNode implements PropertyChangeListener {
     
     private final Fiber material;
 
+    @SuppressWarnings("this-escape")
     public FibreNode(Fiber material) {
         super(Children.LEAF, Lookups.singleton(material));
         this.material = material;

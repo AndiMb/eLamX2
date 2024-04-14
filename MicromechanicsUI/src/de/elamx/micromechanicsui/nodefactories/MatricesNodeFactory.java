@@ -45,6 +45,7 @@ public class MatricesNodeFactory extends ChildFactory<Matrix> implements LookupL
 
     private Lookup.Result<Matrix> result = null;
     
+    @SuppressWarnings("this-escape")
     public MatricesNodeFactory() {
         result = eLamXLookup.getDefault().lookupResult(Matrix.class);
         result.addLookupListener(this);

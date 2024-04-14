@@ -57,6 +57,7 @@ public class LastPlyFailureDataNode extends AbstractNode implements PropertyChan
 
     private final LastPlyFailureModuleData data;
 
+    @SuppressWarnings("this-escape")
     public LastPlyFailureDataNode(LastPlyFailureModuleData data) {
         super(Children.LEAF, Lookups.singleton(data));
         this.data = data;

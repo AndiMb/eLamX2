@@ -50,6 +50,7 @@ public class OptimizationModuleData extends ELamXObject implements PropertyChang
     public static final String PROP_OPTIMIZER = "OPTIMIZER";
     public static final String PROP_ANGLETYPE = "ANGLETYPE";
 
+    @SuppressWarnings("this-escape")
     public OptimizationModuleData(OptimizationInput input, boolean addToLookup) {
         super(UUID.randomUUID().toString(), NbBundle.getMessage(OptimizationModuleData.class, "OptimizationModule.name"), addToLookup);
         this.input = input;

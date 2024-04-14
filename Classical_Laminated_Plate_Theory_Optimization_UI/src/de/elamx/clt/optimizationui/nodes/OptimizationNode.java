@@ -53,6 +53,7 @@ public class OptimizationNode extends AbstractNode implements PropertyChangeList
 
     private final OptimizationModuleData data;
 
+    @SuppressWarnings("this-escape")
     public OptimizationNode(OptimizationModuleData data) {
         super(Children.LEAF, Lookups.singleton(data));
         this.data = data;

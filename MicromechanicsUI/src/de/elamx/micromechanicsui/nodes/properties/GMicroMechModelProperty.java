@@ -61,6 +61,7 @@ public class GMicroMechModelProperty extends PropertySupport.ReadWrite<MicroMech
 
     boolean showHtml = Boolean.getBoolean("nb.useSwingHtmlRendering");
 
+    @SuppressWarnings("this-escape")
     public GMicroMechModelProperty(MicroMechanicMaterial material) {
         super(MicroMechanicMaterial.PROP_EPARMODEL, MicroMechModel.class, NbBundle.getMessage(MicroMechanicMaterialNode.class, "MicroMechanicMaterialNode.GMicroMechModel"), NbBundle.getMessage(MicroMechanicMaterialNode.class, "MicroMechanicMaterialNode.GMicroMechModel.description"));
         this.htmlName = NbBundle.getMessage(MicroMechanicMaterialNode.class, "MicroMechanicMaterialNode.GMicroMechModel.html");

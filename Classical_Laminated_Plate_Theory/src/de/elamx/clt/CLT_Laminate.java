@@ -74,6 +74,7 @@ public class CLT_Laminate extends CLT_Object{
      * und die Lage mit dem Index [AnzahlderLagen] bei -t<sub>ges</sub>/2 endet. 
      * @param laminat <CODE>ArrayList&lt;Layer&gt;</CODE>, der die einzelnen <CODE>Layer</CODE>-Objekte enthält
      */
+    @SuppressWarnings("this-escape")
     public CLT_Laminate(Laminat laminat) {
         this.laminat = laminat;
         refresh();

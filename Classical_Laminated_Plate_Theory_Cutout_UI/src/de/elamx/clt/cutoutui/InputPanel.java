@@ -61,6 +61,7 @@ public class InputPanel  extends javax.swing.JPanel implements ItemListener, Pro
     /**
      * Creates new customizer InputPanel
      */
+    @SuppressWarnings("this-escape")
     public InputPanel(CutoutModuleData data) {
         Collection<? extends CutoutGeometry> c = Lookup.getDefault().lookupAll(CutoutGeometry.class);
         cutoutGeometries = new CutoutGeometry[c.size()];

@@ -42,6 +42,7 @@ public class NastranExportOptionsPanel extends ExportOptionsPanel {
     /**
      * Creates new form NastranExportOptionsPanel
      */
+    @SuppressWarnings("this-escape")
     public NastranExportOptionsPanel() {
         initComponents();
         hygrothermalCheckBox.setSelected(NbPreferences.forModule(NastranExportOptionsPanel.class).getBoolean("NastranExportOptionsPanel.hygrothermnal", false));

@@ -63,6 +63,7 @@ public class StiffenerPanel extends javax.swing.JPanel implements ExplorerManage
      *
      * @param input
      */
+    @SuppressWarnings("this-escape")
     public StiffenerPanel(Input input) {
         this.input = input;
         lookup = ExplorerUtils.createLookup(explorerManager, new ActionMap());

@@ -50,6 +50,7 @@ public class SpringInModuleData extends eLamXModuleData implements PropertyChang
         this(laminat, new SpringInInput());
     }
 
+    @SuppressWarnings("this-escape")
     public SpringInModuleData(Laminat laminat, SpringInInput input) {
         super(laminat, NbBundle.getMessage(SpringInModuleData.class, "SpringInModule.name"));
         this.input = input;

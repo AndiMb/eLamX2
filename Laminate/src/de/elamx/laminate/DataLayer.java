@@ -59,10 +59,12 @@ public class DataLayer extends Layer {
         this(uid, name, material, angle, thickness, null);
     }
 
+    @SuppressWarnings("this-escape")
     public DataLayer(String uid, String name, LayerMaterial material, double angle, double thickness, Criterion criterion) {
         this(uid, name, material, angle, thickness, criterion, false);
     }
     
+    @SuppressWarnings("this-escape")
     private DataLayer(String uid, String name, LayerMaterial material, double angle, double thickness, Criterion criterion, boolean withListeners) {
         super(uid, name);
         this.material = material;

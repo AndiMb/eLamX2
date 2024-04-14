@@ -45,6 +45,7 @@ public class LaminateNode extends AbstractNode {
 
     LayerNodeFactory layers;
     
+    @SuppressWarnings("this-escape")
     public LaminateNode(final LayerNodeFactory layers) {
         super(Children.create(layers, false));
         this.layers = layers;

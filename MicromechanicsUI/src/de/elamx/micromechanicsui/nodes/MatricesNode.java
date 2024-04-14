@@ -41,6 +41,7 @@ import org.openide.util.Utilities;
  */
 public class MatricesNode extends AbstractNode {
 
+    @SuppressWarnings("this-escape")
     public MatricesNode() {
         super(Children.create(new MatricesNodeFactory(), true));
         this.setName(NbBundle.getMessage(MatricesNode.class,"MatricesNode.name"));

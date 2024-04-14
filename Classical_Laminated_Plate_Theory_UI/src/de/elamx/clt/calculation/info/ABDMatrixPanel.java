@@ -53,6 +53,7 @@ public class ABDMatrixPanel extends javax.swing.JPanel {
     /**
      * Creates new form ABDMatrixPanel
      */
+    @SuppressWarnings("this-escape")
     public ABDMatrixPanel() {
         initComponents();
     }

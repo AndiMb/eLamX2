@@ -663,6 +663,7 @@ public final class MicroMechanicsTopComponent extends TopComponent implements Pr
         Border selectedBorder = null;
         boolean isBordered = true;
 
+        @SuppressWarnings("this-escape")
         public ColorRenderer(boolean isBordered) {
             this.isBordered = isBordered;
             setOpaque(true); //MUST do this for background to show up.

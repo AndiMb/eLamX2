@@ -52,6 +52,7 @@ public class StiffenerDefinitionNode extends AbstractNode implements PropertyCha
 
     private final StiffenerDefinitionService props;
 
+    @SuppressWarnings("this-escape")
     public StiffenerDefinitionNode(StiffenerDefinitionService props) {
         super(Children.LEAF, Lookups.singleton(props));
         this.props = props;

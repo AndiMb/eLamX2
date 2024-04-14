@@ -26,6 +26,7 @@ public class eLamXModuleDataNodeFactory extends ChildFactory<eLamXModuleDataNode
     
     private Lookup.Result<eLamXModuleData> result = null;
     
+    @SuppressWarnings("this-escape")
     public eLamXModuleDataNodeFactory(Laminat laminate) {
         this.laminat = laminate;
         result = laminat.getLookup().lookupResult(eLamXModuleData.class);

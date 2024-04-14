@@ -68,6 +68,7 @@ public class MatrixNode extends AbstractNode implements PropertyChangeListener {
     
     private final Matrix matrix;
 
+    @SuppressWarnings("this-escape")
     public MatrixNode(Matrix material) {
         super(Children.LEAF, Lookups.singleton(material));
         this.matrix = material;

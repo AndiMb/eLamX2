@@ -49,6 +49,7 @@ public class EngineeringConstantsPanel extends javax.swing.JPanel {
     /**
      * Creates new form EngineeringConstantsPanel
      */
+    @SuppressWarnings("this-escape")
     public EngineeringConstantsPanel() {
         initComponents();
     }

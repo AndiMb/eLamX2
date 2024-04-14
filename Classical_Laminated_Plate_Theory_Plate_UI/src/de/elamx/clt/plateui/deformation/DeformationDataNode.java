@@ -57,6 +57,7 @@ public class DeformationDataNode extends AbstractNode implements PropertyChangeL
     
     private final DeformationModuleData data;
 
+    @SuppressWarnings("this-escape")
     public DeformationDataNode(DeformationModuleData data) {
         super(Children.LEAF, Lookups.singleton(data));
         this.data = data;

@@ -42,6 +42,7 @@ public class AbaqusExportOptionsPanel extends ExportOptionsPanel {
     /**
      * Creates new form AbaqusExportOptionsPanel
      */
+    @SuppressWarnings("this-escape")
     public AbaqusExportOptionsPanel() {
         initComponents();
         hygrothermalCheckBox.setSelected(NbPreferences.forModule(AbaqusExportOptionsPanel.class).getBoolean("AbaqusExportOptionsPanel.hygrothermnal", false));

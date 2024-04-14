@@ -41,6 +41,7 @@ import org.openide.util.Utilities;
  */
 public class OptimizationsNode extends AbstractNode {
 
+    @SuppressWarnings("this-escape")
     public OptimizationsNode() {
         super(Children.create(new OptimizationsNodeFactory(), true));
         this.setName(NbBundle.getMessage(OptimizationsNode.class, "OptimizationsNode.name"));

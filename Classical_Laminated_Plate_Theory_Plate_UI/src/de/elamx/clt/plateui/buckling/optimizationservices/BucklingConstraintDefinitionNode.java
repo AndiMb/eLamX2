@@ -65,6 +65,7 @@ public class BucklingConstraintDefinitionNode extends AbstractNode implements Pr
         this(new MinimalBucklingReserveFactorImpl());
     }
     
+    @SuppressWarnings("this-escape")
     public BucklingConstraintDefinitionNode(MinimalBucklingReserveFactorImpl impl){
         super(Children.LEAF, Lookups.singleton(impl));
         data = this.getLookup().lookup(MinimalBucklingReserveFactorImpl.class);

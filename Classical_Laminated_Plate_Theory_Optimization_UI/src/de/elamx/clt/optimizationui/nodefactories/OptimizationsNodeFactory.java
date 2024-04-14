@@ -45,6 +45,7 @@ public class OptimizationsNodeFactory extends ChildFactory<OptimizationModuleDat
 
     private Lookup.Result<OptimizationModuleData> result = null;
     
+    @SuppressWarnings("this-escape")
     public OptimizationsNodeFactory() {
         result = eLamXLookup.getDefault().lookupResult(OptimizationModuleData.class);
         result.addLookupListener(this);

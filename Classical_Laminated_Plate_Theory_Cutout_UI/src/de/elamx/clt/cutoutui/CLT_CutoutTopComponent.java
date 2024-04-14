@@ -89,6 +89,7 @@ public class CLT_CutoutTopComponent extends TopComponent implements LookupListen
     /**
      * Creates new customizer CLT_CutoutTopComponent
      */
+    @SuppressWarnings("this-escape")
     public CLT_CutoutTopComponent(CutoutModuleData data) {
         this.data = data;
         setName(this.data.getName() + " - " + this.data.getLaminat().getName());

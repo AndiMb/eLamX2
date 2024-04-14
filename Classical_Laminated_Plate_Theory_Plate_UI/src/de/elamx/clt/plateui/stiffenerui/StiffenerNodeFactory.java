@@ -42,6 +42,7 @@ public class StiffenerNodeFactory extends ChildFactory<StiffenerProperties> impl
     
     private final Input input;
 
+    @SuppressWarnings("this-escape")
     public StiffenerNodeFactory(Input input) {
         this.input = input;
         input.addPropertyChangeListener(Input.PROP_STIFF_PROP, WeakListeners.propertyChange(this, input));

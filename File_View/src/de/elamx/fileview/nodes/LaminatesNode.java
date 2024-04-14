@@ -20,6 +20,7 @@ import org.openide.util.Utilities;
  */
 public class LaminatesNode extends AbstractNode {
 
+    @SuppressWarnings("this-escape")
     public LaminatesNode() {
         super(Children.create(new LaminatesNodeFactory(), true));
         this.setName(NbBundle.getMessage(LaminatesNode.class,"LaminatesNode.name"));

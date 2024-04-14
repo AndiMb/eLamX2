@@ -52,6 +52,7 @@ public class TransverseLoadNode extends AbstractNode implements PropertyChangeLi
     
     private final TransverseLoad tLoad;
 
+    @SuppressWarnings("this-escape")
     public TransverseLoadNode(TransverseLoad tLoad) {
         super(Children.LEAF, Lookups.singleton(tLoad));
         this.tLoad = tLoad;

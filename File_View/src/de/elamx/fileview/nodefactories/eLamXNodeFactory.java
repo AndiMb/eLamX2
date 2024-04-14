@@ -21,6 +21,7 @@ import org.openide.util.Lookup;
  */
 public class eLamXNodeFactory extends ChildFactory<ELamXNodeProvider> implements PropertyChangeListener{
 
+    @SuppressWarnings("this-escape")
     public eLamXNodeFactory() {
         eLamXLookup.getDefault().addPropertyChangeListener(this);
     }

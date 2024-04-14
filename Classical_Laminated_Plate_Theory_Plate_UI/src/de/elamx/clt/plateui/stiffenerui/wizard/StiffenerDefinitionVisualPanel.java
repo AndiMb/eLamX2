@@ -41,6 +41,7 @@ public class StiffenerDefinitionVisualPanel extends javax.swing.JPanel {
     /**
      * Creates new form StiffenerDefintionVisualPanel
      */
+    @SuppressWarnings("this-escape")
     public StiffenerDefinitionVisualPanel() {
         initComponents();
     }

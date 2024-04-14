@@ -59,6 +59,7 @@ public class ConstraintDefinitionNode extends AbstractNode implements PropertyCh
         this(new MinimalReserveFactorImplementation());
     }
 
+    @SuppressWarnings("this-escape")
     public ConstraintDefinitionNode(MinimalReserveFactorImplementation impl) {
         super(Children.LEAF, Lookups.singleton(impl));
         data = this.getLookup().lookup(MinimalReserveFactorImplementation.class);

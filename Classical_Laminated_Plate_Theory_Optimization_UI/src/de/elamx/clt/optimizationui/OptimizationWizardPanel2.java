@@ -80,6 +80,7 @@ public class OptimizationWizardPanel2 implements WizardDescriptor.ValidatingPane
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void readSettings(WizardDescriptor wiz) {
         if (wiz.getProperty("Calculators") == null){
             return;

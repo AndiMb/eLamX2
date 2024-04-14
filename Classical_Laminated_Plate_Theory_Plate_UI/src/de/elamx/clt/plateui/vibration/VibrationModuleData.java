@@ -50,6 +50,7 @@ public class VibrationModuleData extends eLamXModuleData implements PropertyChan
         this(laminat, new VibrationInput());
     }
 
+    @SuppressWarnings("this-escape")
     public VibrationModuleData(Laminat laminat, VibrationInput input) {
         super(laminat, NbBundle.getMessage(VibrationModuleData.class, "VibrationModule.name"));
         this.input = input;

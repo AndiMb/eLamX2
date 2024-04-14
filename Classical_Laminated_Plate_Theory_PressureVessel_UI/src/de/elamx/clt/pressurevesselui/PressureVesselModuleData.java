@@ -48,6 +48,7 @@ public class PressureVesselModuleData extends eLamXModuleData implements Propert
         this(laminat, new PressureVesselInput());
     }
 
+    @SuppressWarnings("this-escape")
     public PressureVesselModuleData(Laminat laminat, PressureVesselInput input) {
         super(laminat, NbBundle.getMessage(PressureVesselModuleData.class, "PressureVesselModule.name"));
         this.input = input;

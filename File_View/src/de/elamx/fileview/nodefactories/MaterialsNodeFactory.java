@@ -30,6 +30,7 @@ public class MaterialsNodeFactory extends ChildFactory<MaterialProviderProxy> im
     
     private Lookup.Result<Material> result = null;
 
+    @SuppressWarnings("this-escape")
     public MaterialsNodeFactory() {
         result = eLamXLookup.getDefault().lookupResult(Material.class);
         result.addLookupListener(this);

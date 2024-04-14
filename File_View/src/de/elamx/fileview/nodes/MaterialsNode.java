@@ -20,6 +20,7 @@ import org.openide.util.Utilities;
  */
 public class MaterialsNode extends AbstractNode {
 
+    @SuppressWarnings("this-escape")
     public MaterialsNode() {
         super(Children.create(new MaterialsNodeFactory(), true));
         this.setName(NbBundle.getMessage(MaterialsNode.class,"MaterialNode.name"));

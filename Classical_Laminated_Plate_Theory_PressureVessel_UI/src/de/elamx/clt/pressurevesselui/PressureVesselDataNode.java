@@ -57,6 +57,7 @@ public class PressureVesselDataNode extends AbstractNode implements PropertyChan
     
     private final PressureVesselModuleData data;
 
+    @SuppressWarnings("this-escape")
     public PressureVesselDataNode(PressureVesselModuleData data) {
         super(Children.LEAF, Lookups.singleton(data));
         this.data = data;

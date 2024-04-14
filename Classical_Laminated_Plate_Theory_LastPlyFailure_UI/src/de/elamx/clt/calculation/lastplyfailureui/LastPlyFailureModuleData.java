@@ -48,6 +48,7 @@ public class LastPlyFailureModuleData extends eLamXModuleData implements Propert
         this(laminat, new LastPlyFailureInput());
     }
 
+    @SuppressWarnings("this-escape")
     public LastPlyFailureModuleData(Laminat laminat, LastPlyFailureInput input) {
         super(laminat, NbBundle.getMessage(LastPlyFailureModuleData.class, "LastPlyFailureModule.name"));
         this.input = input;

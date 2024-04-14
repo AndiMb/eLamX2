@@ -129,6 +129,7 @@ public class LastPlyFailureInput {
         this.notify = notify;
     }
 
+    @SuppressWarnings("this-escape")
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

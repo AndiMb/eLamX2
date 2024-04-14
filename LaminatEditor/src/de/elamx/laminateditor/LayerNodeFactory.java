@@ -63,6 +63,7 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
     private boolean changing = false;
     private final Laminat laminat;
 
+    @SuppressWarnings("this-escape")
     public LayerNodeFactory(Laminat laminat) {
         this.laminat = laminat;
         this.laminat.addPropertyChangeListener(this);
@@ -211,6 +212,7 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
         private int number;
         private double zm;
 
+        @SuppressWarnings("this-escape")
         public LayerNode(Lookup lookup, boolean symmetryLayer, int number, double zm) {
             super(Children.LEAF, lookup);
             this.symmetryLayer = !symmetryLayer;

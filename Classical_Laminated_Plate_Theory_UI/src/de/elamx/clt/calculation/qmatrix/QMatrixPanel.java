@@ -57,10 +57,12 @@ public class QMatrixPanel extends javax.swing.JPanel {
     /**
      * Creates new form QMatrixPanel
      */
+    @SuppressWarnings("this-escape")
     public QMatrixPanel() {
         initComponents();
     }
     
+    @SuppressWarnings("this-escape")
     public QMatrixPanel(Layer layer){
         if ((cltLayer = layer.getLookup().lookup(CLT_Layer.class)) == null){
             cltLayer = new CLT_Layer(layer);

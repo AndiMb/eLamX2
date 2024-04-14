@@ -49,6 +49,7 @@ public class BucklingModuleData extends eLamXModuleData implements PropertyChang
         this(laminat, new BucklingInput());
     }
 
+    @SuppressWarnings("this-escape")
     public BucklingModuleData(Laminat laminat, BucklingInput input) {
         super(laminat, NbBundle.getMessage(BucklingModuleData.class, "BucklingModule.name"));
         this.input = input;

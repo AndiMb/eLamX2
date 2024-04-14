@@ -50,6 +50,7 @@ public class CutoutModuleData extends eLamXModuleData implements PropertyChangeL
         this(laminat, new CutoutInput());
     }
 
+    @SuppressWarnings("this-escape")
     public CutoutModuleData(Laminat laminat, CutoutInput input) {
         super(laminat, NbBundle.getMessage(CutoutModuleData.class, "CutoutModule.name"));
         this.input = input;

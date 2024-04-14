@@ -53,6 +53,7 @@ public class ControlPanel extends javax.swing.JPanel {
         this(null, null);
     }
     
+    @SuppressWarnings("this-escape")
     public ControlPanel(CutoutModuleData data, JFreeChart chart){
         this.data  = data;
         this.chart = chart;

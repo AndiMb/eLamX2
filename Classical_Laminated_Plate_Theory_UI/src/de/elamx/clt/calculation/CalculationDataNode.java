@@ -57,6 +57,7 @@ public class CalculationDataNode extends AbstractNode implements PropertyChangeL
     
     private final CalculationModuleData data;
 
+    @SuppressWarnings("this-escape")
     public CalculationDataNode(CalculationModuleData data) {
         super(Children.LEAF, Lookups.singleton(data));
         this.data = data;

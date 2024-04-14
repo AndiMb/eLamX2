@@ -66,6 +66,7 @@ public class InputPanel extends javax.swing.JPanel implements ItemListener, Prop
     /**
      * Creates new form InputPanel
      */
+    @SuppressWarnings("this-escape")
     public InputPanel(SpringInModuleData data) {
         Collection<? extends SpringInModel> c = Lookup.getDefault().lookupAll(SpringInModel.class);
         springInModels = new SpringInModel[c.size()];

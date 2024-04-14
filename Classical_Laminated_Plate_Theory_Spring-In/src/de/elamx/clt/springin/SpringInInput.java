@@ -200,6 +200,7 @@ public class SpringInInput {
         return radius*2.0;
     }
 
+    @SuppressWarnings("this-escape")
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

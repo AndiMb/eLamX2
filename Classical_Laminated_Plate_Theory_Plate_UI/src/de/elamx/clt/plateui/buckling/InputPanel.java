@@ -68,6 +68,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
     /**
      * Creates new form InputPanel
      */
+    @SuppressWarnings("this-escape")
     public InputPanel(BucklingModuleData data) {
         bc_icons = new ImageIcon[boundary_cond.length];
         Image image;

@@ -40,6 +40,7 @@ public class NonDimensionalParametersPanel extends javax.swing.JPanel {
     /**
      * Creates new form HygrothermalCoefficientPanel
      */
+    @SuppressWarnings("this-escape")
     public NonDimensionalParametersPanel() {
         initComponents();
     }

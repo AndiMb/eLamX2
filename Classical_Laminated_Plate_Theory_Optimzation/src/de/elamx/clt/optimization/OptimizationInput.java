@@ -54,6 +54,7 @@ public class OptimizationInput {
     private boolean symmetricLaminat;
 
     private final boolean notify = true;
+    @SuppressWarnings("this-escape")
     private final transient PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
     
     public OptimizationInput(){

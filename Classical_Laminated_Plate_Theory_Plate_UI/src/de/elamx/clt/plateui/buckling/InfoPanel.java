@@ -49,6 +49,7 @@ public class InfoPanel extends javax.swing.JPanel implements PropertyChangeListe
     /**
      * Creates new form ResultPanel
      */
+    @SuppressWarnings("this-escape")
     public InfoPanel(BucklingModuleData data) {
         this.data = data;
         if (data != null) {

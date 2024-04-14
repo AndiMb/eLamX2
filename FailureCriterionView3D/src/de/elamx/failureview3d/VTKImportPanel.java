@@ -44,6 +44,7 @@ public class VTKImportPanel extends javax.swing.JPanel {
     /**
      * Creates new form ImagePropertyPanel
      */
+    @SuppressWarnings("this-escape")
     public VTKImportPanel(String filename, double scale) {
         initComponents();
         filenameField.setText(filename);

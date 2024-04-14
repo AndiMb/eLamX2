@@ -60,6 +60,7 @@ public class SigEpsProperty extends PropertySupport.ReadWrite<Integer> {
 
     boolean showHtml = Boolean.getBoolean("nb.useSwingHtmlRendering");
 
+    @SuppressWarnings("this-escape")
     public SigEpsProperty(CLT_Input input, int index) {
         super(CLT_Input.PROP_USESTRAINS + index, Integer.class, NbBundle.getMessage(SigEpsProperty.class, "SigEpsProperty.UseStrain" + index), NbBundle.getMessage(SigEpsProperty.class, "SigEpsProperty.UseStrain" + index + ".description"));
         this.htmlName = NbBundle.getMessage(SigEpsProperty.class, "SigEpsProperty.UseStrain"  + index + ".html");

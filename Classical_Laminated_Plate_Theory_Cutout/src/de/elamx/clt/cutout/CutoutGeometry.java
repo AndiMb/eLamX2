@@ -242,6 +242,7 @@ public abstract class CutoutGeometry {
         return new double[]{sums.getRe()/max,sums.getIm()/max};
     }
     
+    @SuppressWarnings("this-escape")
     protected transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**

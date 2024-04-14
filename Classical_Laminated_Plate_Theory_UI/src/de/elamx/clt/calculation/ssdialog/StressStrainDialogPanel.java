@@ -44,6 +44,7 @@ public class StressStrainDialogPanel extends javax.swing.JPanel implements Actio
     /**
      * Creates new form StressStrainDialogPanel
      */
+    @SuppressWarnings("this-escape")
     public StressStrainDialogPanel(CLT_Laminate laminate) {
         this.laminate = laminate;
         initComponents();

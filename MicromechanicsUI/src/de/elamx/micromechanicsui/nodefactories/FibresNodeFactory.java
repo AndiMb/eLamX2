@@ -45,6 +45,7 @@ public class FibresNodeFactory extends ChildFactory<Fiber> implements LookupList
 
     private Lookup.Result<Fiber> result = null;
     
+    @SuppressWarnings("this-escape")
     public FibresNodeFactory() {
         result = eLamXLookup.getDefault().lookupResult(Fiber.class);
         result.addLookupListener(this);

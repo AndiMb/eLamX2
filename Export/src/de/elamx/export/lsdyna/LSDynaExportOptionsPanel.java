@@ -49,6 +49,7 @@ public class LSDynaExportOptionsPanel extends ExportOptionsPanel {
     /**
      * Creates new form LSDynaExportOptionsPanel
      */
+    @SuppressWarnings("this-escape")
     public LSDynaExportOptionsPanel() {
         initComponents();
     }
