@@ -52,6 +52,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.NumberFormatter;
 import org.netbeans.swing.outline.DefaultOutlineModel;
 import org.openide.DialogDisplayer;
@@ -803,8 +804,9 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
 
         @Override
         public void focusGained(FocusEvent e) {
-            JTextField field = (JTextField) e.getSource();
-            field.selectAll();
+            SwingUtilities.invokeLater(() -> {
+                ((JTextField) e.getSource()).selectAll();
+            });
         }
 
         @Override

@@ -39,6 +39,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -53,9 +55,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.Action;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -76,6 +81,7 @@ import org.openide.util.lookup.AbstractLookup;
 import org.openide.util.lookup.InstanceContent;
 import org.openide.util.lookup.Lookups;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 /**
  * Top component which displays something.
@@ -151,46 +157,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        nxField = new javax.swing.JFormattedTextField(df_Forces);
-        nxField.setValue(data.getLastPlyFailureInput().getLoad().getN_x());
-        nxField.addPropertyChangeListener("value", this);
-        jLabel2 = new javax.swing.JLabel();
-        nyField = new javax.swing.JFormattedTextField(df_Forces);
-        nyField.setValue(data.getLastPlyFailureInput().getLoad().getN_y());
-        nyField.addPropertyChangeListener("value", this);
-        jLabel3 = new javax.swing.JLabel();
-        nxyField = new javax.swing.JFormattedTextField(df_Forces);
-        nxyField.setValue(data.getLastPlyFailureInput().getLoad().getN_xy());
-        nxyField.addPropertyChangeListener("value", this);
-        jLabel4 = new javax.swing.JLabel();
-        mxyField = new javax.swing.JFormattedTextField(df_Forces);
-        mxyField.setValue(data.getLastPlyFailureInput().getLoad().getM_xy());
-        mxyField.addPropertyChangeListener("value", this);
-        jLabel5 = new javax.swing.JLabel();
-        mxField = new javax.swing.JFormattedTextField(df_Forces);
-        mxField.setValue(data.getLastPlyFailureInput().getLoad().getM_x());
-        mxField.addPropertyChangeListener("value", this);
-        jLabel6 = new javax.swing.JLabel();
-        myField = new javax.swing.JFormattedTextField(df_Forces);
-        myField.setValue(data.getLastPlyFailureInput().getLoad().getM_y());
-        myField.addPropertyChangeListener("value", this);
-        calculationButton = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        iterationField = new javax.swing.JTextField();
-        RFminField = new javax.swing.JTextField();
-        failureTypeField = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        layerNumberField = new javax.swing.JTextField();
-        previewsButton = new javax.swing.JButton();
-        nextButton = new javax.swing.JButton();
-        chartHolderPanel = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        tablePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new AutoRowHeightTable(){
 
@@ -210,10 +177,133 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         table.setDefaultRenderer(Object.class, or);
         table.setDefaultRenderer(Number.class, new NumberRenderer());
         table.setDefaultRenderer(Double.class, new DoubleRenderer());
+        inputResultPanel = new javax.swing.JPanel();
+        inputPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        nxField = new javax.swing.JFormattedTextField(df_Forces) {
+            @Override
+            protected void processFocusEvent(FocusEvent e) {
+                super.processFocusEvent(e);
+                if (e.isTemporary()) {
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> {
+                    selectAll();
+                });
+            }
+        };
+        nxField.setValue(data.getLastPlyFailureInput().getLoad().getN_x());
+        nxField.addPropertyChangeListener("value", this);
+        jLabel2 = new javax.swing.JLabel();
+        nyField = new javax.swing.JFormattedTextField(df_Forces) {
+            @Override
+            protected void processFocusEvent(FocusEvent e) {
+                super.processFocusEvent(e);
+                if (e.isTemporary()) {
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> {
+                    selectAll();
+                });
+            }
+        };
+        nyField.setValue(data.getLastPlyFailureInput().getLoad().getN_y());
+        nyField.addPropertyChangeListener("value", this);
+        jLabel3 = new javax.swing.JLabel();
+        nxyField = new javax.swing.JFormattedTextField(df_Forces) {
+            @Override
+            protected void processFocusEvent(FocusEvent e) {
+                super.processFocusEvent(e);
+                if (e.isTemporary()) {
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> {
+                    selectAll();
+                });
+            }
+        };
+        nxyField.setValue(data.getLastPlyFailureInput().getLoad().getN_xy());
+        nxyField.addPropertyChangeListener("value", this);
+        jLabel4 = new javax.swing.JLabel();
+        mxyField = new javax.swing.JFormattedTextField(df_Forces) {
+            @Override
+            protected void processFocusEvent(FocusEvent e) {
+                super.processFocusEvent(e);
+                if (e.isTemporary()) {
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> {
+                    selectAll();
+                });
+            }
+        };
+        mxyField.setValue(data.getLastPlyFailureInput().getLoad().getM_xy());
+        mxyField.addPropertyChangeListener("value", this);
+        jLabel5 = new javax.swing.JLabel();
+        mxField = new javax.swing.JFormattedTextField(df_Forces) {
+            @Override
+            protected void processFocusEvent(FocusEvent e) {
+                super.processFocusEvent(e);
+                if (e.isTemporary()) {
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> {
+                    selectAll();
+                });
+            }
+        };
+        mxField.setValue(data.getLastPlyFailureInput().getLoad().getM_x());
+        mxField.addPropertyChangeListener("value", this);
+        jLabel6 = new javax.swing.JLabel();
+        myField = new javax.swing.JFormattedTextField(df_Forces) {
+            @Override
+            protected void processFocusEvent(FocusEvent e) {
+                super.processFocusEvent(e);
+                if (e.isTemporary()) {
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> {
+                    selectAll();
+                });
+            }
+        };
+        myField.setValue(data.getLastPlyFailureInput().getLoad().getM_y());
+        myField.addPropertyChangeListener("value", this);
+        calculationButton = new javax.swing.JButton();
+        ResultPanel = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        iterationField = new javax.swing.JTextField();
+        RFminField = new javax.swing.JTextField();
+        failureTypeField = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        layerNumberField = new javax.swing.JTextField();
+        previewsButton = new javax.swing.JButton();
+        nextButton = new javax.swing.JButton();
+        chartHolderPanel = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.jPanel1.border.title"))); // NOI18N
+        tablePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.tablePanel.border.title"))); // NOI18N
+
+        table.setModel(tabModel);
+        jScrollPane1.setViewportView(table);
+
+        javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
+        tablePanel.setLayout(tablePanelLayout);
+        tablePanelLayout.setHorizontalGroup(
+            tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+        );
+        tablePanelLayout.setVerticalGroup(
+            tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+        );
+
+        add(tablePanel, java.awt.BorderLayout.CENTER);
+
+        inputPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.inputPanel.border.title"))); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.jLabel1.text")); // NOI18N
 
@@ -245,13 +335,13 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         myField.setColumns(8);
         myField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout inputPanelLayout = new javax.swing.GroupLayout(inputPanel);
+        inputPanel.setLayout(inputPanelLayout);
+        inputPanelLayout.setHorizontalGroup(
+            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,43 +349,43 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(myField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        inputPanelLayout.setVerticalGroup(
+            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(myField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         org.openide.awt.Mnemonics.setLocalizedText(calculationButton, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.calculationButton.text")); // NOI18N
@@ -305,7 +395,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             }
         });
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.jPanel4.border.title"))); // NOI18N
+        ResultPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.ResultPanel.border.title"))); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.jLabel7.text")); // NOI18N
 
@@ -335,42 +425,42 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         layerNumberField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         layerNumberField.setText(org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.layerNumberField.text")); // NOI18N
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout ResultPanelLayout = new javax.swing.GroupLayout(ResultPanel);
+        ResultPanel.setLayout(ResultPanelLayout);
+        ResultPanelLayout.setHorizontalGroup(
+            ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ResultPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jLabel10)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(failureTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RFminField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(layerNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(iterationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        ResultPanelLayout.setVerticalGroup(
+            ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ResultPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(iterationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(layerNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RFminField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(failureTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -393,63 +483,45 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
 
         chartHolderPanel.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout inputResultPanelLayout = new javax.swing.GroupLayout(inputResultPanel);
+        inputResultPanel.setLayout(inputResultPanelLayout);
+        inputResultPanelLayout.setHorizontalGroup(
+            inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputResultPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(inputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calculationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(inputResultPanelLayout.createSequentialGroup()
                         .addComponent(previewsButton)
-                        .addGap(87, 87, 87)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(nextButton))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ResultPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chartHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                .addComponent(chartHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        inputResultPanelLayout.setVerticalGroup(
+            inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputResultPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(chartHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(inputResultPanelLayout.createSequentialGroup()
+                        .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ResultPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(calculationButton)
                             .addComponent(previewsButton)
-                            .addComponent(nextButton))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(nextButton))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        add(jPanel3, java.awt.BorderLayout.PAGE_START);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.jPanel2.border.title"))); // NOI18N
-
-        table.setModel(tabModel);
-        jScrollPane1.setViewportView(table);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-        );
-
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        add(inputResultPanel, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
     private void calculationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculationButtonActionPerformed
@@ -494,9 +566,12 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField RFminField;
+    private javax.swing.JPanel ResultPanel;
     private javax.swing.JButton calculationButton;
     private javax.swing.JPanel chartHolderPanel;
     private javax.swing.JTextField failureTypeField;
+    private javax.swing.JPanel inputPanel;
+    private javax.swing.JPanel inputResultPanel;
     private javax.swing.JTextField iterationField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -508,10 +583,6 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField layerNumberField;
     private javax.swing.JFormattedTextField mxField;
@@ -523,6 +594,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     private javax.swing.JFormattedTextField nyField;
     private javax.swing.JButton previewsButton;
     private javax.swing.JTable table;
+    private javax.swing.JPanel tablePanel;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
@@ -536,6 +608,33 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         clt_lam.removeCLTRefreshListener(this);
         uniqueLastPlyFailureData.remove(data);
     }
+
+    @Override
+    protected void componentDeactivated() {
+        super.componentDeactivated();
+        JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
+        mainFrame.getRootPane().removePropertyChangeListener("defaultButton", defaultButtonListener);
+        mainFrame.getRootPane().setDefaultButton(null);
+    }
+
+    @Override
+    protected void componentActivated() {
+        super.componentActivated();
+        JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
+        mainFrame.getRootPane().setDefaultButton(calculationButton);
+        nxField.requestFocus();
+        mainFrame.getRootPane().addPropertyChangeListener("defaultButton", defaultButtonListener);
+    }
+
+    private final PropertyChangeListener defaultButtonListener = new PropertyChangeListener() {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            JFrame mainFrame = (JFrame) WindowManager.getDefault().getMainWindow();
+            mainFrame.getRootPane().removePropertyChangeListener("defaultButton", defaultButtonListener);
+            mainFrame.getRootPane().setDefaultButton(calculationButton);
+            mainFrame.getRootPane().addPropertyChangeListener("defaultButton", defaultButtonListener);
+        }
+    };
 
     @Override
     public int getPersistenceType() {
