@@ -351,15 +351,6 @@ public class CLT_Calculator {
                     lastIteration = true;
                 }
             }
-
-            System.out.println("Result für Iteration #" + (iter + 1));
-            System.out.println("  Layer:       " + layerResults[minLayerIndex].getLayer().getNumber());
-            System.out.println("  RF_min:      " + rf_min.getMinimalReserveFactor());
-            System.out.println("  FailureType: " + rf_min.getFailureName());
-            for (int ii = 0; ii < numLayers; ii++) {
-                System.out.println("  Layerfailure " + fb_fail[ii] + " " + zfw_fail[ii]);
-            }
-            System.out.println("");
             
             layerResultList.add(layerResults);
             boolean[] zfw_failTemp = new boolean[numLayers];
