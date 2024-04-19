@@ -191,16 +191,22 @@ public class CLT_Laminate extends CLT_Object{
     private void calcDtilde() {
         // Berechnen von D tilde
         double [][] Btransp = MatrixTools.MatTransp(B);
-        double [][] Ainv    = this.getaMatrix();
+        double [][] Ainv    = MatrixTools.getInverse(A);
 
         double [][] helpMat1    = MatrixTools.MatMult(Btransp, Ainv);
         double [][] helpMat2    = MatrixTools.MatMult(helpMat1, B);
+        
+        /* 
+        Hier wird zur Vereinfachung und aus Effizienzgründen die D-Matrix 
+        genutzt, da Dtilde noch nicht zur Verfügung steht.
+        */
+        double zero = -EPS*MatrixTools.getMaximumNorm(D);
         
         negativeDtildeEntries = false;
         for (int ii = 0; ii < Dtilde.length; ii++) {
             for (int jj = 0; jj < Dtilde[0].length; jj++) {
                 Dtilde[ii][jj] = D[ii][jj] - helpMat2[ii][jj];
-                if ((!negativeDtildeEntries) && (Dtilde[ii][jj] < 0.)) {
+                if ((!negativeDtildeEntries) && (Dtilde[ii][jj] < zero)) {
                     negativeDtildeEntries = true;
                 }
             }
