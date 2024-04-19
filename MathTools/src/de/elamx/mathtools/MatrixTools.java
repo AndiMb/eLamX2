@@ -32,6 +32,21 @@ package de.elamx.mathtools;
 public class MatrixTools {
 
     /**
+     * Liefert die Maximumnorm einer Matrix zurück.
+     * @param mat
+     * @return Maximumnorm der Matrix
+     */
+    public static double getMaximumNorm(double[][] mat) {
+        double max = 0.0;
+        for (int ii = 0; ii < 3; ii++) {
+            for (int jj = 0; jj < 3; jj++) {
+                max = Math.max(max, Math.abs(mat[ii][jj]));
+            }
+        }
+        return max;
+    }
+    
+    /**
      * Liefert die Determinante einer 3x3 Matrix. Weitere Berechnungsverfahren
      * für andere Matrizen müssen noch implementiert werden.
      *
@@ -638,10 +653,10 @@ public class MatrixTools {
         double[][] rs = new double[A.length][B[0].length];
 
         // Führe Matrixmultiplikation aus
-        for (int ii = 0; ii < rs.length; ii++) {
-            for (int jj = 0; jj < rs[0].length; jj++) {
+        for (int ii = 0; ii < A.length; ii++) {
+            for (int jj = 0; jj < B[0].length; jj++) {
                 for (int kk = 0; kk < A[0].length; kk++) {
-                    rs[ii][jj] += A[ii][jj] * B[jj][kk];
+                    rs[ii][jj] += A[ii][kk] * B[kk][jj];
                 }
             }
         }
