@@ -25,6 +25,7 @@
  */
 package de.elamx.clt.plateui.buckling.batchrun;
 
+import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.plate.BucklingResult;
 import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.Laminat;
@@ -50,20 +51,27 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
         out.println();
         out.println("Laminat: " + laminate.getName());
         out.println();
-        out.println("critical load");
-        double[] ncrit = result.getN_crit();
-        out.printf(lo,"  nx_crit  = %17.10E%n"  , ncrit[0]);
-        out.printf(lo,"  ny_crit  = %17.10E%n"  , ncrit[1]);
-        out.printf(lo,"  nxy_crit = %17.10E%n"  , ncrit[2]);
-        out.println();
-        out.println("Eigenvalues 1 to 5");
-        double[] eigenvalues = result.getEigenvalues_();
-        out.printf(lo,"  Eigenv1  = %17.10E%n"  , eigenvalues[0]);
-        out.printf(lo,"  Eigenv2  = %17.10E%n"  , eigenvalues[1]);
-        out.printf(lo,"  Eigenv3  = %17.10E%n"  , eigenvalues[2]);
-        out.printf(lo,"  Eigenv4  = %17.10E%n"  , eigenvalues[3]);
-        out.printf(lo,"  Eigenv5  = %17.10E%n"  , eigenvalues[4]);
-        out.println();
-        out.println();
+        if (! data.getLaminat().getLookup().lookup(CLT_Laminate.class).hasNegativeDtildeEntries()) {
+            out.println("critical load");
+            double[] ncrit = result.getN_crit();
+            out.printf(lo,"  nx_crit  = %17.10E%n"  , ncrit[0]);
+            out.printf(lo,"  ny_crit  = %17.10E%n"  , ncrit[1]);
+            out.printf(lo,"  nxy_crit = %17.10E%n"  , ncrit[2]);
+            out.println();
+            out.println("Eigenvalues 1 to 5");
+            double[] eigenvalues = result.getEigenvalues_();
+            out.printf(lo,"  Eigenv1  = %17.10E%n"  , eigenvalues[0]);
+            out.printf(lo,"  Eigenv2  = %17.10E%n"  , eigenvalues[1]);
+            out.printf(lo,"  Eigenv3  = %17.10E%n"  , eigenvalues[2]);
+            out.printf(lo,"  Eigenv4  = %17.10E%n"  , eigenvalues[3]);
+            out.printf(lo,"  Eigenv5  = %17.10E%n"  , eigenvalues[4]);
+            out.println();
+            out.println();
+        } else {
+            out.printf("D̃ matrix has negative entries.%n");
+            out.printf("Buckling calculation cannot be performed.%n");
+            out.println();
+            out.println();
+        }
     }
 }
