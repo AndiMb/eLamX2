@@ -25,6 +25,7 @@
  */
 package de.elamx.core;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -38,10 +39,16 @@ public class ELamXDecimalFormat extends DecimalFormat{
     public ELamXDecimalFormat(String pattern, DecimalFormatSymbols symbols) {
         super(pattern, symbols);
     }
-    
+
     @Override
     public void applyPattern(String pattern){
         super.applyPattern(pattern);
+        firePatternChange();
+    }
+
+    @Override
+    public void setRoundingMode(RoundingMode rounding) {
+        super.setRoundingMode(rounding);
         firePatternChange();
     }
 

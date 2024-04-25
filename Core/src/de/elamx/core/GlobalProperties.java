@@ -25,6 +25,7 @@
  */
 package de.elamx.core;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.Locale;
@@ -60,6 +61,7 @@ public class GlobalProperties{
     public static final String USE_enUS_LOCALE        = "use_en-US_locale";
     public static final String SHOW_TRANSVERSAL_SHEAR = "show_transversal_shear";
     public static final String INVERT_Z_DEFAULT       = "invert_z_default";
+    public static final String RESERVE_FACTOR_ROUND_DOWN = "reserve_factor_round_down";
     
     private final HashMap<String, ELamXDecimalFormat> formats = new HashMap<>();
     
@@ -69,6 +71,7 @@ public class GlobalProperties{
     private boolean showTransShear;
 
     private boolean invertZDefault;
+    private boolean reserveFactorRoundDown;
     
     private boolean headless = false;
     
@@ -115,6 +118,9 @@ public class GlobalProperties{
         formats.put(FORMAT_PERCENT, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_PERCENT, "0.00##"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_EIGENVALUE, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_EIGENVALUE, "0.00##"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_TEMPERATURE, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_TEMPERATURE, "0.0"), new DecimalFormatSymbols(locale)));
+        
+        reserveFactorRoundDown = Boolean.parseBoolean(NbPreferences.forModule(GlobalProperties.class).get(RESERVE_FACTOR_ROUND_DOWN, Boolean.toString(false)));
+        if (reserveFactorRoundDown) formats.get(FORMAT_RESERVE_FACTOR).setRoundingMode(RoundingMode.DOWN);
     }
     
     public ELamXDecimalFormat getFormat(String format){
@@ -151,6 +157,14 @@ public class GlobalProperties{
 
     public void setInvertZDefault(boolean invertZDefault) {
         this.invertZDefault = invertZDefault;
+    }
+
+    public boolean isReserveFactorRoundDown() {
+        return reserveFactorRoundDown;
+    }
+
+    public void setReserveFactorRoundDown(boolean reserveFactorRoundDown) {
+        this.reserveFactorRoundDown = reserveFactorRoundDown;
     }
 
     public boolean isHeadless() {
