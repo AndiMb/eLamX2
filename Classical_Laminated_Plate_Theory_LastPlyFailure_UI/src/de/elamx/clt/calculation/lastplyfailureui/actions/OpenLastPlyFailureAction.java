@@ -42,7 +42,7 @@ import org.openide.windows.WindowManager;
  */
 @ActionID(category = "Lastplyfailure",
 id = "de.elamx.clt.calculation.lastplyfailureui.actions.OpenLastPlyFailureAction")
-@ActionRegistration(iconBase = "de/elamx/clt/calculation/lastplyfailureui/resources/kcalc.png",
+@ActionRegistration(iconBase = "de/elamx/clt/calculation/lastplyfailureui/resources/LastPlyFailureAnalysis.png",
 displayName = "#CTL_OpenCLT_LastPlyFailureAction")
 @ActionReferences({
     @ActionReference(path = "eLamXActions/Lastplyfailure", position = 0)

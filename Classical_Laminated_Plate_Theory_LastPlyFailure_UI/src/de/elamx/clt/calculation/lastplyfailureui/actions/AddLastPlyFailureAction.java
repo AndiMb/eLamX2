@@ -40,7 +40,7 @@ import org.openide.awt.ActionRegistration;
  */
 @ActionID(category = "Laminate",
 id = "de.elamx.clt.calculation.lastplyfailureui.actions.AddLastPlyFailureAction")
-@ActionRegistration(iconBase = "de/elamx/clt/calculation/lastplyfailureui/resources/kcalc.png",
+@ActionRegistration(iconBase = "de/elamx/clt/calculation/lastplyfailureui/resources/LastPlyFailureAnalysis.png",
 displayName = "#CTL_AddCLT_LastPlyFailureAction")
 @ActionReferences({
     @ActionReference(path = "eLamXActions/Laminate", position = 505),

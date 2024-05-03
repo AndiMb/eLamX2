@@ -88,7 +88,7 @@ import org.openide.windows.WindowManager;
  */
 @TopComponent.Description(
         preferredID = "CLT_LastPlyFailureTopComponentTopComponent",
-        iconBase = "de/elamx/clt/calculation/lastplyfailureui/resources/kcalc.png"
+        iconBase = "de/elamx/clt/calculation/lastplyfailureui/resources/LastPlyFailureAnalysis.png"
 )
 public final class CLT_LastPlyFailureTopComponent extends TopComponent implements LookupListener, CLTRefreshListener, PropertyChangeListener {
 

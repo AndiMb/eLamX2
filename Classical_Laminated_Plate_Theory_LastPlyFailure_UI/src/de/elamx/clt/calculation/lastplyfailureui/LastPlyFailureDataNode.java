@@ -110,7 +110,7 @@ public class LastPlyFailureDataNode extends AbstractNode implements PropertyChan
 
     @Override
     public Image getIcon(int type) {
-        return ImageUtilities.loadImage("de/elamx/clt/calculation/lastplyfailureui/resources/kcalc.png");
+        return ImageUtilities.loadImage("de/elamx/clt/calculation/lastplyfailureui/resources/LastPlyFailureAnalysis.png");
     }
 
     @Override
