@@ -205,10 +205,9 @@ public class CLT_Laminate extends CLT_Object{
 
     private void calcDtilde() {
         // Berechnen von D tilde
-        double [][] Btransp = MatrixTools.MatTransp(B);
         double [][] Ainv    = MatrixTools.getInverse(A);
 
-        double [][] helpMat1    = MatrixTools.MatMult(Btransp, Ainv);
+        double [][] helpMat1    = MatrixTools.MatMult(B, Ainv);
         double [][] helpMat2    = MatrixTools.MatMult(helpMat1, B);
         
         /* 
