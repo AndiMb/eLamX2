@@ -126,28 +126,13 @@ public class Plate {
 
         // Hier wird die D-Matrix des Laminates gespeichert.
         // Gegebenenfalls Nutzung von D-Tilde anstelle von D Matrix
-        double [][] dmattemp;
+        double [][] dmat;
         if (Dtilde) {
-            dmattemp = laminat.getDtildeMatrix();
+            dmat = laminat.getDtildeMatrix();
+        } else if(!wholeD) {
+            dmat = laminat.getDMatrixWithZeroD12D16();
         } else {
-            dmattemp = laminat.getDMatrix();
-        }
-
-        // Die D-Matrix des Laminates muss umgespeichert werden, um eine Kopie zu erstellen.
-        // Tut man das nicht, werden beim Nullsetzen der D16 und D26 Terme, die
-        // Original-D-Matrix verändert und andere Module bekommen eine andere
-        // D-Matrix.
-        double [][] dmat = new double[3][3];
-        for (int ii = 0; ii < 3; ii++){
-            System.arraycopy(dmattemp[ii], 0, dmat[ii], 0, 3);
-        }
-
-        // Nullsetzen der D16 und D26-Terme
-        if (!wholeD){
-            dmat[0][2] = 0.0;
-            dmat[1][2] = 0.0;
-            dmat[2][0] = 0.0;
-            dmat[2][1] = 0.0;
+            dmat = laminat.getDMatrix();
         }
 
         int k = -1; // Laufvariable (1. Index) für die Steifigkeitsmatrix

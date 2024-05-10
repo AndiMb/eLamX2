@@ -51,6 +51,7 @@ public class CLT_Laminate extends CLT_Object{
     private final double[][] D      = new double[3][3];  // D-Matrix
     private final double[][] ABD    = new double[6][6];  // ABD-Matrix
     private double[][] ABDInv = new double[6][6];  // Inverse ABD-Matrix
+    private double[][] DwithZeroD12D16 = new double[3][3]; // D-Matrix mit Nulleinträgen für D12 und D16
     private double[][] Dtilde = new double[3][3];  // Dtilde-Matrix für Stabilitätsanalyse
     private double  tges      = 0.0;               // Gesamtdicke des Laminats
     private boolean isSym     = false;             // Flag, ob das Laminat symmetrisch aufgebaut ist
@@ -93,6 +94,7 @@ public class CLT_Laminate extends CLT_Object{
     public final void refresh(){
         initCLTLayers();
         calcABD();
+        calcDwithZeroD12D16();
         calcDtilde();
         calculateNonDimensionalParameters();
     }
@@ -188,6 +190,19 @@ public class CLT_Laminate extends CLT_Object{
         ABDInv = MatrixTools.getInverse(ABD);
     }
 
+    private void calcDwithZeroD12D16() {
+        DwithZeroD12D16 = new double[3][3];
+        for (int ii = 0; ii < 3; ii++){
+            System.arraycopy(D[ii], 0, DwithZeroD12D16[ii], 0, 3);
+        }
+
+        // Nullsetzen der D16 und D26-Terme
+        DwithZeroD12D16[0][2] = 0.0;
+        DwithZeroD12D16[1][2] = 0.0;
+        DwithZeroD12D16[2][0] = 0.0;
+        DwithZeroD12D16[2][1] = 0.0;
+    }
+
     private void calcDtilde() {
         // Berechnen von D tilde
         double [][] Btransp = MatrixTools.MatTransp(B);
@@ -274,6 +289,12 @@ public class CLT_Laminate extends CLT_Object{
      * @return D-Matrix des Laminates. (3x3)
      */
     public double[][] getDMatrix(){return D;}
+    
+    /**
+     * Liefert die D-Matrix des Laminates mit Nulleinträgen für D12 und D16.
+     * @return D-Matrix des Laminates mit Nulleinträgen für D12 und D16. (3x3)
+     */
+    public double[][] getDMatrixWithZeroD12D16(){return DwithZeroD12D16;}
     
     /**
      * Liefert die D-Tilde-Matrix des Laminates.
