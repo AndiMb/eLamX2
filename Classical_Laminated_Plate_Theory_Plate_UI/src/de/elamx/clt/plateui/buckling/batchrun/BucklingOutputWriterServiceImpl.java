@@ -50,13 +50,13 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
         String dMatrixOption;
         if (data.getBucklingInput().isDtilde()) {
             dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDtildeMatrix();
-            dMatrixOption = NbBundle.getBundle(DMatrixPanel.class).getString("DtildeMatrix.name");
+            dMatrixOption = "D̃ matrix";
         } else if(!data.getBucklingInput().isWholeD()) {
             dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrixWithZeroD12D16();
-            dMatrixOption = NbBundle.getBundle(DMatrixPanel.class).getString("DmatrixD16D26zero.name");
+            dMatrixOption = "D matrix with D_{16} = D_{26} = 0";
         } else {
             dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrix();
-            dMatrixOption = NbBundle.getBundle(DMatrixPanel.class).getString("Dmatrix.name");
+            dMatrixOption = "Original D matrix";
         }
         out.println("********************************************************************************");
         out.println(Utilities.centeredText("BUCKLING", 80));
