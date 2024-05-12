@@ -50,7 +50,7 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
         String dMatrixOption;
         if (data.getBucklingInput().isDtilde()) {
             dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDtildeMatrix();
-            dMatrixOption = "D̃ matrix";
+            dMatrixOption = "D-tilde matrix";
         } else if(!data.getBucklingInput().isWholeD()) {
             dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrixWithZeroD12D16();
             dMatrixOption = "D matrix with D_{16} = D_{26} = 0";
