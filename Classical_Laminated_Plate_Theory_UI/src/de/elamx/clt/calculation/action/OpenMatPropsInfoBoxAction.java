@@ -25,6 +25,8 @@
  */
 package de.elamx.clt.calculation.action;
 
+import de.elamx.clt.calculation.LayerResultContainer;
+import de.elamx.clt.calculation.layerproperties.MaterialPropertiesPanel;
 import de.elamx.clt.calculation.layerproperties.QMatrixPanel;
 import de.elamx.laminate.Layer;
 import java.awt.event.ActionEvent;
@@ -37,26 +39,30 @@ import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle;
 
-@ActionID(category = "Layer",
-id = "de.elamx.clt.calculation.OpenQMatAction")
+/**
+ *
+ * @author Andreas Hauffe
+ */
+@ActionID(category = "LayerResultContainer",
+id = "de.elamx.clt.calculation.OpenMatPropsInfoBoxAction")
 @ActionRegistration(iconBase = "de/elamx/clt/calculation/resources/ilr_icon16.png",
-displayName = "#CTL_OpenCLT_QMatAction")
+displayName = "#CTL_OpenCLT_MatPropsInfoBox_Action")
 @ActionReferences({
-    @ActionReference(path = "eLamXActions/Layer", position = 0)
+    @ActionReference(path = "eLamXActions/LayerResultContainer", position = 100)
 })
-public final class OpenQMatAction implements ActionListener {
+public class OpenMatPropsInfoBoxAction implements ActionListener {
 
-    private final Layer context;
+    private final LayerResultContainer context;
 
-    public OpenQMatAction(Layer context) {
+    public OpenMatPropsInfoBoxAction(LayerResultContainer context) {
         this.context = context;
     }
 
     @Override
     public void actionPerformed(ActionEvent ev) {
         NotifyDescriptor nd = new NotifyDescriptor(
-                new QMatrixPanel(context), 
-                NbBundle.getBundle(OpenQMatAction.class).getString("OpenQMatAction.Title"), 
+                new MaterialPropertiesPanel(context.getLayerResult().getLayer()), 
+                NbBundle.getBundle(OpenQMatAction.class).getString("OpenMatPropsInfoBoxAction.Title"), 
                 NotifyDescriptor.DEFAULT_OPTION, 
                 NotifyDescriptor.PLAIN_MESSAGE, 
                 new Object[] { NotifyDescriptor.OK_OPTION }, 

@@ -23,7 +23,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.calculation.qmatrix;
+package de.elamx.clt.calculation.layerproperties;
 
 import de.elamx.clt.CLT_Layer;
 import de.elamx.core.GlobalProperties;
@@ -126,22 +126,18 @@ public class QMatrixPanel extends javax.swing.JPanel {
 
         localQMatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(QMatrixPanel.class, "QMatrixPanel.localQMatPanel.border.title"))); // NOI18N
         localQMatPanel.setLayout(new java.awt.BorderLayout());
-
         localQMatPanel.add(localQMatTable, java.awt.BorderLayout.PAGE_START);
 
         globalQMatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(QMatrixPanel.class, "QMatrixPanel.globalQMatPanel.border.title"))); // NOI18N
         globalQMatPanel.setLayout(new java.awt.BorderLayout());
-
         globalQMatPanel.add(globalQMatTable, java.awt.BorderLayout.CENTER);
 
         localSMatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(QMatrixPanel.class, "QMatrixPanel.localSMatPanel.border.title"))); // NOI18N
         localSMatPanel.setLayout(new java.awt.BorderLayout());
-
         localSMatPanel.add(localInvQMatTable, java.awt.BorderLayout.PAGE_START);
 
         globalSMatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(QMatrixPanel.class, "QMatrixPanel.globalSMatPanel.border.title"))); // NOI18N
         globalSMatPanel.setLayout(new java.awt.BorderLayout());
-
         globalSMatPanel.add(jTable1, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
