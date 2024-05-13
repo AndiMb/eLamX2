@@ -35,7 +35,6 @@ import java.awt.Image;
 import java.awt.datatransfer.Transferable;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyEditor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -317,11 +316,6 @@ public class LayerNodeFactory extends ChildFactory<LayerProxy> implements Proper
                     @Override
                     public Double getValue() {
                         return getZM();
-                    }
-                    
-                    @Override
-                    public PropertyEditor getPropertyEditor() {
-                        return new ThicknessPropertyEditorSupport();
                     }
                 };
                 PropertySupport.Reflection<String> nameProp = new PropertySupport.Reflection<String>(layer, String.class, Layer.PROP_NAME) {
