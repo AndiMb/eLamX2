@@ -56,8 +56,6 @@ public class CLT_Laminate extends CLT_Object{
     private double  tges      = 0.0;               // Gesamtdicke des Laminats
     private boolean isSym     = false;             // Flag, ob das Laminat symmetrisch aufgebaut ist
 
-    private boolean negativeDtildeEntries;         // Flag, ob Dtilde-Matrix negative Einträge besitzt
-
     // Dimensionslose Parameter der D-Matrix
     private double beta_D;                           // Seydel's orthotropy parameter
     private double nu_D;                             // Transverse contraction parameter
@@ -209,20 +207,10 @@ public class CLT_Laminate extends CLT_Object{
 
         double [][] helpMat1    = MatrixTools.MatMult(B, Ainv);
         double [][] helpMat2    = MatrixTools.MatMult(helpMat1, B);
-        
-        /* 
-        Hier wird zur Vereinfachung und aus Effizienzgründen die D-Matrix 
-        genutzt, da Dtilde noch nicht zur Verfügung steht.
-        */
-        double zero = -EPS*MatrixTools.getMaximumNorm(D);
-        
-        negativeDtildeEntries = false;
+
         for (int ii = 0; ii < Dtilde.length; ii++) {
             for (int jj = 0; jj < Dtilde[0].length; jj++) {
                 Dtilde[ii][jj] = D[ii][jj] - helpMat2[ii][jj];
-                if ((!negativeDtildeEntries) && (Dtilde[ii][jj] < zero)) {
-                    negativeDtildeEntries = true;
-                }
             }
         }
     }
@@ -373,14 +361,6 @@ public class CLT_Laminate extends CLT_Object{
         }
 
         return dmat;
-    }
-
-    /**
-     * Liefert zurück, ob die D-Tilde Matrix negative Einträge besitzt.
-     * @return true, wenn D-Tilde Matrix einen oder mehrere negative Einträge besitzt
-     */
-    public boolean hasNegativeDtildeEntries() {
-        return negativeDtildeEntries;
     }
 
     /** Liefert Seydels Orthotropieparameter der D-Matrix des Laminats.

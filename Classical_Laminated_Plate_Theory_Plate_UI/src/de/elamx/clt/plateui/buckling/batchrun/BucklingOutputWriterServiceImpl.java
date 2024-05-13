@@ -65,33 +65,26 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
         out.println();
         out.println("Laminat: " + laminate.getName());
         out.println();
-        if (! data.getLaminat().getLookup().lookup(CLT_Laminate.class).hasNegativeDtildeEntries()) {
-            out.println("D-matrix option: " + dMatrixOption);
-            out.println("D-matrix used:");
-            for (int ii=0; ii<3; ii++) {
-            out.printf(lo,"  %10.1f    %10.1f    %10.1f%n"  , dmat[ii][0], dmat[ii][1], dmat[ii][2]);
-            };
-            out.println();
-            out.println("critical load");
-            double[] ncrit = result.getN_crit();
-            out.printf(lo,"  nx_crit  = %17.10E%n"  , ncrit[0]);
-            out.printf(lo,"  ny_crit  = %17.10E%n"  , ncrit[1]);
-            out.printf(lo,"  nxy_crit = %17.10E%n"  , ncrit[2]);
-            out.println();
-            out.println("Eigenvalues 1 to 5");
-            double[] eigenvalues = result.getEigenvalues_();
-            out.printf(lo,"  Eigenv1  = %17.10E%n"  , eigenvalues[0]);
-            out.printf(lo,"  Eigenv2  = %17.10E%n"  , eigenvalues[1]);
-            out.printf(lo,"  Eigenv3  = %17.10E%n"  , eigenvalues[2]);
-            out.printf(lo,"  Eigenv4  = %17.10E%n"  , eigenvalues[3]);
-            out.printf(lo,"  Eigenv5  = %17.10E%n"  , eigenvalues[4]);
-            out.println();
-            out.println();
-        } else {
-            out.printf("D̃ matrix has negative entries.%n");
-            out.printf("Buckling calculation cannot be performed.%n");
-            out.println();
-            out.println();
-        }
-    }
+        out.println("D-matrix option: " + dMatrixOption);
+        out.println("D-matrix used:");
+        for (int ii=0; ii<3; ii++) {
+        out.printf(lo,"  %10.1f    %10.1f    %10.1f%n"  , dmat[ii][0], dmat[ii][1], dmat[ii][2]);
+        };
+        out.println();
+        out.println("critical load");
+        double[] ncrit = result.getN_crit();
+        out.printf(lo,"  nx_crit  = %17.10E%n"  , ncrit[0]);
+        out.printf(lo,"  ny_crit  = %17.10E%n"  , ncrit[1]);
+        out.printf(lo,"  nxy_crit = %17.10E%n"  , ncrit[2]);
+        out.println();
+        out.println("Eigenvalues 1 to 5");
+        double[] eigenvalues = result.getEigenvalues_();
+        out.printf(lo,"  Eigenv1  = %17.10E%n"  , eigenvalues[0]);
+        out.printf(lo,"  Eigenv2  = %17.10E%n"  , eigenvalues[1]);
+        out.printf(lo,"  Eigenv3  = %17.10E%n"  , eigenvalues[2]);
+        out.printf(lo,"  Eigenv4  = %17.10E%n"  , eigenvalues[3]);
+        out.printf(lo,"  Eigenv5  = %17.10E%n"  , eigenvalues[4]);
+        out.println();
+        out.println();
+    }  
 }
