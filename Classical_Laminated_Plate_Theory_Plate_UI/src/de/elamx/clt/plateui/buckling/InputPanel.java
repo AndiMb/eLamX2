@@ -330,19 +330,23 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         double [][] dmat;
         String matrixCaption;
+        String shortCaption;
         if (this.data.getBucklingInput().isDtilde()) {
             dmat = this.data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDtildeMatrix();
             matrixCaption = NbBundle.getBundle(DMatrixPanel.class).getString("DtildeMatrix.name");
+            shortCaption = "D̃";
         } else if(!this.data.getBucklingInput().isWholeD()) {
             dmat = this.data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrixWithZeroD12D16();
             matrixCaption = NbBundle.getBundle(DMatrixPanel.class).getString("DmatrixD16D26zero.name");
+            shortCaption = "D";
         } else {
             dmat = this.data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrix();
             matrixCaption = NbBundle.getBundle(DMatrixPanel.class).getString("Dmatrix.name");
+            shortCaption = "D";
         }
         
         NotifyDescriptor nd = new NotifyDescriptor(
-                new DMatrixPanel(dmat, matrixCaption),
+                new DMatrixPanel(dmat, matrixCaption, shortCaption),
                 NbBundle.getBundle(InputPanel.class).getString("OpenDMatAction.Title"), 
                 NotifyDescriptor.DEFAULT_OPTION, 
                 NotifyDescriptor.PLAIN_MESSAGE, 
