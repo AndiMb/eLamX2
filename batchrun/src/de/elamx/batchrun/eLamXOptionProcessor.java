@@ -92,13 +92,13 @@ public class eLamXOptionProcessor extends OptionProcessor {
         in das globale Lookup.
          */
         if (maps.containsKey(inputOption)) {
+            String fileName = maps.get(inputOption)[0];
+            File inputFile = new File(fileName);
             if (maps.containsKey(reducedInputOption)) {
                 // Neue eLamX-Datei anlegen
                 NewFileCreator.create();
 
                 // Einlesen der reduzierten Eingabedatei
-                String fileName = maps.get(inputOption)[0];
-                File inputFile = new File(fileName);
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 try {
                     SAXParser saxParser = factory.newSAXParser();
@@ -108,8 +108,6 @@ public class eLamXOptionProcessor extends OptionProcessor {
                     Logger.getLogger(eLamXOptionProcessor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                String fileName = maps.get(inputOption)[0];
-                File inputFile = new File(fileName);
                 if (inputFile.exists() && inputFile.isFile()) {
                     FileObject fo = FileUtil.toFileObject(inputFile);
                     eLamXLookup.getDefault().setFileObject(fo);
