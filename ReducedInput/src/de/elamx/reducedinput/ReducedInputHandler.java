@@ -108,9 +108,6 @@ public class ReducedInputHandler extends DefaultHandler {
             case KEY_MATERIAL:
                 processMaterial(qName.toLowerCase());
                 break;
-            case KEY_LAMINATE:
-                eLamXLookup.getDefault().add(laminate);
-                break;
             case KEY_LAYER:
                 processLayer(qName.toLowerCase());
                 break;
@@ -255,7 +252,7 @@ public class ReducedInputHandler extends DefaultHandler {
                 inputData.getLoad().setM_xy(calculation.getM_xy());
                 inputData.getLoad().setDeltaH(calculation.getDelta_h());
                 inputData.getLoad().setDeltaT(calculation.getDelta_t());
-                boolean[] useStrains = {false,false,false,false,false,false};
+                boolean[] useStrains = {false, false, false, false, false, false};
                 inputData.setUseStrains(useStrains);
                 CalculationModuleData calcModuleData = new CalculationModuleData(laminate, inputData);
                 calcModuleData.setName(calculation.getName());

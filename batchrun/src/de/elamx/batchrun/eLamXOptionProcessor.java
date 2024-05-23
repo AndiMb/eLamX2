@@ -28,6 +28,7 @@ package de.elamx.batchrun;
 import de.elamx.reducedinput.ReducedInputHandler;
 import de.elamx.core.BatchRunService;
 import de.elamx.core.GeneralOutputWriterService;
+import de.elamx.filesupport.NewFileCreator;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.eLamXLookup;
 import java.io.File;
@@ -92,6 +93,10 @@ public class eLamXOptionProcessor extends OptionProcessor {
          */
         if (maps.containsKey(inputOption)) {
             if (maps.containsKey(reducedInputOption)) {
+                // Neue eLamX-Datei anlegen
+                NewFileCreator.create();
+
+                // Einlesen der reduzierten Eingabedatei
                 String fileName = maps.get(inputOption)[0];
                 File inputFile = new File(fileName);
                 SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -137,7 +142,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
         GeneralOutputWriterService writerService = writerServices.get(Math.min(Math.max(outputType, 0), writerServices.size() - 1));
 
         // Schreiben des Headers
-        writerService.writeHeader(out);
+        writerService.writeHeader(out);        
 
         // Schleife über alle in der eLamX-Datei enthaltenen Laminate
         for (Laminat lam : eLamXLookup.getDefault().lookupAll(Laminat.class)) {
