@@ -31,15 +31,11 @@ public class ReducedInputHandler extends DefaultHandler {
 
     private StringBuilder elementValue;
 
-    private eLamXLookup lookup;
-
     private HashMap<String, DefaultMaterial> materialNames = new HashMap<>();
     private HashMap<String, CLT_Input> cltNames = new HashMap<>();
     private HashMap<DefaultMaterial, Double> materialThicknesses = new HashMap<>();
     private HashMap<DefaultMaterial, Criterion> materialCriteria = new HashMap<>();
     private HashMap<String, Criterion> criterionMap = new HashMap<>();
-
-    private List<LaminateData> laminateData;
 
     private String currentProcess = null;
 
@@ -66,8 +62,6 @@ public class ReducedInputHandler extends DefaultHandler {
         for (Criterion c : critLookup.lookupAll(Criterion.class)) {
             criterionMap.put(c.getClass().getName(), c);
         }
-
-        lookup = eLamXLookup.getDefault();
     }
 
     @Override
