@@ -4,9 +4,10 @@
  */
 package de.elamx.reducedinput;
 
-import de.elamx.*;
 import de.elamx.clt.*;
 import de.elamx.clt.calculation.CalculationModuleData;
+import de.elamx.clt.plate.BucklingInput;
+import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Laminat;
@@ -33,13 +34,14 @@ public class ReducedInputHandler extends DefaultHandler {
     private eLamXLookup lookup;
 
     private HashMap<String, DefaultMaterial> materialNames = new HashMap<>();
+    private HashMap<String, CLT_Input> cltNames = new HashMap<>();
     private HashMap<DefaultMaterial, Double> materialThicknesses = new HashMap<>();
     private HashMap<DefaultMaterial, Criterion> materialCriteria = new HashMap<>();
     private HashMap<String, Criterion> criterionMap = new HashMap<>();
 
     private List<LaminateData> laminateData;
 
-    private String currentProcess;
+    private String currentProcess = null;
 
     private static final String ARG_NAME = "name";
 
@@ -47,6 +49,7 @@ public class ReducedInputHandler extends DefaultHandler {
     private static final String KEY_LAMINATE = "laminate";
     private static final String KEY_LAYER = "layer";
     private static final String KEY_CALCULATION = "calculation";
+    private static final String KEY_BUCKLING = "buckling";
 
     private MaterialData materialData;
     private LayerData layerData;
@@ -54,6 +57,7 @@ public class ReducedInputHandler extends DefaultHandler {
     private Laminat laminate;
 
     private CalculationData calculation;
+    private BucklingData buckling;
 
     @Override
     public void startDocument() throws SAXException {
@@ -72,48 +76,59 @@ public class ReducedInputHandler extends DefaultHandler {
         // Reset elementValue
         elementValue = new StringBuilder();
 
-        switch (qName.toLowerCase()) {
-            case "materials":
-                currentProcess = KEY_MATERIAL;
-                break;
-            case KEY_MATERIAL:
-                name = attr.getValue(ARG_NAME);
-                materialData = new MaterialData(name);
-                break;
-            case KEY_LAMINATE:
-                currentProcess = KEY_LAMINATE;
-                name = attr.getValue(ARG_NAME);
-                laminate = new Laminat(UUID.randomUUID().toString(), name, true);
-                laminate.setOffset(Double.parseDouble(attr.getValue("offset")));
-                laminate.setSymmetric(Boolean.parseBoolean(attr.getValue("symmetric")));
-                laminate.setWithMiddleLayer(Boolean.parseBoolean(attr.getValue("with_middle_layer")));
-                laminate.setInvertZ(Boolean.parseBoolean(attr.getValue("invert_z")));
-                break;
-            case KEY_LAYER:
-                currentProcess = KEY_LAYER;
-                name = attr.getValue(ARG_NAME);
-                layerData = new LayerData(name);
-                break;
-            case KEY_CALCULATION:
-                currentProcess = KEY_CALCULATION;
-                name = attr.getValue(ARG_NAME);
-                calculation = new CalculationData(name);
-                break;
+        if (currentProcess == null) {
+            switch (qName.toLowerCase()) {
+                case KEY_MATERIAL:
+                    currentProcess = KEY_MATERIAL;
+                    name = attr.getValue(ARG_NAME);
+                    materialData = new MaterialData(name);
+                    break;
+                case KEY_LAMINATE:
+                    name = attr.getValue(ARG_NAME);
+                    laminate = new Laminat(UUID.randomUUID().toString(), name, true);
+                    laminate.setOffset(Double.parseDouble(attr.getValue("offset")));
+                    laminate.setSymmetric(Boolean.parseBoolean(attr.getValue("symmetric")));
+                    laminate.setWithMiddleLayer(Boolean.parseBoolean(attr.getValue("with_middle_layer")));
+                    laminate.setInvertZ(Boolean.parseBoolean(attr.getValue("invert_z")));
+                    break;
+                case KEY_LAYER:
+                    currentProcess = KEY_LAYER;
+                    name = attr.getValue(ARG_NAME);
+                    layerData = new LayerData(name);
+                    break;
+                case KEY_CALCULATION:
+                    currentProcess = KEY_CALCULATION;
+                    name = attr.getValue(ARG_NAME);
+                    calculation = new CalculationData(name);
+                    break;
+                case KEY_BUCKLING:
+                    currentProcess = KEY_BUCKLING;
+                    name = attr.getValue(ARG_NAME);
+                    buckling = new BucklingData(name);
+                    buckling.setWholeD(Boolean.parseBoolean(attr.getValue("whole_d")));
+                    buckling.setdTilde(Boolean.parseBoolean(attr.getValue("d_tilde")));
+                    break;
+            }
         }
     }
 
     @Override
     public void endElement(String uri, String lName, String qName) throws SAXException {
-        switch (currentProcess) {
-            case KEY_MATERIAL:
-                processMaterial(qName.toLowerCase());
-                break;
-            case KEY_LAYER:
-                processLayer(qName.toLowerCase());
-                break;
-            case KEY_CALCULATION:
-                processCalculation(qName.toLowerCase());
-                break;
+        if (currentProcess != null) {
+            switch (currentProcess) {
+                case KEY_MATERIAL:
+                    processMaterial(qName.toLowerCase());
+                    break;
+                case KEY_LAYER:
+                    processLayer(qName.toLowerCase());
+                    break;
+                case KEY_CALCULATION:
+                    processCalculation(qName.toLowerCase());
+                    break;
+                case KEY_BUCKLING:
+                    processBuckling(qName.toLowerCase());
+                    break;
+            }
         }
     }
 
@@ -175,6 +190,7 @@ public class ReducedInputHandler extends DefaultHandler {
                 materialNames.put(materialData.getName(), material);
                 materialThicknesses.put(material, materialData.getThickness());
                 materialCriteria.put(material, materialData.getCriterion());
+                currentProcess = null;
                 break;
         }
     }
@@ -212,6 +228,7 @@ public class ReducedInputHandler extends DefaultHandler {
                     layer.setCriterion(criterion);
                 }
                 laminate.addLayer(layer);
+                currentProcess = null;
                 break;
         }
     }
@@ -257,6 +274,71 @@ public class ReducedInputHandler extends DefaultHandler {
                 CalculationModuleData calcModuleData = new CalculationModuleData(laminate, inputData);
                 calcModuleData.setName(calculation.getName());
                 laminate.getLookup().add(calcModuleData);
+                cltNames.put(calculation.getName(), inputData);
+                currentProcess = null;
+                break;
+        }
+    }
+
+    private void processBuckling(String qName) {
+        switch (qName) {
+            case "calculation":
+                buckling.setCalculation(elementValue.toString());
+                break;
+            case "n_x":
+                buckling.setN_x(Double.valueOf(elementValue.toString()));
+                break;
+            case "n_y":
+                buckling.setN_y(Double.valueOf(elementValue.toString()));
+                break;
+            case "n_xy":
+                buckling.setN_xy(Double.valueOf(elementValue.toString()));
+                break;
+            case "bcx":
+                buckling.setBcx(Integer.valueOf(elementValue.toString()));
+                break;
+            case "bcy":
+                buckling.setBcy(Integer.valueOf(elementValue.toString()));
+                break;
+            case "m":
+                buckling.setM(Integer.valueOf(elementValue.toString()));
+                break;
+            case "n":
+                buckling.setN(Integer.valueOf(elementValue.toString()));
+                break;
+            case "length":
+                buckling.setLength(Double.valueOf(elementValue.toString()));
+                break;
+            case "width":
+                buckling.setWidth(Double.valueOf(elementValue.toString()));
+                break;
+            case KEY_BUCKLING:
+                double n_x,
+                 n_y,
+                 n_xy;
+                if (buckling.getN_x() != null) {
+                    n_x = buckling.getN_x();
+                } else {
+                    n_x = cltNames.get(buckling.getCalculation()).getLoad().getN_x();
+                }
+
+                if (buckling.getN_y() != null) {
+                    n_y = buckling.getN_y();
+                } else {
+                    n_y = cltNames.get(buckling.getCalculation()).getLoad().getN_y();
+                }
+
+                if (buckling.getN_xy() != null) {
+                    n_xy = buckling.getN_xy();
+                } else {
+                    n_xy = cltNames.get(buckling.getCalculation()).getLoad().getN_xy();
+                }
+
+                BucklingInput inputData = new BucklingInput(buckling.getLength(), buckling.getWidth(), n_x, n_y, n_xy, buckling.getWholeD(), buckling.getdTilde(), buckling.getBcx(), buckling.getBcy(), buckling.getM(), buckling.getN());
+                BucklingModuleData buckModuleData = new BucklingModuleData(laminate, inputData);
+                buckModuleData.setName(buckling.getName());
+                laminate.getLookup().add(buckModuleData);
+                currentProcess = null;
                 break;
         }
     }
@@ -627,5 +709,136 @@ public class ReducedInputHandler extends DefaultHandler {
             this.delta_h = delta_h;
         }
 
+    }
+
+    private class BucklingData {
+
+        private String name;
+
+        private String calculation = null;
+
+        private Double n_x = null;
+        private Double n_y = null;
+        private Double n_xy = null;
+
+        private Double length;
+        private Double width;
+        private Integer bcx;
+        private Integer bcy;
+        private Integer m;
+        private Integer n;
+        private Boolean wholeD;
+        private Boolean dTilde;
+
+        public BucklingData() {
+        }
+
+        public BucklingData(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getCalculation() {
+            return calculation;
+        }
+
+        public void setCalculation(String calculation) {
+            this.calculation = calculation;
+        }
+
+        public Double getN_x() {
+            return n_x;
+        }
+
+        public void setN_x(Double n_x) {
+            this.n_x = n_x;
+        }
+
+        public Double getN_y() {
+            return n_y;
+        }
+
+        public void setN_y(Double n_y) {
+            this.n_y = n_y;
+        }
+
+        public Double getN_xy() {
+            return n_xy;
+        }
+
+        public void setN_xy(Double n_xy) {
+            this.n_xy = n_xy;
+        }
+
+        public Double getLength() {
+            return length;
+        }
+
+        public void setLength(Double length) {
+            this.length = length;
+        }
+
+        public Double getWidth() {
+            return width;
+        }
+
+        public void setWidth(Double width) {
+            this.width = width;
+        }
+
+        public Integer getBcx() {
+            return bcx;
+        }
+
+        public void setBcx(Integer bcx) {
+            this.bcx = bcx;
+        }
+
+        public Integer getBcy() {
+            return bcy;
+        }
+
+        public void setBcy(Integer bcy) {
+            this.bcy = bcy;
+        }
+
+        public Integer getM() {
+            return m;
+        }
+
+        public void setM(Integer m) {
+            this.m = m;
+        }
+
+        public Integer getN() {
+            return n;
+        }
+
+        public void setN(Integer n) {
+            this.n = n;
+        }
+
+        public Boolean getWholeD() {
+            return wholeD;
+        }
+
+        public void setWholeD(Boolean wholeD) {
+            this.wholeD = wholeD;
+        }
+
+        public Boolean getdTilde() {
+            return dTilde;
+        }
+
+        public void setdTilde(Boolean dTilde) {
+            this.dTilde = dTilde;
+        }
     }
 }
