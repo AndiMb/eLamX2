@@ -196,16 +196,16 @@ public class ReducedInputHandler extends DefaultHandler {
             case KEY_LAYER:
                 DefaultMaterial material = materialNames.get(layerData.getMaterialName());
                 double thickness;
-                if (materialThicknesses.get(material) != null) {
-                    thickness = materialThicknesses.get(material);
-                } else {
+                if (layerData.getThickness() != null) {
                     thickness = layerData.getThickness();
+                } else {
+                    thickness = materialThicknesses.get(material);
                 }
                 Criterion criterion;
-                if (materialCriteria.get(material) != null) {
-                    criterion = materialCriteria.get(material);
-                } else {
+                if (layerData.getCriterion() != null) {
                     criterion = layerData.getCriterion();
+                } else {
+                    criterion = materialCriteria.get(material);
                 }
                 DataLayer layer = new DataLayer(UUID.randomUUID().toString(), layerData.getName(), material, layerData.getAngle(), thickness);
                 if (criterion != null) {
