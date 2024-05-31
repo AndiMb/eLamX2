@@ -86,6 +86,7 @@ public class ReducedInputHandler extends DefaultHandler {
                 case KEY_LAMINATE:
                     name = attr.getValue(ARG_NAME);
                     createBucklingLaminate = false;
+                    bucklingLaminate = null;
                     laminate = new Laminat(UUID.randomUUID().toString(), name, true);
                     laminate.setOffset(Double.parseDouble(attr.getValue("offset")));
                     laminate.setSymmetric(Boolean.parseBoolean(attr.getValue("symmetric")));
@@ -108,7 +109,7 @@ public class ReducedInputHandler extends DefaultHandler {
                     buckling = new BucklingData(name);
                     buckling.setWholeD(Boolean.parseBoolean(attr.getValue("whole_d")));
                     buckling.setdTilde(Boolean.parseBoolean(attr.getValue("d_tilde")));
-                    if (createBucklingLaminate) {
+                    if (createBucklingLaminate && (bucklingLaminate == null)) {
                         bucklingLaminate = laminate.getCopy(true);
                         for (Layer l: bucklingLaminate.getOriginalLayers()) {
                             DefaultMaterial originalMaterial = ((DefaultMaterial) l.getMaterial());
@@ -118,8 +119,6 @@ public class ReducedInputHandler extends DefaultHandler {
                         }
                         String bucklingLaminateName = laminate.getName().concat(" Buckling");
                         bucklingLaminate.setName(bucklingLaminateName);
-                    } else {
-                        bucklingLaminate = null;
                     }
                     break;
             }
