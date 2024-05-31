@@ -11,11 +11,10 @@ import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.DataLayer;
 import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Laminat;
-import de.elamx.laminate.eLamXLookup;
+import de.elamx.laminate.Layer;
 import de.elamx.laminate.failure.Criterion;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.Lookups;
@@ -35,9 +34,11 @@ public class ReducedInputHandler extends DefaultHandler {
     private HashMap<String, CLT_Input> cltNames = new HashMap<>();
     private HashMap<DefaultMaterial, Double> materialThicknesses = new HashMap<>();
     private HashMap<DefaultMaterial, Criterion> materialCriteria = new HashMap<>();
+    private HashMap<DefaultMaterial, DefaultMaterial> bucklingMaterials = new HashMap<>();
     private HashMap<String, Criterion> criterionMap = new HashMap<>();
 
     private String currentProcess = null;
+    private String currentSubProcess = null;
 
     private static final String ARG_NAME = "name";
 
@@ -48,9 +49,13 @@ public class ReducedInputHandler extends DefaultHandler {
     private static final String KEY_BUCKLING = "buckling";
 
     private MaterialData materialData;
+    private MaterialData materialDataBuckling;
     private LayerData layerData;
 
     private Laminat laminate;
+    private Laminat bucklingLaminate;
+
+    private boolean createBucklingLaminate;
 
     private CalculationData calculation;
     private BucklingData buckling;
@@ -76,9 +81,11 @@ public class ReducedInputHandler extends DefaultHandler {
                     currentProcess = KEY_MATERIAL;
                     name = attr.getValue(ARG_NAME);
                     materialData = new MaterialData(name);
+                    materialDataBuckling = null;
                     break;
                 case KEY_LAMINATE:
                     name = attr.getValue(ARG_NAME);
+                    createBucklingLaminate = false;
                     laminate = new Laminat(UUID.randomUUID().toString(), name, true);
                     laminate.setOffset(Double.parseDouble(attr.getValue("offset")));
                     laminate.setSymmetric(Boolean.parseBoolean(attr.getValue("symmetric")));
@@ -101,7 +108,31 @@ public class ReducedInputHandler extends DefaultHandler {
                     buckling = new BucklingData(name);
                     buckling.setWholeD(Boolean.parseBoolean(attr.getValue("whole_d")));
                     buckling.setdTilde(Boolean.parseBoolean(attr.getValue("d_tilde")));
+                    if (createBucklingLaminate) {
+                        bucklingLaminate = laminate.getCopy(true);
+                        for (Layer l: bucklingLaminate.getOriginalLayers()) {
+                            DefaultMaterial originalMaterial = ((DefaultMaterial) l.getMaterial());
+                            if (bucklingMaterials.containsKey(originalMaterial)) {
+                                ((DataLayer) l).setMaterial(bucklingMaterials.get(originalMaterial));
+                            }
+                        }
+                        String bucklingLaminateName = laminate.getName().concat(" Buckling");
+                        bucklingLaminate.setName(bucklingLaminateName);
+                    } else {
+                        bucklingLaminate = null;
+                    }
                     break;
+            }
+        } else {
+            if (currentProcess == KEY_MATERIAL) {
+                switch (qName.toLowerCase()) {
+                    case KEY_BUCKLING:
+                        currentSubProcess = KEY_BUCKLING;
+                        name = attr.getValue(ARG_NAME);
+                        String bucklingMaterialName = materialData.getName().concat(" Buckling");
+                        materialDataBuckling = new MaterialData(bucklingMaterialName);
+                        break;
+                }
             }
         }
     }
@@ -111,8 +142,12 @@ public class ReducedInputHandler extends DefaultHandler {
         if (currentProcess != null) {
             switch (currentProcess) {
                 case KEY_MATERIAL:
-                    processMaterial(qName.toLowerCase());
-                    break;
+                    if (currentSubProcess == KEY_BUCKLING) {
+                        processBucklingMaterial(qName.toLowerCase());
+                    } else {
+                        processMaterial(qName.toLowerCase());                 
+                    }
+                    break;                        
                 case KEY_LAYER:
                     processLayer(qName.toLowerCase());
                     break;
@@ -123,6 +158,32 @@ public class ReducedInputHandler extends DefaultHandler {
                     processBuckling(qName.toLowerCase());
                     break;
             }
+        }
+    }
+
+    private void processBucklingMaterial(String qName) {
+        switch (qName) {
+            case "epar":
+                materialDataBuckling.setEpar(Double.valueOf(elementValue.toString()));
+                break;
+            case "enor":
+                materialDataBuckling.setEnor(Double.valueOf(elementValue.toString()));
+                break;
+            case "nue12":
+                materialDataBuckling.setNue12(Double.valueOf(elementValue.toString()));
+                break;
+            case "g":
+                materialDataBuckling.setG(Double.valueOf(elementValue.toString()));
+                break;
+            case "g13":
+                materialDataBuckling.setG13(Double.valueOf(elementValue.toString()));
+                break;
+            case "g23":
+                materialDataBuckling.setG23(Double.valueOf(elementValue.toString()));
+                break;
+            case KEY_BUCKLING:
+                currentSubProcess = null;
+                break;
         }
     }
 
@@ -139,6 +200,12 @@ public class ReducedInputHandler extends DefaultHandler {
                 break;
             case "g":
                 materialData.setG(Double.valueOf(elementValue.toString()));
+                break;
+            case "g13":
+                materialData.setG13(Double.valueOf(elementValue.toString()));
+                break;
+            case "g23":
+                materialData.setG23(Double.valueOf(elementValue.toString()));
                 break;
             case "rho":
                 materialData.setRho(Double.valueOf(elementValue.toString()));
@@ -166,6 +233,12 @@ public class ReducedInputHandler extends DefaultHandler {
                 break;
             case KEY_MATERIAL:
                 DefaultMaterial material = new DefaultMaterial(UUID.randomUUID().toString(), materialData.getName(), materialData.getEpar(), materialData.getEnor(), materialData.getNue12(), materialData.getG(), materialData.getRho(), true);
+                if (materialData.getG13() != null) {
+                    material.setG13(materialData.getG13());
+                }
+                if (materialData.getG23() != null) {
+                    material.setG23(materialData.getG23());
+                }
                 if (materialData.getRParTen() != null) {
                     material.setRParTen(materialData.getRParTen());
                 }
@@ -184,6 +257,32 @@ public class ReducedInputHandler extends DefaultHandler {
                 materialNames.put(materialData.getName(), material);
                 materialThicknesses.put(material, materialData.getThickness());
                 materialCriteria.put(material, materialData.getCriterion());
+
+                if (materialDataBuckling != null) {
+                    DefaultMaterial bMaterial = new DefaultMaterial(UUID.randomUUID().toString(), "", 0.0, 0.0, 0.0, 0.0, 0.0, true);                        
+                    bMaterial = material.copyValues(bMaterial);
+                    bMaterial.setName(materialDataBuckling.getName());
+                    if (materialDataBuckling.getEpar() != null) {
+                        bMaterial.setEpar(materialDataBuckling.getEpar());
+                    }
+                    if (materialDataBuckling.getEnor() != null) {
+                        bMaterial.setEnor(materialDataBuckling.getEnor());
+                    }
+                    if (materialDataBuckling.getNue12() != null) {
+                        bMaterial.setNue12(materialDataBuckling.getNue12());
+                    }
+                    if (materialDataBuckling.getG() != null) {
+                        bMaterial.setG(materialDataBuckling.getG());
+                    }
+                    if (materialDataBuckling.getG13() != null) {
+                        bMaterial.setG13(materialDataBuckling.getG13());
+                    }
+                    if (materialDataBuckling.getG23() != null) {
+                        bMaterial.setG23(materialDataBuckling.getG23());
+                    }
+                    bucklingMaterials.put(material, bMaterial);
+                    materialDataBuckling = null;
+                }
                 currentProcess = null;
                 break;
         }
@@ -205,6 +304,9 @@ public class ReducedInputHandler extends DefaultHandler {
                 break;
             case KEY_LAYER:
                 DefaultMaterial material = materialNames.get(layerData.getMaterialName());
+                if (bucklingMaterials.containsKey(material)) {
+                    createBucklingLaminate = true;
+                }
                 double thickness;
                 if (layerData.getThickness() != null) {
                     thickness = layerData.getThickness();
@@ -328,10 +430,17 @@ public class ReducedInputHandler extends DefaultHandler {
                     n_xy = cltNames.get(buckling.getCalculation()).getLoad().getN_xy();
                 }
 
+                Laminat lam;
+                if (bucklingLaminate != null) { 
+                    lam = bucklingLaminate;                
+                } else {
+                    lam = laminate;
+                }
+
                 BucklingInput inputData = new BucklingInput(buckling.getLength(), buckling.getWidth(), n_x, n_y, n_xy, buckling.getWholeD(), buckling.getdTilde(), buckling.getBcx(), buckling.getBcy(), buckling.getM(), buckling.getN());
-                BucklingModuleData buckModuleData = new BucklingModuleData(laminate, inputData);
+                BucklingModuleData buckModuleData = new BucklingModuleData(lam, inputData);
                 buckModuleData.setName(buckling.getName());
-                laminate.getLookup().add(buckModuleData);
+                lam.getLookup().add(buckModuleData);
                 currentProcess = null;
                 break;
         }
@@ -362,6 +471,8 @@ public class ReducedInputHandler extends DefaultHandler {
         private Double Enor = null;
         private Double nue12 = null;
         private Double G = null;
+        private Double G13 = null;
+        private Double G23 = null;
         private Double rho = null;
 
         private Double RParTen = null;
@@ -491,6 +602,23 @@ public class ReducedInputHandler extends DefaultHandler {
             this.Criterion = Criterion;
         }
 
+        public Double getG13() {
+            return G13;
+        }
+
+        public void setG13(Double G13) {
+            this.G13 = G13;
+        }
+
+        public Double getG23() {
+            return G23;
+        }
+
+        public void setG23(Double G23) {
+            this.G23 = G23;
+        }
+
+        
     }
 
     private class LaminateData {
