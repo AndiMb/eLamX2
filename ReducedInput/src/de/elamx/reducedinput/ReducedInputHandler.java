@@ -23,7 +23,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- *
+ * Dient dem Einlesen einer reduzierten Eingabedatei.
+ * Im Gegensatz zum Einlesen der konventionellen eLamX²-Datei basiert die Klasse
+ * auf dem SAX-Reader zum Einlesen von xml-Dateien. Im Gegensatz zum DOM-Reader
+ * (genutzt zum Einlesen der konvnetionellen eLamX²-Datei) setzt dieser ein
+ * sequentielles Einlesen der xml-Eingabedatei um. Dies ist an dieser Stelle
+ * essentiell, da die Logik der reduzierten Eingabedatei potentiell auf der
+ * Reihenfolge der Datenblöcke beruht.
  * @author Florian Dexl
  */
 public class ReducedInputHandler extends DefaultHandler {
