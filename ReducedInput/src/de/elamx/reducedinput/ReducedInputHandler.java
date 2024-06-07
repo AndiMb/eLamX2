@@ -38,7 +38,6 @@ public class ReducedInputHandler extends DefaultHandler {
 
     private HashMap<String, DefaultMaterial> materialNames = new HashMap<>();
     private HashMap<String, LoadCaseData> loadCaseNames = new HashMap<>();
-    private HashMap<String, CLT_Input> cltNames = new HashMap<>();
     private HashMap<DefaultMaterial, Double> materialThicknesses = new HashMap<>();
     private HashMap<DefaultMaterial, Criterion> materialCriteria = new HashMap<>();
     private HashMap<DefaultMaterial, DefaultMaterial> bucklingMaterials = new HashMap<>();
@@ -405,7 +404,6 @@ public class ReducedInputHandler extends DefaultHandler {
                 CalculationModuleData calcModuleData = new CalculationModuleData(laminate, inputData);
                 calcModuleData.setName(calculation.getName());
                 laminate.getLookup().add(calcModuleData);
-                cltNames.put(calculation.getName(), inputData);
                 currentProcess = null;
                 break;
         }
