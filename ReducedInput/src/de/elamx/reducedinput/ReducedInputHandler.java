@@ -37,6 +37,7 @@ public class ReducedInputHandler extends DefaultHandler {
     private StringBuilder elementValue;
 
     private HashMap<String, DefaultMaterial> materialNames = new HashMap<>();
+    private HashMap<String, LoadCaseData> loadCaseNames = new HashMap<>();
     private HashMap<String, CLT_Input> cltNames = new HashMap<>();
     private HashMap<DefaultMaterial, Double> materialThicknesses = new HashMap<>();
     private HashMap<DefaultMaterial, Criterion> materialCriteria = new HashMap<>();
@@ -51,6 +52,7 @@ public class ReducedInputHandler extends DefaultHandler {
     private static final String KEY_MATERIAL = "material";
     private static final String KEY_LAMINATE = "laminate";
     private static final String KEY_LAYER = "layer";
+    private static final String KEY_LOADCASE = "loadcase";
     private static final String KEY_CALCULATION = "calculation";
     private static final String KEY_BUCKLING = "buckling";
 
@@ -62,6 +64,8 @@ public class ReducedInputHandler extends DefaultHandler {
     private Laminat bucklingLaminate;
 
     private boolean createBucklingLaminate;
+
+    private LoadCaseData loadcase;
 
     private CalculationData calculation;
     private BucklingData buckling;
@@ -103,6 +107,11 @@ public class ReducedInputHandler extends DefaultHandler {
                     currentProcess = KEY_LAYER;
                     name = attr.getValue(ARG_NAME);
                     layerData = new LayerData(name);
+                    break;
+                case KEY_LOADCASE:
+                    currentProcess = KEY_LOADCASE;
+                    name = attr.getValue(ARG_NAME);
+                    loadcase = new LoadCaseData(name);
                     break;
                 case KEY_CALCULATION:
                     currentProcess = KEY_CALCULATION;
@@ -155,6 +164,9 @@ public class ReducedInputHandler extends DefaultHandler {
                     break;                        
                 case KEY_LAYER:
                     processLayer(qName.toLowerCase());
+                    break;
+                case KEY_LOADCASE:
+                    processLoadCase(qName.toLowerCase());
                     break;
                 case KEY_CALCULATION:
                     processCalculation(qName.toLowerCase());
@@ -334,42 +346,60 @@ public class ReducedInputHandler extends DefaultHandler {
         }
     }
 
-    private void processCalculation(String qName) {
+    private void processLoadCase(String qName) {
         switch (qName) {
             case "n_x":
-                calculation.setN_x(Double.valueOf(elementValue.toString()));
+                loadcase.setN_x(Double.valueOf(elementValue.toString()));
                 break;
             case "n_y":
-                calculation.setN_y(Double.valueOf(elementValue.toString()));
+                loadcase.setN_y(Double.valueOf(elementValue.toString()));
                 break;
             case "n_xy":
-                calculation.setN_xy(Double.valueOf(elementValue.toString()));
+                loadcase.setN_xy(Double.valueOf(elementValue.toString()));
                 break;
             case "m_x":
-                calculation.setM_x(Double.valueOf(elementValue.toString()));
+                loadcase.setM_x(Double.valueOf(elementValue.toString()));
                 break;
             case "m_y":
-                calculation.setM_y(Double.valueOf(elementValue.toString()));
+                loadcase.setM_y(Double.valueOf(elementValue.toString()));
                 break;
             case "m_xy":
-                calculation.setM_xy(Double.valueOf(elementValue.toString()));
+                loadcase.setM_xy(Double.valueOf(elementValue.toString()));
                 break;
             case "deltat":
-                calculation.setDelta_t(Double.valueOf(elementValue.toString()));
+                loadcase.setDelta_t(Double.valueOf(elementValue.toString()));
                 break;
             case "deltah":
-                calculation.setDelta_h(Double.valueOf(elementValue.toString()));
+                loadcase.setDelta_h(Double.valueOf(elementValue.toString()));
+                break;
+            case "ul_factor":
+                loadcase.setUl_factor(Double.valueOf(elementValue.toString()));
+                break;
+            case KEY_LOADCASE:
+                loadCaseNames.put(loadcase.getName(), loadcase);
+                currentProcess = null;
+                break;
+        }
+    }
+
+    private void processCalculation(String qName) {
+        switch (qName) {
+            case "loadcase":
+                calculation.setLoadcase(elementValue.toString());
                 break;
             case KEY_CALCULATION:
+                System.out.println("NEW CALCULATION WITH LOADCASE: " + calculation.getLoadcase());
                 CLT_Input inputData = new CLT_Input();
-                inputData.getLoad().setN_x(calculation.getN_x());
-                inputData.getLoad().setN_y(calculation.getN_y());
-                inputData.getLoad().setN_xy(calculation.getN_xy());
-                inputData.getLoad().setM_x(calculation.getM_x());
-                inputData.getLoad().setM_y(calculation.getM_y());
-                inputData.getLoad().setM_xy(calculation.getM_xy());
-                inputData.getLoad().setDeltaH(calculation.getDelta_h());
-                inputData.getLoad().setDeltaT(calculation.getDelta_t());
+                LoadCaseData lc = loadCaseNames.get(calculation.getLoadcase());
+                System.out.println("LOADCASE FOUND: " + lc.getName());
+                inputData.getLoad().setN_x(lc.getN_x());
+                inputData.getLoad().setN_y(lc.getN_y());
+                inputData.getLoad().setN_xy(lc.getN_xy());
+                inputData.getLoad().setM_x(lc.getM_x());
+                inputData.getLoad().setM_y(lc.getM_y());
+                inputData.getLoad().setM_xy(lc.getM_xy());
+                inputData.getLoad().setDeltaH(lc.getDelta_h());
+                inputData.getLoad().setDeltaT(lc.getDelta_t());
                 boolean[] useStrains = {false, false, false, false, false, false};
                 inputData.setUseStrains(useStrains);
                 CalculationModuleData calcModuleData = new CalculationModuleData(laminate, inputData);
@@ -383,17 +413,8 @@ public class ReducedInputHandler extends DefaultHandler {
 
     private void processBuckling(String qName) {
         switch (qName) {
-            case "calculation":
-                buckling.setCalculation(elementValue.toString());
-                break;
-            case "n_x":
-                buckling.setN_x(Double.valueOf(elementValue.toString()));
-                break;
-            case "n_y":
-                buckling.setN_y(Double.valueOf(elementValue.toString()));
-                break;
-            case "n_xy":
-                buckling.setN_xy(Double.valueOf(elementValue.toString()));
+            case "loadcase":
+                buckling.setLoadcase(elementValue.toString());
                 break;
             case "bcx":
                 buckling.setBcx(Integer.valueOf(elementValue.toString()));
@@ -414,35 +435,16 @@ public class ReducedInputHandler extends DefaultHandler {
                 buckling.setWidth(Double.valueOf(elementValue.toString()));
                 break;
             case KEY_BUCKLING:
-                double n_x,
-                 n_y,
-                 n_xy;
-                if (buckling.getN_x() != null) {
-                    n_x = buckling.getN_x();
-                } else {
-                    n_x = cltNames.get(buckling.getCalculation()).getLoad().getN_x();
-                }
-
-                if (buckling.getN_y() != null) {
-                    n_y = buckling.getN_y();
-                } else {
-                    n_y = cltNames.get(buckling.getCalculation()).getLoad().getN_y();
-                }
-
-                if (buckling.getN_xy() != null) {
-                    n_xy = buckling.getN_xy();
-                } else {
-                    n_xy = cltNames.get(buckling.getCalculation()).getLoad().getN_xy();
-                }
-
+                System.out.println("NEW BUCKLING WITH LOADCASE: " + buckling.getLoadcase());
+                LoadCaseData lc = loadCaseNames.get(buckling.getLoadcase());
                 Laminat lam;
+                System.out.println("LOADCASE FOUND: " + lc.getName());
                 if (bucklingLaminate != null) { 
                     lam = bucklingLaminate;                
                 } else {
                     lam = laminate;
                 }
-
-                BucklingInput inputData = new BucklingInput(buckling.getLength(), buckling.getWidth(), n_x, n_y, n_xy, buckling.getWholeD(), buckling.getdTilde(), buckling.getBcx(), buckling.getBcy(), buckling.getM(), buckling.getN());
+                BucklingInput inputData = new BucklingInput(buckling.getLength(), buckling.getWidth(), lc.getN_x(), lc.getN_y(), lc.getN_xy(), buckling.getWholeD(), buckling.getdTilde(), buckling.getBcx(), buckling.getBcy(), buckling.getM(), buckling.getN());
                 BucklingModuleData buckModuleData = new BucklingModuleData(lam, inputData);
                 buckModuleData.setName(buckling.getName());
                 lam.getLookup().add(buckModuleData);
@@ -748,6 +750,139 @@ public class ReducedInputHandler extends DefaultHandler {
 
         private String name;
 
+        private String loadcase;
+
+        public CalculationData() {
+        }
+
+        public CalculationData(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getLoadcase() {
+            return loadcase;
+        }
+
+        public void setLoadcase(String loadcase) {
+            this.loadcase = loadcase;
+        }
+    }
+
+    private class BucklingData {
+
+        private String name;
+
+        private String loadcase = null;
+
+        private Double length;
+        private Double width;
+        private Integer bcx;
+        private Integer bcy;
+        private Integer m;
+        private Integer n;
+        private Boolean wholeD;
+        private Boolean dTilde;
+
+        public BucklingData() {
+        }
+
+        public BucklingData(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getLoadcase() {
+            return loadcase;
+        }
+
+        public void setLoadcase(String loadcase) {
+            this.loadcase = loadcase;
+        }
+
+        public Double getLength() {
+            return length;
+        }
+
+        public void setLength(Double length) {
+            this.length = length;
+        }
+
+        public Double getWidth() {
+            return width;
+        }
+
+        public void setWidth(Double width) {
+            this.width = width;
+        }
+
+        public Integer getBcx() {
+            return bcx;
+        }
+
+        public void setBcx(Integer bcx) {
+            this.bcx = bcx;
+        }
+
+        public Integer getBcy() {
+            return bcy;
+        }
+
+        public void setBcy(Integer bcy) {
+            this.bcy = bcy;
+        }
+
+        public Integer getM() {
+            return m;
+        }
+
+        public void setM(Integer m) {
+            this.m = m;
+        }
+
+        public Integer getN() {
+            return n;
+        }
+
+        public void setN(Integer n) {
+            this.n = n;
+        }
+
+        public Boolean getWholeD() {
+            return wholeD;
+        }
+
+        public void setWholeD(Boolean wholeD) {
+            this.wholeD = wholeD;
+        }
+
+        public Boolean getdTilde() {
+            return dTilde;
+        }
+
+        public void setdTilde(Boolean dTilde) {
+            this.dTilde = dTilde;
+        }
+    }
+    
+    private class LoadCaseData {
+
+        private String name;
+
         private Double n_x;
         private Double n_y;
         private Double n_xy;
@@ -756,11 +891,12 @@ public class ReducedInputHandler extends DefaultHandler {
         private Double m_xy;
         private Double delta_t;
         private Double delta_h;
+        private Double ul_factor;
 
-        public CalculationData() {
+        public LoadCaseData() {
         }
 
-        public CalculationData(String name) {
+        public LoadCaseData(String name) {
             this.name = name;
         }
 
@@ -836,136 +972,14 @@ public class ReducedInputHandler extends DefaultHandler {
             this.delta_h = delta_h;
         }
 
-    }
-
-    private class BucklingData {
-
-        private String name;
-
-        private String calculation = null;
-
-        private Double n_x = null;
-        private Double n_y = null;
-        private Double n_xy = null;
-
-        private Double length;
-        private Double width;
-        private Integer bcx;
-        private Integer bcy;
-        private Integer m;
-        private Integer n;
-        private Boolean wholeD;
-        private Boolean dTilde;
-
-        public BucklingData() {
+        public Double getUl_factor() {
+            return ul_factor;
         }
 
-        public BucklingData(String name) {
-            this.name = name;
+        public void setUl_factor(Double ul_factor) {
+            this.ul_factor = ul_factor;
         }
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getCalculation() {
-            return calculation;
-        }
-
-        public void setCalculation(String calculation) {
-            this.calculation = calculation;
-        }
-
-        public Double getN_x() {
-            return n_x;
-        }
-
-        public void setN_x(Double n_x) {
-            this.n_x = n_x;
-        }
-
-        public Double getN_y() {
-            return n_y;
-        }
-
-        public void setN_y(Double n_y) {
-            this.n_y = n_y;
-        }
-
-        public Double getN_xy() {
-            return n_xy;
-        }
-
-        public void setN_xy(Double n_xy) {
-            this.n_xy = n_xy;
-        }
-
-        public Double getLength() {
-            return length;
-        }
-
-        public void setLength(Double length) {
-            this.length = length;
-        }
-
-        public Double getWidth() {
-            return width;
-        }
-
-        public void setWidth(Double width) {
-            this.width = width;
-        }
-
-        public Integer getBcx() {
-            return bcx;
-        }
-
-        public void setBcx(Integer bcx) {
-            this.bcx = bcx;
-        }
-
-        public Integer getBcy() {
-            return bcy;
-        }
-
-        public void setBcy(Integer bcy) {
-            this.bcy = bcy;
-        }
-
-        public Integer getM() {
-            return m;
-        }
-
-        public void setM(Integer m) {
-            this.m = m;
-        }
-
-        public Integer getN() {
-            return n;
-        }
-
-        public void setN(Integer n) {
-            this.n = n;
-        }
-
-        public Boolean getWholeD() {
-            return wholeD;
-        }
-
-        public void setWholeD(Boolean wholeD) {
-            this.wholeD = wholeD;
-        }
-
-        public Boolean getdTilde() {
-            return dTilde;
-        }
-
-        public void setdTilde(Boolean dTilde) {
-            this.dTilde = dTilde;
-        }
+        
     }
 }
