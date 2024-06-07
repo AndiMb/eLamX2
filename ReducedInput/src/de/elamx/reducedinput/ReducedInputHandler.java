@@ -4,7 +4,12 @@
  */
 package de.elamx.reducedinput;
 
-import de.elamx.clt.*;
+import de.elamx.reducedinput.dataobjects.LoadCaseData;
+import de.elamx.reducedinput.dataobjects.BucklingData;
+import de.elamx.reducedinput.dataobjects.LayerData;
+import de.elamx.reducedinput.dataobjects.CalculationData;
+import de.elamx.reducedinput.dataobjects.MaterialData;
+import de.elamx.clt.CLT_Input;
 import de.elamx.clt.calculation.CalculationModuleData;
 import de.elamx.clt.plate.BucklingInput;
 import de.elamx.clt.plateui.buckling.BucklingModuleData;
@@ -13,7 +18,6 @@ import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
 import de.elamx.laminate.failure.Criterion;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 import org.openide.util.Lookup;
@@ -23,28 +27,29 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Dient dem Einlesen einer reduzierten Eingabedatei.
- * Im Gegensatz zum Einlesen der konventionellen eLamX²-Datei basiert die Klasse
- * auf dem SAX-Parser zum Einlesen von xml-Dateien. Im Gegensatz zum DOM-Parser
- * (genutzt zum Einlesen der konventionellen eLamX²-Datei) setzt dieser ein
- * sequentielles Einlesen der xml-Eingabedatei um. Dies ist an dieser Stelle
- * essentiell, da die Logik der reduzierten Eingabedatei potentiell auf der
- * Reihenfolge der Datenblöcke beruht.
+ * Dient dem Einlesen einer reduzierten Eingabedatei. Im Gegensatz zum Einlesen
+ * der konventionellen eLamX²-Datei basiert die Klasse auf dem SAX-Parser zum
+ * Einlesen von xml-Dateien. Im Gegensatz zum DOM-Parser (genutzt zum Einlesen
+ * der konventionellen eLamX²-Datei) setzt dieser ein sequentielles Einlesen der
+ * xml-Eingabedatei um. Dies ist an dieser Stelle essentiell, da die Logik der
+ * reduzierten Eingabedatei potentiell auf der Reihenfolge der Datenblöcke
+ * beruht.
+ *
  * @author Florian Dexl
  */
 public class ReducedInputHandler extends DefaultHandler {
 
     private StringBuilder elementValue;
 
-    private HashMap<String, DefaultMaterial> materialNames = new HashMap<>();
-    private HashMap<String, LoadCaseData> loadCaseNames = new HashMap<>();
-    private HashMap<DefaultMaterial, Double> materialThicknesses = new HashMap<>();
-    private HashMap<DefaultMaterial, Criterion> materialCriteria = new HashMap<>();
-    private HashMap<DefaultMaterial, DefaultMaterial> bucklingMaterials = new HashMap<>();
-    private HashMap<String, Criterion> criterionMap = new HashMap<>();
+    private HashMap<String, DefaultMaterial> materialNames;
+    private HashMap<String, LoadCaseData> loadCaseNames;
+    private HashMap<DefaultMaterial, Double> materialThicknesses;
+    private HashMap<DefaultMaterial, Criterion> materialCriteria;
+    private HashMap<DefaultMaterial, DefaultMaterial> bucklingMaterials;
+    private HashMap<String, Criterion> criterionMap;
 
-    private String currentProcess = null;
-    private String currentSubProcess = null;
+    private String currentProcess;
+    private String currentSubProcess;
 
     private static final String ARG_NAME = "name";
 
@@ -71,10 +76,19 @@ public class ReducedInputHandler extends DefaultHandler {
 
     @Override
     public void startDocument() throws SAXException {
-        criterionMap.clear();
-        Lookup critLookup = Lookups.forPath("elamx/failurecriteria");
-        for (Criterion c : critLookup.lookupAll(Criterion.class)) {
-            criterionMap.put(c.getClass().getName(), c);
+        initialize();
+    }
+
+    @Override
+    public void endDocument() {
+    }
+
+    @Override
+    public void characters(char[] ch, int start, int length) throws SAXException {
+        if (elementValue == null) {
+            elementValue = new StringBuilder();
+        } else {
+            elementValue.append(ch, start, length);
         }
     }
 
@@ -125,7 +139,7 @@ public class ReducedInputHandler extends DefaultHandler {
                     buckling.setdTilde(Boolean.parseBoolean(attr.getValue("d_tilde")));
                     if (createBucklingLaminate && (bucklingLaminate == null)) {
                         bucklingLaminate = laminate.getCopy(true);
-                        for (Layer l: bucklingLaminate.getOriginalLayers()) {
+                        for (Layer l : bucklingLaminate.getOriginalLayers()) {
                             DefaultMaterial originalMaterial = ((DefaultMaterial) l.getMaterial());
                             if (bucklingMaterials.containsKey(originalMaterial)) {
                                 ((DataLayer) l).setMaterial(bucklingMaterials.get(originalMaterial));
@@ -141,7 +155,6 @@ public class ReducedInputHandler extends DefaultHandler {
                 switch (qName.toLowerCase()) {
                     case KEY_BUCKLING:
                         currentSubProcess = KEY_BUCKLING;
-                        name = attr.getValue(ARG_NAME);
                         String bucklingMaterialName = materialData.getName().concat(" Buckling");
                         materialDataBuckling = new MaterialData(bucklingMaterialName);
                         break;
@@ -158,9 +171,9 @@ public class ReducedInputHandler extends DefaultHandler {
                     if (currentSubProcess == KEY_BUCKLING) {
                         processBucklingMaterial(qName.toLowerCase());
                     } else {
-                        processMaterial(qName.toLowerCase());                 
+                        processMaterial(qName.toLowerCase());
                     }
-                    break;                        
+                    break;
                 case KEY_LAYER:
                     processLayer(qName.toLowerCase());
                     break;
@@ -275,7 +288,7 @@ public class ReducedInputHandler extends DefaultHandler {
                 materialCriteria.put(material, materialData.getCriterion());
 
                 if (materialDataBuckling != null) {
-                    DefaultMaterial bMaterial = new DefaultMaterial(UUID.randomUUID().toString(), "", 0.0, 0.0, 0.0, 0.0, 0.0, true);                        
+                    DefaultMaterial bMaterial = new DefaultMaterial(UUID.randomUUID().toString(), "", 0.0, 0.0, 0.0, 0.0, 0.0, true);
                     bMaterial = material.copyValues(bMaterial);
                     bMaterial.setName(materialDataBuckling.getName());
                     if (materialDataBuckling.getEpar() != null) {
@@ -433,8 +446,8 @@ public class ReducedInputHandler extends DefaultHandler {
             case KEY_BUCKLING:
                 LoadCaseData lc = loadCaseNames.get(buckling.getLoadcase());
                 Laminat lam;
-                if (bucklingLaminate != null) { 
-                    lam = bucklingLaminate;                
+                if (bucklingLaminate != null) {
+                    lam = bucklingLaminate;
                 } else {
                     lam = laminate;
                 }
@@ -447,532 +460,21 @@ public class ReducedInputHandler extends DefaultHandler {
         }
     }
 
-    @Override
-    public void endDocument() {
-    }
-
-    @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
-        if (elementValue == null) {
-            elementValue = new StringBuilder();
-        } else {
-            elementValue.append(ch, start, length);
-        }
-    }
-
-    private class MaterialData {
-
-        private String name;
-
-        private Double thickness = null;
-        private Criterion Criterion = null;
-
-        private Double Epar = null;
-        private Double Enor = null;
-        private Double nue12 = null;
-        private Double G = null;
-        private Double G13 = null;
-        private Double G23 = null;
-        private Double rho = null;
-
-        private Double RParTen = null;
-        private Double RParCom = null;
-        private Double RNorTen = null;
-        private Double RNorCom = null;
-        private Double RShear = null;
-
-        private Double FMCmuesp = null;
-
-        public MaterialData() {
-        }
-
-        public MaterialData(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Double getThickness() {
-            return thickness;
-        }
-
-        public void setThickness(Double thickness) {
-            this.thickness = thickness;
-        }
-
-        public Double getEpar() {
-            return Epar;
-        }
-
-        public void setEpar(Double Epar) {
-            this.Epar = Epar;
-        }
-
-        public Double getEnor() {
-            return Enor;
-        }
-
-        public void setEnor(Double Enor) {
-            this.Enor = Enor;
-        }
-
-        public Double getNue12() {
-            return nue12;
-        }
-
-        public void setNue12(Double nue12) {
-            this.nue12 = nue12;
-        }
-
-        public Double getG() {
-            return G;
-        }
-
-        public void setG(Double G) {
-            this.G = G;
-        }
-
-        public Double getRho() {
-            return rho;
-        }
-
-        public void setRho(Double rho) {
-            this.rho = rho;
-        }
-
-        public Double getRParTen() {
-            return RParTen;
-        }
-
-        public void setRParTen(Double RParTen) {
-            this.RParTen = RParTen;
-        }
-
-        public Double getRParCom() {
-            return RParCom;
-        }
-
-        public void setRParCom(Double RParCom) {
-            this.RParCom = RParCom;
-        }
-
-        public Double getRNorTen() {
-            return RNorTen;
-        }
-
-        public void setRNorTen(Double RNorTen) {
-            this.RNorTen = RNorTen;
-        }
-
-        public Double getRNorCom() {
-            return RNorCom;
-        }
-
-        public void setRNorCom(Double RNorCom) {
-            this.RNorCom = RNorCom;
-        }
-
-        public Double getRShear() {
-            return RShear;
-        }
-
-        public void setRShear(Double RShear) {
-            this.RShear = RShear;
-        }
-
-        public Double getFMCmuesp() {
-            return FMCmuesp;
-        }
-
-        public void setFMCmuesp(Double FMCmuesp) {
-            this.FMCmuesp = FMCmuesp;
-        }
-
-        public Criterion getCriterion() {
-            return Criterion;
-        }
-
-        public void setCriterion(Criterion Criterion) {
-            this.Criterion = Criterion;
-        }
-
-        public Double getG13() {
-            return G13;
-        }
-
-        public void setG13(Double G13) {
-            this.G13 = G13;
-        }
-
-        public Double getG23() {
-            return G23;
-        }
-
-        public void setG23(Double G23) {
-            this.G23 = G23;
-        }
-
-        
-    }
-
-    private class LaminateData {
-
-        private String name;
-
-        private Double offset;
-
-        private boolean symmetric;
-        private boolean withMiddleLayer;
-
-        private final ArrayList<LayerData> layers = new ArrayList<>();
-
-        public LaminateData() {
-        }
-
-        public LaminateData(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Double getOffset() {
-            return offset;
-        }
-
-        public void setOffset(Double offset) {
-            this.offset = offset;
-        }
-
-        public boolean isSymmetric() {
-            return symmetric;
-        }
-
-        public void setSymmetric(boolean symmetric) {
-            this.symmetric = symmetric;
-        }
-
-        public boolean isWithMiddleLayer() {
-            return withMiddleLayer;
-        }
-
-        public void setWithMiddleLayer(boolean withMiddleLayer) {
-            this.withMiddleLayer = withMiddleLayer;
-        }
-
-        public void addLayer(LayerData layerData) {
-            this.layers.add(layerData);
-        }
-
-        public ArrayList<LayerData> getLayers() {
-            return layers;
-        }
-    }
-
-    private class LayerData {
-
-        private String name;
-
-        private Double thickness;
-        private Double angle;
-        private String materialName;
-
-        private Criterion criterion = null;
-
-        public LayerData() {
-        }
-
-        public LayerData(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Double getThickness() {
-            return thickness;
-        }
-
-        public void setThickness(Double thickness) {
-            this.thickness = thickness;
-        }
-
-        public Double getAngle() {
-            return angle;
-        }
-
-        public void setAngle(Double angle) {
-            this.angle = angle;
-        }
-
-        public String getMaterialName() {
-            return materialName;
-        }
-
-        public void setMaterialName(String materialName) {
-            this.materialName = materialName;
-        }
-
-        public Criterion getCriterion() {
-            return criterion;
-        }
-
-        public void setCriterion(Criterion criterion) {
-            this.criterion = criterion;
-        }
-
-    }
-
-    private class CalculationData {
-
-        private String name;
-
-        private String loadcase;
-
-        public CalculationData() {
-        }
-
-        public CalculationData(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getLoadcase() {
-            return loadcase;
-        }
-
-        public void setLoadcase(String loadcase) {
-            this.loadcase = loadcase;
-        }
-    }
-
-    private class BucklingData {
-
-        private String name;
-
-        private String loadcase = null;
-
-        private Double length;
-        private Double width;
-        private Integer bcx;
-        private Integer bcy;
-        private Integer m;
-        private Integer n;
-        private Boolean wholeD;
-        private Boolean dTilde;
-
-        public BucklingData() {
-        }
-
-        public BucklingData(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getLoadcase() {
-            return loadcase;
-        }
-
-        public void setLoadcase(String loadcase) {
-            this.loadcase = loadcase;
-        }
-
-        public Double getLength() {
-            return length;
-        }
-
-        public void setLength(Double length) {
-            this.length = length;
-        }
-
-        public Double getWidth() {
-            return width;
-        }
-
-        public void setWidth(Double width) {
-            this.width = width;
-        }
-
-        public Integer getBcx() {
-            return bcx;
-        }
-
-        public void setBcx(Integer bcx) {
-            this.bcx = bcx;
-        }
-
-        public Integer getBcy() {
-            return bcy;
-        }
-
-        public void setBcy(Integer bcy) {
-            this.bcy = bcy;
-        }
-
-        public Integer getM() {
-            return m;
+    private void initialize() {
+        materialNames = new HashMap<>();
+        loadCaseNames = new HashMap<>();
+        materialThicknesses = new HashMap<>();
+        materialCriteria = new HashMap<>();
+        bucklingMaterials = new HashMap<>();
+        criterionMap = new HashMap<>();
+
+        currentProcess = null;
+        currentSubProcess = null;
+
+        criterionMap.clear();
+        Lookup critLookup = Lookups.forPath("elamx/failurecriteria");
+        for (Criterion c : critLookup.lookupAll(Criterion.class)) {
+            criterionMap.put(c.getClass().getName(), c);
         }
-
-        public void setM(Integer m) {
-            this.m = m;
-        }
-
-        public Integer getN() {
-            return n;
-        }
-
-        public void setN(Integer n) {
-            this.n = n;
-        }
-
-        public Boolean getWholeD() {
-            return wholeD;
-        }
-
-        public void setWholeD(Boolean wholeD) {
-            this.wholeD = wholeD;
-        }
-
-        public Boolean getdTilde() {
-            return dTilde;
-        }
-
-        public void setdTilde(Boolean dTilde) {
-            this.dTilde = dTilde;
-        }
-    }
-    
-    private class LoadCaseData {
-
-        private String name;
-
-        private Double n_x;
-        private Double n_y;
-        private Double n_xy;
-        private Double m_x;
-        private Double m_y;
-        private Double m_xy;
-        private Double delta_t;
-        private Double delta_h;
-        private Double ul_factor;
-
-        public LoadCaseData() {
-        }
-
-        public LoadCaseData(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Double getN_x() {
-            return n_x;
-        }
-
-        public void setN_x(Double n_x) {
-            this.n_x = n_x;
-        }
-
-        public Double getN_y() {
-            return n_y;
-        }
-
-        public void setN_y(Double n_y) {
-            this.n_y = n_y;
-        }
-
-        public Double getN_xy() {
-            return n_xy;
-        }
-
-        public void setN_xy(Double n_xy) {
-            this.n_xy = n_xy;
-        }
-
-        public Double getM_x() {
-            return m_x;
-        }
-
-        public void setM_x(Double m_x) {
-            this.m_x = m_x;
-        }
-
-        public Double getM_y() {
-            return m_y;
-        }
-
-        public void setM_y(Double m_y) {
-            this.m_y = m_y;
-        }
-
-        public Double getM_xy() {
-            return m_xy;
-        }
-
-        public void setM_xy(Double m_xy) {
-            this.m_xy = m_xy;
-        }
-
-        public Double getDelta_t() {
-            return delta_t;
-        }
-
-        public void setDelta_t(Double delta_t) {
-            this.delta_t = delta_t;
-        }
-
-        public Double getDelta_h() {
-            return delta_h;
-        }
-
-        public void setDelta_h(Double delta_h) {
-            this.delta_h = delta_h;
-        }
-
-        public Double getUl_factor() {
-            return ul_factor;
-        }
-
-        public void setUl_factor(Double ul_factor) {
-            this.ul_factor = ul_factor;
-        }
-
-        
     }
 }
