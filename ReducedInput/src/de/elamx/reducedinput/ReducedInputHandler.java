@@ -387,10 +387,8 @@ public class ReducedInputHandler extends DefaultHandler {
                 calculation.setLoadcase(elementValue.toString());
                 break;
             case KEY_CALCULATION:
-                System.out.println("NEW CALCULATION WITH LOADCASE: " + calculation.getLoadcase());
                 CLT_Input inputData = new CLT_Input();
                 LoadCaseData lc = loadCaseNames.get(calculation.getLoadcase());
-                System.out.println("LOADCASE FOUND: " + lc.getName());
                 inputData.getLoad().setN_x(lc.getN_x());
                 inputData.getLoad().setN_y(lc.getN_y());
                 inputData.getLoad().setN_xy(lc.getN_xy());
@@ -433,10 +431,8 @@ public class ReducedInputHandler extends DefaultHandler {
                 buckling.setWidth(Double.valueOf(elementValue.toString()));
                 break;
             case KEY_BUCKLING:
-                System.out.println("NEW BUCKLING WITH LOADCASE: " + buckling.getLoadcase());
                 LoadCaseData lc = loadCaseNames.get(buckling.getLoadcase());
                 Laminat lam;
-                System.out.println("LOADCASE FOUND: " + lc.getName());
                 if (bucklingLaminate != null) { 
                     lam = bucklingLaminate;                
                 } else {
@@ -453,7 +449,6 @@ public class ReducedInputHandler extends DefaultHandler {
 
     @Override
     public void endDocument() {
-        System.out.println("READ DOCUMENT FINISHED");
     }
 
     @Override
