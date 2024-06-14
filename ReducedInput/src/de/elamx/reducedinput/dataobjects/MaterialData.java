@@ -29,7 +29,15 @@ public class MaterialData extends ReducedInputDataObject {
     private Double RNorCom = null;
     private Double RShear = null;
 
-    private Double FMCmuesp = null;
+    private Double FMC_muesp = null;
+    private Double FMC_m = null;
+
+    private Double Puck_a0 = null;
+    private Double Puck_pspz = null;
+    private Double Puck_lambda_min = null;
+    private Double Puck_pspd = null;
+
+    private Double TsaiWu_f12star = null;
 
     public MaterialData(String name) {
         super(name);
@@ -123,14 +131,6 @@ public class MaterialData extends ReducedInputDataObject {
         this.RShear = RShear;
     }
 
-    public Double getFMCmuesp() {
-        return FMCmuesp;
-    }
-
-    public void setFMCmuesp(Double FMCmuesp) {
-        this.FMCmuesp = FMCmuesp;
-    }
-
     public Criterion getCriterion() {
         return Criterion;
     }
@@ -153,6 +153,62 @@ public class MaterialData extends ReducedInputDataObject {
 
     public void setG23(Double G23) {
         this.G23 = G23;
+    }
+
+    public Double getFMC_muesp() {
+        return FMC_muesp;
+    }
+
+    public void setFMC_muesp(Double FMC_muesp) {
+        this.FMC_muesp = FMC_muesp;
+    }
+
+    public Double getFMC_m() {
+        return FMC_m;
+    }
+
+    public void setFMC_m(Double FMC_m) {
+        this.FMC_m = FMC_m;
+    }
+
+    public Double getPuck_a0() {
+        return Puck_a0;
+    }
+
+    public void setPuck_a0(Double Puck_a0) {
+        this.Puck_a0 = Puck_a0;
+    }
+
+    public Double getPuck_pspz() {
+        return Puck_pspz;
+    }
+
+    public void setPuck_pspz(Double Puck_pspz) {
+        this.Puck_pspz = Puck_pspz;
+    }
+
+    public Double getPuck_lambda_min() {
+        return Puck_lambda_min;
+    }
+
+    public void setPuck_lambda_min(Double Puck_lambda_min) {
+        this.Puck_lambda_min = Puck_lambda_min;
+    }
+
+    public Double getPuck_pspd() {
+        return Puck_pspd;
+    }
+
+    public void setPuck_pspd(Double Puck_pspd) {
+        this.Puck_pspd = Puck_pspd;
+    }
+
+    public Double getTsaiWu_f12star() {
+        return TsaiWu_f12star;
+    }
+
+    public void setTsaiWu_f12star(Double TsaiWu_f12star) {
+        this.TsaiWu_f12star = TsaiWu_f12star;
     }
 
 }

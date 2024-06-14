@@ -255,6 +255,27 @@ public class ReducedInputHandler extends DefaultHandler {
             case "thickness":
                 materialData.setThickness(Double.valueOf(elementValue.toString()));
                 break;
+            case "fmc.muesp":
+                materialData.setFMC_muesp(Double.valueOf(elementValue.toString()));
+                break;
+            case "fmc.m":
+                materialData.setFMC_m(Double.valueOf(elementValue.toString()));
+                break;
+            case "puck.a0":
+                materialData.setPuck_a0(Double.valueOf(elementValue.toString()));
+                break;
+            case "puck.pspz":
+                materialData.setPuck_pspz(Double.valueOf(elementValue.toString()));
+                break;
+            case "puck.lambda_min":
+                materialData.setPuck_lambda_min(Double.valueOf(elementValue.toString()));
+                break;
+            case "puck.pspd":
+                materialData.setPuck_pspd(Double.valueOf(elementValue.toString()));
+                break;
+            case "tsai_wu.f12star":
+                materialData.setTsaiWu_f12star(Double.valueOf(elementValue.toString()));
+                break;
             case "criterion":
                 materialData.setCriterion(criterionMap.get(elementValue.toString()));
                 break;
@@ -280,6 +301,27 @@ public class ReducedInputHandler extends DefaultHandler {
                 }
                 if (materialData.getRShear() != null) {
                     material.setRShear(materialData.getRShear());
+                }
+                if (materialData.getFMC_muesp() != null) {
+                    material.putAdditionalValue("de.elamx.laminate.addFailureCriteria.FMC.muesp", materialData.getFMC_muesp());
+                }
+                if (materialData.getFMC_m() != null) {
+                    material.putAdditionalValue("de.elamx.laminate.addFailureCriteria.FMC.m", materialData.getFMC_m());
+                }
+                if (materialData.getPuck_a0() != null) {
+                    material.putAdditionalValue("de.elamx.laminate.failure.Puck.a0", materialData.getPuck_a0());
+                }
+                if (materialData.getPuck_pspz() != null) {
+                    material.putAdditionalValue("de.elamx.laminate.failure.Puck.pspz", materialData.getPuck_pspz());
+                }
+                if (materialData.getPuck_lambda_min() != null) {
+                    material.putAdditionalValue("de.elamx.laminate.failure.Puck.lambda_min", materialData.getPuck_lambda_min());
+                }
+                if (materialData.getPuck_pspd() != null) {
+                    material.putAdditionalValue("de.elamx.laminate.failure.Puck.pspd", materialData.getPuck_pspd());
+                }
+                if (materialData.getTsaiWu_f12star() != null) {
+                    material.putAdditionalValue("de.elamx.laminate.addFailureCriteria.TsaiWu.f12star", materialData.getTsaiWu_f12star());
                 }
                 materialNames.put(materialData.getName(), material);
                 materialThicknesses.put(material, materialData.getThickness());
