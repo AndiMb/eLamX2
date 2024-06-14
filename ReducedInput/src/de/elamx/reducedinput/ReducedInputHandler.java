@@ -135,8 +135,6 @@ public class ReducedInputHandler extends DefaultHandler {
                     currentProcess = KEY_BUCKLING;
                     name = attr.getValue(ARG_NAME);
                     buckling = new BucklingData(name);
-                    buckling.setWholeD(Boolean.parseBoolean(attr.getValue("whole_d")));
-                    buckling.setdTilde(Boolean.parseBoolean(attr.getValue("d_tilde")));
                     if (createBucklingLaminate && (bucklingLaminate == null)) {
                         bucklingLaminate = laminate.getCopy(true);
                         for (Layer l : bucklingLaminate.getOriginalLayers()) {
@@ -431,9 +429,6 @@ public class ReducedInputHandler extends DefaultHandler {
             case "bcy":
                 buckling.setBcy(Integer.valueOf(elementValue.toString()));
                 break;
-            case "m":
-                buckling.setM(Integer.valueOf(elementValue.toString()));
-                break;
             case "n":
                 buckling.setN(Integer.valueOf(elementValue.toString()));
                 break;
@@ -451,10 +446,16 @@ public class ReducedInputHandler extends DefaultHandler {
                 } else {
                     lam = laminate;
                 }
-                BucklingInput inputData = new BucklingInput(buckling.getLength(), buckling.getWidth(), lc.getN_x(), lc.getN_y(), lc.getN_xy(), buckling.getWholeD(), buckling.getdTilde(), buckling.getBcx(), buckling.getBcy(), buckling.getM(), buckling.getN());
+                BucklingInput inputData = new BucklingInput(buckling.getLength(), buckling.getWidth(), lc.getN_x(), lc.getN_y(), lc.getN_xy(), true, false, buckling.getBcx(), buckling.getBcy(), buckling.getN(), buckling.getN());
                 BucklingModuleData buckModuleData = new BucklingModuleData(lam, inputData);
                 buckModuleData.setName(buckling.getName());
                 lam.getLookup().add(buckModuleData);
+                if (! lam.isSymmetric()) {
+                    BucklingInput inputData_dTilde = new BucklingInput(buckling.getLength(), buckling.getWidth(), lc.getN_x(), lc.getN_y(), lc.getN_xy(), true, true, buckling.getBcx(), buckling.getBcy(), buckling.getN(), buckling.getN());
+                    BucklingModuleData buckModuleData_dTilde = new BucklingModuleData(lam, inputData_dTilde);
+                    buckModuleData_dTilde.setName(buckling.getName().concat(" Dtilde-option"));
+                    lam.getLookup().add(buckModuleData_dTilde);
+                }
                 currentProcess = null;
                 break;
         }

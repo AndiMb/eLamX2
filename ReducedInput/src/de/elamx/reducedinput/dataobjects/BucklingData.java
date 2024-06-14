@@ -16,10 +16,7 @@ public class BucklingData extends ReducedInputDataObject {
     private Double width;
     private Integer bcx;
     private Integer bcy;
-    private Integer m;
     private Integer n;
-    private Boolean wholeD;
-    private Boolean dTilde;
 
     public BucklingData(String name) {
         super(name);
@@ -65,35 +62,11 @@ public class BucklingData extends ReducedInputDataObject {
         this.bcy = bcy;
     }
 
-    public Integer getM() {
-        return m;
-    }
-
-    public void setM(Integer m) {
-        this.m = m;
-    }
-
     public Integer getN() {
         return n;
     }
 
     public void setN(Integer n) {
         this.n = n;
-    }
-
-    public Boolean getWholeD() {
-        return wholeD;
-    }
-
-    public void setWholeD(Boolean wholeD) {
-        this.wholeD = wholeD;
-    }
-
-    public Boolean getdTilde() {
-        return dTilde;
-    }
-
-    public void setdTilde(Boolean dTilde) {
-        this.dTilde = dTilde;
     }
 }
