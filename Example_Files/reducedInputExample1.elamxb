@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elamx version="1">
+    <materials>
+        <material name="HSB 37103-01" >
+            <Epar>132700.0</Epar>
+            <Enor>9300.0</Enor>
+            <nue12>0.28</nue12>
+            <G>4600.0</G>
+            <G13>0.0</G13>
+            <G23>0.0</G23>
+            <rho>1.7E-9</rho>
+            <RParTen>1500.0</RParTen>
+            <RParCom>1000.0</RParCom>
+            <RNorTen>180.0</RNorTen>
+            <RNorCom>240.0</RNorCom>
+            <RShear>150.0</RShear>
+            <FMC.muesp>0.15</FMC.muesp>
+            <FMC.m>3.1</FMC.m>
+            <criterion>de.elamx.laminate.failure.Puck</criterion>
+            <thickness>0.125</thickness>
+            <buckling>
+                <Epar>106160.0</Epar>
+                <Enor>7440.0</Enor>
+                <nue12>0.28</nue12>
+                <G>3680.0</G>
+                <G13>0.0</G13>
+                <G23>0.0</G23>
+            </buckling>
+        </material>
+        <material name="Standardmaterial" >
+            <Epar>141000.0</Epar>
+            <Enor>9340.0</Enor>
+            <nue12>0.35</nue12>
+            <G>4500.0</G>
+            <G13>0.0</G13>
+            <G23>0.0</G23>
+            <rho>1.7E-9</rho>
+            <RParTen>1500.0</RParTen>
+            <RParCom>1000.0</RParCom>
+            <RNorTen>180.0</RNorTen>
+            <RNorCom>240.0</RNorCom>
+            <RShear>150.0</RShear>
+            <FMC.muesp>0.15</FMC.muesp>
+            <FMC.m>3.1</FMC.m>
+            <criterion>de.elamx.laminate.addFailureCriteria.FMC</criterion>
+            <thickness>0.125</thickness>
+        </material>
+    </materials>
+    <laminates>
+        <laminate name="Laminate HSB 37103-01" offset="0.0" symmetric="false" with_middle_layer="false" invert_z="false">
+            <layer name="Layer 1" >
+                <angle>70.0</angle>
+                <material>HSB 37103-01</material>
+            </layer>
+            <layer name="Layer 2" >
+                <angle>90.0</angle>
+                <material>HSB 37103-01</material>
+                <criterion>de.elamx.laminate.addFailureCriteria.FMC</criterion>
+                <thickness>0.3</thickness>
+            </layer>
+            <layer name="Layer 3" >
+                <angle>10.0</angle>
+                <material>HSB 37103-01</material>
+            </layer>
+            <layer name="Layer 4" >
+                <angle>0.0</angle>
+                <material>HSB 37103-01</material>
+            </layer>
+            <loadcase name="Load Case A1">
+                <n_x>100.0</n_x>
+                <n_y>0.0</n_y>
+                <n_xy>10.0</n_xy>
+                <m_x>15.0</m_x>
+                <m_y>0.0</m_y>
+                <m_xy>0.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+                <ul_factor>1.5</ul_factor>
+            </loadcase>
+            <loadcase name="Load Case A2">
+                <n_x>100.0</n_x>
+                <n_y>10.0</n_y>
+                <n_xy>10.0</n_xy>
+                <m_x>15.0</m_x>
+                <m_y>0.0</m_y>
+                <m_xy>0.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+            </loadcase>
+            <loadcase name="Load Case A3">
+                <n_x>100.0</n_x>
+                <n_y>0.0</n_y>
+                <n_xy>50.0</n_xy>
+                <m_x>0.0</m_x>
+                <m_y>10.0</m_y>
+                <m_xy>0.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+            </loadcase>
+            <calculation name="Calculation A1">
+                <loadcase>Load Case A1</loadcase>
+            </calculation>
+            <buckling name="Buckling A1">
+                <loadcase>Load Case A1</loadcase>
+                <length>500.0</length>
+                <width>400.0</width>
+                <bcx>1</bcx>
+                <bcy>0</bcy>
+                <n>6</n>
+            </buckling>
+            <calculation name="Calculation A2">
+                <loadcase>Load Case A2</loadcase>
+            </calculation>
+            <buckling name="Buckling A3">
+                <loadcase>Load Case A3</loadcase>
+                <length>100.0</length>
+                <width>100.0</width>
+                <bcx>1</bcx>
+                <bcy>0</bcy>
+                <n>6</n>
+            </buckling>
+        </laminate>
+        <laminate name="Beispiellaminat" offset="0.0" symmetric="true" with_middle_layer="false" invert_z="false">
+            <layer name="Layer 1" >
+                <angle>0.0</angle>
+                <material>Standardmaterial</material>
+            </layer>
+            <layer name="Layer 2" >
+                <angle>45.0</angle>
+                <material>Standardmaterial</material>
+            </layer>
+            <layer name="Layer 3" >
+                <angle>-45.0</angle>
+                <material>Standardmaterial</material>
+            </layer>
+            <layer name="Layer 4" >
+                <angle>90.0</angle>
+                <material>Standardmaterial</material>
+            </layer>
+            <loadcase name="Load Case B1">
+                <n_x>-100.0</n_x>
+                <n_y>-100.0</n_y>
+                <n_xy>0.0</n_xy>
+                <m_x>0.0</m_x>
+                <m_y>0.0</m_y>
+                <m_xy>00.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+            </loadcase>
+            <loadcase name="Load Case B2">
+                <n_x>0.0</n_x>
+                <n_y>0.0</n_y>
+                <n_xy>0.0</n_xy>
+                <m_x>90.0</m_x>
+                <m_y>70.0</m_y>
+                <m_xy>00.0</m_xy>
+                <deltat>0.0</deltat>
+                <deltah>0.0</deltah>
+            </loadcase>
+            <calculation name="Calculation B1">
+                <loadcase>Load Case B1</loadcase>
+            </calculation>
+            <buckling name="Buckling B1">
+                <loadcase>Load Case B1</loadcase>
+                <length>100.0</length>
+                <width>100.0</width>
+                <bcx>1</bcx>
+                <bcy>1</bcy>
+                <n>6</n>
+            </buckling>
+            <calculation name="Calculation B2">
+                <loadcase>Load Case B2</loadcase>
+            </calculation>
+        </laminate>
+    </laminates>
+</elamx>
