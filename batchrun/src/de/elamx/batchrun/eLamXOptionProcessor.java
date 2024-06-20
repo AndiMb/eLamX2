@@ -25,12 +25,15 @@
  */
 package de.elamx.batchrun;
 
+import de.elamx.reducedinput.ReducedInputHandler;
 import de.elamx.core.BatchRunService;
 import de.elamx.core.GeneralOutputWriterService;
+import de.elamx.filesupport.NewFileCreator;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.eLamXLookup;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,6 +42,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import org.netbeans.api.sendopts.CommandException;
 import org.netbeans.spi.sendopts.Env;
 import org.netbeans.spi.sendopts.Option;
@@ -48,6 +54,7 @@ import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -59,6 +66,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
     private final Option inputOption = Option.requiredArgument('i', "input");
     private final Option outputOption = Option.optionalArgument('o', "output");
     private final Option outputTypeOption = Option.optionalArgument('t', "outputtype");
+    private final Option reducedInputOption = Option.optionalArgument('b', "reducedinput");
 
     @Override
     protected Set<Option> getOptions() {
@@ -66,6 +74,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
         set.add(inputOption);
         set.add(outputOption);
         set.add(outputTypeOption);
+        set.add(reducedInputOption);
         return set;
     }
 
@@ -85,9 +94,24 @@ public class eLamXOptionProcessor extends OptionProcessor {
         if (maps.containsKey(inputOption)) {
             String fileName = maps.get(inputOption)[0];
             File inputFile = new File(fileName);
-            if (inputFile.exists() && inputFile.isFile()) {
-                FileObject fo = FileUtil.toFileObject(inputFile);
-                eLamXLookup.getDefault().setFileObject(fo);
+            if (maps.containsKey(reducedInputOption)) {
+                // Neue eLamX-Datei anlegen
+                NewFileCreator.create();
+
+                // Einlesen der reduzierten Eingabedatei
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                try {
+                    SAXParser saxParser = factory.newSAXParser();
+                    ReducedInputHandler handler = new ReducedInputHandler();
+                    saxParser.parse(inputFile, handler);
+                } catch (ParserConfigurationException | SAXException | IOException ex) {
+                    Logger.getLogger(eLamXOptionProcessor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                if (inputFile.exists() && inputFile.isFile()) {
+                    FileObject fo = FileUtil.toFileObject(inputFile);
+                    eLamXLookup.getDefault().setFileObject(fo);
+                }
             }
         }
 
@@ -116,7 +140,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
         GeneralOutputWriterService writerService = writerServices.get(Math.min(Math.max(outputType, 0), writerServices.size() - 1));
 
         // Schreiben des Headers
-        writerService.writeHeader(out);
+        writerService.writeHeader(out);        
 
         // Schleife über alle in der eLamX-Datei enthaltenen Laminate
         for (Laminat lam : eLamXLookup.getDefault().lookupAll(Laminat.class)) {

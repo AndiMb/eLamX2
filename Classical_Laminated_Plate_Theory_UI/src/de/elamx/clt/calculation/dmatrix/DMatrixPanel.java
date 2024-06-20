@@ -53,6 +53,7 @@ import javax.swing.table.TableCellRenderer;
 public class DMatrixPanel extends javax.swing.JPanel {
 
     private String matrixCaption;
+    private String shortCaption;
     private double[][] dMatrix;
     
     /**
@@ -67,6 +68,15 @@ public class DMatrixPanel extends javax.swing.JPanel {
     public DMatrixPanel(double[][] dMatrix, String matrixCaption){
         this.dMatrix = dMatrix;
         this.matrixCaption = matrixCaption;
+        this.shortCaption = "D";
+        initComponents();
+    }
+    
+    @SuppressWarnings("this-escape")
+    public DMatrixPanel(double[][] dMatrix, String matrixCaption, String shortCaption){
+        this.dMatrix = dMatrix;
+        this.matrixCaption = matrixCaption;
+        this.shortCaption = shortCaption;
         initComponents();
     }
 
@@ -87,7 +97,7 @@ public class DMatrixPanel extends javax.swing.JPanel {
         for (int ii = 0; ii < mat[0].length; ii++){
             colName[ii] = "";
         }
-        String[][] captions = new String[][]{{"D"}};
+        String[][] captions = new String[][]{{shortCaption}};
         Color[][]  letterColors = new Color[][]{{new Color(255,255,220)}};
         Color[][]  bgColors     = new Color[][]{{new Color(255,255,120)}};
         DMatTable = new MatrixTable(mat,
