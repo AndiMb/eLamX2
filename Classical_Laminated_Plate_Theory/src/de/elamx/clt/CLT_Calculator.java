@@ -367,6 +367,10 @@ public class CLT_Calculator {
                     lastIteration = true;
                 }
             }
+
+            if (lastIteration) {
+                break;
+            }
             
             layerResultList.add(layerResults);
             boolean[] zfw_failTemp = new boolean[numLayers];
@@ -378,10 +382,6 @@ public class CLT_Calculator {
             layerNumberList.add(layerResults[minLayerIndex].getLayer().getNumber());
             rf_minList.add(rf_min.getMinimalReserveFactor() * j_A_set);
             FailureTypeList.add(rf_min.getFailureName());
-
-            if (lastIteration) {
-                break;
-            }
 
             clt_lam.getCLTLayers()[minLayerIndex].refresh();
             clt_lam.refresh();
