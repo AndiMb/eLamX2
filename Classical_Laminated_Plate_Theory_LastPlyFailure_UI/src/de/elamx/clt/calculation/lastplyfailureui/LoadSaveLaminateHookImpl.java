@@ -75,6 +75,10 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
         input.getLoad().setM_x(Double.parseDouble(getTagValue("m_x", LastPlyFailureElement)));
         input.getLoad().setM_y(Double.parseDouble(getTagValue("m_y", LastPlyFailureElement)));
         input.getLoad().setM_xy(Double.parseDouble(getTagValue("m_xy", LastPlyFailureElement)));
+        input.setDegradationFactor(Double.parseDouble(getTagValue(LastPlyFailureInput.PROP_DEGRADATIONFACTOR, LastPlyFailureElement)));
+        input.setDegradeAllOnFibreFailure(Boolean.parseBoolean(getTagValue(LastPlyFailureInput.PROP_DEGRADEALLONFIBREFAILURE, LastPlyFailureElement)));
+        input.setEpsilon_crit(Double.parseDouble(getTagValue(LastPlyFailureInput.PROP_EPSILON_CRIT, LastPlyFailureElement)));
+        input.setJ_a(Double.parseDouble(getTagValue(LastPlyFailureInput.PROP_J_A, LastPlyFailureElement)));
 
         return input;
     }
@@ -128,6 +132,10 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
         addValue(doc, "m_x", Double.toString(input.getLoad().getM_x()), dataElement);
         addValue(doc, "m_y", Double.toString(input.getLoad().getM_y()), dataElement);
         addValue(doc, "m_xy", Double.toString(input.getLoad().getM_xy()), dataElement);
+        addValue(doc, LastPlyFailureInput.PROP_DEGRADATIONFACTOR, Double.toString(input.getDegradationFactor()), dataElement);
+        addValue(doc, LastPlyFailureInput.PROP_DEGRADEALLONFIBREFAILURE, Boolean.toString(input.isDegradeAllOnFibreFailure()), dataElement);
+        addValue(doc, LastPlyFailureInput.PROP_EPSILON_CRIT, Double.toString(input.getEpsilon_crit()), dataElement);
+        addValue(doc, LastPlyFailureInput.PROP_J_A, Double.toString(input.getJ_a()), dataElement);
     }
 
     private static void addValue(Document doc, String eName, String value, Element eElement) {
