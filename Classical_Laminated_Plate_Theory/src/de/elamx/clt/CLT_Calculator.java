@@ -327,6 +327,8 @@ public class CLT_Calculator {
                     minLayerIndex = ii;
                 }
             }
+            
+            double j_A_set = 1.0;
 
             DefaultMaterial mat = (DefaultMaterial) layerResults[minLayerIndex].getLayer().getMaterial();
             if (rf_min.getFailureType() == ReserveFactor.MATRIX_FAILURE) {
@@ -334,6 +336,7 @@ public class CLT_Calculator {
                     mat.setEnor(matReductionFactor * mat.getEnor());
                     mat.setG(matReductionFactor * mat.getG());
                     zfw_fail[minLayerIndex] = true;
+                    j_A_set = j_A;
                 } else {
                     lastIteration = true;
                 }
@@ -373,7 +376,7 @@ public class CLT_Calculator {
             System.arraycopy(fb_fail, 0, fb_failTemp, 0, numLayers);
             fb_failList.add(fb_failTemp);
             layerNumberList.add(layerResults[minLayerIndex].getLayer().getNumber());
-            rf_minList.add(rf_min.getMinimalReserveFactor());
+            rf_minList.add(rf_min.getMinimalReserveFactor() * j_A_set);
             FailureTypeList.add(rf_min.getFailureName());
 
             if (lastIteration) {
