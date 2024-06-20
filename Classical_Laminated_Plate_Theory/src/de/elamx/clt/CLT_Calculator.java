@@ -271,9 +271,8 @@ public class CLT_Calculator {
         return rs;
     }
 
-    public static CLT_LastPlyFailureResult determineValuesLastPlyFailure(CLT_Laminate lam, Loads loads, Strains strains, boolean[] useStrain) {
-
-        double matReductionFactor = 0.000001;
+    public static CLT_LastPlyFailureResult determineValuesLastPlyFailure(CLT_Laminate lam, Loads loads, Strains strains, boolean[] useStrain, 
+            double matReductionFactor, double epsilon_crit, double j_A, boolean degradeAllOnFibreFailure) {
 
         int numLayers = lam.getCLTLayers().length;   // Anzahl der Lagen
 
@@ -340,8 +339,22 @@ public class CLT_Calculator {
                 }
             }
 
-            if (rf_min.getFailureType() == ReserveFactor.GENERAL_MATERIAL_FAILURE || rf_min.getFailureType() == ReserveFactor.FIBER_FAILURE) {
+            if (rf_min.getFailureType() == ReserveFactor.FIBER_FAILURE) {
                 if (!fb_fail[minLayerIndex]) {
+                    mat.setEpar(matReductionFactor * mat.getEpar());
+                    fb_fail[minLayerIndex] = true;
+                    if (degradeAllOnFibreFailure){
+                        mat.setEnor(matReductionFactor * mat.getEnor());
+                        mat.setG(matReductionFactor * mat.getG());
+                        zfw_fail[minLayerIndex] = true;
+                    }
+                } else {
+                    lastIteration = true;
+                }
+            }
+
+            if (rf_min.getFailureType() == ReserveFactor.GENERAL_MATERIAL_FAILURE) {
+                if (!fb_fail[minLayerIndex] && !zfw_fail[minLayerIndex]) {
                     mat.setEpar(matReductionFactor * mat.getEpar());
                     mat.setEnor(matReductionFactor * mat.getEnor());
                     mat.setG(matReductionFactor * mat.getG());

@@ -39,6 +39,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -104,6 +106,9 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
 
     DecimalFormat df_Forces = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_FORCE);
     DecimalFormat df_RF = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_RESERVE_FACTOR);
+    DecimalFormat df_Strain = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_STRAIN);
+    DecimalFormat df_Double = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_DOUBLE);
+    DecimalFormat df_SmallDouble = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_SMALL_DOUBLE);
 
     private final JPopupMenu popupMenu;
     private final AbstractLookup lu = new AbstractLookup(ic);
@@ -155,6 +160,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel12 = new javax.swing.JLabel();
         tablePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new AutoRowHeightTable(){
@@ -267,6 +273,53 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         };
         myField.setValue(data.getLastPlyFailureInput().getLoad().getM_y());
         myField.addPropertyChangeListener("value", this);
+        jLabel11 = new javax.swing.JLabel();
+        jaField = new javax.swing.JFormattedTextField(df_Double) {
+            @Override
+            protected void processFocusEvent(FocusEvent e) {
+                super.processFocusEvent(e);
+                if (e.isTemporary()) {
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> {
+                    selectAll();
+                });
+            }
+        };
+        jaField.setValue(data.getLastPlyFailureInput().getJ_a());
+        jaField.addPropertyChangeListener("value", this);
+        DegradeAllOnFibreFailureBox = new javax.swing.JCheckBox();
+        DegradeAllOnFibreFailureBox.setSelected(data.getLastPlyFailureInput().isDegradeAllOnFibreFailure());
+        jLabel13 = new javax.swing.JLabel();
+        degradFactorField = new javax.swing.JFormattedTextField(df_SmallDouble) {
+            @Override
+            protected void processFocusEvent(FocusEvent e) {
+                super.processFocusEvent(e);
+                if (e.isTemporary()) {
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> {
+                    selectAll();
+                });
+            }
+        };
+        degradFactorField.setValue(data.getLastPlyFailureInput().getDegradationFactor());
+        degradFactorField.addPropertyChangeListener("value", this);
+        jLabel14 = new javax.swing.JLabel();
+        epscritField = new javax.swing.JFormattedTextField(df_Strain) {
+            @Override
+            protected void processFocusEvent(FocusEvent e) {
+                super.processFocusEvent(e);
+                if (e.isTemporary()) {
+                    return;
+                }
+                SwingUtilities.invokeLater(() -> {
+                    selectAll();
+                });
+            }
+        };
+        epscritField.setValue(data.getLastPlyFailureInput().getEpsilon_crit());
+        epscritField.addPropertyChangeListener("value", this);
         calculationButton = new javax.swing.JButton();
         ResultPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -281,6 +334,8 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         nextButton = new javax.swing.JButton();
         chartHolderPanel = new javax.swing.JPanel();
 
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel12, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.jLabel12.text")); // NOI18N
+
         setLayout(new java.awt.BorderLayout());
 
         tablePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.tablePanel.border.title"))); // NOI18N
@@ -292,11 +347,11 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         tablePanel.setLayout(tablePanelLayout);
         tablePanelLayout.setHorizontalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
         );
         tablePanelLayout.setVerticalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
         );
 
         add(tablePanel, java.awt.BorderLayout.CENTER);
@@ -333,6 +388,28 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         myField.setColumns(8);
         myField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel11, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.jLabel11.text")); // NOI18N
+
+        jaField.setColumns(8);
+        jaField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        org.openide.awt.Mnemonics.setLocalizedText(DegradeAllOnFibreFailureBox, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.DegradeAllOnFibreFailureBox.text")); // NOI18N
+        DegradeAllOnFibreFailureBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DegradeAllOnFibreFailureBoxActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel13, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.jLabel13.text")); // NOI18N
+
+        degradFactorField.setColumns(8);
+        degradFactorField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel14, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.jLabel14.text")); // NOI18N
+
+        epscritField.setColumns(8);
+        epscritField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         javax.swing.GroupLayout inputPanelLayout = new javax.swing.GroupLayout(inputPanel);
         inputPanel.setLayout(inputPanelLayout);
         inputPanelLayout.setHorizontalGroup(
@@ -348,13 +425,33 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(myField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(inputPanelLayout.createSequentialGroup()
+                        .addComponent(mxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DegradeAllOnFibreFailureBox))
+                    .addComponent(myField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(inputPanelLayout.createSequentialGroup()
+                        .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(inputPanelLayout.createSequentialGroup()
+                                .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel13))
+                            .addGroup(inputPanelLayout.createSequentialGroup()
+                                .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(inputPanelLayout.createSequentialGroup()
+                                .addComponent(nxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(degradFactorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(epscritField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jaField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         inputPanelLayout.setVerticalGroup(
             inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,19 +459,26 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 .addContainerGap()
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13)
+                    .addComponent(degradFactorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(epscritField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DegradeAllOnFibreFailureBox, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -487,9 +591,9 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inputResultPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(inputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(calculationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(calculationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(inputResultPanelLayout.createSequentialGroup()
@@ -498,7 +602,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                         .addComponent(nextButton))
                     .addComponent(ResultPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chartHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(chartHolderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addContainerGap())
         );
         inputResultPanelLayout.setVerticalGroup(
@@ -529,7 +633,11 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 clt_lam,
                 data.getLastPlyFailureInput().getLoad(),
                 data.getLastPlyFailureInput().getStrain(),
-                data.getLastPlyFailureInput().isUseStrains()
+                data.getLastPlyFailureInput().isUseStrains(),
+                data.getLastPlyFailureInput().getDegradationFactor(),
+                data.getLastPlyFailureInput().getEpsilon_crit(),
+                data.getLastPlyFailureInput().getJ_a(),
+                data.getLastPlyFailureInput().isDegradeAllOnFibreFailure()
         );
 
         data.getLastPlyFailureInput().addPropertyChangeListener(this);
@@ -562,17 +670,28 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         setIterationResults(actualIterationNumber);
     }//GEN-LAST:event_nextButtonActionPerformed
 
+    private void DegradeAllOnFibreFailureBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DegradeAllOnFibreFailureBoxActionPerformed
+        data.getLastPlyFailureInput().setDegradeAllOnFibreFailure(DegradeAllOnFibreFailureBox.isSelected());
+    }//GEN-LAST:event_DegradeAllOnFibreFailureBoxActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox DegradeAllOnFibreFailureBox;
     private javax.swing.JTextField RFminField;
     private javax.swing.JPanel ResultPanel;
     private javax.swing.JButton calculationButton;
     private javax.swing.JPanel chartHolderPanel;
+    private javax.swing.JFormattedTextField degradFactorField;
+    private javax.swing.JFormattedTextField epscritField;
     private javax.swing.JTextField failureTypeField;
     private javax.swing.JPanel inputPanel;
     private javax.swing.JPanel inputResultPanel;
     private javax.swing.JTextField iterationField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -582,6 +701,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JFormattedTextField jaField;
     private javax.swing.JTextField layerNumberField;
     private javax.swing.JFormattedTextField mxField;
     private javax.swing.JFormattedTextField mxyField;
@@ -700,6 +820,12 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 data.getLastPlyFailureInput().getLoad().setM_y(((Number) myField.getValue()).doubleValue());
             } else if (evt.getSource() == mxyField) {
                 data.getLastPlyFailureInput().getLoad().setM_xy(((Number) mxyField.getValue()).doubleValue());
+            } else if (evt.getSource() == jaField) {
+                data.getLastPlyFailureInput().setJ_a(((Number) jaField.getValue()).doubleValue());
+            } else if (evt.getSource() == degradFactorField) {
+                data.getLastPlyFailureInput().setDegradationFactor(((Number) degradFactorField.getValue()).doubleValue());
+            } else if (evt.getSource() == epscritField) {
+                data.getLastPlyFailureInput().setEpsilon_crit(((Number) epscritField.getValue()).doubleValue());
             }
         }
     }

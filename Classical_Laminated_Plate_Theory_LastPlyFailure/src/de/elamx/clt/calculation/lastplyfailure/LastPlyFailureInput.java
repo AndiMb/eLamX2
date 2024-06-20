@@ -41,6 +41,15 @@ public class LastPlyFailureInput {
     public static final String PROP_N_XY = "n_xy";
     public static final String PROP_N_Y = "n_y";
     public static final String PROP_N_X = "n_x";
+    public static final String PROP_J_A = "j_a";
+    public static final String PROP_EPSILON_CRIT = "epsilon_crit";
+    public static final String PROP_DEGRADATIONFACTOR = "degradationFactor";
+    public static final String PROP_DEGRADEALLONFIBREFAILURE = "degradeAllOnFibreFailure";
+    
+    private double j_a = 1.0;
+    private double epsilon_crit = 0.003;
+    private double degradationFactor = 0.000001;
+    private boolean degradeAllOnFibreFailure = true;
     
     private final Loads load = new Loads(){
 
@@ -119,6 +128,46 @@ public class LastPlyFailureInput {
     
     public boolean[] isUseStrains() {
         return useStrains;
+    }
+    
+    public double getDegradationFactor() {
+        return degradationFactor;
+    }
+
+    public void setDegradationFactor(double degradationFactor) {
+        double oldDegradationFactor = this.degradationFactor;
+        this.degradationFactor = degradationFactor;
+        firePropertyChange(PROP_DEGRADATIONFACTOR, oldDegradationFactor, degradationFactor);
+    }
+
+    public double getEpsilon_crit() {
+        return epsilon_crit;
+    }
+
+    public void setEpsilon_crit(double epsilon_crit) {
+        double oldEpsilon_crit = this.epsilon_crit;
+        this.epsilon_crit = epsilon_crit;
+        firePropertyChange(PROP_EPSILON_CRIT, oldEpsilon_crit, epsilon_crit);
+    }
+
+    public double getJ_a() {
+        return j_a;
+    }
+
+    public void setJ_a(double j_a) {
+        double oldJ_a = this.j_a;
+        this.j_a = j_a;
+        firePropertyChange(PROP_J_A, oldJ_a, j_a);
+    }
+
+    public boolean isDegradeAllOnFibreFailure() {
+        return degradeAllOnFibreFailure;
+    }
+
+    public void setDegradeAllOnFibreFailure(boolean degradeAllOnFibreFailure) {
+        boolean oldDegradeAllOnFibreFailure = this.degradeAllOnFibreFailure;
+        this.degradeAllOnFibreFailure = degradeAllOnFibreFailure;
+        firePropertyChange(PROP_DEGRADEALLONFIBREFAILURE, oldDegradeAllOnFibreFailure, degradeAllOnFibreFailure);
     }
 
     public boolean isNotify() {
