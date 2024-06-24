@@ -170,7 +170,7 @@ public class ReducedInputHandler extends DefaultHandler {
                     break;
             }
         } else {
-            if (currentProcess.equals(KEY_MATERIAL)) {
+            if (currentProcess == null ? KEY_MATERIAL == null : currentProcess.equals(KEY_MATERIAL)) {
                 switch (qName.toLowerCase()) {
                     case KEY_BUCKLING:
                         currentSubProcess = KEY_BUCKLING;
@@ -187,7 +187,7 @@ public class ReducedInputHandler extends DefaultHandler {
         if (currentProcess != null) {
             switch (currentProcess) {
                 case KEY_MATERIAL:
-                    if (currentSubProcess.equals(KEY_BUCKLING)) {
+                    if (currentSubProcess == null ? KEY_BUCKLING == null : currentSubProcess.equals(KEY_BUCKLING)) {
                         processBucklingMaterial(qName.toLowerCase());
                     } else {
                         processMaterial(qName.toLowerCase());
