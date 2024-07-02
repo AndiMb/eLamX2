@@ -25,11 +25,15 @@
  */
 package de.elamx.batchrun;
 
+import ch.systemsx.cisd.hdf5.HDF5Factory;
+import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.reducedinput.ReducedInputHandler;
 import de.elamx.core.BatchRunService;
 import de.elamx.core.GeneralOutputWriterService;
+import de.elamx.core.HDF5OutputWriterService;
 import de.elamx.filesupport.NewFileCreator;
 import de.elamx.laminate.Laminat;
+import de.elamx.laminate.Material;
 import de.elamx.laminate.eLamXLookup;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -67,6 +71,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
     private final Option outputOption = Option.optionalArgument('o', "output");
     private final Option outputTypeOption = Option.optionalArgument('t', "outputtype");
     private final Option reducedInputOption = Option.optionalArgument('b', "reducedinput");
+    private final Option hdf5OutputOption = Option.optionalArgument('h', "hdf5output");
 
     @Override
     protected Set<Option> getOptions() {
@@ -75,6 +80,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
         set.add(outputOption);
         set.add(outputTypeOption);
         set.add(reducedInputOption);
+        set.add(hdf5OutputOption);
         return set;
     }
 
@@ -91,9 +97,10 @@ public class eLamXOptionProcessor extends OptionProcessor {
         Öffnen der über die Option "-i" übergebenen *.elamx-Datei und Laden
         in das globale Lookup.
          */
+        File inputFile = null;
         if (maps.containsKey(inputOption)) {
             String fileName = maps.get(inputOption)[0];
-            File inputFile = new File(fileName);
+            inputFile = new File(fileName);
             if (maps.containsKey(reducedInputOption)) {
                 // Neue eLamX-Datei anlegen
                 NewFileCreator.create();
@@ -118,7 +125,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
         // Setzen des Output-Streams auf STD-Out
         PrintStream out = System.out;
         /*
-        Wenn eine Ausgabedatei mit der Option "-o" übergeben wurde, dass 
+        Wenn eine Ausgabedatei mit der Option "-o" übergeben wurde, dann
         Öffnen des OutputStreams.
          */
         if (maps.containsKey(outputOption)) {
@@ -139,13 +146,43 @@ public class eLamXOptionProcessor extends OptionProcessor {
         List<GeneralOutputWriterService> writerServices = new ArrayList<>(Lookup.getDefault().lookupAll(GeneralOutputWriterService.class));
         GeneralOutputWriterService writerService = writerServices.get(Math.min(Math.max(outputType, 0), writerServices.size() - 1));
 
+        /*
+        Wenn eine hdf5-Ausgabedatei mit der Option "-h" definiert wurde, dann
+        Öffnen des hdf5-Writers
+         */
+        IHDF5Writer hdf5out = null;
+        if (maps.containsKey(hdf5OutputOption)) {
+            String hdf5FileName = maps.get(hdf5OutputOption)[0];
+            hdf5out = HDF5Factory.configure(hdf5FileName).overwrite().writer();
+        }
+
+        int hdf5OutputType = 0;
+        List<HDF5OutputWriterService> hdf5WriterServices = new ArrayList<>(Lookup.getDefault().lookupAll(HDF5OutputWriterService.class));
+        HDF5OutputWriterService hdf5WriterService = hdf5WriterServices.get(Math.min(Math.max(hdf5OutputType, 0), writerServices.size() - 1));
+
         // Schreiben des Headers
-        writerService.writeHeader(out);        
+        writerService.writeHeader(out);
+
+        // Schreiben des Headers der hdf5-Datei
+        if (hdf5out != null) {
+            hdf5WriterService.writeHeader(hdf5out, inputFile);
+        }
+
+        // Schleife über alle in der eLamX-Datei enthaltenen Materialien
+        if (hdf5out != null) {
+            for (Material mat : eLamXLookup.getDefault().lookupAll(Material.class)) {
+                // Schreiben der Materialinformationen in hdf5-Datei
+                hdf5WriterService.writeMaterialInformation(hdf5out, mat);
+            }
+        }
 
         // Schleife über alle in der eLamX-Datei enthaltenen Laminate
         for (Laminat lam : eLamXLookup.getDefault().lookupAll(Laminat.class)) {
             // Schreiben der Laminatinformationen
             writerService.writeLaminateInformation(out, lam);
+            if (hdf5out != null) {
+                hdf5WriterService.writeLaminateInformation(hdf5out, lam);
+            }
             /*
             Schleife über alle Module-Ausgabe-Service-Klasse, um die jeweiligen
             Berechnungen und Ausgaben anzustoßen, z.B. das Berechnungsmodul.
@@ -158,6 +195,11 @@ public class eLamXOptionProcessor extends OptionProcessor {
         // Schließen des OutputStreams
         if (out != System.out) {
             out.close();
+        }
+
+        // Schließen der hdf5-Datei
+        if (hdf5out != null) {
+            hdf5out.close();
         }
 
         /*
