@@ -131,14 +131,18 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         ArrayList<Layer> layers = laminate.getLayers();
         int layerNum = layers.size();
         Layer l;
+        String layerGroupName;
         for (int ii = 0; ii < layerNum; ii++) {
             l = layers.get(ii);
-            hdf5writer.object().createGroup("/".concat(groupName).concat("/layers/").concat(l.getName()));
-            hdf5writer.int32().write("/".concat(groupName).concat("/layers/").concat(l.getName()).concat("/number"), l.getNumber());
-            hdf5writer.float64().write("/".concat(groupName).concat("/layers/").concat(l.getName()).concat("/thickness"), l.getThickness());
-            hdf5writer.float64().write("/".concat(groupName).concat("/layers/").concat(l.getName()).concat("/angle"), l.getAngle());
-            hdf5writer.string().write("/".concat(groupName).concat("/layers/").concat(l.getName()).concat("/material"), l.getMaterial().getName());
-            hdf5writer.string().write("/".concat(groupName).concat("/layers/").concat(l.getName()).concat("/criterion"), l.getCriterion().getDisplayName());
+            layerGroupName = "layer " + (ii+1);
+            layerGroupName = "/".concat(groupName).concat("/layers/").concat(layerGroupName);
+            hdf5writer.object().createGroup(layerGroupName);
+            hdf5writer.int32().write(layerGroupName.concat("/number"), l.getNumber());
+            hdf5writer.string().write(layerGroupName.concat("/name"), l.getName());
+            hdf5writer.float64().write(layerGroupName.concat("/thickness"), l.getThickness());
+            hdf5writer.float64().write(layerGroupName.concat("/angle"), l.getAngle());
+            hdf5writer.string().write(layerGroupName.concat("/material"), l.getMaterial().getName());
+            hdf5writer.string().write(layerGroupName.concat("/criterion"), l.getCriterion().getDisplayName());
         }
     }
 
