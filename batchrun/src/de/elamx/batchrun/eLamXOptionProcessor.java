@@ -188,7 +188,7 @@ public class eLamXOptionProcessor extends OptionProcessor {
             Berechnungen und Ausgaben anzustoßen, z.B. das Berechnungsmodul.
              */
             for (BatchRunService tos : Lookup.getDefault().lookupAll(BatchRunService.class)) {
-                tos.performBatchTasksAndOutput(lam, out, outputType);
+                tos.performBatchTasksAndOutput(lam, out, hdf5out, outputType);
             }
         }
 

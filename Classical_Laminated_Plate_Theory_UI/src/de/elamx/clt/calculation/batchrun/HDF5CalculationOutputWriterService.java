@@ -23,25 +23,18 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.hdf5.output;
+package de.elamx.clt.calculation.batchrun;
 
-import de.elamx.clt.plate.BucklingResult;
-import de.elamx.clt.plateui.buckling.BucklingModuleData;
-import de.elamx.clt.plateui.buckling.batchrun.BucklingOutputWriterService;
-import de.elamx.laminate.Laminat;
-import java.io.PrintStream;
-import org.openide.util.lookup.ServiceProvider;
+import ch.systemsx.cisd.hdf5.IHDF5Writer;
+import de.elamx.clt.CLT_LayerResult;
+import de.elamx.clt.Loads;
+import de.elamx.clt.Strains;
+import de.elamx.clt.calculation.CalculationModuleData;
 
 /**
  *
- * @author Andreas Hauffe
+ * @author Florian Dexl
  */
-@ServiceProvider(service=BucklingOutputWriterService.class, position=1000)
-public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterService{
-
-    @Override
-    public void writeResults(PrintStream out, BucklingModuleData data, Laminat laminate, BucklingResult result) {
-        out.println("Buckling Output for " + data.getLaminat().getName());
-    }
-    
+public interface HDF5CalculationOutputWriterService {
+    public void writeResults(IHDF5Writer hdf5writer, CalculationModuleData data, Loads loads, Strains strain, CLT_LayerResult[] results);
 }

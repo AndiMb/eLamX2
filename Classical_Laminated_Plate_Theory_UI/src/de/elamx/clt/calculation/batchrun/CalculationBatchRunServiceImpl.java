@@ -25,6 +25,7 @@
  */
 package de.elamx.clt.calculation.batchrun;
 
+import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_Calculator;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.CLT_LayerResult;
@@ -46,23 +47,33 @@ import org.openide.util.lookup.ServiceProvider;
 public class CalculationBatchRunServiceImpl implements BatchRunService {
 
     @Override
-    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, int outputType) {
+    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, IHDF5Writer hdf5writer, int outputType) {
         Collection<? extends CalculationModuleData> col = laminate.getLookup().lookupAll(CalculationModuleData.class);
-        if (col.isEmpty()){
+        if (col.isEmpty()) {
             return;
         }
         CLT_Laminate clt_lam = laminate.getLookup().lookup(CLT_Laminate.class);
         if (clt_lam == null) {
             clt_lam = new CLT_Laminate(laminate);
         }
-        
+
         List<CalculationOutputWriterService> writerServices = new ArrayList<>(Lookup.getDefault().lookupAll(CalculationOutputWriterService.class));
-        CalculationOutputWriterService outputWriter = writerServices.get(Math.min(Math.max(outputType, 0),writerServices.size()-1));
-        
+        CalculationOutputWriterService outputWriter = writerServices.get(Math.min(Math.max(outputType, 0), writerServices.size() - 1));
+
+        HDF5CalculationOutputWriterService hdf5OutputWriter = null;
+        if (hdf5writer != null) {
+            List<HDF5CalculationOutputWriterService> hdf5WriterServices = new ArrayList<>(Lookup.getDefault().lookupAll(HDF5CalculationOutputWriterService.class));
+            hdf5OutputWriter = hdf5WriterServices.get(Math.min(Math.max(outputType, 0), hdf5WriterServices.size() - 1));
+
+        }
+
         for (CalculationModuleData data : col) {
             CLT_Calculator.determineValues(clt_lam, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), data.getDataHolder().isUseStrains());
             CLT_LayerResult[] layerResults = CLT_Calculator.getLayerResults(data.getLaminat().getLookup().lookup(CLT_Laminate.class), data.getDataHolder().getLoad(), data.getDataHolder().getStrains());
             outputWriter.writeResults(ps, data, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), layerResults);
+            if (hdf5OutputWriter != null) {
+                hdf5OutputWriter.writeResults(hdf5writer, data, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), layerResults);
+            }
         }
     }
 }

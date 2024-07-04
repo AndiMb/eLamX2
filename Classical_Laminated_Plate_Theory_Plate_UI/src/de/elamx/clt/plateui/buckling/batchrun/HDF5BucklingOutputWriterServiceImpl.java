@@ -25,25 +25,29 @@
  */
 package de.elamx.clt.plateui.buckling.batchrun;
 
+import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.plate.BucklingResult;
 import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.Laminat;
-import de.elamx.utilities.Utilities;
-import java.io.PrintStream;
-import java.util.Locale;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author Andreas Hauffe
+ * @author Florian Dexl
  */
-@ServiceProvider(service=BucklingOutputWriterService.class, position=1)
-public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterService{
+@ServiceProvider(service=HDF5BucklingOutputWriterService.class, position=1)
+public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWriterService{
     
     @Override
-    public void writeResults(PrintStream out, BucklingModuleData data, Laminat laminate, BucklingResult result){
-        Locale lo = Locale.ENGLISH;      
+    public void writeResults(IHDF5Writer hdf5writer, BucklingModuleData data, Laminat laminate, BucklingResult result){
+        String bucklingGroup = "laminates/".concat(data.getLaminat().getName().concat("/buckling/"));
+        if (!hdf5writer.object().exists(bucklingGroup)) {
+            hdf5writer.object().createGroup(bucklingGroup);
+        }
+        String groupName = bucklingGroup.concat(data.getName());
+        hdf5writer.object().createGroup(groupName);
+
         double [][] dmat;
         String dMatrixOption;
         if (data.getBucklingInput().isDtilde()) {
@@ -56,33 +60,21 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
             dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrix();
             dMatrixOption = "Original D matrix";
         }
-        out.println("********************************************************************************");
-        out.println(Utilities.centeredText("BUCKLING", 80));
-        out.println(Utilities.centeredText(data.getName(), 80));
-        out.println("********************************************************************************");
-        out.println();
-        out.println("Laminat: " + laminate.getName());
-        out.println();
-        out.println("D-matrix option: " + dMatrixOption);
-        out.println("D-matrix used:");
-        for (int ii=0; ii<3; ii++) {
-        out.printf(lo,"  %10.1f    %10.1f    %10.1f%n"  , dmat[ii][0], dmat[ii][1], dmat[ii][2]);
-        };
-        out.println();
-        out.println("critical load");
+
+        hdf5writer.float64().createMatrix(groupName.concat("/D matrix used"), 3, 3);
+        hdf5writer.float64().writeMatrix(groupName.concat("/D matrix used"), dmat);
+        hdf5writer.string().setAttr(groupName.concat("/D matrix used"), "D matrix option", dMatrixOption);
+
+        hdf5writer.object().createGroup(groupName.concat("/critical load"));
         double[] ncrit = result.getN_crit();
-        out.printf(lo,"  nx_crit  = %17.10E%n"  , ncrit[0]);
-        out.printf(lo,"  ny_crit  = %17.10E%n"  , ncrit[1]);
-        out.printf(lo,"  nxy_crit = %17.10E%n"  , ncrit[2]);
-        out.println();
-        out.println("Eigenvalues 1 to 5");
+        hdf5writer.float64().write(groupName.concat("/critical load/nx_crit"), ncrit[0]);
+        hdf5writer.float64().write(groupName.concat("/critical load/ny_crit"), ncrit[1]);
+        hdf5writer.float64().write(groupName.concat("/critical load/nxy_crit"), ncrit[2]);
+
         double[] eigenvalues = result.getEigenvalues_();
-        out.printf(lo,"  Eigenv1  = %17.10E%n"  , eigenvalues[0]);
-        out.printf(lo,"  Eigenv2  = %17.10E%n"  , eigenvalues[1]);
-        out.printf(lo,"  Eigenv3  = %17.10E%n"  , eigenvalues[2]);
-        out.printf(lo,"  Eigenv4  = %17.10E%n"  , eigenvalues[3]);
-        out.printf(lo,"  Eigenv5  = %17.10E%n"  , eigenvalues[4]);
-        out.println();
-        out.println();
+        int numberOfEigenvalues = eigenvalues.length;
+        hdf5writer.float64().createArray(groupName.concat("/eigenvalues"), numberOfEigenvalues);
+        hdf5writer.float64().writeArray(groupName.concat("/eigenvalues"), eigenvalues);
+        hdf5writer.int32().setAttr(groupName.concat("/eigenvalues"), "number of eigenvalues", numberOfEigenvalues);
     }  
 }

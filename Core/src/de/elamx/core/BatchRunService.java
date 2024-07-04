@@ -25,6 +25,7 @@
  */
 package de.elamx.core;
 
+import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.laminate.Laminat;
 import java.io.PrintStream;
 
@@ -33,5 +34,5 @@ import java.io.PrintStream;
  * @author Andreas Hauffe
  */
 public interface BatchRunService {
-    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, int outputType);
+    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, IHDF5Writer hdf5writer, int outputType);
 }
