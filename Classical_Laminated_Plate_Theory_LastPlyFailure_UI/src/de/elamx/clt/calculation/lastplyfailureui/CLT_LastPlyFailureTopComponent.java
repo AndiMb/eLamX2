@@ -675,7 +675,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             public void run() {
                 minResDataset.removeAllSeries();
                 minResDataset.addSeries(new XYSeries(NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "LastPlyFailureChart.yaxis.caption")));
-                int intNum = 1;
+                int intNum = 0;
                 for (Double rfMin : lpfResult.getRf_min()) {
                     minResDataset.getSeries(0).add(intNum++, rfMin);
                 }
