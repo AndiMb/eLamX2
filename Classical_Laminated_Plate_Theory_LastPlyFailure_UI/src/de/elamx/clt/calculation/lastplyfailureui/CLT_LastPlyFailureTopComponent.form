@@ -182,11 +182,9 @@
                           <Component id="mxyField" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="mxField" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="myField" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                              <Component id="nyField" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="nxField" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="nxyField" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="nyField" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="nxField" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="nxyField" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -521,19 +519,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="DegradeAllOnFibreFailureBox" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                      <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
