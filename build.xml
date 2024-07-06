@@ -6,6 +6,27 @@
     <description>Builds the module suite eLamX2.</description>
     <import file="nbproject/build-impl.xml"/>
     
+    <condition property="isWindows">
+        <os family="windows" />
+    </condition>
+
+    <target name="build-launchers" depends="suite.build-launchers">
+        <!-- Replace the icon for the Windows launcher exe. -->
+        <antcall target="replaceWindowsLauncherIcon"/>
+    </target>
+
+    <!-- Windows-only target that replaces the icon for the launcher exe with our own icon. -->
+    <target name="replaceWindowsLauncherIcon" if="isWindows" description="Replace the icon for the Windows launcher exe">
+        <echo message="Replacing icon of Windows launcher executable."/>
+        <tstamp>
+            <format property="builddate" pattern="yyyyMMdd"/>
+        </tstamp>
+        <delete file="build/launcher/bin/${app.name}.exe"/>
+        <exec executable="Resource/rcedit-x64.exe" resolveexecutable="true">
+            <arg line='build/launcher/bin/${app.name}64.exe --set-icon "Resource/${app.name}.ico" --set-file-version "1.0.0" --set-product-version "${elamxversion} - ${builddate}" --set-version-string "ProductName" "${app.name}" --set-version-string "LegalCopyright" "GPL - 2021 Technische Universität Dresden - Andreas Hauffe"'/>
+        </exec>
+    </target>
+    
     <target name="build" depends="build_view3d,suite.build">
     </target>
     
