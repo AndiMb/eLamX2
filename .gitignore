@@ -63,3 +63,6 @@
 /ReducedInput/build/
 /sis-jhdf5-batteries_included/build/
 /HDF5BatchrunOutput/build/
+/HDF5BatchrunOutput/nbproject/private/
+/JHDF5/nbproject/private/
+/JHDF5/build/

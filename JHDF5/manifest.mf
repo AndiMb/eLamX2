@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: true
-OpenIDE-Module: ch.systemsx.cisd.hdf5
+OpenIDE-Module: ch.systemsx.cisd.hdf5/14
 OpenIDE-Module-Localizing-Bundle: ch/systemsx/cisd/hdf5/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.0
+OpenIDE-Module-Specification-Version: 14.12.6.36356
 
