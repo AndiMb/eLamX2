@@ -26,14 +26,12 @@
 package de.elamx.clt.plateui.buckling.batchrun;
 
 import de.elamx.clt.CLT_Laminate;
-import de.elamx.clt.calculation.dmatrix.DMatrixPanel;
 import de.elamx.clt.plate.BucklingResult;
 import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.Laminat;
 import de.elamx.utilities.Utilities;
 import java.io.PrintStream;
 import java.util.Locale;
-import org.openide.util.NbBundle;
 import org.openide.util.lookup.ServiceProvider;
 
 /**

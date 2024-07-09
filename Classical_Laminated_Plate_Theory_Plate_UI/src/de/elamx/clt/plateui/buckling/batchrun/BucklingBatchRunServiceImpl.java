@@ -25,6 +25,7 @@
  */
 package de.elamx.clt.plateui.buckling.batchrun;
 
+import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.plate.Buckling;
 import de.elamx.clt.plate.BucklingResult;
@@ -46,7 +47,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class BucklingBatchRunServiceImpl implements BatchRunService{
 
     @Override
-    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, int outputType) {
+    public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, IHDF5Writer hdf5writer, int outputType) {
         Collection<? extends BucklingModuleData> col = laminate.getLookup().lookupAll(BucklingModuleData.class);
         if (col.isEmpty()){
             return;
@@ -58,10 +59,19 @@ public class BucklingBatchRunServiceImpl implements BatchRunService{
         
         List<BucklingOutputWriterService> writerServices = new ArrayList<>(Lookup.getDefault().lookupAll(BucklingOutputWriterService.class));
         BucklingOutputWriterService outputWriter = writerServices.get(Math.min(Math.max(outputType, 0),writerServices.size()-1));
-        
+
+        HDF5BucklingOutputWriterService hdf5OutputWriter = null;
+        if (hdf5writer != null) {
+            List<HDF5BucklingOutputWriterService> hdf5WriterServices = new ArrayList<>(Lookup.getDefault().lookupAll(HDF5BucklingOutputWriterService.class));
+            hdf5OutputWriter = hdf5WriterServices.get(Math.min(Math.max(outputType, 0), hdf5WriterServices.size() - 1));
+        }
+
         for (BucklingModuleData data : col){
             BucklingResult result = Buckling.calc(clt_lam, data.getBucklingInput());
             outputWriter.writeResults(ps, data, data.getLaminat(), result);
+            if (hdf5OutputWriter != null) {
+                hdf5OutputWriter.writeResults(hdf5writer, data, data.getLaminat(), result);
+            }
         }
     }
 }
