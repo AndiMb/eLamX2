@@ -124,15 +124,15 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural/Eyy"), clt_laminate.getEyBendFixed());
         hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural/Gxy"), clt_laminate.getGBendFixed());
 
-        hdf5writer.object().createGroup("/".concat(groupName).concat("/layers"));
+        String layupGroupName = "/".concat(groupName).concat("/layup");
+        hdf5writer.object().createGroup(layupGroupName);
         ArrayList<Layer> layers = laminate.getLayers();
         int layerNum = layers.size();
         Layer l;
         String layerGroupName;
         for (int ii = 0; ii < layerNum; ii++) {
             l = layers.get(ii);
-            layerGroupName = "layer " + (ii+1);
-            layerGroupName = "/".concat(groupName).concat("/layers/").concat(layerGroupName);
+            layerGroupName = layupGroupName.concat("/layer " + (ii+1));
             hdf5writer.object().createGroup(layerGroupName);
             hdf5writer.int32().write(layerGroupName.concat("/number"), l.getNumber());
             hdf5writer.string().write(layerGroupName.concat("/name"), l.getName());
