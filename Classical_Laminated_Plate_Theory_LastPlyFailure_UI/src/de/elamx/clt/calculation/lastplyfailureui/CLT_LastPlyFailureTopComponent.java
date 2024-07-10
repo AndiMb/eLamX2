@@ -116,6 +116,8 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     private JFreeChart chart = null;
     private ChartPanel chartPanel;
 
+    private final int chartIterOffset = 0;
+
     public CLT_LastPlyFailureTopComponent(LastPlyFailureModuleData data) {
         this.data = data;
         setName(this.data.getName() + " - " + this.data.getLaminat().getName());
@@ -281,7 +283,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         failureTypeField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         layerNumberField = new javax.swing.JTextField();
-        previewsButton = new javax.swing.JButton();
+        previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         chartHolderPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -405,10 +407,9 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                     .addComponent(mxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(myField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(nyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nxyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         inputPanelLayout.setVerticalGroup(
@@ -519,11 +520,11 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        org.openide.awt.Mnemonics.setLocalizedText(previewsButton, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.previewsButton.text")); // NOI18N
-        previewsButton.setEnabled(false);
-        previewsButton.addActionListener(new java.awt.event.ActionListener() {
+        org.openide.awt.Mnemonics.setLocalizedText(previousButton, org.openide.util.NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "CLT_LastPlyFailureTopComponent.previousButton.text")); // NOI18N
+        previousButton.setEnabled(false);
+        previousButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                previewsButtonActionPerformed(evt);
+                previousButtonActionPerformed(evt);
             }
         });
 
@@ -569,16 +570,11 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(DegradeAllOnFibreFailureBox)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel13))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -621,7 +617,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(inputResultPanelLayout.createSequentialGroup()
-                        .addComponent(previewsButton)
+                        .addComponent(previousButton)
                         .addGap(84, 84, 84)
                         .addComponent(nextButton))
                     .addComponent(ResultPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -643,7 +639,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(inputResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(calculationButton)
-                            .addComponent(previewsButton)
+                            .addComponent(previousButton)
                             .addComponent(nextButton))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -675,20 +671,20 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             public void run() {
                 minResDataset.removeAllSeries();
                 minResDataset.addSeries(new XYSeries(NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "LastPlyFailureChart.yaxis.caption")));
-                int intNum = 0;
+                int intNum = chartIterOffset;
                 for (Double rfMin : lpfResult.getRf_min()) {
                     minResDataset.getSeries(0).add(intNum++, rfMin);
                 }
                 actRFminDataset.getSeries(0).remove(0);
-                actRFminDataset.getSeries(0).add(1, lpfResult.getRf_min()[0]);
+                actRFminDataset.getSeries(0).add(chartIterOffset, lpfResult.getRf_min()[0]);
             }
         });
     }//GEN-LAST:event_calculationButtonActionPerformed
 
-    private void previewsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previewsButtonActionPerformed
+    private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
         actualIterationNumber = Math.max(0, actualIterationNumber - 1);
         setIterationResults(actualIterationNumber);
-    }//GEN-LAST:event_previewsButtonActionPerformed
+    }//GEN-LAST:event_previousButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         actualIterationNumber = Math.min(maxIterationNumber, actualIterationNumber + 1);
@@ -736,7 +732,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     private javax.swing.JFormattedTextField nxField;
     private javax.swing.JFormattedTextField nxyField;
     private javax.swing.JFormattedTextField nyField;
-    private javax.swing.JButton previewsButton;
+    private javax.swing.JButton previousButton;
     private javax.swing.JTable table;
     private javax.swing.JPanel tablePanel;
     // End of variables declaration//GEN-END:variables
@@ -814,7 +810,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             tabModel.setLayerResults(actLayerResults);
 
             nextButton.setEnabled(iter < maxIterationNumber);
-            previewsButton.setEnabled(iter > 0);
+            previousButton.setEnabled(iter > 0);
 
             iterationField.setText(Integer.toString(iter + 1));
             layerNumberField.setText(Integer.toString(lpfResult.getLayerNumber()[iter]));
@@ -824,7 +820,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             if (!actRFminDataset.getSeries(0).isEmpty()) {
                 actRFminDataset.getSeries(0).remove(0);
             }
-            actRFminDataset.getSeries(0).add(iter + 1, lpfResult.getRf_min()[iter]);
+            actRFminDataset.getSeries(0).add(iter + chartIterOffset, lpfResult.getRf_min()[iter]);
         }
     }
 

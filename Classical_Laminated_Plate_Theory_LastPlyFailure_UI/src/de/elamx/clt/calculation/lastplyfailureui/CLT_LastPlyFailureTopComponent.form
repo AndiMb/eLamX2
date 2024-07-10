@@ -115,7 +115,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="previewsButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="previousButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                           <Component id="nextButton" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -142,7 +142,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="calculationButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="previewsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="previousButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="nextButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -475,15 +475,15 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="previewsButton">
+        <Component class="javax.swing.JButton" name="previousButton">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="de/elamx/clt/calculation/lastplyfailureui/Bundle.properties" key="CLT_LastPlyFailureTopComponent.previewsButton.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="de/elamx/clt/calculation/lastplyfailureui/Bundle.properties" key="CLT_LastPlyFailureTopComponent.previousButton.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="previewsButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="previousButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="nextButton">
