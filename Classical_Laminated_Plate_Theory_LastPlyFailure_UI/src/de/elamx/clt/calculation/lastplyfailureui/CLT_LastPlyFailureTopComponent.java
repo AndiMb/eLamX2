@@ -812,7 +812,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             nextButton.setEnabled(iter < maxIterationNumber);
             previousButton.setEnabled(iter > 0);
 
-            iterationField.setText(Integer.toString(iter + 1));
+            iterationField.setText(Integer.toString(iter + chartIterOffset));
             layerNumberField.setText(Integer.toString(lpfResult.getLayerNumber()[iter]));
             RFminField.setText(df_RF.format(lpfResult.getRf_min()[iter]));
             failureTypeField.setText(lpfResult.getFailureType()[iter]);
