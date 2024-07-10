@@ -882,7 +882,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         Font font = chart.getXYPlot().getDomainAxis().getLabelFont();
         AttributedString captionY = new AttributedString(NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "LastPlyFailureChart.yaxis.caption"));
         captionY.addAttribute(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD, 0, 2);
-        captionY.addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB, 2, 5);
+        captionY.addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB, 2, 11);
         captionY.addAttribute(TextAttribute.SIZE, font.getSize());
         chart.getXYPlot().getRangeAxis().setAttributedLabel(captionY);
 
