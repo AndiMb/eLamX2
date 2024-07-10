@@ -93,9 +93,6 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         hdf5writer.float64().createMatrix("/".concat(groupName).concat("/ABD-Matrix"), 6, 6);
         hdf5writer.float64().writeMatrix("/".concat(groupName).concat("/ABD-Matrix"), clt_laminate.getABDMatrix());
 
-        hdf5writer.float64().createMatrix("/".concat(groupName).concat("/abd-Matrix"), 6, 6);
-        hdf5writer.float64().writeMatrix("/".concat(groupName).concat("/abd-Matrix"), clt_laminate.getInvABDMatrix());
-
         hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness"));
         hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness/with poisson effect"));
         hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane"));
