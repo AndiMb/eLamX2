@@ -111,6 +111,13 @@ jobs:
         tag: nightly
         token: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Update Nightly TAG
+      uses: richardsimko/update-tag@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: Latest Nightly ${{ env.NIGHTLYDATE }}
+
   build-macos:
 
     runs-on: macos-latest
