@@ -32,8 +32,6 @@ import de.elamx.reducedinput.dataobjects.CalculationData;
 import de.elamx.reducedinput.dataobjects.MaterialData;
 import de.elamx.clt.CLT_Input;
 import de.elamx.clt.calculation.CalculationModuleData;
-import de.elamx.clt.calculation.lastplyfailure.LastPlyFailureInput;
-import de.elamx.clt.calculation.lastplyfailureui.LastPlyFailureModuleData;
 import de.elamx.clt.plate.BucklingInput;
 import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.DataLayer;
@@ -41,7 +39,6 @@ import de.elamx.laminate.DefaultMaterial;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
 import de.elamx.laminate.failure.Criterion;
-import de.elamx.reducedinput.dataobjects.LastPlyFailureData;
 import java.util.HashMap;
 import java.util.UUID;
 import org.openide.util.Lookup;
@@ -83,7 +80,6 @@ public class ReducedInputHandler extends DefaultHandler {
     private static final String KEY_LOADCASE = "loadcase";
     private static final String KEY_CALCULATION = "calculation";
     private static final String KEY_BUCKLING = "buckling";
-    private static final String KEY_LASTPLYFAILURE = "lastplyfailure";
 
     private MaterialData materialData;
     private MaterialData materialDataBuckling;
@@ -98,7 +94,6 @@ public class ReducedInputHandler extends DefaultHandler {
 
     private CalculationData calculation;
     private BucklingData buckling;
-    private LastPlyFailureData lastPlyFailure;
 
     @Override
     public void startDocument() throws SAXException {
@@ -173,12 +168,6 @@ public class ReducedInputHandler extends DefaultHandler {
                         bucklingLaminate.setName(bucklingLaminateName);
                     }
                     break;
-                case KEY_LASTPLYFAILURE:
-                    currentProcess = KEY_LASTPLYFAILURE;
-                    name = attr.getValue(ARG_NAME);
-                    lastPlyFailure = new LastPlyFailureData(name);
-                    lastPlyFailure.setDegradeAllOnFibreFailure(Boolean.parseBoolean(attr.getValue("degrade_all_on_fibre_failure")));
-                    break;
             }
         } else {
             if (currentProcess == null ? KEY_MATERIAL == null : currentProcess.equals(KEY_MATERIAL)) {
@@ -215,9 +204,6 @@ public class ReducedInputHandler extends DefaultHandler {
                     break;
                 case KEY_BUCKLING:
                     processBuckling(qName.toLowerCase());
-                    break;
-                case KEY_LASTPLYFAILURE:
-                    processLastPlyFailure(qName.toLowerCase());
                     break;
             }
         }
@@ -533,38 +519,6 @@ public class ReducedInputHandler extends DefaultHandler {
                     buckModuleData_dTilde.setName(buckling.getName().concat(" Dtilde-option"));
                     lam.getLookup().add(buckModuleData_dTilde);
                 }
-                currentProcess = null;
-                break;
-        }
-    }
-
-    private void processLastPlyFailure(String qName) {
-        switch (qName) {
-            case "loadcase":
-                lastPlyFailure.setLoadcase(elementValue.toString());
-                break;
-            case "degradationfactor":
-                lastPlyFailure.setDegradationFactor(Double.valueOf(elementValue.toString()));
-                break;
-            case "epsilon_crit":
-                lastPlyFailure.setEpsilonCrit(Double.valueOf(elementValue.toString()));
-                break;
-            case KEY_LASTPLYFAILURE:
-                LastPlyFailureInput inputData = new LastPlyFailureInput();
-                LoadCaseData lc = loadCaseNames.get(lastPlyFailure.getLoadcase());
-                inputData.getLoad().setN_x(lc.getN_x());
-                inputData.getLoad().setN_y(lc.getN_y());
-                inputData.getLoad().setN_xy(lc.getN_xy());
-                inputData.getLoad().setM_x(lc.getM_x());
-                inputData.getLoad().setM_y(lc.getM_y());
-                inputData.getLoad().setM_xy(lc.getM_xy());
-                inputData.setDegradationFactor(lastPlyFailure.getDegradationFactor());
-                inputData.setDegradeAllOnFibreFailure(lastPlyFailure.getDegradeAllOnFibreFailure());
-                inputData.setEpsilon_crit(lastPlyFailure.getEpsilonCrit());
-                inputData.setJ_a((lc.getUl_factor() == null) ? 1.0 : lc.getUl_factor());                        
-                LastPlyFailureModuleData lpfModuleData = new LastPlyFailureModuleData(laminate, inputData);
-                lpfModuleData.setName(lastPlyFailure.getName());
-                laminate.getLookup().add(lpfModuleData);
                 currentProcess = null;
                 break;
         }

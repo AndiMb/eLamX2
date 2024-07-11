@@ -153,9 +153,7 @@
                     </run-dependency>
                 </dependency>
             </module-dependencies>
-            <public-packages>
-                <package>de.elamx.clt.calculation.lastplyfailureui</package>
-            </public-packages>
+            <public-packages/>
         </data>
     </configuration>
 </project>
