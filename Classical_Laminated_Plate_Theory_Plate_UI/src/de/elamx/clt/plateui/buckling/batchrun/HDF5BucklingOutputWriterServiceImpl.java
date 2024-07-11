@@ -25,11 +25,14 @@
  */
 package de.elamx.clt.plateui.buckling.batchrun;
 
+import ch.systemsx.cisd.hdf5.HDF5CompoundType;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.plate.BucklingResult;
 import de.elamx.clt.plateui.buckling.BucklingModuleData;
 import de.elamx.laminate.Laminat;
+import java.util.ArrayList;
+import java.util.List;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -67,14 +70,27 @@ public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWr
 
         hdf5writer.object().createGroup(groupName.concat("/critical load"));
         double[] ncrit = result.getN_crit();
-        hdf5writer.float64().write(groupName.concat("/critical load/nx_crit"), ncrit[0]);
-        hdf5writer.float64().write(groupName.concat("/critical load/ny_crit"), ncrit[1]);
-        hdf5writer.float64().write(groupName.concat("/critical load/nxy_crit"), ncrit[2]);
+        ArrayList<Double> criticalLoadValuesArrayList = new ArrayList<>();
+        ArrayList<String> criticalLoadNamesArrayList = new ArrayList<>();
+
+        criticalLoadValuesArrayList.add(ncrit[0]);
+        criticalLoadNamesArrayList.add("nx_crit");
+
+        criticalLoadValuesArrayList.add(ncrit[1]);
+        criticalLoadNamesArrayList.add("ny_crit");
+
+        criticalLoadValuesArrayList.add(ncrit[2]);
+        criticalLoadNamesArrayList.add("nxy_crit");
+
+        HDF5CompoundType<List<?>> criticalLoadsType
+                = hdf5writer.compound().getInferredType("Critical loads", criticalLoadNamesArrayList, criticalLoadValuesArrayList);
+
+        hdf5writer.compound().write(groupName.concat("/critical load"), criticalLoadsType, criticalLoadValuesArrayList);
 
         double[] eigenvalues = result.getEigenvalues_();
         int numberOfEigenvalues = eigenvalues.length;
         hdf5writer.float64().createArray(groupName.concat("/eigenvalues"), numberOfEigenvalues);
         hdf5writer.float64().writeArray(groupName.concat("/eigenvalues"), eigenvalues);
         hdf5writer.int32().setAttr(groupName.concat("/eigenvalues"), "number of eigenvalues", numberOfEigenvalues);
-    }  
+    }
 }
