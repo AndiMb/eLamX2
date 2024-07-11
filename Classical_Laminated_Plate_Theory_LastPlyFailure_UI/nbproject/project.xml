@@ -7,6 +7,15 @@
             <suite-component/>
             <module-dependencies>
                 <dependency>
+                    <code-name-base>ch.systemsx.cisd.hdf5</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <release-version>14</release-version>
+                        <specification-version>14.12.6.36356</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>de.elamx.clt</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
