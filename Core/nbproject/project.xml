@@ -11,8 +11,8 @@
                     <build-prerequisite/>
                     <compile-dependency/>
                     <run-dependency>
-                        <release-version>14</release-version>
-                        <specification-version>14.12.6.36356</specification-version>
+                        <release-version>19</release-version>
+                        <specification-version>19.4.1</specification-version>
                     </run-dependency>
                 </dependency>
                 <dependency>
