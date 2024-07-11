@@ -566,7 +566,6 @@ public class ReducedInputHandler extends DefaultHandler {
                 lpfModuleData.setName(lastPlyFailure.getName());
                 laminate.getLookup().add(lpfModuleData);
                 currentProcess = null;
-                System.out.println("ADDED LAST PLY FAILURE ANALYSIS");
                 break;
         }
     }
