@@ -60,11 +60,12 @@ public class LastPlyFailureBatchRunServiceImpl implements BatchRunService {
         List<LastPlyFailureOutputWriterService> writerServices = new ArrayList<>(Lookup.getDefault().lookupAll(LastPlyFailureOutputWriterService.class));
         LastPlyFailureOutputWriterService outputWriter = writerServices.get(Math.min(Math.max(outputType, 0),writerServices.size()-1));
 
-        /*HDF5LastPlyFailureOutputWriterService hdf5OutputWriter = null;
+        HDF5LastPlyFailureOutputWriterService hdf5OutputWriter = null;
         if (hdf5writer != null) {
             List<HDF5LastPlyFailureOutputWriterService> hdf5WriterServices = new ArrayList<>(Lookup.getDefault().lookupAll(HDF5LastPlyFailureOutputWriterService.class));
             hdf5OutputWriter = hdf5WriterServices.get(Math.min(Math.max(outputType, 0), hdf5WriterServices.size() - 1));
-        }*/
+        }
+
         for (LastPlyFailureModuleData data : col) {
 
             CLT_LastPlyFailureResult lpfResult = CLT_Calculator.determineValuesLastPlyFailure(
@@ -79,9 +80,9 @@ public class LastPlyFailureBatchRunServiceImpl implements BatchRunService {
             );
 
             outputWriter.writeResults(ps, data, lpfResult);
-            /*if (hdf5OutputWriter != null) {
+            if (hdf5OutputWriter != null) {
                 hdf5OutputWriter.writeResults(hdf5writer, data, lpfResult);
-            }*/
+            }
         }
     }
 }
