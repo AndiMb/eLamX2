@@ -86,6 +86,7 @@
                 <m_xy>0.0</m_xy>
                 <deltat>0.0</deltat>
                 <deltah>0.0</deltah>
+                <ul_factor>1.5</ul_factor>
             </loadcase>
             <loadcase name="Load Case A3">
                 <n_x>100.0</n_x>
@@ -119,6 +120,21 @@
                 <bcy>0</bcy>
                 <n>6</n>
             </buckling>
+            <lastplyfailure name="LastPlyFailure A1" degrade_all_on_fibre_failure="false">
+                <loadcase>Load Case A1</loadcase>
+                <degradationFactor>1.0E-6</degradationFactor>
+                <epsilon_crit>0.003</epsilon_crit>
+            </lastplyfailure>
+            <lastplyfailure name="LastPlyFailure A2" degrade_all_on_fibre_failure="false">
+                <loadcase>Load Case A2</loadcase>
+                <degradationFactor>1.0E-4</degradationFactor>
+                <epsilon_crit>0.001</epsilon_crit>
+            </lastplyfailure>
+            <lastplyfailure name="LastPlyFailure A3" degrade_all_on_fibre_failure="true">
+                <loadcase>Load Case A3</loadcase>
+                <degradationFactor>1.0E-6</degradationFactor>
+                <epsilon_crit>0.003</epsilon_crit>
+            </lastplyfailure>
         </laminate>
         <laminate name="Beispiellaminat" offset="0.0" symmetric="true" with_middle_layer="false" invert_z="false">
             <layer name="Layer 1" >
