@@ -97,52 +97,112 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
 
         hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness"));
         hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness/with poisson effect"));
-        hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane"));
 
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane/Exx"), clt_laminate.getExSimple());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane/Eyy"), clt_laminate.getEySimple());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane/Gxy"), clt_laminate.getGSimple());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane/vxy"), clt_laminate.getNuxySimple());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane/vyx"), clt_laminate.getNuyxSimple());
+        ArrayList<Double> effectiveStiffnessValuesArrayList = new ArrayList<>();
+        ArrayList<String> effectiveStiffnessNamesArrayList = new ArrayList<>();
 
-        hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness/with poisson effect/flexural"));
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getExSimple());
+        effectiveStiffnessNamesArrayList.add("Exx");
 
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/flexural/Exx"), clt_laminate.getExBendSimple());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/flexural/Eyy"), clt_laminate.getEyBendSimple());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/flexural/Gxy"), clt_laminate.getGBendSimple());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/flexural/vxy"), clt_laminate.getNuxyBendSimple());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/flexural/vyx"), clt_laminate.getNuyxBendSimple());
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getEySimple());
+        effectiveStiffnessNamesArrayList.add("Eyy");
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getGSimple());
+        effectiveStiffnessNamesArrayList.add("Gxy");
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getNuxySimple());
+        effectiveStiffnessNamesArrayList.add("vxy");
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getNuyxSimple());
+        effectiveStiffnessNamesArrayList.add("vyx");
+
+        HDF5CompoundType<List<?>> effectiveStiffnessType
+                = hdf5writer.compound().getInferredType("Effective stiffness with poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
+
+        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane"), effectiveStiffnessType, effectiveStiffnessValuesArrayList);
+        
+        effectiveStiffnessValuesArrayList = new ArrayList<>();
+        effectiveStiffnessNamesArrayList = new ArrayList<>();
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getExBendSimple());
+        effectiveStiffnessNamesArrayList.add("Exx");
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getEyBendSimple());
+        effectiveStiffnessNamesArrayList.add("Eyy");
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getGBendSimple());
+        effectiveStiffnessNamesArrayList.add("Gxy");
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getNuxyBendSimple());
+        effectiveStiffnessNamesArrayList.add("vxy");
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getNuyxBendSimple());
+        effectiveStiffnessNamesArrayList.add("vyx");
+
+        effectiveStiffnessType
+                = hdf5writer.compound().getInferredType("Effective stiffness with poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
+
+        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/flexural"), effectiveStiffnessType, effectiveStiffnessValuesArrayList);
 
         hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness/without poisson effect"));
-        hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness/without poisson effect/membrane"));
+        
+        effectiveStiffnessValuesArrayList = new ArrayList<>();
+        effectiveStiffnessNamesArrayList = new ArrayList<>();
 
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/membrane/Exx"), clt_laminate.getExFixed());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/membrane/Eyy"), clt_laminate.getEyFixed());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/membrane/Gxy"), clt_laminate.getGFixed());
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getExFixed());
+        effectiveStiffnessNamesArrayList.add("Exx");
 
-        hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural"));
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getEyFixed());
+        effectiveStiffnessNamesArrayList.add("Eyy");
 
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural/Exx"), clt_laminate.getExBendFixed());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural/Eyy"), clt_laminate.getEyBendFixed());
-        hdf5writer.float64().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural/Gxy"), clt_laminate.getGBendFixed());
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getGFixed());
+        effectiveStiffnessNamesArrayList.add("Gxy");
+
+        effectiveStiffnessType
+                = hdf5writer.compound().getInferredType("Effective stiffness without poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
+
+        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/membrane"), effectiveStiffnessType, effectiveStiffnessValuesArrayList);
+        
+        effectiveStiffnessValuesArrayList = new ArrayList<>();
+        effectiveStiffnessNamesArrayList = new ArrayList<>();
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getExBendFixed());
+        effectiveStiffnessNamesArrayList.add("Exx");
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getEyBendFixed());
+        effectiveStiffnessNamesArrayList.add("Eyy");
+
+        effectiveStiffnessValuesArrayList.add(clt_laminate.getGBendFixed());
+        effectiveStiffnessNamesArrayList.add("Gxy");
+
+        effectiveStiffnessType
+                = hdf5writer.compound().getInferredType("Effective stiffness without poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
+
+        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural"), effectiveStiffnessType, effectiveStiffnessValuesArrayList);
 
         String layupGroupName = "/".concat(groupName).concat("/layup");
         hdf5writer.object().createGroup(layupGroupName);
         ArrayList<Layer> layers = laminate.getLayers();
         int layerNum = layers.size();
         Layer l;
-        String layerGroupName;
+        String[] names = new String[layerNum];
+        double[] thicknesses = new double[layerNum];
+        double[] angles = new double[layerNum];
+        String[] materials = new String[layerNum];
+        String[] criteria = new String[layerNum];
         for (int ii = 0; ii < layerNum; ii++) {
             l = layers.get(ii);
-            layerGroupName = layupGroupName.concat("/layer " + (ii + 1));
-            hdf5writer.object().createGroup(layerGroupName);
-            hdf5writer.int32().write(layerGroupName.concat("/number"), l.getNumber());
-            hdf5writer.string().write(layerGroupName.concat("/name"), l.getName());
-            hdf5writer.float64().write(layerGroupName.concat("/thickness"), l.getThickness());
-            hdf5writer.float64().write(layerGroupName.concat("/angle"), l.getAngle());
-            hdf5writer.string().write(layerGroupName.concat("/material"), l.getMaterial().getName());
-            hdf5writer.string().write(layerGroupName.concat("/criterion"), l.getCriterion().getDisplayName());
+            names[ii] = l.getName();
+            thicknesses[ii] = l.getThickness();
+            angles[ii] = l.getAngle();
+            materials[ii] = l.getMaterial().getName();
+            criteria[ii] = l.getCriterion().getDisplayName();
         }
+        hdf5writer.writeStringArray("/".concat(layupGroupName).concat("/names"), names);
+        hdf5writer.float64().writeArray("/".concat(layupGroupName).concat("/thicknesses"), thicknesses);
+        hdf5writer.float64().writeArray("/".concat(layupGroupName).concat("/angles"), angles);
+        hdf5writer.writeStringArray("/".concat(layupGroupName).concat("/materials"), materials);
+        hdf5writer.writeStringArray("/".concat(layupGroupName).concat("/criteria"), criteria);
     }
 
     @Override
