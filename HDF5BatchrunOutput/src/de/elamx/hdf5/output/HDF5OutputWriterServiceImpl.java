@@ -25,6 +25,7 @@
  */
 package de.elamx.hdf5.output;
 
+import ch.systemsx.cisd.hdf5.HDF5CompoundDataMap;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.core.HDF5OutputWriterService;
@@ -132,7 +133,7 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         String layerGroupName;
         for (int ii = 0; ii < layerNum; ii++) {
             l = layers.get(ii);
-            layerGroupName = layupGroupName.concat("/layer " + (ii+1));
+            layerGroupName = layupGroupName.concat("/layer " + (ii + 1));
             hdf5writer.object().createGroup(layerGroupName);
             hdf5writer.int32().write(layerGroupName.concat("/number"), l.getNumber());
             hdf5writer.string().write(layerGroupName.concat("/name"), l.getName());
@@ -147,24 +148,29 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
     public void writeMaterialInformation(IHDF5Writer hdf5writer, Material material) {
         String groupName = "materials/".concat(material.getName());
         hdf5writer.object().createGroup(groupName);
-
-        hdf5writer.float64().write("/".concat(groupName).concat("/E11"), material.getEpar());
-        hdf5writer.float64().write("/".concat(groupName).concat("/E22"), material.getEnor());
-        hdf5writer.float64().write("/".concat(groupName).concat("/v12"), material.getNue12());
-        hdf5writer.float64().write("/".concat(groupName).concat("/v21"), material.getNue21());
-        hdf5writer.float64().write("/".concat(groupName).concat("/G12"), material.getG());
-        hdf5writer.float64().write("/".concat(groupName).concat("/rho"), material.getRho());
-        hdf5writer.float64().write("/".concat(groupName).concat("/a11"), material.getAlphaTPar());
-        hdf5writer.float64().write("/".concat(groupName).concat("/a22"), material.getAlphaTNor());
-        hdf5writer.float64().write("/".concat(groupName).concat("/b11"), material.getBetaPar());
-        hdf5writer.float64().write("/".concat(groupName).concat("/b22"), material.getBetaNor());
-        hdf5writer.float64().write("/".concat(groupName).concat("/S11T"), material.getRParTen());
-        hdf5writer.float64().write("/".concat(groupName).concat("/S22T"), material.getRNorTen());
-        hdf5writer.float64().write("/".concat(groupName).concat("/S11C"), material.getRParCom());
-        hdf5writer.float64().write("/".concat(groupName).concat("/S11C"), material.getRNorCom());
-        hdf5writer.float64().write("/".concat(groupName).concat("/S12"), material.getRShear());
+        
+        HDF5CompoundDataMap propertiesMap = new HDF5CompoundDataMap();
+        propertiesMap.put("E11", material.getEpar());
+        propertiesMap.put("E12", material.getEnor());
+        propertiesMap.put("v12", material.getNue12());
+        propertiesMap.put("v21", material.getNue21());
+        propertiesMap.put("G12", material.getG());
+        propertiesMap.put("rho", material.getRho());
+        propertiesMap.put("a11", material.getAlphaTPar());
+        propertiesMap.put("a22", material.getAlphaTNor());
+        propertiesMap.put("b11", material.getBetaPar());
+        propertiesMap.put("b22", material.getBetaNor());
+        propertiesMap.put("S11T", material.getRParTen());
+        propertiesMap.put("S22T", material.getRNorTen());
+        propertiesMap.put("S11C", material.getRParCom());
+        propertiesMap.put("S22C", material.getRNorCom());
+        propertiesMap.put("S12", material.getRShear());
+        
+        
         for (String key : material.getAdditionalValueKeySet()) {
-            hdf5writer.float64().write("/".concat(groupName).concat("/").concat(material.getAdditionalValueDisplayName(key)), material.getAdditionalValue(key));
+            propertiesMap.put(material.getAdditionalValueDisplayName(key), material.getAdditionalValue(key));
         }
+
+        hdf5writer.compound().write("/".concat(groupName).concat("/properties"), propertiesMap);
     }
 }
