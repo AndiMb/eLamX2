@@ -65,6 +65,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+#    - name: Delete old release assets
+#      uses: mknejp/delete-release-assets@v1
+#      with:
+#        token: ${{ secrets.GITHUB_TOKEN }}
+#        tag: nightly
+#
+#        # Pick one of:
+#        # 1. a single file name
+#        assets: eLamX.2.7.exe
+
     - name: Install xmllint
       run: sudo apt-get install -y libfuse2
 
@@ -93,6 +103,13 @@ jobs:
         name: elamx-linux-zip
         path: "dist/*.zip"
         retention-days: 1
+
+    - name: Update Nightly TAG
+      uses: richardsimko/update-tag@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: nightly
 
     - name: Get Nightly Release Date
       run: |
