@@ -25,7 +25,7 @@
  */
 package de.elamx.hdf5.output;
 
-import ch.systemsx.cisd.hdf5.HDF5CompoundDataMap;
+import ch.systemsx.cisd.hdf5.HDF5CompoundType;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.core.HDF5OutputWriterService;
@@ -38,6 +38,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
@@ -148,29 +149,64 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
     public void writeMaterialInformation(IHDF5Writer hdf5writer, Material material) {
         String groupName = "materials/".concat(material.getName());
         hdf5writer.object().createGroup(groupName);
-        
-        HDF5CompoundDataMap propertiesMap = new HDF5CompoundDataMap();
-        propertiesMap.put("E11", material.getEpar());
-        propertiesMap.put("E12", material.getEnor());
-        propertiesMap.put("v12", material.getNue12());
-        propertiesMap.put("v21", material.getNue21());
-        propertiesMap.put("G12", material.getG());
-        propertiesMap.put("rho", material.getRho());
-        propertiesMap.put("a11", material.getAlphaTPar());
-        propertiesMap.put("a22", material.getAlphaTNor());
-        propertiesMap.put("b11", material.getBetaPar());
-        propertiesMap.put("b22", material.getBetaNor());
-        propertiesMap.put("S11T", material.getRParTen());
-        propertiesMap.put("S22T", material.getRNorTen());
-        propertiesMap.put("S11C", material.getRParCom());
-        propertiesMap.put("S22C", material.getRNorCom());
-        propertiesMap.put("S12", material.getRShear());
-        
-        
+
+        ArrayList<Double> materialPropertyValuesArrayList = new ArrayList<>();
+        ArrayList<String> materialPropertyNamesArrayList = new ArrayList<>();
+
+        materialPropertyValuesArrayList.add(material.getEpar());
+        materialPropertyNamesArrayList.add("E11");
+
+        materialPropertyValuesArrayList.add(material.getEnor());
+        materialPropertyNamesArrayList.add("E22");
+
+        materialPropertyValuesArrayList.add(material.getNue12());
+        materialPropertyNamesArrayList.add("v12");
+
+        materialPropertyValuesArrayList.add(material.getNue21());
+        materialPropertyNamesArrayList.add("v21");
+
+        materialPropertyValuesArrayList.add(material.getG());
+        materialPropertyNamesArrayList.add("G12");
+
+        materialPropertyValuesArrayList.add(material.getRho());
+        materialPropertyNamesArrayList.add("rho");
+
+        materialPropertyValuesArrayList.add(material.getAlphaTPar());
+        materialPropertyNamesArrayList.add("a11");
+
+        materialPropertyValuesArrayList.add(material.getAlphaTNor());
+        materialPropertyNamesArrayList.add("a22");
+
+        materialPropertyValuesArrayList.add(material.getBetaPar());
+        materialPropertyNamesArrayList.add("b11");
+
+        materialPropertyValuesArrayList.add(material.getBetaNor());
+        materialPropertyNamesArrayList.add("b22");
+
+        materialPropertyValuesArrayList.add(material.getRParTen());
+        materialPropertyNamesArrayList.add("S11T");
+
+        materialPropertyValuesArrayList.add(material.getRNorTen());
+        materialPropertyNamesArrayList.add("S22T");
+
+        materialPropertyValuesArrayList.add(material.getRParCom());
+        materialPropertyNamesArrayList.add("S11C");
+
+        materialPropertyValuesArrayList.add(material.getRNorCom());
+        materialPropertyNamesArrayList.add("S22C");
+
+        materialPropertyValuesArrayList.add(material.getRShear());
+        materialPropertyNamesArrayList.add("S12");
+
         for (String key : material.getAdditionalValueKeySet()) {
-            propertiesMap.put(material.getAdditionalValueDisplayName(key), material.getAdditionalValue(key));
+            materialPropertyValuesArrayList.add(material.getAdditionalValue(key));
+            materialPropertyNamesArrayList.add(material.getAdditionalValueDisplayName(key));
         }
 
-        hdf5writer.compound().write("/".concat(groupName).concat("/properties"), propertiesMap);
+        HDF5CompoundType<List<?>> materialPropertyType
+                = hdf5writer.compound().getInferredType("Material properties", materialPropertyNamesArrayList, materialPropertyValuesArrayList);
+
+        hdf5writer.compound().write("/".concat(groupName).concat("/properties"), materialPropertyType, materialPropertyValuesArrayList);
     }
+
 }
