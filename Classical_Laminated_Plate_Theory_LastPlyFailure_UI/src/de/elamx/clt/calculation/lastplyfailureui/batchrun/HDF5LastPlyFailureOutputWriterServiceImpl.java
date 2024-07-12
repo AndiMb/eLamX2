@@ -89,6 +89,23 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
         hdf5writer.float64().write(inputGroupName.concat("/epsilonAllow"), data.getLastPlyFailureInput().getEpsilon_crit());
         hdf5writer.bool().write(inputGroupName.concat("/degradeAllOnFibreFailure"), data.getLastPlyFailureInput().isDegradeAllOnFibreFailure());
 
+        String RFGroupName = groupName.concat("/RF results");
+        if (results.getRf_first_epsilon() != null) {
+            hdf5writer.compound().write(RFGroupName.concat("/RF epsilon"), new HDF5LPFRFResult(results.getRf_first_epsilon(), results.getIter_first_epsilon()));
+        }
+
+        if (results.getRf_first_ff() != null) {
+            hdf5writer.compound().write(RFGroupName.concat("/RF first FF"), new HDF5LPFRFResult(results.getRf_first_ff(), results.getIter_first_ff()));
+        }
+
+        if (results.getRf_first_iff() != null) {
+            hdf5writer.compound().write(RFGroupName.concat("/RF first IFF"), new HDF5LPFRFResult(results.getRf_first_iff(), results.getIter_first_iff()));
+        }
+
+        hdf5writer.bool().write(RFGroupName.concat("/FF before IFF"), results.isFf_before_iff());
+
+        hdf5writer.compound().write(RFGroupName.concat("/exceedance factor"), new HDF5LPFRFResult(results.getExceedance_factor(), results.getIter_exceedance_factor()));
+
         int maxIterationNumber = results.getLayerResult().length - 1;
 
         String iterationGroupName = groupName.concat("/iterations");
@@ -113,7 +130,7 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
             iterationResultNamesArrayList.add("failure type");
 
             HDF5CompoundType<List<?>> iterationResultType
-                    = hdf5writer.compound().getInferredType("Loads", iterationResultNamesArrayList, iterationResultValuesArrayList);
+                    = hdf5writer.compound().getInferredType("LPF iteration result", iterationResultNamesArrayList, iterationResultValuesArrayList);
 
             hdf5writer.compound().write(iterationNumGroupName.concat("/iteration result"), iterationResultType, iterationResultValuesArrayList);
 
@@ -299,6 +316,51 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
         @Override
         public String toString() {
             return "LocalLayerResult [number=" + number + ", zmi=" + zmi + ", s11=" + s11 + ", s22=" + s22 + ", s12=" + s12 + "e11" + e11 + ", e22=" + e22 + "e12" + e12 + ", RF" + RF + ", FF=" + FF + ", IFF=" + IFF + "]";
+        }
+
+    }
+
+    /**
+     * A HDF5 Data Transfer Object for reserve factor results of last ply failure.
+     */
+    static class HDF5LPFRFResult {
+
+        // Include the unit in the member name
+        @CompoundElement(memberName = "RF")
+        private double RF;
+
+        // Include the unit in the member name
+        @CompoundElement(memberName = "iteration")
+        private int iteration;
+
+        // Important: needs to have a default constructor, otherwise JHDF5 will bail out on reading.
+        HDF5LPFRFResult() {
+        }
+
+        HDF5LPFRFResult(double RF, int iteration) {
+            this.RF = RF;
+            this.iteration = iteration;
+        }
+
+        public double getRF() {
+            return RF;
+        }
+
+        public void setRF(double RF) {
+            this.RF = RF;
+        }
+
+        public int getIteration() {
+            return iteration;
+        }
+
+        public void setIteration(int iteration) {
+            this.iteration = iteration;
+        }
+
+        @Override
+        public String toString() {
+            return "LocalLayerResult [RF=" + RF + ", iteration=" + iteration + "]";
         }
 
     }
