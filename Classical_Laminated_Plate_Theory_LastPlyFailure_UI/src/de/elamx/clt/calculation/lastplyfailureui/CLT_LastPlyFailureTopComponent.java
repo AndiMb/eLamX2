@@ -815,7 +815,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
             iterationField.setText(Integer.toString(iter + chartIterOffset));
             layerNumberField.setText(Integer.toString(lpfResult.getLayerNumber()[iter]));
             RFminField.setText(df_RF.format(lpfResult.getRf_min()[iter]));
-            failureTypeField.setText(lpfResult.getFailureType()[iter]);
+            failureTypeField.setText(lpfResult.getFailureTypeShort()[iter]);
 
             if (!actRFminDataset.getSeries(0).isEmpty()) {
                 actRFminDataset.getSeries(0).remove(0);
