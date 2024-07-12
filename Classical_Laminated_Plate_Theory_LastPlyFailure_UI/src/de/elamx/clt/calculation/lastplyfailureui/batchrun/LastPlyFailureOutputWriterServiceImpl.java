@@ -111,9 +111,10 @@ public class LastPlyFailureOutputWriterServiceImpl implements LastPlyFailureOutp
             out.println("Local layer results :");
             out.println();
             
-            out.println(   "Layer of Failure: " + Integer.toString(result.getLayerNumber()[iter]));
-            out.printf(lo, "RF Iteration:     %12.5E%n", result.getRf_min()[iter]);
-            out.println(   "Failure Type:     " + result.getFailureType()[iter]);
+            out.println(   "Layer of Failure:   " + Integer.toString(result.getLayerNumber()[iter]));
+            out.printf(lo, "RF Iteration:       %12.5E%n", result.getRf_min()[iter]);
+            out.println(   "Failure Type:       " + result.getFailureType()[iter]);
+            out.println(   "Failure Type Short: " + result.getFailureTypeShort()[iter]);
 
             out.println("  No.      zmi                 s11          s22          s12          e11          e22          e12          RF       FF    IFF");
             double[] str, eps;

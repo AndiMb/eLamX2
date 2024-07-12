@@ -129,6 +129,9 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
             iterationResultValuesArrayList.add(results.getFailureType()[iter]);
             iterationResultNamesArrayList.add("failure type");
 
+            iterationResultValuesArrayList.add(results.getFailureTypeShort()[iter]);
+            iterationResultNamesArrayList.add("failure type short");
+
             HDF5CompoundType<List<?>> iterationResultType
                     = hdf5writer.compound().getInferredType("LPF iteration result", iterationResultNamesArrayList, iterationResultValuesArrayList);
 
