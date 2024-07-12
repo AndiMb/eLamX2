@@ -65,9 +65,10 @@ public class LastPlyFailuerOutputWriterServiceImpl implements LastPlyFailureOutp
         out.println();
         out.println("Additional Input :");
         out.println();
-        out.printf(lo, "  jA       = %-17.10E%n", data.getLastPlyFailureInput().getJ_a());
-        out.printf(lo, "  degFac   = %-17.10E%n", data.getLastPlyFailureInput().getDegradationFactor());
-        out.printf(lo, "  epsAllow = %-17.10E%n", data.getLastPlyFailureInput().getEpsilon_crit());
+        out.printf(lo, "  jA                   = %-17.10E%n", data.getLastPlyFailureInput().getJ_a());
+        out.printf(lo, "  degFac               = %-17.10E%n", data.getLastPlyFailureInput().getDegradationFactor());
+        out.printf(lo, "  epsAllow             = %-17.10E%n", data.getLastPlyFailureInput().getEpsilon_crit());
+        out.printf(lo, "  degAllOnFibreFailure = %5s%n",      data.getLastPlyFailureInput().isDegradeAllOnFibreFailure());
         
         for (int iter = 0; iter < maxIterationNumber; iter++) {
 
