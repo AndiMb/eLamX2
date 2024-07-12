@@ -271,7 +271,7 @@ public class CLT_Calculator {
         return rs;
     }
 
-    public static CLT_LastPlyFailureResult determineValuesLastPlyFailure(CLT_Laminate lam, Loads loads, Strains strains, boolean[] useStrain,
+    public static CLT_LastPlyFailureResult determineValuesLastPlyFailure(CLT_Laminate lam, Loads loads, Strains strains, boolean[] useStrain, 
             double matReductionFactor, double epsilon_crit, double j_A, boolean degradeAllOnFibreFailure) {
 
         int numLayers = lam.getCLTLayers().length;   // Anzahl der Lagen
@@ -280,11 +280,11 @@ public class CLT_Calculator {
         Laminat tempLam = new Laminat("", "", false);
         for (Layer lay : lam.getLaminat().getAllLayers()) {
             DataLayer layer = new DataLayer(
-                    "",
-                    "",
-                    getAsDefaultMaterial(lay.getMaterial()),
+                    "", 
+                    "", 
+                    getAsDefaultMaterial(lay.getMaterial()), 
                     lay.getAngle(),
-                    lay.getThickness(),
+                    lay.getThickness(), 
                     lay.getCriterion()
             );
             tempLam.addLayer(layer);
@@ -293,16 +293,6 @@ public class CLT_Calculator {
 
         boolean[] zfw_fail = new boolean[numLayers];
         boolean[] fb_fail = new boolean[numLayers];
-
-        Double rf_first_ff = null;
-        Double rf_first_iff = null;
-        Double rf_first_epsilon = null;
-        Double exceedance_factor = null;
-        Integer iter_first_ff = -1;
-        Integer iter_first_iff = -1;
-        Integer iter_first_epsilon = -1;
-        Integer iter_exceedance_factor = -1;
-        Boolean ff_before_iff = false;
 
         for (int ii = 0; ii < numLayers; ii++) {
             zfw_fail[ii] = false;
@@ -337,7 +327,7 @@ public class CLT_Calculator {
                     minLayerIndex = ii;
                 }
             }
-
+            
             double j_A_set = 1.0;
 
             DefaultMaterial mat = (DefaultMaterial) layerResults[minLayerIndex].getLayer().getMaterial();
@@ -356,7 +346,7 @@ public class CLT_Calculator {
                 if (!fb_fail[minLayerIndex]) {
                     mat.setEpar(matReductionFactor * mat.getEpar());
                     fb_fail[minLayerIndex] = true;
-                    if (degradeAllOnFibreFailure) {
+                    if (degradeAllOnFibreFailure){
                         mat.setEnor(matReductionFactor * mat.getEnor());
                         mat.setG(matReductionFactor * mat.getG());
                         zfw_fail[minLayerIndex] = true;
@@ -381,31 +371,7 @@ public class CLT_Calculator {
             if (lastIteration) {
                 break;
             }
-
-            if ((rf_first_epsilon == null) && (rf_min.getMinimalReserveFactor() >= 1.)) {
-                double maxAbsStrain = -1. * Double.MAX_VALUE;
-                double maxAbsStrainLayUp, maxAbsStrainLayLo;
-                for (int ii = 0; ii < layerResults.length; ii++) {
-                    maxAbsStrainLayUp = Math.max(layerResults[ii].getSss_upper().getStrain()[0], layerResults[ii].getSss_upper().getStrain()[1]);
-                    maxAbsStrainLayLo = Math.max(layerResults[ii].getSss_lower().getStrain()[0], layerResults[ii].getSss_lower().getStrain()[1]);
-
-                    if (maxAbsStrainLayUp > maxAbsStrain) {
-                        maxAbsStrain = maxAbsStrainLayUp;
-                    }
-
-                    if (maxAbsStrainLayLo > maxAbsStrain) {
-                        maxAbsStrain = maxAbsStrainLayLo;
-                    }
-                }
-                rf_first_epsilon = epsilon_crit / maxAbsStrain;
-                iter_first_epsilon = iter;
-            }
-
-            if ((exceedance_factor == null) || (rf_min.getMinimalReserveFactor() > exceedance_factor)) {
-                exceedance_factor = rf_min.getMinimalReserveFactor();
-                iter_exceedance_factor = iter;
-            }
-
+            
             layerResultList.add(layerResults);
             boolean[] zfw_failTemp = new boolean[numLayers];
             System.arraycopy(zfw_fail, 0, zfw_failTemp, 0, numLayers);
@@ -417,41 +383,19 @@ public class CLT_Calculator {
             rf_minList.add(rf_min.getMinimalReserveFactor() * j_A_set);
             FailureTypeList.add(rf_min.getFailureName());
 
-            if ((rf_first_iff == null) && (rf_min.getFailureType() == ReserveFactor.MATRIX_FAILURE)) {
-                rf_first_iff = rf_min.getMinimalReserveFactor() * j_A_set;
-                iter_first_iff = iter;
-            }
-
-            if ((rf_first_ff == null) && (rf_min.getFailureType() == ReserveFactor.FIBER_FAILURE)) {
-                rf_first_ff = rf_min.getMinimalReserveFactor() * j_A_set;
-                iter_first_ff = iter;
-                if (rf_first_iff == null) {
-                    ff_before_iff = true;
-                }
-            }
-
             clt_lam.getCLTLayers()[minLayerIndex].refresh();
             clt_lam.refresh();
         }
-
+        
         CLT_LastPlyFailureResult lpfResult = new CLT_LastPlyFailureResult(
-                layerResultList.toArray(CLT_LayerResult[][]::new),
-                zfw_failList.toArray(boolean[][]::new),
-                fb_failList.toArray(boolean[][]::new),
-                layerNumberList.toArray(Integer[]::new),
-                rf_minList.toArray(Double[]::new),
-                FailureTypeList.toArray(String[]::new),
-                rf_first_ff,
-                rf_first_iff,
-                rf_first_epsilon,
-                exceedance_factor,
-                iter_first_ff,
-                iter_first_iff,
-                iter_first_epsilon,
-                iter_exceedance_factor,
-                ff_before_iff
+                layerResultList.toArray(CLT_LayerResult[][]::new), 
+                zfw_failList.toArray(boolean[][]::new), 
+                fb_failList.toArray(boolean[][]::new), 
+                layerNumberList.toArray(Integer[]::new), 
+                rf_minList.toArray(Double[]::new), 
+                FailureTypeList.toArray(String[]::new)
         );
-
+        
         return lpfResult;
     }
 

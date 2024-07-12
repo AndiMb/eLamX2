@@ -38,7 +38,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Andreas Hauffe
  */
 @ServiceProvider(service = LastPlyFailureOutputWriterService.class, position = 1)
-public class LastPlyFailureOutputWriterServiceImpl implements LastPlyFailureOutputWriterService {
+public class LastPlyFailuerOutputWriterServiceImpl implements LastPlyFailureOutputWriterService {
 
     @Override
     public void writeResults(PrintStream out, LastPlyFailureModuleData data, CLT_LastPlyFailureResult result) {
@@ -69,37 +69,6 @@ public class LastPlyFailureOutputWriterServiceImpl implements LastPlyFailureOutp
         out.printf(lo, "  degFac               = %-17.10E%n", data.getLastPlyFailureInput().getDegradationFactor());
         out.printf(lo, "  epsAllow             = %-17.10E%n", data.getLastPlyFailureInput().getEpsilon_crit());
         out.printf(lo, "  degAllOnFibreFailure = %5s%n",      data.getLastPlyFailureInput().isDegradeAllOnFibreFailure());
-        out.println();
-        out.println("Reserve Factors :");
-        out.println();
-        if (result.getRf_first_epsilon() != null) {
-            out.printf(lo, "  RF_epsilon           = %-17.10E%n", result.getRf_first_epsilon());
-            out.printf(lo, "  RF_epsilon at iter.  = " + result.getIter_first_epsilon());
-            out.println();
-        } else {
-            out.printf(lo, "  RF_epsilon           = -%n");
-            out.printf(lo, "  RF_epsilon at iter.  = -%n");
-        }
-        if (result.getRf_first_ff() != null) {
-            out.printf(lo, "  RF_FF                = %-17.10E%n", result.getRf_first_ff());
-            out.printf(lo, "  RF_FF at iteration   = " + result.getIter_first_ff());
-            out.println();
-        } else {
-            out.printf(lo, "  RF_FF                = -%n");
-            out.printf(lo, "  RF_FF at iteration   = -%n");
-        }
-        if (result.getRf_first_iff() != null) {
-            out.printf(lo, "  RF_IFF               = %-17.10E%n", result.getRf_first_iff());
-            out.printf(lo, "  RF_IFF at iteration  = " + result.getIter_first_iff());
-            out.println();
-        } else {
-            out.printf(lo, "  RF_IFF               = -%n");
-            out.printf(lo, "  RF_IFF at iteration  = -%n");
-        }
-        out.printf(lo, "  EF_LPF               = %-17.10E%n", result.getExceedance_factor());
-        out.printf(lo, "  EF_LPF at iteration  = " + result.getIter_exceedance_factor());
-        out.println();
-        out.printf(lo, "  FLAG_FF_before_IFF   = %5s%n", result.isFf_before_iff());
         
         for (int iter = 0; iter < maxIterationNumber; iter++) {
 
