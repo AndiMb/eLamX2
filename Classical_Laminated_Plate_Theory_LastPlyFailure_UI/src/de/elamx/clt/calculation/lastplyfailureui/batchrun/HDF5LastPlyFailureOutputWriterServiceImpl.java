@@ -29,6 +29,7 @@ import ch.systemsx.cisd.hdf5.CompoundElement;
 import ch.systemsx.cisd.hdf5.HDF5CompoundType;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_LastPlyFailureResult;
+import de.elamx.clt.CLT_LayerResult;
 import de.elamx.clt.calculation.lastplyfailureui.LastPlyFailureModuleData;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,9 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
         }
         String groupName = lastPlyFailureGroup.concat(data.getName());
         hdf5writer.object().createGroup(groupName);
+
+        String inputGroupName = groupName.concat("/input");
+        hdf5writer.object().createGroup(inputGroupName);
 
         double[] forces = data.getLastPlyFailureInput().getLoad().getForceMomentAsVector();
 
@@ -79,18 +83,77 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
         HDF5CompoundType<List<?>> loadsType
                 = hdf5writer.compound().getInferredType("Loads", loadsNamesArrayList, loadsValuesArrayList);
 
-        hdf5writer.compound().write(groupName.concat("/loads"), loadsType, loadsValuesArrayList);
+        hdf5writer.compound().write(inputGroupName.concat("/loads"), loadsType, loadsValuesArrayList);
 
-        hdf5writer.float64().write(groupName.concat("/degradationFactor"), data.getLastPlyFailureInput().getDegradationFactor());
-        hdf5writer.float64().write(groupName.concat("/epsilonAllow"), data.getLastPlyFailureInput().getEpsilon_crit());
+        hdf5writer.float64().write(inputGroupName.concat("/degradationFactor"), data.getLastPlyFailureInput().getDegradationFactor());
+        hdf5writer.float64().write(inputGroupName.concat("/epsilonAllow"), data.getLastPlyFailureInput().getEpsilon_crit());
+        hdf5writer.bool().write(inputGroupName.concat("/degradeAllOnFibreFailure"), data.getLastPlyFailureInput().isDegradeAllOnFibreFailure());
 
+        int maxIterationNumber = results.getLayerResult().length - 1;
+
+        String iterationGroupName = groupName.concat("/iterations");
+        hdf5writer.object().createGroup(iterationGroupName);
+        hdf5writer.int32().setAttr(iterationGroupName, "max. iteration number", maxIterationNumber);
+
+        String iterationNumGroupName, localLayerResultGroupName;
+        for (int iter = 0; iter < maxIterationNumber; iter++) {
+            iterationNumGroupName = iterationGroupName.concat("/iteration " + iter);
+            hdf5writer.object().createGroup(iterationNumGroupName);
+
+            ArrayList<Object> iterationResultValuesArrayList = new ArrayList<>();
+            ArrayList<String> iterationResultNamesArrayList = new ArrayList<>();
+
+            iterationResultValuesArrayList.add(results.getLayerNumber()[iter]);
+            iterationResultNamesArrayList.add("layer of failure");
+
+            iterationResultValuesArrayList.add(results.getRf_min()[iter]);
+            iterationResultNamesArrayList.add("RF iteration");
+
+            iterationResultValuesArrayList.add(results.getFailureType()[iter]);
+            iterationResultNamesArrayList.add("failure type");
+
+            HDF5CompoundType<List<?>> iterationResultType
+                    = hdf5writer.compound().getInferredType("Loads", iterationResultNamesArrayList, iterationResultValuesArrayList);
+
+            hdf5writer.compound().write(iterationNumGroupName.concat("/iteration result"), iterationResultType, iterationResultValuesArrayList);
+
+            CLT_LayerResult[] clt_results = results.getLayerResult()[iter];
+
+            int layerNumber = clt_results.length;
+
+            localLayerResultGroupName = iterationNumGroupName.concat("/local layer results");
+            hdf5writer.object().createGroup(localLayerResultGroupName);
+            hdf5writer.int32().setAttr(localLayerResultGroupName, "layer number", layerNumber);
+
+            HDF5LPFLocalLayerResult[] localLayerResults_up = new HDF5LPFLocalLayerResult[layerNumber];
+            HDF5LPFLocalLayerResult[] localLayerResults_lo = new HDF5LPFLocalLayerResult[layerNumber];
+            double[] str, eps;
+            for (int ii = 0; ii < layerNumber; ii++) {
+                str = clt_results[ii].getSss_upper().getStress();
+                eps = clt_results[ii].getSss_upper().getStrain();
+                localLayerResults_up[ii] = new HDF5LPFLocalLayerResult((ii + 1), clt_results[ii].getClt_layer().getZm(), str[0], str[1], str[2], eps[0], eps[1], eps[2], clt_results[ii].getRr_upper().getMinimalReserveFactor(), results.getFb_fail()[iter][ii], results.getZfw_fail()[iter][ii]);
+                str = clt_results[ii].getSss_lower().getStress();
+                eps = clt_results[ii].getSss_lower().getStrain();
+                localLayerResults_lo[ii] = new HDF5LPFLocalLayerResult((ii + 1), clt_results[ii].getClt_layer().getZm(), str[0], str[1], str[2], eps[0], eps[1], eps[2], clt_results[ii].getRr_lower().getMinimalReserveFactor(), results.getFb_fail()[iter][ii], results.getZfw_fail()[iter][ii]);
+            }
+            hdf5writer.compound().writeArray(localLayerResultGroupName.concat("/upper"), localLayerResults_up);
+            hdf5writer.compound().writeArray(localLayerResultGroupName.concat("/lower"), localLayerResults_lo);
+        }
     }
 
     /**
-     * A HDF5 Data Transfer Object for local layer results.
+     * A HDF5 Data Transfer Object for local layer results of last ply failure.
      */
-    static class HDF5LocalLayerResult
-    {
+    static class HDF5LPFLocalLayerResult {
+
+        // Include the unit in the member name
+        @CompoundElement(memberName = "number")
+        private int number;
+
+        // Include the unit in the member name
+        @CompoundElement(memberName = "zmi")
+        private double zmi;
+
         // Include the unit in the member name
         @CompoundElement(memberName = "s11")
         private double s11;
@@ -119,20 +182,46 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
         @CompoundElement(memberName = "RF")
         private double RF;
 
+        // Include the unit in the member name
+        @CompoundElement(memberName = "FF")
+        private boolean FF;
+
+        // Include the unit in the member name
+        @CompoundElement(memberName = "IFF")
+        private boolean IFF;
+
         // Important: needs to have a default constructor, otherwise JHDF5 will bail out on reading.
-        HDF5LocalLayerResult()
-        {
+        HDF5LPFLocalLayerResult() {
         }
 
-        HDF5LocalLayerResult(double s11, double s22, double s12, double e11, double e22, double e12, double RF)
-        {
+        HDF5LPFLocalLayerResult(int number, double zmi, double s11, double s22, double s12, double e11, double e22, double e12, double RF, boolean FF, boolean IFF) {
+            this.number = number;
+            this.zmi = zmi;
             this.s11 = s11;
             this.s22 = s22;
             this.s12 = s12;
             this.e11 = e11;
             this.e22 = e22;
             this.e12 = e12;
-            this.RF  = RF;
+            this.RF = RF;
+            this.FF = FF;
+            this.IFF = IFF;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
+
+        public double getZmi() {
+            return zmi;
+        }
+
+        public void setZmi(double zmi) {
+            this.zmi = zmi;
         }
 
         public double getS11() {
@@ -191,10 +280,25 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
             this.RF = RF;
         }
 
+        public boolean isFF() {
+            return FF;
+        }
+
+        public void setFF(boolean FF) {
+            this.FF = FF;
+        }
+
+        public boolean isIFF() {
+            return IFF;
+        }
+
+        public void setIFF(boolean IFF) {
+            this.IFF = IFF;
+        }
+
         @Override
-        public String toString()
-        {
-            return "LocalLayerResult [s11=" + s11 + ", s22=" + s22 + ", s12=" + s12 + "e11" + e11 + ", e22=" + e22 + "e12" + e12 + ", RF" + RF + "]";
+        public String toString() {
+            return "LocalLayerResult [number=" + number + ", zmi=" + zmi + ", s11=" + s11 + ", s22=" + s22 + ", s12=" + s12 + "e11" + e11 + ", e22=" + e22 + "e12" + e12 + ", RF" + RF + ", FF=" + FF + ", IFF=" + IFF + "]";
         }
 
     }
