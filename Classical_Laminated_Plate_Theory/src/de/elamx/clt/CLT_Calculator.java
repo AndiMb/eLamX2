@@ -383,19 +383,9 @@ public class CLT_Calculator {
             }
 
             if ((rf_first_epsilon == null) && (rf_min.getMinimalReserveFactor() >= 1.)) {
-                double maxAbsStrain = -1. * Double.MAX_VALUE;
-                double maxAbsStrainLayUp, maxAbsStrainLayLo;
-                for (int ii = 0; ii < layerResults.length; ii++) {
-                    maxAbsStrainLayUp = Math.abs(layerResults[ii].getSss_upper().getStrain()[0]);
-                    maxAbsStrainLayLo = Math.abs(layerResults[ii].getSss_lower().getStrain()[0]);
-
-                    if (maxAbsStrainLayUp > maxAbsStrain) {
-                        maxAbsStrain = maxAbsStrainLayUp;
-                    }
-
-                    if (maxAbsStrainLayLo > maxAbsStrain) {
-                        maxAbsStrain = maxAbsStrainLayLo;
-                    }
+                double maxAbsStrain = -Double.MAX_VALUE;
+                for (CLT_LayerResult layerResult : layerResults) {
+                    maxAbsStrain = Math.max(maxAbsStrain, Math.max(Math.abs(layerResult.getSss_upper().getStrain()[0]), Math.abs(layerResult.getSss_lower().getStrain()[0])));
                 }
                 rf_first_epsilon = epsilon_crit / maxAbsStrain;
                 iter_first_epsilon = iter;
