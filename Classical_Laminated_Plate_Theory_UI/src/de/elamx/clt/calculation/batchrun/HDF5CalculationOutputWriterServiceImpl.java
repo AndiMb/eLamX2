@@ -160,7 +160,7 @@ public class HDF5CalculationOutputWriterServiceImpl implements HDF5CalculationOu
             e11 = results[ii].getSss_lower().getStrain()[0];
             e22 = results[ii].getSss_lower().getStrain()[1];
             e12 = results[ii].getSss_lower().getStrain()[2];
-            RF  = results[ii].getRr_upper().getMinimalReserveFactor();
+            RF  = results[ii].getRr_lower().getMinimalReserveFactor();
             llres_lo[ii] = new HDF5LocalLayerResult(s11, s22, s12, e11, e22, e12, RF);
         }
         hdf5writer.compound().writeArray(groupName.concat("/local layer results/lower"), llres_lo);
