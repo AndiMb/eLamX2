@@ -25,6 +25,7 @@
  */
 package de.elamx.clt.plateui.buckling.batchrun;
 
+import ch.systemsx.cisd.hdf5.HDF5CompoundType;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.plate.Buckling;
@@ -66,12 +67,38 @@ public class BucklingBatchRunServiceImpl implements BatchRunService{
             hdf5OutputWriter = hdf5WriterServices.get(Math.min(Math.max(outputType, 0), hdf5WriterServices.size() - 1));
         }
 
+        double minEV = Double.MAX_VALUE;
+        String minEV_calculation = "";
         for (BucklingModuleData data : col){
             BucklingResult result = Buckling.calc(clt_lam, data.getBucklingInput());
             outputWriter.writeResults(ps, data, data.getLaminat(), result);
+
             if (hdf5OutputWriter != null) {
                 hdf5OutputWriter.writeResults(hdf5writer, data, data.getLaminat(), result);
+                for (double ev: result.getEigenvalues_()) {
+                    if ((ev >= 0.) && (ev < minEV)) {
+                        minEV = ev;
+                        minEV_calculation = data.getName();
+                    }
+                }
             }
+        }
+
+        if ((hdf5writer != null) && (minEV != Double.MAX_VALUE)) {
+            ArrayList<Object> minEVValuesArrayList = new ArrayList<>();
+            ArrayList<String> minEVNamesArrayList = new ArrayList<>();
+
+            minEVValuesArrayList.add(minEV);
+            minEVNamesArrayList.add("eigenvalue");
+
+            minEVValuesArrayList.add(minEV_calculation);
+            minEVNamesArrayList.add("buckling");
+
+            HDF5CompoundType<List<?>> minEVType
+                    = hdf5writer.compound().getInferredType("Minimum positive eigenvalue", minEVNamesArrayList, minEVValuesArrayList);
+
+            String calculationGroup = "laminates/".concat(laminate.getName().concat("/buckling"));
+            hdf5writer.compound().write(calculationGroup.concat("/min pos eigenvalue"), minEVType, minEVValuesArrayList);
         }
     }
 }

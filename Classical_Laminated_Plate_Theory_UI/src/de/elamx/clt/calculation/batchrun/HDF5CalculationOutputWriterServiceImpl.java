@@ -152,7 +152,6 @@ public class HDF5CalculationOutputWriterServiceImpl implements HDF5CalculationOu
         double e22;
         double RF;
 
-        double minRF = Double.MAX_VALUE;
         HDF5LocalLayerResult[] llres_lo = new HDF5LocalLayerResult[layerResultsNum];
         for (int ii = 0; ii < layerResultsNum; ii++) {
             s11 = results[ii].getSss_lower().getStress()[0];
@@ -163,7 +162,6 @@ public class HDF5CalculationOutputWriterServiceImpl implements HDF5CalculationOu
             e12 = results[ii].getSss_lower().getStrain()[2];
             RF  = results[ii].getRr_lower().getMinimalReserveFactor();
             llres_lo[ii] = new HDF5LocalLayerResult(s11, s22, s12, e11, e22, e12, RF);
-            minRF = Math.min(minRF, RF);
         }
         hdf5writer.compound().writeArray(groupName.concat("/local layer results/lower"), llres_lo);
         hdf5writer.int32().setAttr(groupName.concat("/local layer results/lower"), "number of layers", layerResultsNum);
@@ -178,12 +176,9 @@ public class HDF5CalculationOutputWriterServiceImpl implements HDF5CalculationOu
             e12 = results[ii].getSss_upper().getStrain()[2];
             RF  = results[ii].getRr_upper().getMinimalReserveFactor();
             llres_up[ii] = new HDF5LocalLayerResult(s11, s22, s12, e11, e22, e12, RF);
-            minRF = Math.min(minRF, RF);
         }
         hdf5writer.compound().writeArray(groupName.concat("/local layer results/upper"), llres_up);
         hdf5writer.int32().setAttr(groupName.concat("/local layer results/upper"), "number of layers", layerResultsNum);
-
-        hdf5writer.float64().write(groupName.concat("/minRF"), minRF);
     }
 
     /**

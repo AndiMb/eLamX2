@@ -25,6 +25,7 @@
  */
 package de.elamx.clt.calculation.batchrun;
 
+import ch.systemsx.cisd.hdf5.HDF5CompoundType;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_Calculator;
 import de.elamx.clt.CLT_Laminate;
@@ -67,13 +68,61 @@ public class CalculationBatchRunServiceImpl implements BatchRunService {
 
         }
 
+        double minRF = Double.MAX_VALUE;
+        String minRF_calculation = "";
+        double minRF_temp;
+        int minRF_layer = -1;
+        String minRF_position = "";
         for (CalculationModuleData data : col) {
             CLT_Calculator.determineValues(clt_lam, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), data.getDataHolder().isUseStrains());
             CLT_LayerResult[] layerResults = CLT_Calculator.getLayerResults(data.getLaminat().getLookup().lookup(CLT_Laminate.class), data.getDataHolder().getLoad(), data.getDataHolder().getStrains());
             outputWriter.writeResults(ps, data, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), layerResults);
+
             if (hdf5OutputWriter != null) {
                 hdf5OutputWriter.writeResults(hdf5writer, data, data.getDataHolder().getLoad(), data.getDataHolder().getStrains(), layerResults);
+
+                minRF_temp = Double.MAX_VALUE;
+                for (int lay = 0; lay < layerResults.length; lay++) {
+                    if (layerResults[lay].getRr_lower().getMinimalReserveFactor() < minRF_temp) {
+                        minRF_temp = layerResults[lay].getRr_lower().getMinimalReserveFactor();
+                        minRF_layer = lay + 1;
+                        minRF_position = "lower";
+                    }
+
+                    if (layerResults[lay].getRr_upper().getMinimalReserveFactor() < minRF_temp) {
+                        minRF_temp = layerResults[lay].getRr_upper().getMinimalReserveFactor();
+                        minRF_layer = lay + 1;
+                        minRF_position = "upper";
+                    }
+                }
+                if (minRF_temp < minRF) {
+                    minRF = minRF_temp;
+                    minRF_calculation = data.getName();
+                }
             }
+        }
+
+        if ((hdf5writer != null) && (minRF != Double.MAX_VALUE)) {
+            ArrayList<Object> minRFValuesArrayList = new ArrayList<>();
+            ArrayList<String> minRFNamesArrayList = new ArrayList<>();
+
+            minRFValuesArrayList.add(minRF);
+            minRFNamesArrayList.add("RF");
+
+            minRFValuesArrayList.add(minRF_calculation);
+            minRFNamesArrayList.add("calculation");
+
+            minRFValuesArrayList.add(minRF_layer);
+            minRFNamesArrayList.add("layer");
+
+            minRFValuesArrayList.add(minRF_position);
+            minRFNamesArrayList.add("position");
+
+            HDF5CompoundType<List<?>> minRFType
+                    = hdf5writer.compound().getInferredType("Minimum RF", minRFNamesArrayList, minRFValuesArrayList);
+
+            String calculationGroup = "laminates/".concat(laminate.getName().concat("/calculation"));
+            hdf5writer.compound().write(calculationGroup.concat("/min RF"), minRFType, minRFValuesArrayList);
         }
     }
 }
