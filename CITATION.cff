@@ -11,5 +11,5 @@ authors:
 repository-code: 'https://github.com/AndiMb/eLamX2'
 url: 'http://www.elamx.de'
 license: GPL-3.0
-version: 2.7.0
-date-released: '2022-07-16'
+version: 3.0.0-beta
+date-released: '2024-07-16'
