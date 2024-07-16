@@ -75,13 +75,11 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
         out.printf(lo,"  ny_crit  = %17.10E%n"  , ncrit[1]);
         out.printf(lo,"  nxy_crit = %17.10E%n"  , ncrit[2]);
         out.println();
-        out.println("Eigenvalues 1 to 5");
         double[] eigenvalues = result.getEigenvalues_();
-        out.printf(lo,"  Eigenv1  = %17.10E%n"  , eigenvalues[0]);
-        out.printf(lo,"  Eigenv2  = %17.10E%n"  , eigenvalues[1]);
-        out.printf(lo,"  Eigenv3  = %17.10E%n"  , eigenvalues[2]);
-        out.printf(lo,"  Eigenv4  = %17.10E%n"  , eigenvalues[3]);
-        out.printf(lo,"  Eigenv5  = %17.10E%n"  , eigenvalues[4]);
+        out.println("Eigenvalues 1 to " + eigenvalues.length);
+        for (int ii = 0; ii < eigenvalues.length; ii++) {
+            out.printf(lo,"  Eigenv%03d = %17.10E%n", (ii+1), eigenvalues[ii]);
+        }
         out.println();
         out.println();
     }  
