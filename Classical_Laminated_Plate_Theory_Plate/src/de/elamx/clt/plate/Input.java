@@ -26,6 +26,7 @@
 package de.elamx.clt.plate;
 
 import de.elamx.clt.plate.Stiffener.Properties.StiffenerProperties;
+import de.elamx.clt.plate.dmatrix.DMatrixService;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -41,7 +42,7 @@ public abstract class Input{
 
     public static final String PROP_LENGTH = "length";
     public static final String PROP_WIDTH = "width";
-    public static final String PROP_WHOLED = "wholeD";
+    public static final String PROP_DMATSERVICE = "dMatService";
     public static final String PROP_BCX = "bcx";
     public static final String PROP_BCY = "bcy";
     public static final String PROP_M = "m";
@@ -49,7 +50,7 @@ public abstract class Input{
     public static final String PROP_STIFF_PROP = "PROP_STIFF_PROP";
     private double  length;
     private double  width;
-    private boolean wholeD;
+    private DMatrixService dMatService;
     private int     bcx;
     private int     bcy;
     private int     m;
@@ -62,11 +63,11 @@ public abstract class Input{
 
     private final StiffenerChangeListener sCl = new StiffenerChangeListener();
 
-    public Input(double length, double width, boolean wholeD,
+    public Input(double length, double width, DMatrixService dMatService,
                            int bcx, int bcy, int m, int n){
         this.length = length;
         this.width  = width;
-        this.wholeD = wholeD;
+        this.dMatService = dMatService;
         this.bcx    = bcx;
         this.bcy    = bcy;
         this.m      = m;
@@ -108,17 +109,17 @@ public abstract class Input{
     /**
      * @return the wholeD
      */
-    public boolean isWholeD() {
-        return wholeD;
+    public DMatrixService getDMatrixService() {
+        return dMatService;
     }
 
     /**
-     * @param wholeD the wholeD to set
+     * @param dMatService the wholeD to set
      */
-    public void setWholeD(boolean wholeD) {
-        boolean oldWholeD = this.wholeD;
-        this.wholeD = wholeD;
-        firePropertyChange(PROP_WHOLED, oldWholeD, wholeD);
+    public void setDMatrixService(DMatrixService dMatService) {
+        DMatrixService oldDMatService = this.dMatService;
+        this.dMatService = dMatService;
+        firePropertyChange(PROP_DMATSERVICE, oldDMatService, dMatService);
     }
 
     /**

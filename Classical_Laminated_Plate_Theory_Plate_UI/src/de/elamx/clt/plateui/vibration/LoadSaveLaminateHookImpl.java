@@ -26,10 +26,16 @@
 package de.elamx.clt.plateui.vibration;
 
 import de.elamx.clt.plate.VibrationInput;
+import de.elamx.clt.plate.dmatrix.DMatrixService;
+import de.elamx.clt.plate.dmatrix.SpecialOrthotropicDMatrixServiceImpl;
+import de.elamx.clt.plate.dmatrix.StandardDMatrixServiceImpl;
+import static de.elamx.clt.plateui.deformation.LoadSaveLaminateHookImpl.getTagValue;
 import de.elamx.clt.plateui.stiffenerui.LoadSaveStiffeners;
 import de.elamx.filesupport.LoadSaveLaminateHook;
 import de.elamx.laminate.Laminat;
 import java.util.Collection;
+import java.util.HashMap;
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -45,6 +51,11 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
 
     @Override
     public void load(Element laminateElement, Laminat laminate) {
+        
+        HashMap<String, DMatrixService> dMatServMap = new HashMap<>();
+        for (DMatrixService c : Lookup.getDefault().lookupAll(DMatrixService.class)) {
+            dMatServMap.put(c.getClass().getName(), c);
+        }
 
         NodeList vibrationList = laminateElement.getElementsByTagName("vibration");
         if (vibrationList.getLength() > 0) {
@@ -64,8 +75,29 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
                     
                     input.setM(Integer.parseInt(getTagValue("m", VibrationElement)));
                     input.setN(Integer.parseInt(getTagValue("n", VibrationElement)));
-                    
-                    input.setWholeD(Boolean.parseBoolean(getTagValue("wholed", VibrationElement)));
+
+                    /*
+                    Die Prüfung auf wholed ist ausschließlich zur Abwärtskompatibilität.
+                    */
+                    String value = getTagValue("wholed", VibrationElement);
+                    if (value == null){
+                        DMatrixService dMatService = null;
+                        try{
+                            dMatService = dMatServMap.get(getTagValue("dmatrixservice", VibrationElement));
+                        }catch (NullPointerException ex){
+                        }
+                        if (dMatService == null) {
+                            dMatService = dMatServMap.get(StandardDMatrixServiceImpl.class.getName());
+                        }
+                        input.setDMatrixService(dMatService);
+                    }else{
+                        boolean wholeD = Boolean.parseBoolean(value);
+                        if (wholeD){
+                            input.setDMatrixService(dMatServMap.get(StandardDMatrixServiceImpl.class.getName()));
+                        }else{
+                            input.setDMatrixService(dMatServMap.get(SpecialOrthotropicDMatrixServiceImpl.class.getName()));
+                        }
+                    }
 
                     LoadSaveStiffeners.loadStiffeners(VibrationElement, input);
                     
@@ -124,7 +156,7 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
             addValue(doc, "m", Integer.toString(input.getM()), dataElement);
             addValue(doc, "n", Integer.toString(input.getN()), dataElement);
             
-            addValue(doc, "wholed", Boolean.toString(input.isWholeD()), dataElement);
+            addValue(doc, "dmatrixservice", input.getDMatrixService().getClass().getName(), dataElement);
                 
             LoadSaveStiffeners.storeStiffeners(doc, dataElement, input);
 

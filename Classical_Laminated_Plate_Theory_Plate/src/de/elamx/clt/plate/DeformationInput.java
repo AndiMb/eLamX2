@@ -27,10 +27,13 @@ package de.elamx.clt.plate;
 
 import de.elamx.clt.plate.Mechanical.TransverseLoad;
 import de.elamx.clt.plate.Stiffener.Properties.StiffenerProperties;
+import de.elamx.clt.plate.dmatrix.DMatrixService;
+import de.elamx.clt.plate.dmatrix.StandardDMatrixServiceImpl;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import org.openide.util.Lookup;
 import org.openide.util.WeakListeners;
 
 
@@ -47,12 +50,12 @@ public class DeformationInput extends Input implements PropertyChangeListener{
     private double maxDisplacementInZ;
 
     public DeformationInput() {
-        this(500.0, 500.0, true, 0, 0, 10, 10);
+        this(500.0, 500.0, Lookup.getDefault().lookup(StandardDMatrixServiceImpl.class), 0, 0, 10, 10);
     }
 
-    public DeformationInput(double length, double width, boolean wholeD,
+    public DeformationInput(double length, double width, DMatrixService dMatService,
             int bcx, int bcy, int m, int n) {
-        super(length, width, wholeD, bcx, bcy, m, n);
+        super(length, width, dMatService, bcx, bcy, m, n);
     }
     
     public void addLoad(TransverseLoad load){
@@ -99,7 +102,7 @@ public class DeformationInput extends Input implements PropertyChangeListener{
     
     @Override
     public Input copy() {
-        DeformationInput in = new DeformationInput(getLength(), getWidth(), isWholeD(), getBcx(), getBcy(), getM(), getN());
+        DeformationInput in = new DeformationInput(getLength(), getWidth(), getDMatrixService(), getBcx(), getBcy(), getM(), getN());
         for (TransverseLoad l : loads){
             in.addLoad(l.getCopy());
         }

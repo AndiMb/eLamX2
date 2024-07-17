@@ -29,10 +29,16 @@ import de.elamx.clt.plate.DeformationInput;
 import de.elamx.clt.plate.Mechanical.PointLoad;
 import de.elamx.clt.plate.Mechanical.SurfaceLoad_const_full;
 import de.elamx.clt.plate.Mechanical.TransverseLoad;
+import de.elamx.clt.plate.dmatrix.DMatrixService;
+import de.elamx.clt.plate.dmatrix.SpecialOrthotropicDMatrixServiceImpl;
+import de.elamx.clt.plate.dmatrix.StandardDMatrixServiceImpl;
+import static de.elamx.clt.plateui.buckling.LoadSaveLaminateHookImpl.getTagValue;
 import de.elamx.clt.plateui.stiffenerui.LoadSaveStiffeners;
 import de.elamx.filesupport.LoadSaveLaminateHook;
 import de.elamx.laminate.Laminat;
 import java.util.Collection;
+import java.util.HashMap;
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -69,6 +75,11 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
     }
 
     public static DeformationInput loadInput(Element DeformationElement) {
+        
+        HashMap<String, DMatrixService> dMatServMap = new HashMap<>();
+        for (DMatrixService c : Lookup.getDefault().lookupAll(DMatrixService.class)) {
+            dMatServMap.put(c.getClass().getName(), c);
+        }
 
         DeformationInput input = new DeformationInput();
 
@@ -81,7 +92,28 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
         input.setM(Integer.parseInt(getTagValue("m", DeformationElement)));
         input.setN(Integer.parseInt(getTagValue("n", DeformationElement)));
 
-        input.setWholeD(Boolean.parseBoolean(getTagValue("wholed", DeformationElement)));
+        /*
+        Die Prüfung auf wholed ist ausschließlich zur Abwärtskompatibilität.
+        */
+        String value = getTagValue("wholed", DeformationElement);
+        if (value == null){
+            DMatrixService dMatService = null;
+            try{
+                dMatService = dMatServMap.get(getTagValue("dmatrixservice", DeformationElement));
+            }catch (NullPointerException ex){
+            }
+            if (dMatService == null) {
+                dMatService = dMatServMap.get(StandardDMatrixServiceImpl.class.getName());
+            }
+            input.setDMatrixService(dMatService);
+        }else{
+            boolean wholeD = Boolean.parseBoolean(value);
+            if (wholeD){
+                input.setDMatrixService(dMatServMap.get(StandardDMatrixServiceImpl.class.getName()));
+            }else{
+                input.setDMatrixService(dMatServMap.get(SpecialOrthotropicDMatrixServiceImpl.class.getName()));
+            }
+        }
         
         String sMaxDispl = getTagValue("maxDisplacement", DeformationElement);
         input.setMaxDisplacementInZ(sMaxDispl == null ? 0.0 : Double.parseDouble(sMaxDispl));
@@ -151,8 +183,8 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
 
         addValue(doc, "m", Integer.toString(input.getM()), dataElement);
         addValue(doc, "n", Integer.toString(input.getN()), dataElement);
-
-        addValue(doc, "wholed", Boolean.toString(input.isWholeD()), dataElement);
+        
+        addValue(doc, "dmatrixservice", input.getDMatrixService().getClass().getName(), dataElement);
         
         addValue(doc, "maxDisplacement", Double.toString(input.getMaxDisplacementInZ()), dataElement);
 

@@ -25,7 +25,10 @@
  */
 package de.elamx.clt.plateui.vibration;
 
+import de.elamx.clt.CLT_Laminate;
+import de.elamx.clt.calculation.dmatrix.DMatrixPanel;
 import de.elamx.clt.plate.VibrationInput;
+import de.elamx.clt.plate.dmatrix.DMatrixService;
 import de.elamx.core.GlobalProperties;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -36,6 +39,8 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
+import java.util.Collection;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -45,7 +50,11 @@ import static javax.swing.SwingConstants.CENTER;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.NumberFormatter;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.util.ImageUtilities;
+import org.openide.util.Lookup;
+import org.openide.util.NbBundle;
 
 /**
  *
@@ -56,6 +65,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
     private static final String[] boundary_cond = new String[]{"SS", "CC", "CF", "FF", "SC", "SF"};
     private static final DecimalFormat lengthFormat = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_THICKNESS);
     private ImageIcon[] bc_icons;
+    private final VibrationModuleData data;
     private final VibrationInput input;
 
     /**
@@ -77,6 +87,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
             }
         }
         initComponents();
+        this.data = data;
         this.input = data != null ? data.getVibrationInput() : null;
 
         if (input != null) {
@@ -88,18 +99,18 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
             bcxComboBox.addItemListener(this);
             bcyComboBox.setSelectedIndex(input.getBcy());
             bcyComboBox.addItemListener(this);
-            if (input.isWholeD()) {
-                DoriginalRadioButton.setSelected(true);
-                woD16D26RadioButton.setSelected(false);
-            } else {
-                DoriginalRadioButton.setSelected(false);
-                woD16D26RadioButton.setSelected(true);
-            }
-            DoriginalRadioButton.addItemListener(this);
-            woD16D26RadioButton.addItemListener(this);
+            setDMatrixComboBox();
+            dMatrixComboBox.setSelectedItem(input.getDMatrixService());
+            dMatrixComboBox.addItemListener(this);
             termsSpinner.setValue(input.getN());
             termsSpinner.addChangeListener(this);
         }
+    }
+    
+    private void setDMatrixComboBox() {
+        Collection<? extends DMatrixService> dMatrixServices = Lookup.getDefault().lookupAll(DMatrixService.class);
+        DefaultComboBoxModel<DMatrixService> dMatModel = new DefaultComboBoxModel<>(dMatrixServices.toArray(DMatrixService[]::new));
+        dMatrixComboBox.setModel(dMatModel);
     }
 
     /**
@@ -110,7 +121,6 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        DmatrixOptionsButtonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -128,8 +138,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
         jLabel5 = new javax.swing.JLabel();
         termsSpinner = new javax.swing.JSpinner();
         DmatrixOptionsPanel = new javax.swing.JPanel();
-        DoriginalRadioButton = new javax.swing.JRadioButton();
-        woD16D26RadioButton = new javax.swing.JRadioButton();
+        dMatrixComboBox = new javax.swing.JComboBox<>();
+        showDMatrixButton = new javax.swing.JButton();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.jLabel1.text")); // NOI18N
 
@@ -157,35 +167,32 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
 
         DmatrixOptionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.DmatrixOptionsPanel.border.title"))); // NOI18N
 
-        DmatrixOptionsButtonGroup.add(DoriginalRadioButton);
-        DoriginalRadioButton.setText(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.DoriginalRadioButton.text")); // NOI18N
-        DoriginalRadioButton.addActionListener(new java.awt.event.ActionListener() {
+        showDMatrixButton.setText(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.showDMatrixButton.text")); // NOI18N
+        showDMatrixButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DoriginalRadioButtonActionPerformed(evt);
+                showDMatrixButtonActionPerformed(evt);
             }
         });
-
-        DmatrixOptionsButtonGroup.add(woD16D26RadioButton);
-        woD16D26RadioButton.setText(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.woD16D26RadioButton.text")); // NOI18N
 
         javax.swing.GroupLayout DmatrixOptionsPanelLayout = new javax.swing.GroupLayout(DmatrixOptionsPanel);
         DmatrixOptionsPanel.setLayout(DmatrixOptionsPanelLayout);
         DmatrixOptionsPanelLayout.setHorizontalGroup(
             DmatrixOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DmatrixOptionsPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(DmatrixOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DoriginalRadioButton)
-                    .addComponent(woD16D26RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(dMatrixComboBox, 0, 152, Short.MAX_VALUE)
+                    .addComponent(showDMatrixButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         DmatrixOptionsPanelLayout.setVerticalGroup(
             DmatrixOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DmatrixOptionsPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DmatrixOptionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(DoriginalRadioButton)
+                .addComponent(dMatrixComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(woD16D26RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6))
+                .addComponent(showDMatrixButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -237,31 +244,41 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(termsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DmatrixOptionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void DoriginalRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoriginalRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DoriginalRadioButtonActionPerformed
+    private void showDMatrixButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDMatrixButtonActionPerformed
+        DMatrixService dMatServ = dMatrixComboBox.getItemAt(dMatrixComboBox.getSelectedIndex());
+        
+        double [][] dmat = dMatServ.getDMatrix(data.getLaminat().getLookup().lookup(CLT_Laminate.class));
+        
+        NotifyDescriptor nd = new NotifyDescriptor(
+                new DMatrixPanel(dmat, dMatServ.getName(), dMatServ.getShortName()),
+                NbBundle.getBundle(de.elamx.clt.plateui.vibration.InputPanel.class).getString("OpenDMatAction.Title"), 
+                NotifyDescriptor.DEFAULT_OPTION, 
+                NotifyDescriptor.PLAIN_MESSAGE, 
+                new Object[] { NotifyDescriptor.OK_OPTION }, 
+                NotifyDescriptor.OK_OPTION);
+        DialogDisplayer.getDefault().notify(nd);
+    }//GEN-LAST:event_showDMatrixButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup DmatrixOptionsButtonGroup;
     private javax.swing.JPanel DmatrixOptionsPanel;
-    private javax.swing.JRadioButton DoriginalRadioButton;
     private javax.swing.JComboBox<Integer> bcxComboBox;
     private javax.swing.JComboBox<Integer> bcyComboBox;
+    private javax.swing.JComboBox<DMatrixService> dMatrixComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JFormattedTextField lengthField;
+    private javax.swing.JButton showDMatrixButton;
     private javax.swing.JSpinner termsSpinner;
     private javax.swing.JFormattedTextField widthField;
-    private javax.swing.JRadioButton woD16D26RadioButton;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -287,8 +304,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
             input.setBcx(bcxComboBox.getSelectedIndex());
         } else if (o == bcyComboBox) {
             input.setBcy(bcyComboBox.getSelectedIndex());
-        } else if ((o == DoriginalRadioButton) || (o == woD16D26RadioButton)) {
-            input.setWholeD(!woD16D26RadioButton.isSelected());
+        } else if (o == dMatrixComboBox) {
+            input.setDMatrixService(dMatrixComboBox.getItemAt(dMatrixComboBox.getSelectedIndex()));
         }
     }
 

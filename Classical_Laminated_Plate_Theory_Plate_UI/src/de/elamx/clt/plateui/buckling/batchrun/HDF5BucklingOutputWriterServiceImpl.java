@@ -51,18 +51,8 @@ public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWr
         String groupName = bucklingGroup.concat(data.getName());
         hdf5writer.object().createGroup(groupName);
 
-        double [][] dmat;
-        String dMatrixOption;
-        if (data.getBucklingInput().isDtilde()) {
-            dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDtildeMatrix();
-            dMatrixOption = "D-tilde matrix";
-        } else if(!data.getBucklingInput().isWholeD()) {
-            dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrixWithZeroD12D16();
-            dMatrixOption = "D matrix with D_{16} = D_{26} = 0";
-        } else {
-            dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrix();
-            dMatrixOption = "Original D matrix";
-        }
+        double [][] dmat = data.getBucklingInput().getDMatrixService().getDMatrix(data.getLaminat().getLookup().lookup(CLT_Laminate.class));
+        String dMatrixOption = data.getBucklingInput().getDMatrixService().getBatchRunOutput();
 
         hdf5writer.float64().createMatrix(groupName.concat("/D matrix used"), 3, 3);
         hdf5writer.float64().writeMatrix(groupName.concat("/D matrix used"), dmat);

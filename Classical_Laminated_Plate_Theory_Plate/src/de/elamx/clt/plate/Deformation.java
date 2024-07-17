@@ -111,7 +111,7 @@ public class Deformation {
         double[]   fvec = new double[m * n];          // Kraftvektor
 
         // Aufruf der Methoden addStiffness für Platte, Last zum Füllen von Kmat und Kgmat
-        plate.addStiffness(laminat, kmat, m, n, input.isWholeD(), bx, by); // fill stiffness matrix from Plate.class
+        plate.addStiffness(laminat, kmat, m, n, input.getDMatrixService(), bx, by); // fill stiffness matrix from Plate.class
         // fill Loadvector from Load.class
         for (TransverseLoad load : input.getLoads()) {
             load.add(fvec, m, n, bx, by);

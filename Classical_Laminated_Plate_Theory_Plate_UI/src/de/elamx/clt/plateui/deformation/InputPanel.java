@@ -25,7 +25,10 @@
  */
 package de.elamx.clt.plateui.deformation;
 
+import de.elamx.clt.CLT_Laminate;
+import de.elamx.clt.calculation.dmatrix.DMatrixPanel;
 import de.elamx.clt.plate.DeformationInput;
+import de.elamx.clt.plate.dmatrix.DMatrixService;
 import de.elamx.clt.plateui.deformation.load.LoadPanel;
 import de.elamx.core.GlobalProperties;
 import java.awt.Component;
@@ -37,6 +40,8 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
+import java.util.Collection;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -45,8 +50,12 @@ import javax.swing.ListCellRenderer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.NumberFormatter;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.explorer.ExplorerManager;
 import org.openide.util.ImageUtilities;
+import org.openide.util.Lookup;
+import org.openide.util.NbBundle;
 
 /**
  *
@@ -57,6 +66,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
     private static final String[] boundary_cond = new String[]{"SS", "CC", "CF", "FF", "SC", "SF"};
     private static final DecimalFormat lengthFormat = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_THICKNESS);
     private ImageIcon[] bc_icons;
+    private final DeformationModuleData data;
     private final DeformationInput input;
 
     public InputPanel() {
@@ -77,6 +87,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                 bc_icons[i].setDescription(boundary_cond[i]);
             }
         }
+        this.data = data;
         this.input = data != null ? data.getDeformationInput() : null;
         initComponents();
 
@@ -89,10 +100,20 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
             bcxComboBox.addItemListener(this);
             bcyComboBox.setSelectedIndex(input.getBcy());
             bcyComboBox.addItemListener(this);
+            setDMatrixComboBox();
+            dMatrixComboBox.setSelectedItem(input.getDMatrixService());
+            dMatrixComboBox.addItemListener(this);
             termsSpinner.setValue(input.getN());
             termsSpinner.addChangeListener(this);
         }
     }
+    
+    private void setDMatrixComboBox() {
+        Collection<? extends DMatrixService> dMatrixServices = Lookup.getDefault().lookupAll(DMatrixService.class);
+        DefaultComboBoxModel<DMatrixService> dMatModel = new DefaultComboBoxModel<>(dMatrixServices.toArray(DMatrixService[]::new));
+        dMatrixComboBox.setModel(dMatModel);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,6 +141,9 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
         lengthField = new javax.swing.JFormattedTextField();
         widthField = new javax.swing.JFormattedTextField();
         loadPanel1 = new LoadPanel(input);
+        dmatrixOptionsPanel = new javax.swing.JPanel();
+        dMatrixComboBox = new javax.swing.JComboBox<>();
+        showDMatrixButton = new javax.swing.JButton();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.jLabel1.text")); // NOI18N
 
@@ -145,6 +169,36 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
 
         loadPanel1.setMinimumSize(new java.awt.Dimension(113, 150));
 
+        dmatrixOptionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.dmatrixOptionsPanel.border.title"))); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(showDMatrixButton, org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.showDMatrixButton.text")); // NOI18N
+        showDMatrixButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showDMatrixButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout dmatrixOptionsPanelLayout = new javax.swing.GroupLayout(dmatrixOptionsPanel);
+        dmatrixOptionsPanel.setLayout(dmatrixOptionsPanelLayout);
+        dmatrixOptionsPanelLayout.setHorizontalGroup(
+            dmatrixOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dmatrixOptionsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dmatrixOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dMatrixComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(showDMatrixButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        dmatrixOptionsPanelLayout.setVerticalGroup(
+            dmatrixOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dmatrixOptionsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dMatrixComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(showDMatrixButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -166,7 +220,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                             .addComponent(widthField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lengthField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(termsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(loadPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(loadPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(dmatrixOptionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -194,12 +249,32 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                     .addComponent(termsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(loadPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dmatrixOptionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void showDMatrixButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDMatrixButtonActionPerformed
+        DMatrixService dMatServ = dMatrixComboBox.getItemAt(dMatrixComboBox.getSelectedIndex());
+        
+        double [][] dmat = dMatServ.getDMatrix(data.getLaminat().getLookup().lookup(CLT_Laminate.class));
+        
+        NotifyDescriptor nd = new NotifyDescriptor(
+                new DMatrixPanel(dmat, dMatServ.getName(), dMatServ.getShortName()),
+                NbBundle.getBundle(de.elamx.clt.plateui.deformation.InputPanel.class).getString("OpenDMatAction.Title"), 
+                NotifyDescriptor.DEFAULT_OPTION, 
+                NotifyDescriptor.PLAIN_MESSAGE, 
+                new Object[] { NotifyDescriptor.OK_OPTION }, 
+                NotifyDescriptor.OK_OPTION);
+        DialogDisplayer.getDefault().notify(nd);
+    }//GEN-LAST:event_showDMatrixButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Integer> bcxComboBox;
     private javax.swing.JComboBox<Integer> bcyComboBox;
+    private javax.swing.JComboBox<DMatrixService> dMatrixComboBox;
+    private javax.swing.JPanel dmatrixOptionsPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -207,6 +282,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
     private javax.swing.JLabel jLabel8;
     private javax.swing.JFormattedTextField lengthField;
     private de.elamx.clt.plateui.deformation.load.LoadPanel loadPanel1;
+    private javax.swing.JButton showDMatrixButton;
     private javax.swing.JSpinner termsSpinner;
     private javax.swing.JFormattedTextField widthField;
     // End of variables declaration//GEN-END:variables
@@ -228,6 +304,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
             input.setBcx(bcxComboBox.getSelectedIndex());
         } else if (o == bcyComboBox) {
             input.setBcy(bcyComboBox.getSelectedIndex());
+        } else if (o == dMatrixComboBox) {
+            input.setDMatrixService(dMatrixComboBox.getItemAt(dMatrixComboBox.getSelectedIndex()));
         }
     }
 

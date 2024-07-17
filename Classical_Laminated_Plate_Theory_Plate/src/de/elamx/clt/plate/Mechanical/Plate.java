@@ -28,6 +28,7 @@ package de.elamx.clt.plate.Mechanical;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.CLT_Laminate.MassMoments;
 import de.elamx.clt.plate.Boundary.Boundary;
+import de.elamx.clt.plate.dmatrix.DMatrixService;
 
 /*
  * To change this template, choose Tools | Templates
@@ -101,39 +102,15 @@ public class Plate {
      * @param kmat Steifigkeitsmatrix (m*n x m*n)
      * @param m Anzahl der Terme für den Ritz-Ansatz in x-Richtung
      * @param n Anzahl der Terme für den Ritz-Ansatz in y-Richtung
-     * @param wholeD Flag, ob die D16 und D26 Terme der D-Matrix des Laminates null gesetzt werden sollen
+     * @param dMatServ Objekt, das eine eventuell angepasst D-Matrix des Laminates für die Berechnung bereitstellt
      * @param bx Randbedingungsobjekt in x-Richtung
      * @param by Randbedingungsobjekt in y-Richtung
      */
-    public void addStiffness(CLT_Laminate laminat, double[][] kmat, int m, int n, boolean wholeD, Boundary bx, Boundary by){
-        this.addStiffness(laminat, kmat, m, n, wholeD, false, bx, by);
-    }
-    
-    /**
-     * Fügt die Eigenschaften der Platte der Steifigkeitsmatix basierend auf den
-     * Randbedingungen hinzu. Dabei werden die Werte auf die entsprechenden Terme
-     * addiert. Deshalb muss die Steifigkeitsmatrix am Anfang null gesetzt werden.
-     * @param laminat Laminat der Platte
-     * @param kmat Steifigkeitsmatrix (m*n x m*n)
-     * @param m Anzahl der Terme für den Ritz-Ansatz in x-Richtung
-     * @param n Anzahl der Terme für den Ritz-Ansatz in y-Richtung
-     * @param wholeD Flag, ob die D16 und D26 Terme der D-Matrix des Laminates null gesetzt werden sollen
-     * @param Dtilde Flag, die D-Matrix durch D-Tilde-Matrix ersetzt werden soll
-     * @param bx Randbedingungsobjekt in x-Richtung
-     * @param by Randbedingungsobjekt in y-Richtung
-     */
-    public void addStiffness(CLT_Laminate laminat, double[][] kmat, int m, int n, boolean wholeD, boolean Dtilde, Boundary bx, Boundary by){
+    public void addStiffness(CLT_Laminate laminat, double[][] kmat, int m, int n, DMatrixService dMatServ, Boundary bx, Boundary by){
 
         // Hier wird die D-Matrix des Laminates gespeichert.
         // Gegebenenfalls Nutzung von D-Tilde anstelle von D Matrix
-        double [][] dmat;
-        if (Dtilde) {
-            dmat = laminat.getDtildeMatrix();
-        } else if(!wholeD) {
-            dmat = laminat.getDMatrixWithZeroD12D16();
-        } else {
-            dmat = laminat.getDMatrix();
-        }
+        double [][] dmat = dMatServ.getDMatrix(laminat);
 
         int k = -1; // Laufvariable (1. Index) für die Steifigkeitsmatrix
         int l = -1; // Laufvariable (2. Index) für die Steifigkeitsmatrix
@@ -195,14 +172,8 @@ public class Plate {
         }
     }
     
-    public void addStiffnessAndMass(CLT_Laminate laminat, double[][] kmat, double[][] mmat, int m, int n, boolean wholeD, Boundary bx, Boundary by){
-        this.addStiffnessAndMass(laminat, kmat, mmat, m, n, wholeD, false, bx, by);
-    }
-    
-    public void addStiffnessAndMass(CLT_Laminate laminat, double[][] kmat, double[][] mmat, int m, int n, boolean wholeD, boolean Dtilde, Boundary bx, Boundary by){
-        
+    public void addStiffnessAndMass(CLT_Laminate laminat, double[][] kmat, double[][] mmat, int m, int n, DMatrixService dMatServ, Boundary bx, Boundary by){
         addMass(laminat, mmat, m, n, bx, by);
-        addStiffness(laminat, kmat, m, n, wholeD, Dtilde, bx, by);
-        
+        addStiffness(laminat, kmat, m, n, dMatServ, bx, by);
     }
 }

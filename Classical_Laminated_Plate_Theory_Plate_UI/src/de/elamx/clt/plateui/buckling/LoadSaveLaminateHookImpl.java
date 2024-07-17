@@ -26,10 +26,15 @@
 package de.elamx.clt.plateui.buckling;
 
 import de.elamx.clt.plate.BucklingInput;
+import de.elamx.clt.plate.dmatrix.DMatrixService;
+import de.elamx.clt.plate.dmatrix.SpecialOrthotropicDMatrixServiceImpl;
+import de.elamx.clt.plate.dmatrix.StandardDMatrixServiceImpl;
 import de.elamx.clt.plateui.stiffenerui.LoadSaveStiffeners;
 import de.elamx.filesupport.LoadSaveLaminateHook;
 import de.elamx.laminate.Laminat;
 import java.util.Collection;
+import java.util.HashMap;
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -66,6 +71,12 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
     }
 
     public static BucklingInput loadInput(Element BucklingElement) {
+        
+        HashMap<String, DMatrixService> dMatServMap = new HashMap<>();
+        for (DMatrixService c : Lookup.getDefault().lookupAll(DMatrixService.class)) {
+            dMatServMap.put(c.getClass().getName(), c);
+        }
+        
         BucklingInput input = new BucklingInput();
 
         input.setNx(Double.parseDouble(getTagValue("n_x", BucklingElement)));
@@ -81,13 +92,27 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
         input.setM(Integer.parseInt(getTagValue("m", BucklingElement)));
         input.setN(Integer.parseInt(getTagValue("n", BucklingElement)));
 
-        input.setWholeD(Boolean.parseBoolean(getTagValue("wholed", BucklingElement)));
-
-        String dTildeString = getTagValue("dtilde", BucklingElement);
-        if (dTildeString != null) {
-            input.setDtilde(Boolean.parseBoolean(dTildeString));
-        } else {
-            input.setDtilde(false);
+        /*
+        Die Prüfung auf wholed ist ausschließlich zur Abwärtskompatibilität.
+        */
+        String value = getTagValue("wholed", BucklingElement);
+        if (value == null){
+            DMatrixService dMatService = null;
+            try{
+                dMatService = dMatServMap.get(getTagValue("dmatrixservice", BucklingElement));
+            }catch (NullPointerException ex){
+            }
+            if (dMatService == null) {
+                dMatService = dMatServMap.get(StandardDMatrixServiceImpl.class.getName());
+            }
+            input.setDMatrixService(dMatService);
+        }else{
+            boolean wholeD = Boolean.parseBoolean(value);
+            if (wholeD){
+                input.setDMatrixService(dMatServMap.get(StandardDMatrixServiceImpl.class.getName()));
+            }else{
+                input.setDMatrixService(dMatServMap.get(SpecialOrthotropicDMatrixServiceImpl.class.getName()));
+            }
         }
 
         LoadSaveStiffeners.loadStiffeners(BucklingElement, input);
@@ -155,8 +180,7 @@ public class LoadSaveLaminateHookImpl implements LoadSaveLaminateHook {
         addValue(doc, "m", Integer.toString(input.getM()), dataElement);
         addValue(doc, "n", Integer.toString(input.getN()), dataElement);
 
-        addValue(doc, "wholed", Boolean.toString(input.isWholeD()), dataElement);
-        addValue(doc, "dtilde", Boolean.toString(input.isDtilde()), dataElement);
+        addValue(doc, "dmatrixservice", input.getDMatrixService().getClass().getName(), dataElement);
     }
 
     private static void addValue(Document doc, String eName, String value, Element eElement) {
