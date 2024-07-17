@@ -37,8 +37,6 @@ import org.openide.util.Lookup;
  */
 public class BucklingInput extends Input{
 
-    public static final String PROP_DTILDE = "Dtilde";
-
     public static final String PROP_NX = "nx";
     public static final String PROP_NY = "ny";
     public static final String PROP_NXY = "nxy";
