@@ -26,6 +26,9 @@
 package de.elamx.clt.plate;
 
 import de.elamx.clt.plate.Stiffener.Properties.StiffenerProperties;
+import de.elamx.clt.plate.dmatrix.DMatrixService;
+import de.elamx.clt.plate.dmatrix.StandardDMatrixServiceImpl;
+import org.openide.util.Lookup;
 
 
 /**
@@ -42,19 +45,17 @@ public class BucklingInput extends Input{
     private double nx;
     private double ny;
     private double nxy;
-    private boolean Dtilde;
 
     public BucklingInput() {
-        this(500.0, 500.0, 1.0, 0.0, 0.0, true, false, 0, 0, 10, 10);
+        this(500.0, 500.0, 1.0, 0.0, 0.0, Lookup.getDefault().lookup(StandardDMatrixServiceImpl.class), 0, 0, 10, 10);
     }
 
-    public BucklingInput(double length, double width, double nx, double ny, double nxy, boolean wholeD, boolean Dtilde,
+    public BucklingInput(double length, double width, double nx, double ny, double nxy, DMatrixService dMatService,
             int bcx, int bcy, int m, int n) {
-        super(length, width, wholeD, bcx, bcy, m, n);
+        super(length, width, dMatService, bcx, bcy, m, n);
         this.nx = nx;
         this.ny = ny;
         this.nxy = nxy;
-        this.Dtilde = Dtilde;
     }
 
     /**
@@ -105,25 +106,9 @@ public class BucklingInput extends Input{
         firePropertyChange(PROP_NXY, oldNxy, nxy);
     }
 
-    /**
-     * @return the Dtilde
-     */
-    public boolean isDtilde() {
-        return Dtilde;
-    }
-
-    /**
-     * @param Dtilde the Dtilde to set
-     */
-    public void setDtilde(boolean Dtilde) {
-        boolean oldDtilde = this.Dtilde;
-        this.Dtilde = Dtilde;
-        firePropertyChange(PROP_DTILDE, oldDtilde, Dtilde);
-    }
-
     @Override
     public Input copy() {
-        Input in = new BucklingInput(getLength(), getWidth(), nx, ny, nxy, isWholeD(), isDtilde(), getBcx(), getBcy(), getM(), getN());
+        Input in = new BucklingInput(getLength(), getWidth(), nx, ny, nxy, getDMatrixService(), getBcx(), getBcy(), getM(), getN());
         for (StiffenerProperties ss : getStiffenerProperties()){
             in.addStiffenerProperty(ss.getCopy());
         }

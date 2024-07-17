@@ -44,18 +44,8 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
     @Override
     public void writeResults(PrintStream out, BucklingModuleData data, Laminat laminate, BucklingResult result){
         Locale lo = Locale.ENGLISH;      
-        double [][] dmat;
-        String dMatrixOption;
-        if (data.getBucklingInput().isDtilde()) {
-            dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDtildeMatrix();
-            dMatrixOption = "D-tilde matrix";
-        } else if(!data.getBucklingInput().isWholeD()) {
-            dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrixWithZeroD12D16();
-            dMatrixOption = "D matrix with D_{16} = D_{26} = 0";
-        } else {
-            dmat = data.getLaminat().getLookup().lookup(CLT_Laminate.class).getDMatrix();
-            dMatrixOption = "Original D matrix";
-        }
+        double [][] dmat = data.getBucklingInput().getDMatrixService().getDMatrix(data.getLaminat().getLookup().lookup(CLT_Laminate.class));
+        String dMatrixOption = data.getBucklingInput().getDMatrixService().getBatchRunOutput();
         out.println("********************************************************************************");
         out.println(Utilities.centeredText("BUCKLING", 80));
         out.println(Utilities.centeredText(data.getName(), 80));
@@ -66,8 +56,8 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
         out.println("D-matrix option: " + dMatrixOption);
         out.println("D-matrix used:");
         for (int ii=0; ii<3; ii++) {
-        out.printf(lo,"  %10.1f    %10.1f    %10.1f%n"  , dmat[ii][0], dmat[ii][1], dmat[ii][2]);
-        };
+            out.printf(lo,"  %10.1f    %10.1f    %10.1f%n"  , dmat[ii][0], dmat[ii][1], dmat[ii][2]);
+        }
         out.println();
         out.println("critical load");
         double[] ncrit = result.getN_crit();

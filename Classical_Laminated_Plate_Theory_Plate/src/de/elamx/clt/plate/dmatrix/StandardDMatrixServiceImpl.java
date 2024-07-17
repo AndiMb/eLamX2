@@ -23,34 +23,35 @@
  *  You should have received a copy of the GNU General Public License
  *  along with eLamX².  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.elamx.clt.plate;
+package de.elamx.clt.plate.dmatrix;
 
-import de.elamx.clt.plate.Stiffener.Properties.StiffenerProperties;
-import de.elamx.clt.plate.dmatrix.DMatrixService;
-import de.elamx.clt.plate.dmatrix.StandardDMatrixServiceImpl;
-import org.openide.util.Lookup;
+import de.elamx.clt.CLT_Laminate;
+import org.openide.util.NbBundle;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author raedel
+ * @author Andreas Hauffe
  */
-public class VibrationInput extends Input{
-
-    public VibrationInput() {
-        this(500.0, 500.0, Lookup.getDefault().lookup(StandardDMatrixServiceImpl.class), 0, 0, 10, 10);
-    }
-
-    public VibrationInput(double length, double width, DMatrixService dMatService, int bcx, int bcy, int m, int n) {
-        super(length, width, dMatService, bcx, bcy, m, n);
+@ServiceProvider(service=DMatrixService.class, position=1)
+public class StandardDMatrixServiceImpl extends DMatrixService {
+    
+    public StandardDMatrixServiceImpl() {
+        super(NbBundle.getMessage(StandardDMatrixServiceImpl.class, "StandardDMatrixServiceImpl.name"), "D");
     }
 
     @Override
-    public Input copy() {
-        VibrationInput in = new VibrationInput(getLength(), getWidth(), getDMatrixService(), getBcx(), getBcy(), getM(), getN());
-        for (StiffenerProperties ss : getStiffenerProperties()){
-            in.addStiffenerProperty(ss.getCopy());
-        }
-        return in;
+    public double[][] getDMatrix(CLT_Laminate laminate) {
+        return laminate.getDMatrix();
     }
-    
+
+    @Override
+    public boolean needsSymmetricLaminate() {
+        return true;
+    }
+
+    @Override
+    public String getBatchRunOutput() {
+        return "Original D matrix";
+    }
 }

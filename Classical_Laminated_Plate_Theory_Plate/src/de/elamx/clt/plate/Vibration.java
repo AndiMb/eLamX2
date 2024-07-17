@@ -116,7 +116,7 @@ public class Vibration {
         double[][] mmat  = new double[m_*n_][m_*n_]; // Massenmatrix
 
         // Aufruf der Methoden add für Platte, Last zum Füllen von Kmat und Kgmat
-        plate.addStiffnessAndMass(laminat, kmat, mmat, m_, n_, input.isWholeD(), bx, by); // fill stiffness and mass matrix from Plate.class
+        plate.addStiffnessAndMass(laminat, kmat, mmat, m_, n_, input.getDMatrixService(), bx, by); // fill stiffness and mass matrix from Plate.class
 
         
         for (StiffenerProperties s : input.getStiffenerProperties()) {

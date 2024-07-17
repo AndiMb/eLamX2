@@ -61,6 +61,14 @@
                     </run-dependency>
                 </dependency>
                 <dependency>
+                    <code-name-base>org.openide.dialogs</code-name-base>
+                    <build-prerequisite/>
+                    <compile-dependency/>
+                    <run-dependency>
+                        <specification-version>7.71</specification-version>
+                    </run-dependency>
+                </dependency>
+                <dependency>
                     <code-name-base>org.openide.util</code-name-base>
                     <build-prerequisite/>
                     <compile-dependency/>
@@ -83,6 +91,7 @@
                 <package>de.elamx.clt.plate.Mechanical</package>
                 <package>de.elamx.clt.plate.Stiffener</package>
                 <package>de.elamx.clt.plate.Stiffener.Properties</package>
+                <package>de.elamx.clt.plate.dmatrix</package>
                 <package>de.elamx.clt.plate.view3d</package>
             </public-packages>
         </data>
