@@ -314,8 +314,8 @@ public class CLT_Calculator {
         List<boolean[]> fb_failList = new ArrayList<>(2 * numLayers);
         List<Integer> layerNumberList = new ArrayList<>(2 * numLayers);
         List<Double> rf_minList = new ArrayList<>(2 * numLayers);
-        List<String> FailureTypeList = new ArrayList<>(2 * numLayers);
-        List<String> FailureTypeShortList = new ArrayList<>(2 * numLayers);
+        List<String> failureNameList = new ArrayList<>(2 * numLayers);
+        List<Integer> failureTypeList = new ArrayList<>(2 * numLayers);
 
         boolean lastIteration = false;
         for (int iter = 0; iter < 2 * numLayers; iter++) {
@@ -406,16 +406,8 @@ public class CLT_Calculator {
             fb_failList.add(fb_failTemp);
             layerNumberList.add(layerResults[minLayerIndex].getLayer().getNumber());
             rf_minList.add(rf_min.getMinimalReserveFactor() * j_A_set);
-            FailureTypeList.add(rf_min.getFailureName());
-            if (rf_min.getFailureType() == ReserveFactor.MATRIX_FAILURE) {
-                FailureTypeShortList.add("IFF");
-            } else if (rf_min.getFailureType() == ReserveFactor.FIBER_FAILURE) {
-                FailureTypeShortList.add("FF");
-            } else if (rf_min.getFailureType() == ReserveFactor.GENERAL_MATERIAL_FAILURE) {
-                FailureTypeShortList.add("GMF");
-            } else {
-                FailureTypeShortList.add("");
-            }
+            failureNameList.add(rf_min.getFailureName());
+            failureTypeList.add(rf_min.getFailureType());
 
             if ((rf_first_iff == null) && (rf_min.getFailureType() == ReserveFactor.MATRIX_FAILURE)) {
                 rf_first_iff = rf_min.getMinimalReserveFactor() * j_A_set;
@@ -440,8 +432,8 @@ public class CLT_Calculator {
                 fb_failList.toArray(boolean[][]::new),
                 layerNumberList.toArray(Integer[]::new),
                 rf_minList.toArray(Double[]::new),
-                FailureTypeList.toArray(String[]::new),
-                FailureTypeShortList.toArray(String[]::new),
+                failureNameList.toArray(String[]::new),
+                failureTypeList.toArray(Integer[]::new),
                 rf_first_ff,
                 rf_first_iff,
                 rf_first_epsilon,
