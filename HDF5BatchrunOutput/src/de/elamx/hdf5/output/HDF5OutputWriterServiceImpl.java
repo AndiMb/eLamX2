@@ -38,10 +38,12 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
+import org.openide.util.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -52,7 +54,10 @@ import org.openide.util.lookup.ServiceProvider;
 public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
 
     @Override
-    public void writeHeader(IHDF5Writer hdf5writer, File inputFile) {
+    public void writeHeader(IHDF5Writer hdf5writer, File inputFile, Date date) {
+        hdf5writer.string().write("elamx version", NbBundle.getBundle("org.netbeans.core.startup.Bundle").getString("currentVersion"));
+        hdf5writer.string().write("timestamp", date.toString());
+        
         hdf5writer.object().createGroup("materials");
         hdf5writer.object().createGroup("laminates");
 

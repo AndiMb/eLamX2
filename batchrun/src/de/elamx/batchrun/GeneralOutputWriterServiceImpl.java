@@ -33,7 +33,9 @@ import de.elamx.laminate.Material;
 import de.elamx.utilities.Utilities;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
+import org.openide.util.NbBundle;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -49,12 +51,16 @@ public class GeneralOutputWriterServiceImpl implements GeneralOutputWriterServic
      * @param out PrintStream für die Ausgaben
      */
     @Override
-    public void writeHeader(PrintStream out) {
+    public void writeHeader(PrintStream out, Date date) {
         out.println("eLamX 2 - Module Calculation");
+        out.println("");
+        out.println("Version: " + NbBundle.getBundle("org.netbeans.core.startup.Bundle").getString("currentVersion"));
         out.println("");
         out.println("Technische Universitaet Dresden");
         out.println("Lehrstuhl fuer Luftfahrzeugtechnik");
         out.println("http://tu-dresden.de/mw/ilr/lft");
+        out.println("");
+        out.println("Timestamp: " + date.toString());
         out.println();
         out.println();
     }

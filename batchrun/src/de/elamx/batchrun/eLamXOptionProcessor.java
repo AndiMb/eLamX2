@@ -40,6 +40,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -161,11 +162,12 @@ public class eLamXOptionProcessor extends OptionProcessor {
         HDF5OutputWriterService hdf5WriterService = hdf5WriterServices.get(Math.min(Math.max(hdf5OutputType, 0), writerServices.size() - 1));
 
         // Schreiben des Headers
-        writerService.writeHeader(out);
+        Date date = new Date();
+        writerService.writeHeader(out, date);
 
         // Schreiben des Headers der hdf5-Datei
         if (hdf5out != null) {
-            hdf5WriterService.writeHeader(hdf5out, inputFile);
+            hdf5WriterService.writeHeader(hdf5out, inputFile, date);
         }
 
         // Schleife über alle in der eLamX-Datei enthaltenen Materialien

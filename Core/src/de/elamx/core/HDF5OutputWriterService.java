@@ -29,6 +29,7 @@ import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Material;
 import java.io.File;
+import java.util.Date;
 
 /**
  *
@@ -36,7 +37,7 @@ import java.io.File;
  */
 public interface HDF5OutputWriterService {
     
-    public void writeHeader(IHDF5Writer hdf5writer, File inputFile);
+    public void writeHeader(IHDF5Writer hdf5writer, File inputFile, Date date);
     
     public void writeLaminateInformation(IHDF5Writer hdf5writer, Laminat laminate);
     
