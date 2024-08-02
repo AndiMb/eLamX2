@@ -46,6 +46,8 @@ import org.openide.util.lookup.ServiceProvider;
  */
 @ServiceProvider(service=BatchRunService.class)
 public class BucklingBatchRunServiceImpl implements BatchRunService{
+    
+    private static HDF5CompoundType<List<?>> HDF5minEVType = null;
 
     @Override
     public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, IHDF5Writer hdf5writer, int outputType) {
@@ -94,11 +96,12 @@ public class BucklingBatchRunServiceImpl implements BatchRunService{
             minEVValuesArrayList.add(minEV_calculation);
             minEVNamesArrayList.add("buckling");
 
-            HDF5CompoundType<List<?>> minEVType
-                    = hdf5writer.compound().getInferredType("Minimum positive eigenvalue", minEVNamesArrayList, minEVValuesArrayList);
+            if (HDF5minEVType == null) {
+                HDF5minEVType = hdf5writer.compound().getInferredType("Minimum positive eigenvalue", minEVNamesArrayList, minEVValuesArrayList);
+            }
 
             String calculationGroup = "laminates/".concat(laminate.getName().concat("/buckling"));
-            hdf5writer.compound().write(calculationGroup.concat("/min pos eigenvalue"), minEVType, minEVValuesArrayList);
+            hdf5writer.compound().write(calculationGroup.concat("/min pos eigenvalue"), HDF5minEVType, minEVValuesArrayList);
         }
     }
 }

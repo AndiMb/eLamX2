@@ -53,11 +53,14 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = HDF5OutputWriterService.class, position = 1000)
 public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
 
+    private static HDF5CompoundType<List<?>> HDF5effectiveStiffnessWithPoissonType = null;
+    private static HDF5CompoundType<List<?>> HDF5effectiveStiffnessWithoutPoissonType = null;
+
     @Override
     public void writeHeader(IHDF5Writer hdf5writer, File inputFile, Date date) {
         hdf5writer.string().write("elamx version", NbBundle.getBundle("org.netbeans.core.startup.Bundle").getString("currentVersion"));
         hdf5writer.string().write("timestamp", date.toString());
-        
+
         hdf5writer.object().createGroup("materials");
         hdf5writer.object().createGroup("laminates");
 
@@ -121,11 +124,12 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         effectiveStiffnessValuesArrayList.add(clt_laminate.getNuyxSimple());
         effectiveStiffnessNamesArrayList.add("vyx");
 
-        HDF5CompoundType<List<?>> effectiveStiffnessType
-                = hdf5writer.compound().getInferredType("Effective stiffness with poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
+        if (HDF5effectiveStiffnessWithPoissonType == null) {
+            HDF5effectiveStiffnessWithPoissonType = hdf5writer.compound().getInferredType("Effective stiffness with poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
+        }
 
-        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane"), effectiveStiffnessType, effectiveStiffnessValuesArrayList);
-        
+        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/membrane"), HDF5effectiveStiffnessWithPoissonType, effectiveStiffnessValuesArrayList);
+
         effectiveStiffnessValuesArrayList = new ArrayList<>();
         effectiveStiffnessNamesArrayList = new ArrayList<>();
 
@@ -144,13 +148,10 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         effectiveStiffnessValuesArrayList.add(clt_laminate.getNuyxBendSimple());
         effectiveStiffnessNamesArrayList.add("vyx");
 
-        effectiveStiffnessType
-                = hdf5writer.compound().getInferredType("Effective stiffness with poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
-
-        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/flexural"), effectiveStiffnessType, effectiveStiffnessValuesArrayList);
+        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/with poisson effect/flexural"), HDF5effectiveStiffnessWithPoissonType, effectiveStiffnessValuesArrayList);
 
         hdf5writer.object().createGroup("/".concat(groupName).concat("/effective stiffness/without poisson effect"));
-        
+
         effectiveStiffnessValuesArrayList = new ArrayList<>();
         effectiveStiffnessNamesArrayList = new ArrayList<>();
 
@@ -163,11 +164,12 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         effectiveStiffnessValuesArrayList.add(clt_laminate.getGFixed());
         effectiveStiffnessNamesArrayList.add("Gxy");
 
-        effectiveStiffnessType
-                = hdf5writer.compound().getInferredType("Effective stiffness without poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
+        if (HDF5effectiveStiffnessWithoutPoissonType == null) {
+            HDF5effectiveStiffnessWithoutPoissonType = hdf5writer.compound().getInferredType("Effective stiffness with poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
+        }
 
-        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/membrane"), effectiveStiffnessType, effectiveStiffnessValuesArrayList);
-        
+        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/membrane"), HDF5effectiveStiffnessWithoutPoissonType, effectiveStiffnessValuesArrayList);
+
         effectiveStiffnessValuesArrayList = new ArrayList<>();
         effectiveStiffnessNamesArrayList = new ArrayList<>();
 
@@ -180,10 +182,7 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         effectiveStiffnessValuesArrayList.add(clt_laminate.getGBendFixed());
         effectiveStiffnessNamesArrayList.add("Gxy");
 
-        effectiveStiffnessType
-                = hdf5writer.compound().getInferredType("Effective stiffness without poisson effect", effectiveStiffnessNamesArrayList, effectiveStiffnessValuesArrayList);
-
-        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural"), effectiveStiffnessType, effectiveStiffnessValuesArrayList);
+        hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural"), HDF5effectiveStiffnessWithoutPoissonType, effectiveStiffnessValuesArrayList);
 
         String layupGroupName = "/".concat(groupName).concat("/layup");
         hdf5writer.object().createGroup(layupGroupName);
@@ -268,10 +267,8 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
             materialPropertyNamesArrayList.add(material.getAdditionalValueDisplayName(key));
         }
 
-        HDF5CompoundType<List<?>> materialPropertyType
-                = hdf5writer.compound().getInferredType("Material properties", materialPropertyNamesArrayList, materialPropertyValuesArrayList);
+        HDF5CompoundType<List<?>> HDF5materialPropertyType = hdf5writer.compound().getInferredType("Material properties", materialPropertyNamesArrayList, materialPropertyValuesArrayList);
 
-        hdf5writer.compound().write("/".concat(groupName).concat("/properties"), materialPropertyType, materialPropertyValuesArrayList);
+        hdf5writer.compound().write("/".concat(groupName).concat("/properties"), HDF5materialPropertyType, materialPropertyValuesArrayList);
     }
-
 }

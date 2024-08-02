@@ -39,11 +39,13 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Florian Dexl
  */
-@ServiceProvider(service=HDF5BucklingOutputWriterService.class, position=1)
-public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWriterService{
-    
+@ServiceProvider(service = HDF5BucklingOutputWriterService.class, position = 1)
+public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWriterService {
+
+    private static HDF5CompoundType<List<?>> HDF5criticalLoadsType = null;
+
     @Override
-    public void writeResults(IHDF5Writer hdf5writer, BucklingModuleData data, Laminat laminate, BucklingResult result){
+    public void writeResults(IHDF5Writer hdf5writer, BucklingModuleData data, Laminat laminate, BucklingResult result) {
         String bucklingGroup = "laminates/".concat(data.getLaminat().getName().concat("/buckling/"));
         if (!hdf5writer.object().exists(bucklingGroup)) {
             hdf5writer.object().createGroup(bucklingGroup);
@@ -51,7 +53,7 @@ public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWr
         String groupName = bucklingGroup.concat(data.getName());
         hdf5writer.object().createGroup(groupName);
 
-        double [][] dmat = data.getBucklingInput().getDMatrixService().getDMatrix(data.getLaminat().getLookup().lookup(CLT_Laminate.class));
+        double[][] dmat = data.getBucklingInput().getDMatrixService().getDMatrix(data.getLaminat().getLookup().lookup(CLT_Laminate.class));
         String dMatrixOption = data.getBucklingInput().getDMatrixService().getBatchRunOutput();
 
         hdf5writer.float64().createMatrix(groupName.concat("/D matrix used"), 3, 3);
@@ -72,10 +74,11 @@ public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWr
         criticalLoadValuesArrayList.add(ncrit[2]);
         criticalLoadNamesArrayList.add("nxy_crit");
 
-        HDF5CompoundType<List<?>> criticalLoadsType
-                = hdf5writer.compound().getInferredType("Critical loads", criticalLoadNamesArrayList, criticalLoadValuesArrayList);
+        if (HDF5criticalLoadsType == null) {
+            HDF5criticalLoadsType = hdf5writer.compound().getInferredType("Critical loads", criticalLoadNamesArrayList, criticalLoadValuesArrayList);
+        }
 
-        hdf5writer.compound().write(groupName.concat("/critical load"), criticalLoadsType, criticalLoadValuesArrayList);
+        hdf5writer.compound().write(groupName.concat("/critical load"), HDF5criticalLoadsType, criticalLoadValuesArrayList);
 
         double[] eigenvalues = result.getEigenvalues_();
         int numberOfEigenvalues = eigenvalues.length;

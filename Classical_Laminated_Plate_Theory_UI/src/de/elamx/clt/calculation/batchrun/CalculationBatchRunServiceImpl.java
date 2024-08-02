@@ -47,6 +47,8 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = BatchRunService.class)
 public class CalculationBatchRunServiceImpl implements BatchRunService {
 
+    private static HDF5CompoundType<List<?>> HDF5minRFType = null;
+
     @Override
     public void performBatchTasksAndOutput(Laminat laminate, PrintStream ps, IHDF5Writer hdf5writer, int outputType) {
         Collection<? extends CalculationModuleData> col = laminate.getLookup().lookupAll(CalculationModuleData.class);
@@ -118,11 +120,12 @@ public class CalculationBatchRunServiceImpl implements BatchRunService {
             minRFValuesArrayList.add(minRF_position);
             minRFNamesArrayList.add("position");
 
-            HDF5CompoundType<List<?>> minRFType
-                    = hdf5writer.compound().getInferredType("Minimum RF", minRFNamesArrayList, minRFValuesArrayList);
+            if (HDF5minRFType == null) {
+                HDF5minRFType = hdf5writer.compound().getInferredType("Minimum RF", minRFNamesArrayList, minRFValuesArrayList);
+            }
 
             String calculationGroup = "laminates/".concat(laminate.getName().concat("/calculation"));
-            hdf5writer.compound().write(calculationGroup.concat("/min RF"), minRFType, minRFValuesArrayList);
+            hdf5writer.compound().write(calculationGroup.concat("/min RF"), HDF5minRFType, minRFValuesArrayList);
         }
     }
 }

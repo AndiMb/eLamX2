@@ -42,6 +42,10 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = HDF5LastPlyFailureOutputWriterService.class, position = 1)
 public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFailureOutputWriterService {
 
+    private static HDF5CompoundType<List<?>> HDF5iterationResultType = null;
+    private static HDF5CompoundType<List<?>> HDF5loadsType = null;
+    private static HDF5CompoundType<List<?>> HDF5rfType = null;
+
     @Override
     public void writeResults(IHDF5Writer hdf5writer, LastPlyFailureModuleData data, CLT_LastPlyFailureResult results) {
         String lastPlyFailureGroup = "laminates/".concat(data.getLaminat().getName().concat("/last ply failure/"));
@@ -80,31 +84,87 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
         loadsValuesArrayList.add(data.getLastPlyFailureInput().getJ_a());
         loadsNamesArrayList.add("jA");
 
-        HDF5CompoundType<List<?>> loadsType
-                = hdf5writer.compound().getInferredType("Loads", loadsNamesArrayList, loadsValuesArrayList);
+        if (HDF5loadsType == null) {
+            HDF5loadsType = hdf5writer.compound().getInferredType("Loads", loadsNamesArrayList, loadsValuesArrayList);
+        }
 
-        hdf5writer.compound().write(inputGroupName.concat("/loads"), loadsType, loadsValuesArrayList);
+        hdf5writer.compound().write(inputGroupName.concat("/loads"), HDF5loadsType, loadsValuesArrayList);
 
         hdf5writer.float64().write(inputGroupName.concat("/degradationFactor"), data.getLastPlyFailureInput().getDegradationFactor());
         hdf5writer.float64().write(inputGroupName.concat("/epsilonAllow"), data.getLastPlyFailureInput().getEpsilon_crit());
         hdf5writer.bool().write(inputGroupName.concat("/degradeAllOnFibreFailure"), data.getLastPlyFailureInput().isDegradeAllOnFibreFailure());
 
+        ArrayList<Object> rfValuesArrayList;
+        ArrayList<String> rfNamesArrayList;
+
         String RFGroupName = groupName.concat("/RF results");
         if (results.getRf_first_epsilon() != null) {
-            hdf5writer.compound().write(RFGroupName.concat("/RF epsilon"), new HDF5LPFRFResult(results.getRf_first_epsilon(), results.getIter_first_epsilon()));
+            rfValuesArrayList = new ArrayList<>();
+            rfNamesArrayList = new ArrayList<>();
+
+            rfValuesArrayList.add(results.getRf_first_epsilon());
+            rfNamesArrayList.add("RF");
+
+            rfValuesArrayList.add(results.getIter_first_epsilon());
+            rfNamesArrayList.add("iteration");
+
+            if (HDF5rfType == null) {
+                HDF5rfType = hdf5writer.compound().getInferredType("RF", rfNamesArrayList, rfValuesArrayList);
+            }
+
+            hdf5writer.compound().write(RFGroupName.concat("/RF epsilon"), HDF5rfType, rfValuesArrayList);
         }
 
         if (results.getRf_first_ff() != null) {
-            hdf5writer.compound().write(RFGroupName.concat("/RF first FF"), new HDF5LPFRFResult(results.getRf_first_ff(), results.getIter_first_ff()));
+            rfValuesArrayList = new ArrayList<>();
+            rfNamesArrayList = new ArrayList<>();
+
+            rfValuesArrayList.add(results.getRf_first_ff());
+            rfNamesArrayList.add("RF");
+
+            rfValuesArrayList.add(results.getIter_first_ff());
+            rfNamesArrayList.add("iteration");
+
+            if (HDF5rfType == null) {
+                HDF5rfType = hdf5writer.compound().getInferredType("RF", rfNamesArrayList, rfValuesArrayList);
+            }
+
+            hdf5writer.compound().write(RFGroupName.concat("/RF first FF"), HDF5rfType, rfValuesArrayList);
         }
 
         if (results.getRf_first_iff() != null) {
-            hdf5writer.compound().write(RFGroupName.concat("/RF first IFF"), new HDF5LPFRFResult(results.getRf_first_iff(), results.getIter_first_iff()));
+            rfValuesArrayList = new ArrayList<>();
+            rfNamesArrayList = new ArrayList<>();
+
+            rfValuesArrayList.add(results.getRf_first_iff());
+            rfNamesArrayList.add("RF");
+
+            rfValuesArrayList.add(results.getIter_first_iff());
+            rfNamesArrayList.add("iteration");
+
+            if (HDF5rfType == null) {
+                HDF5rfType = hdf5writer.compound().getInferredType("RF", rfNamesArrayList, rfValuesArrayList);
+            }
+
+            hdf5writer.compound().write(RFGroupName.concat("/RF first IFF"), HDF5rfType, rfValuesArrayList);
         }
 
         hdf5writer.bool().write(RFGroupName.concat("/FF before IFF"), results.isFf_before_iff());
 
-        hdf5writer.compound().write(RFGroupName.concat("/exceedance factor"), new HDF5LPFRFResult(results.getExceedance_factor(), results.getIter_exceedance_factor()));
+        rfValuesArrayList = new ArrayList<>();
+        rfNamesArrayList = new ArrayList<>();
+
+        rfValuesArrayList.add(results.getExceedance_factor());
+        rfNamesArrayList.add("RF");
+
+        rfValuesArrayList.add(results.getIter_exceedance_factor());
+        rfNamesArrayList.add("iteration");
+
+        if (HDF5rfType == null) {
+            HDF5rfType = hdf5writer.compound().getInferredType("RF", rfNamesArrayList, rfValuesArrayList);
+        }
+
+        hdf5writer.compound().write(RFGroupName.concat("/exceedance factor"), HDF5rfType, rfValuesArrayList);
 
         int maxIterationNumber = results.getLayerResult().length - 1;
 
@@ -132,10 +192,11 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
             iterationResultValuesArrayList.add(FailureTypeShortNameHandler.getInstance().getShortNameForFailureType(results.getFailureType()[iter]));
             iterationResultNamesArrayList.add("failure type short");
 
-            HDF5CompoundType<List<?>> iterationResultType
-                    = hdf5writer.compound().getInferredType("LPF iteration result", iterationResultNamesArrayList, iterationResultValuesArrayList);
+            if (HDF5iterationResultType == null) {
+                HDF5iterationResultType = hdf5writer.compound().getInferredType("LPF iteration result", iterationResultNamesArrayList, iterationResultValuesArrayList);
+            }
 
-            hdf5writer.compound().write(iterationNumGroupName.concat("/iteration result"), iterationResultType, iterationResultValuesArrayList);
+            hdf5writer.compound().write(iterationNumGroupName.concat("/iteration result"), HDF5iterationResultType, iterationResultValuesArrayList);
 
             CLT_LayerResult[] clt_results = results.getLayerResult()[iter];
 
@@ -322,50 +383,4 @@ public class HDF5LastPlyFailureOutputWriterServiceImpl implements HDF5LastPlyFai
         }
 
     }
-
-    /**
-     * A HDF5 Data Transfer Object for reserve factor results of last ply failure.
-     */
-    static class HDF5LPFRFResult {
-
-        // Include the unit in the member name
-        @CompoundElement(memberName = "RF")
-        private double RF;
-
-        // Include the unit in the member name
-        @CompoundElement(memberName = "iteration")
-        private int iteration;
-
-        // Important: needs to have a default constructor, otherwise JHDF5 will bail out on reading.
-        HDF5LPFRFResult() {
-        }
-
-        HDF5LPFRFResult(double RF, int iteration) {
-            this.RF = RF;
-            this.iteration = iteration;
-        }
-
-        public double getRF() {
-            return RF;
-        }
-
-        public void setRF(double RF) {
-            this.RF = RF;
-        }
-
-        public int getIteration() {
-            return iteration;
-        }
-
-        public void setIteration(int iteration) {
-            this.iteration = iteration;
-        }
-
-        @Override
-        public String toString() {
-            return "LocalLayerResult [RF=" + RF + ", iteration=" + iteration + "]";
-        }
-
-    }
-
 }

@@ -43,6 +43,10 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = HDF5CalculationOutputWriterService.class, position = 1)
 public class HDF5CalculationOutputWriterServiceImpl implements HDF5CalculationOutputWriterService {
 
+    private static HDF5CompoundType<List<?>> HDF5mechanicalLoadsType = null;
+    private static HDF5CompoundType<List<?>> HDF5hygrothermalLoadsType = null;
+    private static HDF5CompoundType<List<?>> HDF5globalStrainsType = null;
+
     @Override
     public void writeResults(IHDF5Writer hdf5writer, CalculationModuleData data, Loads loads, Strains strain, CLT_LayerResult[] results) {
         String calculationGroup = "laminates/".concat(data.getLaminat().getName().concat("/calculation/"));
@@ -75,10 +79,11 @@ public class HDF5CalculationOutputWriterServiceImpl implements HDF5CalculationOu
         mechanicalLoadsValuesArrayList.add(forces[5]);
         mechanicalLoadsNamesArrayList.add("mxy");
 
-        HDF5CompoundType<List<?>> mechanicalLoadsType
-                = hdf5writer.compound().getInferredType("Mechanical loads", mechanicalLoadsNamesArrayList, mechanicalLoadsValuesArrayList);
+        if (HDF5mechanicalLoadsType == null) {
+            HDF5mechanicalLoadsType = hdf5writer.compound().getInferredType("Mechanical loads", mechanicalLoadsNamesArrayList, mechanicalLoadsValuesArrayList);
+        }
 
-        hdf5writer.compound().write(groupName.concat("/mechanical loads"), mechanicalLoadsType, mechanicalLoadsValuesArrayList);
+        hdf5writer.compound().write(groupName.concat("/mechanical loads"), HDF5mechanicalLoadsType, mechanicalLoadsValuesArrayList);
 
         ArrayList<Double> hygrothermalLoadsValuesArrayList = new ArrayList<>();
         ArrayList<String> hygrothermalLoadsNamesArrayList = new ArrayList<>();
@@ -107,10 +112,11 @@ public class HDF5CalculationOutputWriterServiceImpl implements HDF5CalculationOu
         hygrothermalLoadsValuesArrayList.add(loads.getDeltaH());
         hygrothermalLoadsNamesArrayList.add("deltac");
 
-        HDF5CompoundType<List<?>> hygrothermalLoadsType
-                = hdf5writer.compound().getInferredType("Hygrothermal loads", hygrothermalLoadsNamesArrayList, hygrothermalLoadsValuesArrayList);
+        if (HDF5hygrothermalLoadsType == null) {
+            HDF5hygrothermalLoadsType = hdf5writer.compound().getInferredType("Hygrothermal loads", hygrothermalLoadsNamesArrayList, hygrothermalLoadsValuesArrayList);
+        }
 
-        hdf5writer.compound().write(groupName.concat("/hygrothermal loads"), hygrothermalLoadsType, hygrothermalLoadsValuesArrayList);
+        hdf5writer.compound().write(groupName.concat("/hygrothermal loads"), HDF5hygrothermalLoadsType, hygrothermalLoadsValuesArrayList);
 
         double[] strains = strain.getEpsilonKappaAsVector();
 
@@ -135,10 +141,11 @@ public class HDF5CalculationOutputWriterServiceImpl implements HDF5CalculationOu
         globalStrainsValuesArrayList.add(strains[5]);
         globalStrainsNamesArrayList.add("kxy");
 
-        HDF5CompoundType<List<?>> globalStrainsType
-                = hdf5writer.compound().getInferredType("Global strains", globalStrainsNamesArrayList, globalStrainsValuesArrayList);
+        if (HDF5globalStrainsType == null) {
+            HDF5globalStrainsType = hdf5writer.compound().getInferredType("Global strains", globalStrainsNamesArrayList, globalStrainsValuesArrayList);
+        }
 
-        hdf5writer.compound().write(groupName.concat("/global strains"), globalStrainsType, globalStrainsValuesArrayList);
+        hdf5writer.compound().write(groupName.concat("/global strains"), HDF5globalStrainsType, globalStrainsValuesArrayList);
 
         int layerResultsNum = results.length;
         
@@ -184,8 +191,8 @@ public class HDF5CalculationOutputWriterServiceImpl implements HDF5CalculationOu
     /**
      * A HDF5 Data Transfer Object for local layer results.
      */
-    static class HDF5LocalLayerResult
-    {
+    static class HDF5LocalLayerResult {
+
         // Include the unit in the member name
         @CompoundElement(memberName = "s11")
         private double s11;
