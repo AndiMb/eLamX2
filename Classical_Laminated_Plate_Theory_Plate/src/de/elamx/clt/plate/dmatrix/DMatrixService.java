@@ -71,6 +71,7 @@ public abstract class DMatrixService {
         return getName();
     }
     
+    @SuppressWarnings("this-escape")
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
