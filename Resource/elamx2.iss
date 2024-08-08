@@ -2,7 +2,7 @@
 AppId=eLamX
 AppName=eLamX
 AppVersion=$ELAMXVERSION$
-VersionInfoVersion=$ELAMXVERSION$.0.0
+;VersionInfoVersion=$ELAMXVERSION$.0.0
 
 ; TO-DO ${APP_URLS}
 LicenseFile=license.txt
