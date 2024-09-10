@@ -75,7 +75,7 @@ public class Vibration {
 
         // Speichern der Termanzahl
         m_ = input.getM();
-        n_ = input.getM();
+        n_ = input.getN();
 
         double length = input.getLength();
         double width  = input.getWidth();

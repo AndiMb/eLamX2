@@ -37,7 +37,8 @@ public class BucklingData extends ReducedInputDataObject {
     private Double width;
     private Integer bcx;
     private Integer bcy;
-    private Integer n;
+    private Integer m = null;
+    private Integer n = null;
 
     public BucklingData(String name) {
         super(name);
@@ -81,6 +82,14 @@ public class BucklingData extends ReducedInputDataObject {
 
     public void setBcy(Integer bcy) {
         this.bcy = bcy;
+    }
+
+    public Integer getM() {
+        return m;
+    }
+
+    public void setM(Integer m) {
+        this.m = m;
     }
 
     public Integer getN() {

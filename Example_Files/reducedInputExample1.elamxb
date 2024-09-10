@@ -107,6 +107,7 @@
                 <width>400.0</width>
                 <bcx>1</bcx>
                 <bcy>0</bcy>
+                <m>6</m>
                 <n>6</n>
             </buckling>
             <calculation name="Calculation A2">
@@ -114,11 +115,12 @@
             </calculation>
             <buckling name="Buckling A3">
                 <loadcase>Load Case A3</loadcase>
-                <length>100.0</length>
+                <length>60.0</length>
                 <width>100.0</width>
                 <bcx>1</bcx>
                 <bcy>0</bcy>
-                <n>6</n>
+                <m>6</m>
+                <n>10</n>
             </buckling>
             <lastplyfailure name="LastPlyFailure A1" degrade_all_on_fibre_failure="false">
                 <loadcase>Load Case A1</loadcase>
@@ -182,6 +184,7 @@
                 <width>100.0</width>
                 <bcx>1</bcx>
                 <bcy>1</bcy>
+                <m>6</m>
                 <n>6</n>
             </buckling>
             <calculation name="Calculation B2">

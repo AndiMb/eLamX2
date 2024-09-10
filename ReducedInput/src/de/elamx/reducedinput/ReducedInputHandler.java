@@ -508,6 +508,9 @@ public class ReducedInputHandler extends DefaultHandler {
             case "bcy":
                 buckling.setBcy(Integer.valueOf(elementValue.toString()));
                 break;
+            case "m":
+                buckling.setM(Integer.valueOf(elementValue.toString()));
+                break;
             case "n":
                 buckling.setN(Integer.valueOf(elementValue.toString()));
                 break;
@@ -525,12 +528,16 @@ public class ReducedInputHandler extends DefaultHandler {
                 } else {
                     lam = laminate;
                 }
-                BucklingInput inputData = new BucklingInput(buckling.getLength(), buckling.getWidth(), lc.getN_x(), lc.getN_y(), lc.getN_xy(), Lookup.getDefault().lookup(StandardDMatrixServiceImpl.class), buckling.getBcx(), buckling.getBcy(), buckling.getN(), buckling.getN());
+                // Für Abwärtskompatibilität
+                if (buckling.getM() == null) {
+                    buckling.setM(buckling.getN());
+                }
+                BucklingInput inputData = new BucklingInput(buckling.getLength(), buckling.getWidth(), lc.getN_x(), lc.getN_y(), lc.getN_xy(), Lookup.getDefault().lookup(StandardDMatrixServiceImpl.class), buckling.getBcx(), buckling.getBcy(), buckling.getM(), buckling.getN());
                 BucklingModuleData buckModuleData = new BucklingModuleData(lam, inputData);
                 buckModuleData.setName(buckling.getName());
                 lam.getLookup().add(buckModuleData);
                 if (! lam.isSymmetric()) {
-                    BucklingInput inputData_dTilde = new BucklingInput(buckling.getLength(), buckling.getWidth(), lc.getN_x(), lc.getN_y(), lc.getN_xy(), Lookup.getDefault().lookup(DtildeDMatrixServiceImpl.class), buckling.getBcx(), buckling.getBcy(), buckling.getN(), buckling.getN());
+                    BucklingInput inputData_dTilde = new BucklingInput(buckling.getLength(), buckling.getWidth(), lc.getN_x(), lc.getN_y(), lc.getN_xy(), Lookup.getDefault().lookup(DtildeDMatrixServiceImpl.class), buckling.getBcx(), buckling.getBcy(), buckling.getM(), buckling.getN());
                     BucklingModuleData buckModuleData_dTilde = new BucklingModuleData(lam, inputData_dTilde);
                     buckModuleData_dTilde.setName(buckling.getName().concat(" Dtilde-option"));
                     lam.getLookup().add(buckModuleData_dTilde);

@@ -96,7 +96,7 @@ public class VibrationPlate extends Plate<VibrationInput> {
             for (int ii = 0; ii <= enum_x; ii++) {
 
                 xTemp = ii * elemsize_x;
-                for (int mm = 0; mm < n; mm++) {
+                for (int mm = 0; mm < m; mm++) {
                     bx_wx[mm] = bx.wx(mm, xTemp);
                 }
                 zTemp = 0.0;

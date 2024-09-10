@@ -69,7 +69,7 @@ public class Deformation {
 
         // Speichern der Termanzahl
         int m = input.getM();
-        int n = input.getM();
+        int n = input.getN();
 
         double length = input.getLength();
         double width  = input.getWidth();

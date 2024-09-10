@@ -108,8 +108,10 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
             setDMatrixComboBox();
             dMatrixComboBox.setSelectedItem(input.getDMatrixService());
             dMatrixComboBox.addItemListener(this);
-            termsSpinner.setValue(input.getN());
-            termsSpinner.addChangeListener(this);
+            termsSpinnerX.setValue(input.getM());
+            termsSpinnerX.addChangeListener(this);
+            termsSpinnerY.setValue(input.getN());
+            termsSpinnerY.addChangeListener(this);
         }
     }
     
@@ -136,6 +138,7 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         Integer[] intArray = new Integer[boundary_cond.length];
         for (int i = 0; i < boundary_cond.length; i++) {
             intArray[i] = i;
@@ -144,7 +147,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
         bcxComboBox.setRenderer(new ComboBoxRenderer());
         bcyComboBox = new ImageJComboBox(intArray);
         bcyComboBox.setRenderer(new ComboBoxRenderer());
-        termsSpinner = new javax.swing.JSpinner();
+        termsSpinnerX = new javax.swing.JSpinner();
+        termsSpinnerY = new javax.swing.JSpinner();
         lengthField = new javax.swing.JFormattedTextField();
         widthField = new javax.swing.JFormattedTextField();
         nxField = new javax.swing.JFormattedTextField();
@@ -170,7 +174,11 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel8, org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.jLabel8.text")); // NOI18N
 
-        termsSpinner.setModel(new javax.swing.SpinnerNumberModel(10, 1, 20, 1));
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel9, org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.jLabel9.text")); // NOI18N
+
+        termsSpinnerX.setModel(new javax.swing.SpinnerNumberModel(10, 1, 20, 1));
+
+        termsSpinnerY.setModel(new javax.swing.SpinnerNumberModel(10, 1, 20, 1));
 
         lengthField.setColumns(8);
         lengthField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new NumberFormatter(lengthFormat)));
@@ -243,7 +251,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(nxyField, javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +262,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                             .addComponent(bcxComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(widthField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lengthField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(termsSpinner)))
+                            .addComponent(termsSpinnerX)
+                            .addComponent(termsSpinnerY)))
                     .addComponent(DmatrixOptionsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -291,13 +301,23 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(termsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(termsSpinnerX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(termsSpinnerY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(DmatrixOptionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel8.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.jLabel8.AccessibleContext.accessibleName")); // NOI18N
+        jLabel8.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.jLabel8.AccessibleContext.accessibleDescription")); // NOI18N
+        jLabel9.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.jLabel9.AccessibleContext.accessibleName")); // NOI18N
+        jLabel9.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.jLabel9.AccessibleContext.accessibleDescription")); // NOI18N
         DmatrixOptionsPanel.getAccessibleContext().setAccessibleDescription(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.DmatrixOptionsPanel.AccessibleContext.accessibleDescription")); // NOI18N
+
+        getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(InputPanel.class, "InputPanel.AccessibleContext.accessibleName")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
 
     private void showDMatrixButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDMatrixButtonActionPerformed
@@ -328,12 +348,14 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JFormattedTextField lengthField;
     private javax.swing.JFormattedTextField nxField;
     private javax.swing.JFormattedTextField nxyField;
     private javax.swing.JFormattedTextField nyField;
     private javax.swing.JButton showDMatrixButton;
-    private javax.swing.JSpinner termsSpinner;
+    private javax.swing.JSpinner termsSpinnerX;
+    private javax.swing.JSpinner termsSpinnerY;
     private javax.swing.JFormattedTextField widthField;
     // End of variables declaration//GEN-END:variables
 
@@ -367,8 +389,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        input.setM(((Number) termsSpinner.getValue()).intValue());
-        input.setN(((Number) termsSpinner.getValue()).intValue());
+        input.setM(((Number) termsSpinnerX.getValue()).intValue());
+        input.setN(((Number) termsSpinnerY.getValue()).intValue());
     }
 
     private static class ImageJComboBox extends JComboBox<Integer> {
