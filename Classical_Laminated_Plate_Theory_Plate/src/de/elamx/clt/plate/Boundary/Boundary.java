@@ -43,7 +43,6 @@ package de.elamx.clt.plate.Boundary;
  */
 public abstract class Boundary {
 
-    protected int    m_ = 0;   // Anzahl der Halbwellen in die entsprechende Richtung
     protected double a_ = 0.0; // Länge in die entsprechende Richtung
 
     // Konstanten des Verschiebungsansatzes
@@ -72,7 +71,6 @@ public abstract class Boundary {
      */
     @SuppressWarnings("this-escape")
     public Boundary (double length, int m){
-        m_ = Math.min(m, 20);
         a_ = length;
         initArrays();
     }
