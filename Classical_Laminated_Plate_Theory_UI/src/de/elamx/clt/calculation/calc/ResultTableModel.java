@@ -51,7 +51,7 @@ public class ResultTableModel extends DefaultTableModel {
     private boolean showStresses = true;
     private String[] stressColumnNames = null;
     private String[] strainColumnNames = null;
-    
+
     private HashMap<CLT_Layer, LayerResultContainer> containerMap = new HashMap<>();
 
     /**
@@ -167,7 +167,7 @@ public class ResultTableModel extends DefaultTableModel {
                 case 3:
                     return dfThickness.format(layerResults[layInd].getClt_layer().getZm());
                 case 4:
-                    return dfThickness.format(layerResults[layInd].getClt_layer().getZm()+layerResults[layInd].getLayer().getThickness()/2.0);
+                    return dfThickness.format(layerResults[layInd].getClt_layer().getZm() + layerResults[layInd].getLayer().getThickness() / 2.0);
                 case 5:
                     return showStresses ? dfStresses.format(layerResults[layInd].getSss_upper().getStress()[0]) : dfStrains.format(layerResults[layInd].getSss_upper().getStrain()[0]);
                 case 6:
@@ -194,7 +194,7 @@ public class ResultTableModel extends DefaultTableModel {
                 case 3:
                     return "";
                 case 4:
-                    return dfThickness.format(layerResults[layInd].getClt_layer().getZm()-layerResults[layInd].getLayer().getThickness()/2.0);
+                    return dfThickness.format(layerResults[layInd].getClt_layer().getZm() - layerResults[layInd].getLayer().getThickness() / 2.0);
                 case 5:
                     return showStresses ? dfStresses.format(layerResults[layInd].getSss_lower().getStress()[0]) : dfStrains.format(layerResults[layInd].getSss_lower().getStrain()[0]);
                 case 6:
@@ -257,32 +257,33 @@ public class ResultTableModel extends DefaultTableModel {
     public void setLayerResults(CLT_LayerResult[] results) {
         this.layerResults = results;
         HashMap<CLT_Layer, LayerResultContainer> newMap = new HashMap<>();
-        for (CLT_LayerResult cLT_LayerResult : results) {
-            LayerResultContainer l = containerMap.remove(cLT_LayerResult.getClt_layer());
-            if (l == null){
-                newMap.put(cLT_LayerResult.getClt_layer(), new LayerResultContainer(cLT_LayerResult));
-            }else{
-                l.setLayerResult(cLT_LayerResult);
-                newMap.put(cLT_LayerResult.getClt_layer(), l);
+        if (results != null) {
+            for (CLT_LayerResult cLT_LayerResult : results) {
+                LayerResultContainer l = containerMap.remove(cLT_LayerResult.getClt_layer());
+                if (l == null) {
+                    newMap.put(cLT_LayerResult.getClt_layer(), new LayerResultContainer(cLT_LayerResult));
+                } else {
+                    l.setLayerResult(cLT_LayerResult);
+                    newMap.put(cLT_LayerResult.getClt_layer(), l);
+                }
             }
-        }
-        for (LayerResultContainer resCont : containerMap.values()) {
-            resCont.setLayerResult(null);
+            for (LayerResultContainer resCont : containerMap.values()) {
+                resCont.setLayerResult(null);
+            }
         }
         containerMap = newMap;
         this.fireTableDataChanged();
     }
-    
+
     /*public CLT_LayerResult getLayerResultAtRow(int index){
         return layerResults[index/2];
     }*/
-    
-    public LayerResultContainer getLayerResultContainerForRow(int index){
-        CLT_Layer l = layerResults[index/2].getClt_layer();
+    public LayerResultContainer getLayerResultContainerForRow(int index) {
+        CLT_Layer l = layerResults[index / 2].getClt_layer();
         return containerMap.get(l);
     }
-    
-    public void clear(){
+
+    public void clear() {
         for (LayerResultContainer resCont : containerMap.values()) {
             resCont.setLayerResult(null);
         }

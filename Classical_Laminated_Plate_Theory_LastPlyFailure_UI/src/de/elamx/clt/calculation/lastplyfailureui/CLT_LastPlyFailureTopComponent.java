@@ -30,6 +30,8 @@ import de.elamx.clt.calculation.LayerResultContainer;
 import de.elamx.clt.calculation.calc.ResultTableModel;
 import de.elamx.core.GlobalProperties;
 import de.elamx.laminate.Laminat;
+import de.elamx.laminate.Layer;
+import de.elamx.laminate.Material;
 import de.elamx.utilities.AutoRowHeightTable;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -50,6 +52,7 @@ import java.beans.PropertyChangeListener;
 import java.text.AttributedString;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -96,7 +99,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     private final CLT_Laminate clt_lam;
     private final Lookup.Result<LastPlyFailureModuleData> result;
     public final static Set<LastPlyFailureModuleData> uniqueLastPlyFailureData = new HashSet<>();
-    private CLT_LastPlyFailureResult lpfResult;
+    private CLT_LastPlyFailureResult lpfResult = null;
     private CLT_LayerResult[] actLayerResults;
     private int actualIterationNumber = 0;
     private int maxIterationNumber = -1;
@@ -123,6 +126,14 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         setName(this.data.getName() + " - " + this.data.getLaminat().getName());
         setToolTipText(NbBundle.getMessage(CLT_LastPlyFailureTopComponent.class, "HINT_CLT_PressureVesselTopComponent"));
         data.getLaminat().addPropertyChangeListener(this);
+        ArrayList<Material> materials = new ArrayList<>();
+        for (Layer l: data.getLaminat().getAllLayers()) {
+            Material mat = l.getMaterial();
+            if (! materials.contains(mat)) {
+                mat.addPropertyChangeListener(this);
+                materials.add(mat);
+            }
+        }
         CLT_Laminate tClt_lam = data.getLaminat().getLookup().lookup(CLT_Laminate.class);
         if (tClt_lam == null) {
             clt_lam = new CLT_Laminate(data.getLaminat());
@@ -693,6 +704,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
 
     private void DegradeAllOnFibreFailureBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DegradeAllOnFibreFailureBoxActionPerformed
         data.getLastPlyFailureInput().setDegradeAllOnFibreFailure(DegradeAllOnFibreFailureBox.isSelected());
+        resetResultView();
     }//GEN-LAST:event_DegradeAllOnFibreFailureBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -805,7 +817,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
     }
 
     private void setIterationResults(int iter) {
-        if (iter >= 0 && iter <= maxIterationNumber) {
+        if (iter >= 0 && iter <= maxIterationNumber && lpfResult != null) {
             actLayerResults = lpfResult.getLayerResult()[iter];
             tabModel.setLayerResults(actLayerResults);
 
@@ -850,6 +862,7 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
                 data.getLastPlyFailureInput().setEpsilon_crit(((Number) epscritField.getValue()).doubleValue());
             }
         }
+        resetResultView();
     }
 
     private void initChart() {
@@ -895,6 +908,24 @@ public final class CLT_LastPlyFailureTopComponent extends TopComponent implement
         chartPanel.setMinimumSize(new Dimension(10, 10));
 
         chartHolderPanel.add(chartPanel, BorderLayout.CENTER);
+    }
+
+    private void resetResultView() {
+        if (lpfResult != null) {            
+            lpfResult = null;
+  
+            minResDataset.removeAllSeries();
+            actRFminDataset.getSeries(0).remove(0);
+            
+            tabModel.setLayerResults(null);
+
+            iterationField.setText("");
+            layerNumberField.setText("");
+            RFminField.setText("");
+            failureTypeField.setText("");
+
+            previousButton.setEnabled(false);
+        }
     }
 
     /**
