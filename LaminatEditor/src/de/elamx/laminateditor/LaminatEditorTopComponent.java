@@ -34,6 +34,8 @@ import de.elamx.laminate.eLamXLookup;
 import de.elamx.laminate.failure.Criterion;
 import de.elamx.laminate.failure.Puck;
 import de.elamx.laminateditor.LayerNodeFactory.LayerNode;
+import de.elamx.clt.calculation.action.OpenInfoAction;
+
 import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -54,6 +56,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.text.NumberFormatter;
+
 import org.netbeans.swing.outline.DefaultOutlineModel;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
@@ -82,6 +85,7 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
 
     private static final DecimalFormat thicknessFormat = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_THICKNESS);
     private static final DecimalFormat angleFormat = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_ANGLE);
+    private static final DecimalFormat area_massFormat = GlobalProperties.getDefault().getFormat(GlobalProperties.FORMAT_DENSITY);
 
     public final static Set<Laminat> uniqueLaminates = new HashSet<>();
     private final Laminat laminat;
@@ -194,11 +198,17 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         rotationAngleField = new javax.swing.JFormattedTextField();
+        change_tot_fail_Botton = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        change_tot_failure_ComboBox = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         totThicknessLabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         numLayersLabel = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        areaWeightLabel = new javax.swing.JLabel();
+        getABD_Botton = new javax.swing.JButton();
         invertZOptionsPanel = new javax.swing.JPanel();
         invertZCheckBox = new javax.swing.JCheckBox();
 
@@ -385,6 +395,21 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         rotationAngleField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new NumberFormatter(angleFormat)));
         rotationAngleField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         rotationAngleField.setValue(0.0);
+        rotationAngleField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rotationAngleFieldActionPerformed(evt);
+            }
+        });
+
+        change_tot_fail_Botton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/elamx/laminateditor/resources/versagenskoerper.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(change_tot_fail_Botton, org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.change_tot_fail_Botton.text")); // NOI18N
+        change_tot_fail_Botton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                change_tot_fail_BottonActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.jLabel7.text")); // NOI18N
 
         javax.swing.GroupLayout editPanelLayout = new javax.swing.GroupLayout(editPanel);
         editPanel.setLayout(editPanelLayout);
@@ -394,13 +419,11 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
                 .addContainerGap()
                 .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(editPanelLayout.createSequentialGroup()
-                        .addComponent(rotateButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addComponent(rotationAngleField, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(editPanelLayout.createSequentialGroup()
                         .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(editPanelLayout.createSequentialGroup()
+                                .addComponent(rotateButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2))
                             .addGroup(editPanelLayout.createSequentialGroup()
                                 .addComponent(invertButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -409,6 +432,14 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
                                 .addComponent(addStackButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(rotationAngleField, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editPanelLayout.createSequentialGroup()
+                        .addComponent(change_tot_fail_Botton, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(change_tot_failure_ComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -419,17 +450,25 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
                 .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(invertButton)
                     .addComponent(jLabel1))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rotateButton)
-                    .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(rotationAngleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12)
+                    .addComponent(jLabel2)
+                    .addComponent(rotationAngleField, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addStackButton)
-                    .addComponent(jLabel3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(editPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3))
+                    .addGroup(editPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addStackButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(change_tot_fail_Botton, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(change_tot_failure_ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.infoPanel.title"))); // NOI18N
@@ -444,6 +483,17 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
 
         org.openide.awt.Mnemonics.setLocalizedText(numLayersLabel, org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.numLayersLabel.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.jLabel6.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(areaWeightLabel, org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.areaWeightLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(getABD_Botton, org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.getABD_Botton.text")); // NOI18N
+        getABD_Botton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getABD_BottonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -451,15 +501,18 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(totThicknessLabel))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(numLayersLabel)))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(numLayersLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                    .addComponent(areaWeightLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totThicknessLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(getABD_Botton, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -472,7 +525,13 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(numLayersLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(areaWeightLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(getABD_Botton)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         invertZOptionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(LaminatEditorTopComponent.class, "LaminatEditorTopComponent.invertZOptionsPanel.border.title"))); // NOI18N
@@ -536,36 +595,6 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         add(jScrollPane2, java.awt.BorderLayout.LINE_END);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addStackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStackButtonActionPerformed
-        Node[] nodes = explorerManager.getSelectedNodes();
-        if (nodes.length == 0) {
-            return;
-        }
-        ArrayList<LayerNode> lNodes = new ArrayList<>();
-        for (Node n : nodes) {
-            if (n instanceof LayerNode) {
-                lNodes.add((LayerNode) n);
-            }
-        }
-        (new CloneLayersAction(lNodes)).actionPerformed(evt);
-    }//GEN-LAST:event_addStackButtonActionPerformed
-
-    private void rotateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateButtonActionPerformed
-        double rotAngle = ((Number) rotationAngleField.getValue()).doubleValue();
-        for (DataLayer l : laminat.getOriginalLayers()) {
-            l.setAngle(rotAngle + l.getAngle());
-        }
-    }//GEN-LAST:event_rotateButtonActionPerformed
-
-    private void invertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invertButtonActionPerformed
-        int size = laminat.getOriginalLayers().size();
-        int[] perm = new int[size];
-        for (int ii = 0; ii < perm.length; ii++) {
-            perm[ii] = size - 1 - ii;
-        }
-        explorerManager.getRootContext().getCookie(Index.class).reorder(perm);
-    }//GEN-LAST:event_invertButtonActionPerformed
-
     private void addLayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLayerButtonActionPerformed
 
         Double thickness = getThickness();
@@ -623,6 +652,57 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         laminat.setInvertZ(invertZCheckBox.isSelected());
     }//GEN-LAST:event_invertZCheckBoxActionPerformed
 
+    private void rotationAngleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotationAngleFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rotationAngleFieldActionPerformed
+
+    private void addStackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStackButtonActionPerformed
+        Node[] nodes = explorerManager.getSelectedNodes();
+        if (nodes.length == 0) {
+            return;
+        }
+        ArrayList<LayerNode> lNodes = new ArrayList<>();
+        for (Node n : nodes) {
+            if (n instanceof LayerNode) {
+                lNodes.add((LayerNode) n);
+            }
+        }
+        (new CloneLayersAction(lNodes)).actionPerformed(evt);
+    }//GEN-LAST:event_addStackButtonActionPerformed
+
+    private void rotateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateButtonActionPerformed
+        double rotAngle = ((Number) rotationAngleField.getValue()).doubleValue();
+        for (DataLayer l : laminat.getOriginalLayers()) {
+            l.setAngle(rotAngle + l.getAngle());
+        }
+    }//GEN-LAST:event_rotateButtonActionPerformed
+
+    private void invertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invertButtonActionPerformed
+        int size = laminat.getOriginalLayers().size();
+        int[] perm = new int[size];
+        for (int ii = 0; ii < perm.length; ii++) {
+            perm[ii] = size - 1 - ii;
+        }
+        explorerManager.getRootContext().getCookie(Index.class).reorder(perm);
+    }//GEN-LAST:event_invertButtonActionPerformed
+
+    private void change_tot_fail_BottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_change_tot_fail_BottonActionPerformed
+        // TODO add your handling code here:
+        
+        Criterion criterion = (Criterion) change_tot_failure_ComboBox.getSelectedItem();
+        ArrayList <DataLayer> all_Layers = this.laminat.getOriginalLayers();
+
+        for (DataLayer layer_i : all_Layers) {
+            layer_i.setCriterion(criterion);
+        }
+    }//GEN-LAST:event_change_tot_fail_BottonActionPerformed
+
+    private void getABD_BottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getABD_BottonActionPerformed
+        // TODO add your handling code here:
+        OpenInfoAction oi_action = new OpenInfoAction(laminat);
+        oi_action.actionPerformed(evt);
+    }//GEN-LAST:event_getABD_BottonActionPerformed
+
     private Double getThickness() {
         ParsePosition pos = new ParsePosition(0);
         double thickness = thicknessFormat.parse(thicknessField.getText(), pos).doubleValue();
@@ -638,9 +718,13 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
     private javax.swing.JButton addStackButton;
     private javax.swing.JTextField anglesField;
     private javax.swing.JLabel anglesLabel;
+    private javax.swing.JLabel areaWeightLabel;
+    private javax.swing.JButton change_tot_fail_Botton;
+    private javax.swing.JComboBox<Criterion> change_tot_failure_ComboBox;
     private javax.swing.JPanel editPanel;
     private javax.swing.JComboBox<Criterion> failureComboBox;
     private javax.swing.JLabel failureLabel;
+    private javax.swing.JButton getABD_Botton;
     private javax.swing.JButton invertButton;
     private javax.swing.JCheckBox invertZCheckBox;
     private javax.swing.JPanel invertZOptionsPanel;
@@ -649,6 +733,8 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -711,6 +797,7 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         }
         totThicknessLabel.setText(thicknessFormat.format(laminat.getThickness()));
         numLayersLabel.setText("" + laminat.getNumberofLayers());
+        areaWeightLabel.setText(area_massFormat.format(laminat.getAreaWeight()));
     }
 
     @Override
@@ -782,6 +869,12 @@ public final class LaminatEditorTopComponent extends TopComponent implements Exp
         DefaultComboBoxModel<Criterion> critModel = new DefaultComboBoxModel<>(criteria.toArray(new Criterion[criteria.size()]));
         failureComboBox.setModel(critModel);
         failureComboBox.setSelectedItem(selectedItem);
+        /*
+            this code is added to cover the ComboBox, which is used to set a failure criteruim
+            for all layers
+        */
+        change_tot_failure_ComboBox.setModel(critModel);
+        change_tot_failure_ComboBox.setSelectedItem(selectedItem);
     }
 
     private class MaterialLookupListener implements LookupListener {

@@ -38,15 +38,15 @@ import org.openide.util.NbPreferences;
  */
 public class GlobalProperties{
     
-    public static final String FORMAT_DOUBLE        = "Format.Double";
-    public static final String FORMAT_SMALL_DOUBLE  = "Format.SmallDouble";
-    public static final String FORMAT_STIFFNESS     = "Format.Stiffness";
-    public static final String FORMAT_INV_STIFFNESS = "Format.InverseStiffness";
-    public static final String FORMAT_POISSONRATIO  = "Format.PoissonRatio";
-    public static final String FORMAT_THICKNESS     = "Format.Thickness";
-    public static final String FORMAT_YIELDSTRESS   = "Format.YieldStress";
-    public static final String FORMAT_ANGLE         = "Format.Angle";
-    public static final String FORMAT_DENSITY       = "Format.Density";
+    public static final String FORMAT_DOUBLE          = "Format.Double";
+    public static final String FORMAT_SMALL_DOUBLE    = "Format.SmallDouble";
+    public static final String FORMAT_STIFFNESS       = "Format.Stiffness";
+    public static final String FORMAT_INV_STIFFNESS   = "Format.InverseStiffness";
+    public static final String FORMAT_POISSONRATIO    = "Format.PoissonRatio";
+    public static final String FORMAT_THICKNESS       = "Format.Thickness";
+    public static final String FORMAT_YIELDSTRESS     = "Format.YieldStress";
+    public static final String FORMAT_ANGLE           = "Format.Angle";
+    public static final String FORMAT_DENSITY         = "Format.Density";
     public static final String FORMAT_HYGROTHERMCOEFF = "Format.HygroThermCoefficient";
     public static final String FORMAT_NONDIMDMATPARAM = "Format.NondimDmatParam";
     public static final String FORMAT_FORCE           = "Format.Force";
@@ -58,6 +58,7 @@ public class GlobalProperties{
     public static final String FORMAT_PERCENT         = "Format.Percent";
     public static final String FORMAT_EIGENVALUE      = "Format.Eigenvalue";
     public static final String FORMAT_TEMPERATURE     = "Format.Temperature";
+    public static final String FORMAT_AREAMASS        = "Format.AreaMass";
     public static final String USE_enUS_LOCALE        = "use_en-US_locale";
     public static final String SHOW_TRANSVERSAL_SHEAR = "show_transversal_shear";
     public static final String INVERT_Z_DEFAULT       = "invert_z_default";
@@ -118,6 +119,7 @@ public class GlobalProperties{
         formats.put(FORMAT_PERCENT, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_PERCENT, "0.00##"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_EIGENVALUE, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_EIGENVALUE, "0.00##"), new DecimalFormatSymbols(locale)));
         formats.put(FORMAT_TEMPERATURE, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_TEMPERATURE, "0.0"), new DecimalFormatSymbols(locale)));
+        formats.put(FORMAT_AREAMASS, new ELamXDecimalFormat(NbPreferences.forModule(GlobalProperties.class).get(FORMAT_AREAMASS, "0.0###E0"), new DecimalFormatSymbols(locale)));
         
         reserveFactorRoundDown = Boolean.parseBoolean(NbPreferences.forModule(GlobalProperties.class).get(RESERVE_FACTOR_ROUND_DOWN, Boolean.toString(false)));
         if (reserveFactorRoundDown) formats.get(FORMAT_RESERVE_FACTOR).setRoundingMode(RoundingMode.DOWN);
