@@ -303,10 +303,10 @@ public class Plate{
         }
         
         if (my != 0.0){
-            ArrowData data = new ArrowData(new float[]{0.0f, (float)(-width/maxsize/2.0), 0.0f}, new float[]{(float)(-Math.signum(my)),  0.0f, 0.0f}, 1.0f, ArrowData.POSREF_TAIL, 2);
+            ArrowData data = new ArrowData(new float[]{0.0f, (float)(-width/maxsize/2.0), 0.0f}, new float[]{(float)(Math.signum(my)),  0.0f, 0.0f}, 1.0f, ArrowData.POSREF_TAIL, 2);
             group.add(new Arrow(data, new ColorRGBA(0.0f, 0.0f, 1.0f, 1.0f)));
             
-            data = new ArrowData(new float[]{0.0f, (float)( width/maxsize/2.0), 0.0f}, new float[]{(float)(Math.signum(my)), 0.0f, 0.0f}, 1.0f, ArrowData.POSREF_TAIL, 2);
+            data = new ArrowData(new float[]{0.0f, (float)( width/maxsize/2.0), 0.0f}, new float[]{(float)(-Math.signum(my)), 0.0f, 0.0f}, 1.0f, ArrowData.POSREF_TAIL, 2);
             group.add(new Arrow(data, new ColorRGBA(0.0f, 0.0f, 1.0f, 1.0f)));
         }
         
