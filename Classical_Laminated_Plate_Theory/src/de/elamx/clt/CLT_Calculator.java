@@ -255,8 +255,8 @@ public class CLT_Calculator {
     /**
      * interne hilfsmethode zur Berechnung des Hygro Koffizienten
      *
-     * @param alpha_i {@link double} array mi Werten von alpha i
-     * @param beta_i {@link double} array mi Werten von beta i
+     * @param alpha_i {@link double} array mit Werten von alpha i
+     * @param beta_i {@link double} array mit Werten von beta i
      * @param deltaT Wert fuer delta t
      * @param deltaC Wert fuer delta c
      * @return {@link double} array mit Werten fuer hygro koeffizienten
