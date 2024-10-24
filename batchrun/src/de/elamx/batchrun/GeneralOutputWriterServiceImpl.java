@@ -57,8 +57,8 @@ public class GeneralOutputWriterServiceImpl implements GeneralOutputWriterServic
         out.println("Version: " + NbBundle.getBundle("org.netbeans.core.startup.Bundle").getString("currentVersion"));
         out.println("");
         out.println("Technische Universitaet Dresden");
-        out.println("Lehrstuhl fuer Luftfahrzeugtechnik");
-        out.println("http://tu-dresden.de/mw/ilr/lft");
+        out.println("Professur fuer Luftfahrzeugtechnik");
+        out.println("https://tu-dresden.de/mw/ilr/lft");
         out.println("");
         out.println("Timestamp: " + date.toString());
         out.println();
