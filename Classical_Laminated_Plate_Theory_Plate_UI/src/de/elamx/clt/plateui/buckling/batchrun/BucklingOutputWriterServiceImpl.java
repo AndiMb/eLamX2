@@ -51,7 +51,7 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
         out.println(Utilities.centeredText(data.getName(), 80));
         out.println("********************************************************************************");
         out.println();
-        out.println("Laminat: " + laminate.getName());
+        out.println("Laminate: " + laminate.getName());
         out.println();
         out.println("D-matrix option: " + dMatrixOption);
         out.println("D-matrix used:");
