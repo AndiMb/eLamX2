@@ -27,6 +27,9 @@ package de.elamx.laminate;
 
 import java.util.Objects;
 import java.util.UUID;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
+import org.openide.util.NbBundle;
 
 /**
  *
@@ -119,6 +122,9 @@ public class DefaultMaterial extends LayerMaterial{
         double oldEpar = this.Epar;
         this.Epar = Epar;
         firePropertyChange(PROP_EPAR, oldEpar, Epar);
+        if ((Epar != oldEpar) && (Epar < 0.)) {
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(DefaultMaterial.class, "Warning.negativeelasticmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+        }
     }
     /**
      * Liefert den E-Modul in Faserrichtung E<sub>||</sub> des Materials.
@@ -135,6 +141,9 @@ public class DefaultMaterial extends LayerMaterial{
         double oldEnor = this.Enor;
         this.Enor = Enor;
         firePropertyChange(PROP_ENOR, oldEnor, this.Enor);
+        if ((Enor != oldEnor) && (Enor < 0.)) {
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(DefaultMaterial.class, "Warning.negativeelasticmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+        }
     }
     /**
      * Liefert den E-Modul quer zur Faserrichtung E<sub>&perp;</sub> des Materials.
@@ -153,6 +162,9 @@ public class DefaultMaterial extends LayerMaterial{
         double oldNue12 = this.nue12;
         nue12 = nue;
         firePropertyChange(PROP_NUE12, oldNue12, nue12);
+        if ((nue != oldNue12) && (nue < 0.)) {
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(DefaultMaterial.class, "Warning.negativepoissonratio"), NotifyDescriptor.WARNING_MESSAGE));
+        }
     }
     /**
      * Liefert die Querkontraktionszahl &nu;<sub>12</sub> des Materials. Dabei gilt folgende
@@ -171,6 +183,9 @@ public class DefaultMaterial extends LayerMaterial{
         double oldG = this.G;
         this.G = G;
         firePropertyChange(PROP_G, oldG, this.G);
+        if ((G != oldG) && (G < 0.)) {
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(DefaultMaterial.class, "Warning.negativeshearmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+        }
     }
     /**
      * Liefert den Schubmoduls G<sub>||&perp;</sub> des Materials.
@@ -187,6 +202,9 @@ public class DefaultMaterial extends LayerMaterial{
         double oldG13 = this.G13;
         this.G13 = G13;
         firePropertyChange(PROP_G13, oldG13, this.G13);
+        if ((G13 != oldG13) && (G13 < 0.)) {
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(DefaultMaterial.class, "Warning.negativeshearmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+        }
     }
     /**
      * Liefert die transversale Schubsteifigkeit G<sub>||&perp;</sub> des Materials.
@@ -203,6 +221,9 @@ public class DefaultMaterial extends LayerMaterial{
         double oldG23 = this.G23;
         this.G23 = G23;
         firePropertyChange(PROP_G23, oldG23, this.G23);
+        if ((G23 != oldG23) && (G23 < 0.)) {
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(DefaultMaterial.class, "Warning.negativeshearmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+        }
     }
     /**
      * Liefert die transversale Schubsteifigkeit G<sub>&perp;&perp;</sub> des Materials.
