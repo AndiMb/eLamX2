@@ -59,6 +59,13 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
             out.printf(lo,"  %10.1f    %10.1f    %10.1f%n"  , dmat[ii][0], dmat[ii][1], dmat[ii][2]);
         }
         out.println();
+        out.println("Effective aspect ratio:");
+        if (data.getAlphaBar() != null) {
+            out.printf(lo,"  alpha_bar  = %17.10E%n"  , data.getAlphaBar());
+        } else {
+            out.printf(lo,"  alpha_bar  = - (stiffeners specified)");
+        }
+        out.println();
         out.println("critical load");
         double[] ncrit = result.getN_crit();
         out.printf(lo,"  nx_crit  = %17.10E%n"  , ncrit[0]);

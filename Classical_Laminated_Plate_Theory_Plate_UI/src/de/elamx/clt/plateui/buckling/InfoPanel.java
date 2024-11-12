@@ -125,11 +125,8 @@ public class InfoPanel extends javax.swing.JPanel implements PropertyChangeListe
             return;
         }
         // Effective aspect ratio
-        Double alphaBar;
-        if (data.getBucklingInput().getStiffenerProperties().isEmpty()) {
-            double D11 = clt_lam.getDMatrix()[0][0];
-            double D22 = clt_lam.getDMatrix()[1][1];
-            alphaBar = data.getBucklingInput().getLength()/data.getBucklingInput().getWidth()*Math.pow((D22/D11),0.25);
+        Double alphaBar = data.getAlphaBar();
+        if (alphaBar != null) {
             alphabarLabel.setText(DF.format(alphaBar));
         } else {
             alphabarLabel.setText("<html>\u2015</html>");

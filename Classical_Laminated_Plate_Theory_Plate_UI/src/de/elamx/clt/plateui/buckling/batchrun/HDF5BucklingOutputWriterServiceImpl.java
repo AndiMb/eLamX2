@@ -60,6 +60,10 @@ public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWr
         hdf5writer.float64().writeMatrix(groupName.concat("/D matrix used"), dmat);
         hdf5writer.string().setAttr(groupName.concat("/D matrix used"), "D matrix option", dMatrixOption);
 
+        if (data.getAlphaBar() != null) {
+            hdf5writer.float64().write(groupName.concat("/effective aspect ratio"), data.getAlphaBar());
+        }
+
         hdf5writer.object().createGroup(groupName.concat("/critical load"));
         double[] ncrit = result.getN_crit();
         ArrayList<Double> criticalLoadValuesArrayList = new ArrayList<>();

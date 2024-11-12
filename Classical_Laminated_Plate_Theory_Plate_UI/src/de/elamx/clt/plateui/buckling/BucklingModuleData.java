@@ -25,6 +25,7 @@
  */
 package de.elamx.clt.plateui.buckling;
 
+import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.plate.BucklingInput;
 import de.elamx.clt.plate.BucklingResult;
 import de.elamx.laminate.Laminat;
@@ -58,6 +59,21 @@ public class BucklingModuleData extends eLamXModuleData implements PropertyChang
 
     public BucklingInput getBucklingInput() {
         return input;
+    }
+
+    public Double getAlphaBar() {
+        if (this.getBucklingInput().getStiffenerProperties().isEmpty()) {
+            CLT_Laminate clt_lam = this.getLaminat().getLookup().lookup(CLT_Laminate.class);
+            if (clt_lam == null) {
+                clt_lam = new CLT_Laminate(this.getLaminat());
+            }
+            double D11 = clt_lam.getDMatrix()[0][0];
+            double D22 = clt_lam.getDMatrix()[1][1];
+
+            return this.getBucklingInput().getLength()/this.getBucklingInput().getWidth()*Math.pow((D22/D11),0.25);
+        } else {
+            return null;
+        }
     }
 
     @Override
