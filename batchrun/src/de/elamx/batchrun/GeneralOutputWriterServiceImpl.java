@@ -156,7 +156,7 @@ public class GeneralOutputWriterServiceImpl implements GeneralOutputWriterServic
         out.println();
         out.println("_______________________________________________________________________________");
         out.println();
-        out.println("abd-Matrix (Flexiblity matrix):");
+        out.println("abd-Matrix (Flexibility matrix):");
         amat = clt_laminate.getaMatrix();
         bmat = clt_laminate.getbMatrix();
         dmat = clt_laminate.getdMatrix();
