@@ -181,6 +181,13 @@ public class GeneralOutputWriterServiceImpl implements GeneralOutputWriterServic
         out.printf(lo, "  vxy  = %-10.5f    %-10.5f    %-10s    %-10s%n", clt_laminate.getNuxySimple(), clt_laminate.getNuxyBendSimple(), "-", "-");
         out.printf(lo, "  vyx  = %-10.5f    %-10.5f    %-10s    %-10s%n", clt_laminate.getNuyxSimple(), clt_laminate.getNuyxBendSimple(), "-", "-");
         out.println();
+
+        out.println("Non-dimensional parameters :");
+        out.printf(lo, "  beta_D   = %17.10E%n", clt_laminate.getBetaD());
+        out.printf(lo, "  nu_D     = %17.10E%n", clt_laminate.getNuD());
+        out.printf(lo, "  gamma_D  = %17.10E%n", clt_laminate.getGammaD());
+        out.printf(lo, "  delta_D  = %17.10E%n", clt_laminate.getDeltaD());
+        out.println();
         out.println();
     }
 }

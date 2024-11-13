@@ -55,6 +55,7 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
 
     private static HDF5CompoundType<List<?>> HDF5effectiveStiffnessWithPoissonType = null;
     private static HDF5CompoundType<List<?>> HDF5effectiveStiffnessWithoutPoissonType = null;
+    private static HDF5CompoundType<List<?>> HDF5nonDimensionalParametersType = null;
 
     @Override
     public void writeHeader(IHDF5Writer hdf5writer, File inputFile, Date date) {
@@ -183,6 +184,27 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         effectiveStiffnessNamesArrayList.add("Gxy");
 
         hdf5writer.compound().write("/".concat(groupName).concat("/effective stiffness/without poisson effect/flexural"), HDF5effectiveStiffnessWithoutPoissonType, effectiveStiffnessValuesArrayList);
+
+        ArrayList<Double> nonDimensionalParametersValuesArrayList = new ArrayList<>();
+        ArrayList<String> nonDimensionalParametersNamesArrayList = new ArrayList<>();
+
+        nonDimensionalParametersValuesArrayList.add(clt_laminate.getBetaD());
+        nonDimensionalParametersNamesArrayList.add("beta_D");
+
+        nonDimensionalParametersValuesArrayList.add(clt_laminate.getNuD());
+        nonDimensionalParametersNamesArrayList.add("nu_D");
+
+        nonDimensionalParametersValuesArrayList.add(clt_laminate.getGammaD());
+        nonDimensionalParametersNamesArrayList.add("gamma_D");
+
+        nonDimensionalParametersValuesArrayList.add(clt_laminate.getDeltaD());
+        nonDimensionalParametersNamesArrayList.add("delta_D");
+
+        if (HDF5nonDimensionalParametersType == null) {
+            HDF5nonDimensionalParametersType = hdf5writer.compound().getInferredType("Non-dimensional parameters", nonDimensionalParametersNamesArrayList, nonDimensionalParametersValuesArrayList);
+        }
+
+        hdf5writer.compound().write("/".concat(groupName).concat("/non-dimensional parameters"), HDF5nonDimensionalParametersType, nonDimensionalParametersValuesArrayList);
 
         String layupGroupName = "/".concat(groupName).concat("/layup");
         hdf5writer.object().createGroup(layupGroupName);
