@@ -497,4 +497,8 @@ public class InputPanel extends javax.swing.JPanel implements ChangeListener, Pr
             setText(uhOhText);
         }
     }
+
+    public static String getBoundaryConditionString(int bc){
+        return boundary_cond[bc];
+    }
 }
