@@ -28,6 +28,7 @@ package de.elamx.clt.plateui.buckling.batchrun;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.plate.BucklingResult;
 import de.elamx.clt.plateui.buckling.BucklingModuleData;
+import de.elamx.clt.plateui.buckling.InputPanel;
 import de.elamx.laminate.Laminat;
 import de.elamx.utilities.Utilities;
 import java.io.PrintStream;
@@ -65,6 +66,18 @@ public class BucklingOutputWriterServiceImpl implements BucklingOutputWriterServ
         } else {
             out.printf(lo,"  alpha_bar  = - (stiffeners specified)");
         }
+        out.println();
+        out.println("Plate geometry:");
+        out.printf(lo,"  length     = %17.10E%n"  , data.getBucklingInput().getLength());
+        out.printf(lo,"  width      = %17.10E%n"  , data.getBucklingInput().getWidth());
+        out.println();
+        out.println("Boundary conditions:");
+        out.printf(lo,"  x          : %s%n", InputPanel.getBoundaryConditionString(data.getBucklingInput().getBcx()));
+        out.printf(lo,"  x          : %s%n", InputPanel.getBoundaryConditionString(data.getBucklingInput().getBcy()));
+        out.println();
+        out.println("Number of terms:");
+        out.printf(lo,"  n_x        = %3d%n"  , data.getBucklingInput().getM());
+        out.printf(lo,"  n_y        = %3d%n"  , data.getBucklingInput().getN());
         out.println();
         out.println("critical load");
         double[] ncrit = result.getN_crit();
