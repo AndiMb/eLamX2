@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.Action;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.awt.Actions;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -190,6 +192,21 @@ public class FibreNode extends AbstractNode implements PropertyChangeListener {
         if (evt.getPropertyName().equals(Material.PROP_NAME)) {
             this.fireDisplayNameChange((String)evt.getOldValue(), (String)evt.getNewValue());
             return;
+        }
+        if (evt.getPropertyName().equals(Fiber.PROP_EPAR) || evt.getPropertyName().equals(Fiber.PROP_ENOR))  {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(FibreNode.class, "Warning.negativeelasticmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+        }
+        if (evt.getPropertyName().equals(Fiber.PROP_NUE12)) {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(FibreNode.class, "Warning.negativepoissonratio"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+        }
+        if (evt.getPropertyName().equals(Fiber.PROP_G) || evt.getPropertyName().equals(Fiber.PROP_G13) || evt.getPropertyName().equals(Fiber.PROP_G23)) {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(FibreNode.class, "Warning.negativeshearmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+            }
         }
         this.firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
     }
