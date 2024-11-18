@@ -30,6 +30,7 @@ import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.plate.BucklingResult;
 import de.elamx.clt.plateui.buckling.BucklingModuleData;
+import de.elamx.clt.plateui.buckling.InputPanel;
 import de.elamx.laminate.Laminat;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,8 @@ import org.openide.util.lookup.ServiceProvider;
 public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWriterService {
 
     private static HDF5CompoundType<List<?>> HDF5criticalLoadsType = null;
+    private static HDF5CompoundType<List<?>> HDF5plateGeometryType = null;
+    private static HDF5CompoundType<List<?>> HDF5termNumberType = null;
 
     @Override
     public void writeResults(IHDF5Writer hdf5writer, BucklingModuleData data, Laminat laminate, BucklingResult result) {
@@ -52,6 +55,43 @@ public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWr
         }
         String groupName = bucklingGroup.concat(data.getName());
         hdf5writer.object().createGroup(groupName);
+        
+        String inputGroup = groupName.concat("/input data/");
+
+        hdf5writer.object().createGroup(inputGroup);
+
+        ArrayList<Double> plateGeometryValuesArrayList = new ArrayList<>();
+        ArrayList<String> plateGeometryNamesArrayList = new ArrayList<>();
+
+        plateGeometryValuesArrayList.add(data.getBucklingInput().getLength());
+        plateGeometryNamesArrayList.add("length");
+
+        plateGeometryValuesArrayList.add(data.getBucklingInput().getWidth());
+        plateGeometryNamesArrayList.add("width");
+
+        if (HDF5plateGeometryType == null) {
+            HDF5plateGeometryType = hdf5writer.compound().getInferredType("Plate geometry", plateGeometryNamesArrayList, plateGeometryValuesArrayList);
+        }
+        
+        hdf5writer.compound().write(inputGroup.concat("/plate geometry"), HDF5plateGeometryType, plateGeometryValuesArrayList);
+
+        hdf5writer.string().write(inputGroup.concat("/BCx"), InputPanel.getBoundaryConditionString(data.getBucklingInput().getBcx()));
+        hdf5writer.string().write(inputGroup.concat("/BCy"), InputPanel.getBoundaryConditionString(data.getBucklingInput().getBcy()));
+
+        ArrayList<Integer> termNumberValuesArrayList = new ArrayList<>();
+        ArrayList<String> termNumberNamesArrayList = new ArrayList<>();
+
+        termNumberValuesArrayList.add(data.getBucklingInput().getM());
+        termNumberNamesArrayList.add("m (x)");
+
+        termNumberValuesArrayList.add(data.getBucklingInput().getN());
+        termNumberNamesArrayList.add("n (y)");
+
+        if (HDF5termNumberType == null) {
+            HDF5termNumberType = hdf5writer.compound().getInferredType("Term number", termNumberNamesArrayList, termNumberValuesArrayList);
+        }
+        
+        hdf5writer.compound().write(inputGroup.concat("/term number"), HDF5termNumberType, termNumberValuesArrayList);        
 
         double[][] dmat = data.getBucklingInput().getDMatrixService().getDMatrix(data.getLaminat().getLookup().lookup(CLT_Laminate.class));
         String dMatrixOption = data.getBucklingInput().getDMatrixService().getBatchRunOutput();
