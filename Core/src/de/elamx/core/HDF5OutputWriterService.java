@@ -37,7 +37,7 @@ import java.util.Date;
  */
 public interface HDF5OutputWriterService {
     
-    public void writeHeader(IHDF5Writer hdf5writer, File inputFile, Date date);
+    public void writeHeader(IHDF5Writer hdf5writer, File inputFile, String inputFileMD5, Date date);
     
     public void writeLaminateInformation(IHDF5Writer hdf5writer, Laminat laminate);
     

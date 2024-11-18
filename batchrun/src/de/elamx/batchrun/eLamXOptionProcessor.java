@@ -39,6 +39,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -50,6 +53,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import org.apache.commons.io.FileUtils;
 import org.netbeans.api.sendopts.CommandException;
 import org.netbeans.spi.sendopts.Env;
 import org.netbeans.spi.sendopts.Option;
@@ -163,11 +167,29 @@ public class eLamXOptionProcessor extends OptionProcessor {
 
         // Schreiben des Headers
         Date date = new Date();
-        writerService.writeHeader(out, date);
+        
+        String md5checksum = null;
+        if (inputFile != null) {
+            byte[] data = null;
+            try {
+                data = FileUtils.readFileToByteArray(inputFile);
+            } catch (IOException ex) {
+                Logger.getLogger(eLamXOptionProcessor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            byte[] hash = null;
+            try {
+                hash = MessageDigest.getInstance("MD5").digest(data);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(eLamXOptionProcessor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            md5checksum = new BigInteger(1, hash).toString(16);            
+        }
+        
+        writerService.writeHeader(out, inputFile, md5checksum, date);
 
         // Schreiben des Headers der hdf5-Datei
         if (hdf5out != null) {
-            hdf5WriterService.writeHeader(hdf5out, inputFile, date);
+            hdf5WriterService.writeHeader(hdf5out, inputFile, md5checksum, date);
         }
 
         // Schleife über alle in der eLamX-Datei enthaltenen Materialien

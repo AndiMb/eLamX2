@@ -27,6 +27,7 @@ package de.elamx.batchrun.output;
 
 import de.elamx.core.GeneralOutputWriterService;
 import de.elamx.laminate.Laminat;
+import java.io.File;
 import java.io.PrintStream;
 import java.util.Date;
 import org.openide.util.lookup.ServiceProvider;
@@ -39,7 +40,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class GeneralOutputWriterServiceImpl implements GeneralOutputWriterService{
 
     @Override
-    public void writeHeader(PrintStream out, Date date) {
+    public void writeHeader(PrintStream out, File inputFile, String inputFileMD5, Date date) {
         out.println("Header");
     }
 

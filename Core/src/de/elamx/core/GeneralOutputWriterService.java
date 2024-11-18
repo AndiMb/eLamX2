@@ -26,6 +26,7 @@
 package de.elamx.core;
 
 import de.elamx.laminate.Laminat;
+import java.io.File;
 import java.io.PrintStream;
 import java.util.Date;
 
@@ -35,7 +36,7 @@ import java.util.Date;
  */
 public interface GeneralOutputWriterService {
     
-    public void writeHeader(PrintStream out, Date date);
+    public void writeHeader(PrintStream out, File inputFile, String inputFileMD5, Date date);
     
     public void writeLaminateInformation(PrintStream out, Laminat laminate);
 }

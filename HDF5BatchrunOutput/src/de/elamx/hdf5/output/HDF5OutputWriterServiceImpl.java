@@ -34,9 +34,6 @@ import de.elamx.laminate.Layer;
 import de.elamx.laminate.Material;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +55,7 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
     private static HDF5CompoundType<List<?>> HDF5nonDimensionalParametersType = null;
 
     @Override
-    public void writeHeader(IHDF5Writer hdf5writer, File inputFile, Date date) {
+    public void writeHeader(IHDF5Writer hdf5writer, File inputFile, String inputFileMD5, Date date) {
         hdf5writer.string().write("elamx version", NbBundle.getBundle("org.netbeans.core.startup.Bundle").getString("currentVersion"));
         hdf5writer.string().write("timestamp", date.toString());
 
@@ -66,21 +63,12 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
         hdf5writer.object().createGroup("laminates");
 
         if (inputFile != null) {
-            byte[] data = null;
             try {
                 hdf5writer.string().write("input file", FileUtils.readFileToString(inputFile));
-                data = FileUtils.readFileToByteArray(inputFile);
             } catch (IOException ex) {
                 Logger.getLogger(HDF5OutputWriterServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-            byte[] hash = null;
-            try {
-                hash = MessageDigest.getInstance("MD5").digest(data);
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(HDF5OutputWriterServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            String checksum = new BigInteger(1, hash).toString(16);
-            hdf5writer.string().setAttr("input file", "md5 checksum", checksum);
+            hdf5writer.string().setAttr("input file", "md5 checksum", inputFileMD5);
             hdf5writer.string().setAttr("input file", "filename", inputFile.getName());
             hdf5writer.string().setAttr("input file", "absolute path", inputFile.getAbsolutePath());
         }

@@ -31,6 +31,7 @@ import de.elamx.laminate.Laminat;
 import de.elamx.laminate.Layer;
 import de.elamx.laminate.Material;
 import de.elamx.utilities.Utilities;
+import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,9 +50,12 @@ public class GeneralOutputWriterServiceImpl implements GeneralOutputWriterServic
      * Schreiben allgemeiner Informationen zum eLamX-Lauf.
      *
      * @param out PrintStream für die Ausgaben
+     * @param inputFile Eingabedatei
+     * @param inputFileMD5 MD5-Checksumme der Eingabedatei
+     * @param date Zeitstempel
      */
     @Override
-    public void writeHeader(PrintStream out, Date date) {
+    public void writeHeader(PrintStream out, File inputFile, String inputFileMD5, Date date) {
         out.println("eLamX 2 - Module Calculation");
         out.println("");
         out.println("Version: " + NbBundle.getBundle("org.netbeans.core.startup.Bundle").getString("currentVersion"));
@@ -61,6 +65,8 @@ public class GeneralOutputWriterServiceImpl implements GeneralOutputWriterServic
         out.println("https://tu-dresden.de/mw/ilr/lft");
         out.println("");
         out.println("Timestamp: " + date.toString());
+        out.println("");
+        out.println("Processed file (MD5): " + inputFile.getAbsolutePath() + " (" + inputFileMD5 + ")");
         out.println();
         out.println();
     }
