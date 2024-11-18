@@ -64,7 +64,6 @@ public class HDF5BucklingOutputWriterServiceImpl implements HDF5BucklingOutputWr
             hdf5writer.float64().write(groupName.concat("/effective aspect ratio"), data.getAlphaBar());
         }
 
-        hdf5writer.object().createGroup(groupName.concat("/critical load"));
         double[] ncrit = result.getN_crit();
         ArrayList<Double> criticalLoadValuesArrayList = new ArrayList<>();
         ArrayList<String> criticalLoadNamesArrayList = new ArrayList<>();
