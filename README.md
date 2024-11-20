@@ -9,10 +9,14 @@ eLamX² is an OpenSource, Java-written composite calculator, which is being deve
 
 ## Coding eLamX²
 
-1. get and openJDK build, e.g. from https://adoptium.net/de/download/
+1. get and openJDK build, e.g. from https://adoptium.net/de/temurin/releases/
 2. Unpack/install JDK
 3. get Apache Netbeans from https://netbeans.apache.org/download
 4. unpack/install Apache Netbeans
 5. Open Apache Netbeans
 6. clone eLamX2 https://github.com/AndiMb/eLamX2
 7. Init GIT submodule View3DSuite by running "git submodule update --init --recursive" in the eLamX² clone directory
+
+## Documentation
+
+A documentation of the theory and usage of eLamX² can be found in the [wiki](https://github.com/AndiMb/eLamX2/wiki).
