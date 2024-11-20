@@ -1,9 +1,9 @@
-name: build
+name: delete-old-assets-nightly-manual
 
 on: [workflow_dispatch]
 
 jobs:
-  delete-old-assets-nightly-manual:
+  build:
     runs-on: ubuntu-latest
     steps:
       #- name: Checkout code
