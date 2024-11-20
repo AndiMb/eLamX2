@@ -3,7 +3,7 @@ name: build
 on: [workflow_dispatch]
 
 jobs:
-  build:
+  delete-old-assets-nightly-manual:
     runs-on: ubuntu-latest
     steps:
       #- name: Checkout code
