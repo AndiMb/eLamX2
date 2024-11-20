@@ -1,0 +1,23 @@
+name: build
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      #- name: Checkout code
+      #  uses: actions/checkout@v2
+
+      - name: Delete old release assets
+        uses: mknejp/delete-release-assets@v1
+        with:
+          token: ${{ github.token }}
+          tag: nightly # This may also be of the form 'refs/tags/staging'
+
+          # Optional another repository
+          repository: AndiMb/eLamX2
+
+          assets: |
+            eLamX.3.0.0.exe
+            eLamX.2.7.2.exe
