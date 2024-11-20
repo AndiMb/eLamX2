@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.Action;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.awt.Actions;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -167,6 +169,16 @@ public class MatrixNode extends AbstractNode implements PropertyChangeListener {
         if (evt.getPropertyName().equals(Material.PROP_NAME)) {
             this.fireDisplayNameChange((String)evt.getOldValue(), (String)evt.getNewValue());
             return;
+        }
+        if (evt.getPropertyName().equals(Matrix.PROP_E))  {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(MatrixNode.class, "Warning.negativeelasticmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+        }
+        if (evt.getPropertyName().equals(Matrix.PROP_NUE)) {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(MatrixNode.class, "Warning.negativepoissonratio"), NotifyDescriptor.WARNING_MESSAGE));
+            }
         }
         this.firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
     }
