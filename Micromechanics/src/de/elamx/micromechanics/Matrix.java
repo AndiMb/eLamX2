@@ -27,9 +27,6 @@ package de.elamx.micromechanics;
 
 import de.elamx.laminate.Material;
 import java.util.UUID;
-import org.openide.DialogDisplayer;
-import org.openide.NotifyDescriptor;
-import org.openide.util.NbBundle;
 
 /**
  *
@@ -128,9 +125,6 @@ public class Matrix extends Material{
         double oldG = G;
         G = E / (2 * (1.0 + nue));
         firePropertyChange(PROP_G, oldG, G);
-        if ((nue != oldNue) && (nue < 0.)) {
-            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(Matrix.class, "Warning.negativepoissonratio"), NotifyDescriptor.WARNING_MESSAGE));
-        }
     }
 
     /**
@@ -145,9 +139,6 @@ public class Matrix extends Material{
         double oldG = G;
         G = E / (2 * (1.0 + nue));
         firePropertyChange(PROP_G, oldG, G);
-        if ((E != oldE) && (E < 0.)) {
-            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(Matrix.class, "Warning.negativeelasticmodulus"), NotifyDescriptor.WARNING_MESSAGE));
-        }
     }
 
     public double getE() {

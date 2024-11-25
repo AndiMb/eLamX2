@@ -53,6 +53,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.Action;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.awt.Actions;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -322,6 +324,21 @@ public class MicroMechanicMaterialNode extends AbstractNode implements PropertyC
         if (evt.getPropertyName().equals(Material.PROP_NAME)) {
             this.fireDisplayNameChange((String)evt.getOldValue(), (String)evt.getNewValue());
             return;
+        }
+        if (evt.getPropertyName().equals(MicroMechanicMaterial.PROP_EPAR) || evt.getPropertyName().equals(MicroMechanicMaterial.PROP_ENOR))  {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(MicroMechanicMaterialNode.class, "Warning.negativeelasticmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+        }
+        if (evt.getPropertyName().equals(MicroMechanicMaterial.PROP_NUE12)) {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(MicroMechanicMaterialNode.class, "Warning.negativepoissonratio"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+        }
+        if (evt.getPropertyName().equals(MicroMechanicMaterial.PROP_G) || evt.getPropertyName().equals(MicroMechanicMaterial.PROP_G13) || evt.getPropertyName().equals(MicroMechanicMaterial.PROP_G23)) {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(MicroMechanicMaterialNode.class, "Warning.negativeshearmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+            }
         }
         this.firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
     }

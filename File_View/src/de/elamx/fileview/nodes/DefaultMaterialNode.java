@@ -47,6 +47,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javax.swing.Action;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.awt.Actions;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -296,6 +298,21 @@ public class DefaultMaterialNode extends AbstractNode implements PropertyChangeL
         if (evt.getPropertyName().equals(Material.PROP_NAME)) {
             this.fireDisplayNameChange((String) evt.getOldValue(), (String) evt.getNewValue());
             return;
+        }
+        if (evt.getPropertyName().equals(DefaultMaterial.PROP_EPAR) || evt.getPropertyName().equals(DefaultMaterial.PROP_ENOR))  {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(DefaultMaterialNode.class, "Warning.negativeelasticmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+        }
+        if (evt.getPropertyName().equals(DefaultMaterial.PROP_NUE12)) {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(DefaultMaterialNode.class, "Warning.negativepoissonratio"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+        }
+        if (evt.getPropertyName().equals(DefaultMaterial.PROP_G) || evt.getPropertyName().equals(DefaultMaterial.PROP_G13) || evt.getPropertyName().equals(DefaultMaterial.PROP_G23)) {
+            if (((double)evt.getNewValue() != (double)evt.getOldValue()) && ((double)evt.getNewValue() < 0.)) {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(DefaultMaterialNode.class, "Warning.negativeshearmodulus"), NotifyDescriptor.WARNING_MESSAGE));
+            }
         }
         this.firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
     }
