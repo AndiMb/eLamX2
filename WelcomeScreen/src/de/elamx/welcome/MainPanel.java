@@ -30,7 +30,9 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import org.openide.util.ImageUtilities;
 
 /**
  *
@@ -42,6 +44,7 @@ public class MainPanel extends javax.swing.JPanel {
     private final TabButton[] buttons;
     private final boolean[] tabAdded;
     private int selTabIndex = -1;
+    private final ImageIcon tudImageIcon;
 
     /**
      * Creates new form FirstStepsPanel
@@ -68,6 +71,8 @@ public class MainPanel extends javax.swing.JPanel {
             buttons[i] = new TabButton(tabs[i].getName().toUpperCase(), i);
             buttons[i].addActionListener(al);
         }
+        
+        tudImageIcon = ImageUtilities.loadImageIcon("de/elamx/welcome/resources/TUD_Logo_HKS41_57.svg", false);
         
         initComponents();
         
@@ -129,7 +134,7 @@ public class MainPanel extends javax.swing.JPanel {
         headerPanel.setBackground(new java.awt.Color(11, 42, 81));
         headerPanel.setPreferredSize(new java.awt.Dimension(82, 72));
 
-        logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/elamx/welcome/resources/tud_logo_weiss.png"))); // NOI18N
+        logo1.setIcon(tudImageIcon);
 
         logo2.setForeground(new java.awt.Color(255, 255, 255));
         logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/elamx/welcome/resources/ILRLogo_weiss.png"))); // NOI18N
@@ -142,7 +147,7 @@ public class MainPanel extends javax.swing.JPanel {
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(logo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -151,10 +156,10 @@ public class MainPanel extends javax.swing.JPanel {
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(logo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(logo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(logo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(78, 100, 126));
@@ -178,7 +183,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addComponent(facultyLabel)
                 .addGap(18, 18, 18)
                 .addComponent(instituteLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
