@@ -44,7 +44,7 @@ public class MainPanel extends javax.swing.JPanel {
     private final TabButton[] buttons;
     private final boolean[] tabAdded;
     private int selTabIndex = -1;
-    private final ImageIcon tudImageIcon;
+    private final ImageIcon tudImageIcon, ilrImageIcon;
 
     /**
      * Creates new form FirstStepsPanel
@@ -73,6 +73,7 @@ public class MainPanel extends javax.swing.JPanel {
         }
         
         tudImageIcon = ImageUtilities.loadImageIcon("de/elamx/welcome/resources/TUD_Logo_HKS41_57.svg", false);
+        ilrImageIcon = ImageUtilities.loadImageIcon("de/elamx/welcome/resources/ILRLogo_weiss.svg", false);
         
         initComponents();
         
@@ -121,8 +122,8 @@ public class MainPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         headerPanel = new javax.swing.JPanel();
-        logo1 = new Logo("http://tu-dresden.de");
-        logo2 = new Logo("http://tu-dresden.de/mw/ilr/lft");
+        logo1 = new Logo("https://tu-dresden.de");
+        logo2 = new Logo("https://tu-dresden.de/mw/ilr/lft");
         jPanel2 = new javax.swing.JPanel();
         facultyLabel = new javax.swing.JLabel();
         instituteLabel = new javax.swing.JLabel();
@@ -137,7 +138,7 @@ public class MainPanel extends javax.swing.JPanel {
         logo1.setIcon(tudImageIcon);
 
         logo2.setForeground(new java.awt.Color(255, 255, 255));
-        logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/elamx/welcome/resources/ILRLogo_weiss.png"))); // NOI18N
+        logo2.setIcon(ilrImageIcon);
         org.openide.awt.Mnemonics.setLocalizedText(logo2, org.openide.util.NbBundle.getMessage(MainPanel.class, "MainPanel.logo2.text")); // NOI18N
         logo2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
 
@@ -159,7 +160,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(logo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(78, 100, 126));

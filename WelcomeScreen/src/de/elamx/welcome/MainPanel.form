@@ -76,7 +76,7 @@
                       <Component id="logo2" max="32767" attributes="0"/>
                       <Component id="logo1" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="10" max="32767" attributes="0"/>
+                  <EmptySpace pref="38" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -89,7 +89,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Logo(&quot;http://tu-dresden.de&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Logo(&quot;https://tu-dresden.de&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="de.elamx.welcome.Logo" name="logo2">
@@ -97,8 +97,8 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/de/elamx/welcome/resources/ILRLogo_weiss.png"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="ilrImageIcon" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="de/elamx/welcome/Bundle.properties" key="MainPanel.logo2.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -108,7 +108,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Logo(&quot;http://tu-dresden.de/mw/ilr/lft&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Logo(&quot;https://tu-dresden.de/mw/ilr/lft&quot;);"/>
           </AuxValues>
         </Component>
       </SubComponents>

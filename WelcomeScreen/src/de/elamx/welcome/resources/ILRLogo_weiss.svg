@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="63" height="42" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 1138.78 816.41"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:white;stroke-width:37.04;stroke-linecap:round;stroke-miterlimit:22.9256}
+    .fil0 {fill:none}
+    .fil1 {fill:white}
+   ]]>
+  </style>
+ </defs>
+ <g id="Ebene_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <path class="fil0 str0" d="M1120.26 18.52c0,0 -539.7,214.84 -671.2,276.33 -131.5,61.49 -162.98,82.23 -213.73,112.98 -50.75,30.74 -97.79,65.56 -124.46,88.16 -27.04,22.6 -45.19,43.71 -57.04,57.79 -11.85,14.45 -16.67,20.74 -21.11,28.52 -4.45,7.78 -10,19.63 -11.11,26.3 -1.11,6.3 -3.7,15.93 -2.96,24.45 1.11,8.15 4.45,16.67 9.63,27.04 5.19,10.37 20,24.45 32.23,34.08 12.22,9.63 31.12,20 49.64,27.41 18.15,7.78 48.9,16.67 71.86,23.34 22.97,6.67 53.71,14.08 82.23,19.63 28.15,5.19 68.9,10.74 106.31,14.82 37.78,4.07 104.46,8.89 144.83,11.11 40.38,2.59 73.71,4.07 124.09,5.56 50.38,1.48 212.99,1.85 212.99,1.85"/>
+  <line class="fil0 str0" x1="457.58" y1="666.75" x2="498.7" y2= "487.47" />
+  <line class="fil0 str0" x1="529.81" y1="665.64" x2="585.37" y2= "423.76" />
+  <line class="fil0 str0" x1="601.67" y1="666.75" x2="642.79" y2= "487.47" />
+  <path class="fil1" d="M534.26 423.76c0,11.48 -9.26,21.11 -21.11,21.11 -11.48,0 -21.11,-9.26 -21.11,-21.11 0,-11.48 9.26,-21.11 21.11,-21.11 11.48,0 21.11,9.26 21.11,21.11z"/>
+  <path class="fil1" d="M716.5 491.18c0,11.48 -9.26,21.11 -21.11,21.11 -11.48,0 -21.11,-9.26 -21.11,-21.11 0,-11.48 9.26,-21.11 21.11,-21.11 11.48,0 21.11,9.26 21.11,21.11z"/>
+ </g>
+</svg>
