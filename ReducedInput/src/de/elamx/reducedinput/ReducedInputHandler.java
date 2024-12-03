@@ -31,6 +31,7 @@ import de.elamx.reducedinput.dataobjects.LayerData;
 import de.elamx.reducedinput.dataobjects.CalculationData;
 import de.elamx.reducedinput.dataobjects.MaterialData;
 import de.elamx.clt.CLT_Input;
+import de.elamx.clt.CLT_Laminate;
 import de.elamx.clt.calculation.*;
 import de.elamx.clt.calculation.lastplyfailure.LastPlyFailureInput;
 import de.elamx.clt.calculation.lastplyfailureui.LastPlyFailureModuleData;
@@ -536,7 +537,11 @@ public class ReducedInputHandler extends DefaultHandler {
                 BucklingModuleData buckModuleData = new BucklingModuleData(lam, inputData);
                 buckModuleData.setName(buckling.getName());
                 lam.getLookup().add(buckModuleData);
-                if (! lam.isSymmetric()) {
+                CLT_Laminate clt_lam = lam.getLookup().lookup(CLT_Laminate.class);
+                if (clt_lam == null) {
+                    clt_lam = new CLT_Laminate(lam);
+                }
+                if (! clt_lam.isSymmetric())  {
                     BucklingInput inputData_dTilde = new BucklingInput(buckling.getLength(), buckling.getWidth(), lc.getN_x(), lc.getN_y(), lc.getN_xy(), Lookup.getDefault().lookup(DtildeDMatrixServiceImpl.class), buckling.getBcx(), buckling.getBcy(), buckling.getM(), buckling.getN());
                     BucklingModuleData buckModuleData_dTilde = new BucklingModuleData(lam, inputData_dTilde);
                     buckModuleData_dTilde.setName(buckling.getName().concat(" Dtilde-option"));
