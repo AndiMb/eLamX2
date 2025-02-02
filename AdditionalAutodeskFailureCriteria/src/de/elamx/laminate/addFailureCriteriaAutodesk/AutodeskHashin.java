@@ -25,7 +25,7 @@
  */
 package de.elamx.laminate.addFailureCriteriaAutodesk;
 
-/**
+/*
  *
  * @author Tim Dorau
  */

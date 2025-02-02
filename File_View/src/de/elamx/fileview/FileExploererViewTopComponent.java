@@ -44,7 +44,7 @@ import org.openide.nodes.NodeEvent;
 import org.openide.nodes.NodeListener;
 import org.openide.nodes.NodeMemberEvent;
 import org.openide.nodes.NodeReorderEvent;
-import org.openide.util.NbBundle;
+import org.openide.util.*;
 import org.openide.windows.TopComponent;
 
 /**

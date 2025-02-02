@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: true
-OpenIDE-Module: de.elamx.hdf5.output
+OpenIDE-Module: de.elamx.hdf5.output/3
 OpenIDE-Module-Localizing-Bundle: de/elamx/hdf5/output/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.0
+OpenIDE-Module-Specification-Version: 3.0.0
 

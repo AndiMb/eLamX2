@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-OpenIDE-Module: de.elamx.export/1
+OpenIDE-Module: de.elamx.export/3
 OpenIDE-Module-Layer: de/elamx/export/layer.xml
 OpenIDE-Module-Localizing-Bundle: de/elamx/export/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.7.0
+OpenIDE-Module-Specification-Version: 3.0.0
 

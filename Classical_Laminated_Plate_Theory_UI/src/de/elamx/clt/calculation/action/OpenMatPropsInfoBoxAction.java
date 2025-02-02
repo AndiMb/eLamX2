@@ -27,8 +27,6 @@ package de.elamx.clt.calculation.action;
 
 import de.elamx.clt.calculation.LayerResultContainer;
 import de.elamx.clt.calculation.layerproperties.MaterialPropertiesPanel;
-import de.elamx.clt.calculation.layerproperties.QMatrixPanel;
-import de.elamx.laminate.Layer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.openide.DialogDisplayer;

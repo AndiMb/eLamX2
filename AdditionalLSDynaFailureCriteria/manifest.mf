@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: true
-OpenIDE-Module: de.elamx.laminate.addFailureCriteriaLSDYNA/1
+OpenIDE-Module: de.elamx.laminate.addFailureCriteriaLSDYNA/3
 OpenIDE-Module-Layer: de/elamx/laminate/addFailureCriteriaLSDYNA/layer.xml
 OpenIDE-Module-Localizing-Bundle: de/elamx/laminate/addFailureCriteriaLSDYNA/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.7.0
+OpenIDE-Module-Specification-Version: 3.0.0
 

@@ -25,7 +25,7 @@
  */
 package de.elamx.laminate.addFailureCriteriaLSDYNA;
 
-/** Die Klasse ist die Implementierung des Kriteriums aus dem Schadensmodell DaimlerCamaho LSDYNA.
+/* Die Klasse ist die Implementierung des Kriteriums aus dem Schadensmodell DaimlerCamaho LSDYNA.
  *
  * @author Tim Dorau
  */

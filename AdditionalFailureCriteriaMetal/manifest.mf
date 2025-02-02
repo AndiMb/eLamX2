@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: true
-OpenIDE-Module: de.elamx.laminate.addFailureCriteriaMetal
+OpenIDE-Module: de.elamx.laminate.addFailureCriteriaMetal/3
 OpenIDE-Module-Layer: de/elamx/laminate/addFailureCriteriaMetal/layer.xml
 OpenIDE-Module-Localizing-Bundle: de/elamx/laminate/addFailureCriteriaMetal/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.7.0
+OpenIDE-Module-Specification-Version: 3.0.0
 
