@@ -19,5 +19,8 @@ jobs:
           repository: AndiMb/eLamX2
 
           assets: |
-            eLamX.3.0.0.exe
-            eLamX.2.7.2.exe
+            eLamX.3.0.0-beta.exe
+            eLamX2-x86_64.AppImage
+            elamx2_linux.zip
+            elamx2_macos.zip
+            elamx2_windows.zip
