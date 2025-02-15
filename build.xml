@@ -3,7 +3,7 @@
 <!-- for some information on what you could do (e.g. targets to override). -->
 <!-- If you delete this file and reopen the project it will be recreated. -->
 <project name="eLamX2" basedir="." xmlns:if="ant:if" xmlns:unless="ant:unless">
-    <description>Builds the module suite eLamX2.</description>
+    <description>Builds the module suite eLamX.</description>
     <import file="nbproject/build-impl.xml"/>
     
     <condition property="isWindows">
@@ -23,7 +23,7 @@
         </tstamp>
         <delete file="build/launcher/bin/${app.name}.exe"/>
         <exec executable="Resource/rcedit-x64.exe" resolveexecutable="true">
-            <arg line='build/launcher/bin/${app.name}64.exe --set-icon "Resource/${app.name}.ico" --set-file-version "1.0.0" --set-product-version "${elamxversion} - ${builddate}" --set-version-string "ProductName" "${app.name}" --set-version-string "LegalCopyright" "GPL - 2021 Technische Universität Dresden - Andreas Hauffe"'/>
+            <arg line='build/launcher/bin/${app.name}64.exe --set-icon "Resource/${app.name}.ico" --set-file-version "1.0.0" --set-product-version "${elamxversion} - ${builddate}" --set-version-string "ProductName" "${app.name}" --set-version-string "LegalCopyright" "GPL - 2025 Technische Universität Dresden - Andreas Hauffe"'/>
         </exec>
     </target>
     
@@ -50,24 +50,24 @@
         <unzip src="${dist.dir}/${app.name}_${elamxjdk.os}.zip" dest="${temp.dir.windows-installer}" />
         
         <!-- InnoSetup Kontrolldatei in den Ordner kopieren -->
-        <copy file="Resource/elamx2.iss" tofile="${temp.dir.windows-installer}/elamx2.iss"/>
+        <copy file="Resource/elamx.iss" tofile="${temp.dir.windows-installer}/elamx.iss"/>
         
         <!-- eLamX²-Version in der InnoSetup Kontrolldatei setzen -->
-        <replace file="${temp.dir.windows-installer}/elamx2.iss"
+        <replace file="${temp.dir.windows-installer}/elamx.iss"
                  value="${elamxversion}">
             <contains text="$ELAMXVERSION$"/>
             <replacetoken><![CDATA[$ELAMXVERSION$]]></replacetoken>
         </replace>
         
         <!-- Icon-Datei in den Ordner kopieren -->
-        <copy file="Resource/elamx2.ico" tofile="${temp.dir.windows-installer}/elamx2/etc/elamx2.ico"/>
+        <copy file="Resource/elamx.ico" tofile="${temp.dir.windows-installer}/elamx/etc/elamx.ico"/>
         
         <!-- Lizenzdatei in den Ordner kopieren -->
         <copy file="LICENSE" tofile="${temp.dir.windows-installer}/license.txt"/>
         
         <!-- Installer mit InnoSetup erstellen -->
         <exec dir="${temp.dir.windows-installer}" executable="${innosetupexe}">
-            <arg value="elamx2.iss" />
+            <arg value="elamx.iss" />
         </exec>
         
         <!-- Installer in den Dist-Ordner kopieren -->
@@ -104,7 +104,7 @@
         <!-- notwendige Dateien in die Ordnerstruktur kopieren (Icon, Desptop-File) -->
         <copy file="Resource/logo_elamx48.png" tofile="${linux-appimage-folder.usr.share.icon}/${app.name}.png"/>
         <symlink link="${linux-appimage-folder}/${app.name}.png" resource="usr/share/icons/hicolor/48x48/apps/${app.name}.png"/>
-        <copy file="Resource/Linux.AppImage/elamx2.desktop" tofile="${linux-appimage-folder.usr.share.applications}/${app.name}.desktop"/>
+        <copy file="Resource/Linux.AppImage/elamx.desktop" tofile="${linux-appimage-folder.usr.share.applications}/${app.name}.desktop"/>
         <symlink link="${linux-appimage-folder}/${app.name}.desktop" resource="usr/share/applications/${app.name}.desktop"/>
         <copy file="Resource/Linux.AppImage/AppRun" tofile="${linux-appimage-folder}/AppRun"/>
         <chmod file="${linux-appimage-folder}/AppRun" perm="a+x"/>
@@ -130,7 +130,7 @@
         </exec>
         
         <!-- AppImage in den Dist-Ordner kopieren -->
-        <move file="${temp.dir.linux-appimage}/eLamX2-x86_64.AppImage" tofile="${dist.dir}/eLamX2-x86_64.AppImage"/>
+        <move file="${temp.dir.linux-appimage}/eLamX-x86_64.AppImage" tofile="${dist.dir}/eLamX-x86_64.AppImage"/>
     </target>
     
     <!-- Hilfstarget, um die linux.properties zu laden -->
@@ -146,7 +146,7 @@
         <property file="nbproject/macos.properties"/>
     </target>
 
-    <!-- ZIP-Datei mit eLamX2 und eine Plattformspezifischen JRE erstellen -->
+    <!-- ZIP-Datei mit eLamX und eine Plattformspezifischen JRE erstellen -->
     <target name="-build-zip-with_jre" depends="build,build-launchers">
         <mkdir dir="${dist.dir}"/>
         <!-- pathfileset does not support 'prefix' and 'filemode' parameters,

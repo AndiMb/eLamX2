@@ -50,7 +50,7 @@ jobs:
       with:
         allowUpdates: true
         artifactErrorsFailBuild: false
-        artifacts: dist\elamx2_windows.zip,dist\eLamX.3.0.0-beta.exe
+        artifacts: dist\elamx_windows.zip,dist\eLamX.3.0.0.exe
         artifactContentType: "raw"
         name: Latest Nightly ${{ env.NIGHTLYDATE }}
         prerelease: true
@@ -94,7 +94,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: elamx-linux-appimage
-        path: "dist/eLamX2-x86_64.AppImage"
+        path: "dist/eLamX-x86_64.AppImage"
         retention-days: 1
 
     - name: Upload Linux Zip
@@ -120,7 +120,7 @@ jobs:
       with:
         allowUpdates: true
         artifactErrorsFailBuild: false
-        artifacts: dist/elamx2_linux.zip,dist/eLamX2-x86_64.AppImage
+        artifacts: dist/elamx_linux.zip,dist/eLamX-x86_64.AppImage
         artifactContentType: "raw"
         name: Latest Nightly ${{ env.NIGHTLYDATE }}
         prerelease: true
@@ -163,7 +163,7 @@ jobs:
       with:
         allowUpdates: true
         artifactErrorsFailBuild: false
-        artifacts: dist/elamx2_macos.zip
+        artifacts: dist/elamx_macos.zip
         artifactContentType: "raw"
         name: Latest Nightly ${{ env.NIGHTLYDATE }}
         prerelease: true

@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=eLamX2
-Exec=elamx2
-Icon=elamx2
+Name=eLamX
+Exec=elamx
+Icon=elamx
 Categories=Development;Java;IDE;
 Version=1.0
 Type=Application
