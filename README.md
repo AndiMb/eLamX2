@@ -7,6 +7,10 @@ eLamX is an OpenSource, Java-written composite calculator, which is being develo
   width="686">
 </p>
 
+## Downloading eLamX
+
+You can download the latest release [here](https://github.com/AndiMb/eLamX2/releases).
+
 ## Coding eLamX
 
 1. get and openJDK build, e.g. from https://adoptium.net/de/temurin/releases/
