@@ -426,8 +426,8 @@ public class PlyFailureCriterion{
         mat.setRParCom(material.getRParCom());
         mat.setRParTen(material.getRParTen());
         mat.setRShear(material.getRShear());
-        for(String key : mat.getAdditionalValueKeySet()){
-            mat.putAdditionalValue(key, mat.getAdditionalValue(key));
+        for(String key : material.getAdditionalValueKeySet()){
+            mat.putAdditionalValue(key, material.getAdditionalValue(key));
         }
         return mat;
     }
