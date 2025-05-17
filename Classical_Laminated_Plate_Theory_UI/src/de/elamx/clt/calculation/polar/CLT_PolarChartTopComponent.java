@@ -512,7 +512,7 @@ public final class CLT_PolarChartTopComponent extends TopComponent implements Lo
         public void export(FileWriter fw) {
             try {
                 String ls = System.getProperty("line.separator");
-                String[] caption = new String[]{"A11", "A12", "A22", "A66"};
+                String[] caption = new String[]{"A11", "A12", "A22", "A66", "B11", "B12", "B22", "B66", "D11", "D12", "D22", "D66"};
                 fw.write("Angle");
                 for (int ii = 0; ii < showATerm.length; ii++) {
                     if (showATerm[ii]) {
