@@ -50,7 +50,7 @@ jobs:
       with:
         allowUpdates: true
         artifactErrorsFailBuild: false
-        artifacts: dist\elamx_windows.zip,dist\eLamX.3.0.0.exe
+        artifacts: dist\elamx_windows.zip,dist\eLamX.3.0.1.exe
         artifactContentType: "raw"
         name: Latest Nightly ${{ env.NIGHTLYDATE }}
         prerelease: true
