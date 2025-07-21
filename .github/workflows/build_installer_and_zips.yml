@@ -43,12 +43,20 @@ jobs:
     - name: Download and extract NetBeans ${{ steps.nbenv.outputs.NETBEANS_VERSION }} ZIP distribution
       shell: cmd
       run: |
-        if [ "${{ steps.cache-netbeans.outputs.cache-hit }}" = "true" ]; then
-          echo "Cache hit - skipping NetBeans ZIP distribution download"
-        else
-          C:\\msys64\\usr\\bin\\wget.exe -q https://archive.apache.org/dist/netbeans/netbeans/${{ steps.nbenv.outputs.NETBEANS_VERSION }}/netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}-bin.zip
-          7z x netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}-bin.zip
-        fi
+        @echo off
+        IF "${{ steps.cache-netbeans.outputs.cache-hit }}"=="true" (
+            echo Cache hit - skipping NetBeans ZIP distribution download
+        ) ELSE (
+            REM NetBeans-Version aus Umgebungsvariable lesen
+            set "NETBEANS_VERSION=${{ steps.cache-netbeans.outputs.cache-hit }}"
+
+            REM ZIP-Datei herunterladen
+            C:\msys64\usr\bin\wget.exe -q https://archive.apache.org/dist/netbeans/netbeans/%NETBEANS_VERSION%/netbeans-%NETBEANS_VERSION%-bin.zip
+
+            REM ZIP-Datei entpacken
+            7z x netbeans-%NETBEANS_VERSION%-bin.zip
+        )
+
         
     - name: Build with Ant
       run: >-
