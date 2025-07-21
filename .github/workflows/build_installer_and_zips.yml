@@ -23,8 +23,17 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         
+    - uses: cjmach/setup-netbeans-action@v2.1
+      name: Setup NetBeans distribution
+      with:
+        version: '26'
+        
     - name: Build with Ant
-      run: ant -noinput -buildfile build.xml windows-installer
+      run: >-
+        ant -noinput -buildfile build.xml
+        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}/netbeans
+        -Dnbplatform.default.harness.dir=${{ github.workspace }}/netbeans/harness
+        windows-installer
 
     - name: Upload Windows Installer
       uses: actions/upload-artifact@v4
@@ -86,9 +95,18 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
-        
+
+    - uses: cjmach/setup-netbeans-action@v2.1
+      name: Setup NetBeans distribution
+      with:
+        version: '26'
+
     - name: Build with Ant
-      run: ant -noinput -buildfile build.xml linux-appimage
+      run: >-
+        ant -noinput -buildfile build.xml
+        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}/netbeans
+        -Dnbplatform.default.harness.dir=${{ github.workspace }}/netbeans/harness
+        linux-appimage
 
     - name: Upload Linux AppIamge
       uses: actions/upload-artifact@v4
@@ -143,9 +161,18 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+
+    - uses: cjmach/setup-netbeans-action@v2.1
+      name: Setup NetBeans distribution
+      with:
+        version: '26'
         
     - name: Build with Ant
-      run: ant -noinput -buildfile build.xml macos-zip
+      run: >-
+        ant -noinput -buildfile build.xml
+        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}/netbeans
+        -Dnbplatform.default.harness.dir=${{ github.workspace }}/netbeans/harness
+        macos-zip
 
     - name: Upload Linux Zip
       uses: actions/upload-artifact@v4
