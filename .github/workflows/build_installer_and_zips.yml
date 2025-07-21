@@ -23,10 +23,32 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         
-    - uses: cjmach/setup-netbeans-action@v2.1
-      name: Setup NetBeans distribution
+    - name: Setup environment
+      id: nbenv
+      shell: bash
+      run: |
+        echo "NETBEANS_VERSION=26" >> "${GITHUB_OUTPUT}"
+        
+    - name: Cache NetBeans distribution
+      uses: actions/cache@v4
+      id: cache-netbeans
       with:
-        version: '26'
+        path: ${{ github.workspace }}/netbeans
+        key: ${{ runner.os }}-netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}
+        restore-keys: |
+          ${{ runner.os }}-netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}
+          ${{ runner.os }}-netbeans-
+          ${{ runner.os }}-
+    
+    - name: Download and extract NetBeans ${{ steps.nbenv.outputs.NETBEANS_VERSION }} ZIP distribution
+      shell: bash
+      run: |
+        if [ "${{ steps.cache-netbeans.outputs.cache-hit }}" = "true" ]; then
+          echo "Cache hit - skipping NetBeans ZIP distribution download"
+        else
+          C:\msys64\usr\bin\wget.exe -q https://archive.apache.org/dist/netbeans/netbeans/${{ steps.nbenv.outputs.NETBEANS_VERSION }}/netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}-bin.zip
+          7z x netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}-bin.zip
+        fi
         
     - name: Build with Ant
       run: >-
