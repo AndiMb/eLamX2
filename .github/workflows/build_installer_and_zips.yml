@@ -41,12 +41,12 @@ jobs:
           ${{ runner.os }}-
     
     - name: Download and extract NetBeans ${{ steps.nbenv.outputs.NETBEANS_VERSION }} ZIP distribution
-      shell: bash
+      shell: cmd
       run: |
         if [ "${{ steps.cache-netbeans.outputs.cache-hit }}" = "true" ]; then
           echo "Cache hit - skipping NetBeans ZIP distribution download"
         else
-          C:\msys64\usr\bin\wget.exe -q https://archive.apache.org/dist/netbeans/netbeans/${{ steps.nbenv.outputs.NETBEANS_VERSION }}/netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}-bin.zip
+          C:\\msys64\\usr\\bin\\wget.exe -q https://archive.apache.org/dist/netbeans/netbeans/${{ steps.nbenv.outputs.NETBEANS_VERSION }}/netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}-bin.zip
           7z x netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}-bin.zip
         fi
         
