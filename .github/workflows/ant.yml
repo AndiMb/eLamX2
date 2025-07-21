@@ -25,6 +25,14 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+    - uses: cjmach/setup-netbeans-action@v2.1
+      name: Setup NetBeans distribution
+      with:
+        version: '26'
     - name: Build with Ant
-      run: ant -noinput -buildfile build.xml build
-      #run: ant -noinput -buildfile build.xml build -Dnbplatform.default.harness.dir=$GITHUB_WORKSPACE/nbmant/harness -Dnbplatform.active.dir=$GITHUB_WORKSPACE/nbmant
+#      run: ant -noinput -buildfile build.xml build
+      run: >-
+        ant -noinput -buildfile build.xml
+        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}/netbeans
+        -Dnbplatform.default.harness.dir=${{ github.workspace }}/netbeans/harness
+        build
