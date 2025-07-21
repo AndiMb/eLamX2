@@ -23,8 +23,16 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+    - uses: cjmach/setup-netbeans-action@v2.1
+      name: Setup NetBeans distribution
+      with:
+        version: '26'
     - name: Test with Ant
-      run: ant -noinput -buildfile build.xml test
+      run: >-
+        ant -noinput -buildfile build.xml
+        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}/netbeans
+        -Dnbplatform.default.harness.dir=${{ github.workspace }}/netbeans/harness
+        test
     - name: Report
       uses: dorny/test-reporter@v1
       if: always()
