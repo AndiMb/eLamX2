@@ -33,7 +33,7 @@ jobs:
       uses: actions/cache@v4
       id: cache-netbeans
       with:
-        path: ${{ env.GITHUB_WORKSPACE }}\netbeans
+        path: ${{ github.workspace }}\netbeans
         key: ${{ runner.os }}-netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}
         restore-keys: |
           ${{ runner.os }}-netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}
@@ -58,9 +58,9 @@ jobs:
           throw "SHA512 hash mismatch"
         }
 
-        Expand-Archive -Path "netbeans.zip" -DestinationPath "${{ env.GITHUB_WORKSPACE }}\netbeans"
+        Expand-Archive -Path "netbeans.zip" -DestinationPath "${{ github.workspace }}\netbeans"
         
-        dir ${{ github.workspace }}\netbeans\netbeans
+        dir ${{ github.workspace }}\netbeans
 
     - name: Build with Ant
       run: >-
