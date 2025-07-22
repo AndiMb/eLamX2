@@ -41,24 +41,27 @@ jobs:
           ${{ runner.os }}-
 
     - name: Download and extract NetBeans ${{ steps.nbenv.outputs.NETBEANS_VERSION }} ZIP distribution
-      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
       shell: pwsh
       run: |
-        $version = "${{ steps.nbenv.outputs.NETBEANS_VERSION }}"
-        $zipUrl = "https://archive.apache.org/dist/netbeans/netbeans/$version/netbeans-$version-bin.zip"
-        $shaUrl = "$zipUrl.sha512"
+        if ("${{ steps.cache-netbeans.outputs.cache-hit }}" -eq "true") {
+          Write-Host "Cache hit - skipping NetBeans ZIP distribution download"
+        } else {
+          $version = "${{ steps.nbenv.outputs.NETBEANS_VERSION }}"
+          $zipUrl = "https://archive.apache.org/dist/netbeans/netbeans/$version/netbeans-$version-bin.zip"
+          $shaUrl = "$zipUrl.sha512"
 
-        Invoke-WebRequest -Uri $zipUrl -OutFile "netbeans.zip"
-        Invoke-WebRequest -Uri $shaUrl -OutFile "netbeans.zip.sha512"
+          Invoke-WebRequest -Uri $zipUrl -OutFile "netbeans.zip"
+          Invoke-WebRequest -Uri $shaUrl -OutFile "netbeans.zip.sha512"
 
-        $hash = Get-FileHash -Algorithm SHA512 -Path "netbeans.zip"
-        $expected = Get-Content "netbeans.zip.sha512"
+          $hash = Get-FileHash -Algorithm SHA512 -Path "netbeans.zip"
+          $expected = Get-Content "netbeans.zip.sha512"
 
-        if (-not ($expected -match $hash.Hash.ToLower())) {
-          throw "SHA512 hash mismatch"
+          if (-not ($expected -match $hash.Hash.ToLower())) {
+            throw "SHA512 hash mismatch"
+          }
+
+          Expand-Archive -Path "netbeans.zip" -DestinationPath "${{ github.workspace }}"
         }
-
-        Expand-Archive -Path "netbeans.zip" -DestinationPath "${{ github.workspace }}"
 
     - name: Build with Ant
 #      run: ant -noinput -buildfile build.xml "-Dnbplatform.default.netbeans.dest.dir=D:/a/eLamX2/eLamX2/netbeans" "-Dnbplatform.default.harness.dir=D:/a/eLamX2/eLamX2/netbeans/harness" windows-installer
