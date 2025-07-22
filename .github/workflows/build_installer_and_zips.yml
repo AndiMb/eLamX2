@@ -22,42 +22,47 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
-        
+
     - name: Setup environment
       id: nbenv
-      shell: bash
+      shell: pwsh
       run: |
-        echo "NETBEANS_VERSION=26" >> "${GITHUB_OUTPUT}"
-        
+        echo "NETBEANS_VERSION=26" >> $env:GITHUB_OUTPUT
+
     - name: Cache NetBeans distribution
       uses: actions/cache@v4
       id: cache-netbeans
       with:
-        path: ${{ github.workspace }}/netbeans
+        path: ${{ env.GITHUB_WORKSPACE }}\netbeans
         key: ${{ runner.os }}-netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}
         restore-keys: |
           ${{ runner.os }}-netbeans-${{ steps.nbenv.outputs.NETBEANS_VERSION }}
           ${{ runner.os }}-netbeans-
           ${{ runner.os }}-
-    
+
     - name: Download and extract NetBeans ${{ steps.nbenv.outputs.NETBEANS_VERSION }} ZIP distribution
-      shell: cmd
+      shell: pwsh
       run: |
-        @echo off
-        IF '%steps.cache-netbeans.outputs.cache-hit%'=="true" (
-            echo Cache hit - skipping NetBeans ZIP distribution download
-        ) ELSE (
-            REM NetBeans-Version aus Umgebungsvariable lesen
-            set 'NETBEANS_VERSION=%steps.cache-netbeans.outputs.cache-hit%'
+        if ("${{ steps.cache-netbeans.outputs.cache-hit }}" -eq "true") {
+          Write-Host "Cache hit - skipping NetBeans ZIP distribution download"
+        } else {
+          $version = "${{ steps.nbenv.outputs.NETBEANS_VERSION }}"
+          $zipUrl = "https://archive.apache.org/dist/netbeans/netbeans/$version/netbeans-$version-bin.zip"
+          $shaUrl = "$zipUrl.sha512"
 
-            REM ZIP-Datei herunterladen
-            C:\msys64\usr\bin\wget.exe -q https://archive.apache.org/dist/netbeans/netbeans/%NETBEANS_VERSION%/netbeans-%NETBEANS_VERSION%-bin.zip
+          Invoke-WebRequest -Uri $zipUrl -OutFile "netbeans.zip"
+          Invoke-WebRequest -Uri $shaUrl -OutFile "netbeans.zip.sha512"
 
-            REM ZIP-Datei entpacken
-            7z x netbeans-%NETBEANS_VERSION%-bin.zip
-        )
+          $hash = Get-FileHash -Algorithm SHA512 -Path "netbeans.zip"
+          $expected = Get-Content "netbeans.zip.sha512"
 
-        
+          if (-not ($expected -match $hash.Hash.ToLower())) {
+            throw "SHA512 hash mismatch"
+          }
+
+          Expand-Archive -Path "netbeans.zip" -DestinationPath "${{ env.GITHUB_WORKSPACE }}\netbeans"
+        }
+
     - name: Build with Ant
       run: >-
         ant -noinput -buildfile build.xml
