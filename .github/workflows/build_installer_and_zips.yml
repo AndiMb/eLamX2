@@ -41,7 +41,7 @@ jobs:
           ${{ runner.os }}-
 
     - name: Download and extract NetBeans ${{ steps.nbenv.outputs.NETBEANS_VERSION }} ZIP distribution
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
       shell: pwsh
       run: |
         $version = "${{ steps.nbenv.outputs.NETBEANS_VERSION }}"
