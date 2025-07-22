@@ -41,33 +41,30 @@ jobs:
           ${{ runner.os }}-
 
     - name: Download and extract NetBeans ${{ steps.nbenv.outputs.NETBEANS_VERSION }} ZIP distribution
+      if: steps.cache.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-        if ("${{ steps.cache-netbeans.outputs.cache-hit }}" -eq "true") {
-          Write-Host "Cache hit - skipping NetBeans ZIP distribution download"
-        } else {
-          $version = "${{ steps.nbenv.outputs.NETBEANS_VERSION }}"
-          $zipUrl = "https://archive.apache.org/dist/netbeans/netbeans/$version/netbeans-$version-bin.zip"
-          $shaUrl = "$zipUrl.sha512"
+        $version = "${{ steps.nbenv.outputs.NETBEANS_VERSION }}"
+        $zipUrl = "https://archive.apache.org/dist/netbeans/netbeans/$version/netbeans-$version-bin.zip"
+        $shaUrl = "$zipUrl.sha512"
 
-          Invoke-WebRequest -Uri $zipUrl -OutFile "netbeans.zip"
-          Invoke-WebRequest -Uri $shaUrl -OutFile "netbeans.zip.sha512"
+        Invoke-WebRequest -Uri $zipUrl -OutFile "netbeans.zip"
+        Invoke-WebRequest -Uri $shaUrl -OutFile "netbeans.zip.sha512"
 
-          $hash = Get-FileHash -Algorithm SHA512 -Path "netbeans.zip"
-          $expected = Get-Content "netbeans.zip.sha512"
+        $hash = Get-FileHash -Algorithm SHA512 -Path "netbeans.zip"
+        $expected = Get-Content "netbeans.zip.sha512"
 
-          if (-not ($expected -match $hash.Hash.ToLower())) {
-            throw "SHA512 hash mismatch"
-          }
-
-          Expand-Archive -Path "netbeans.zip" -DestinationPath "${{ env.GITHUB_WORKSPACE }}\netbeans"
+        if (-not ($expected -match $hash.Hash.ToLower())) {
+          throw "SHA512 hash mismatch"
         }
+
+        Expand-Archive -Path "netbeans.zip" -DestinationPath "${{ env.GITHUB_WORKSPACE }}\netbeans"
 
     - name: Build with Ant
       run: >-
         ant -noinput -buildfile build.xml
-        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}\netbeans
-        -Dnbplatform.default.harness.dir=${{ github.workspace }}\netbeans\harness
+        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}\netbeans\netbeans
+        -Dnbplatform.default.harness.dir=${{ github.workspace }}\netbeans\netbeans\harness
         windows-installer
 
     - name: Upload Windows Installer
