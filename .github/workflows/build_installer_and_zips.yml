@@ -63,11 +63,7 @@ jobs:
         dir ${{ github.workspace }}\netbeans
 
     - name: Build with Ant
-      run: >-
-        ant -noinput -buildfile build.xml
-        -Dnbplatform.default.netbeans.dest.dir=D:\\a\\eLamX2\\eLamX2\\netbeans
-        -Dnbplatform.default.harness.dir=D:\\a\\eLamX2\\eLamX2\\netbeans\\harness
-        windows-installer
+      run: ant -noinput -buildfile build.xml -Dnbplatform.default.netbeans.dest.dir=D:\\a\\eLamX2\\eLamX2\\netbeans -Dnbplatform.default.harness.dir=D:\\a\\eLamX2\\eLamX2\\netbeans\\harness windows-installer
 #      run: >-
 #        ant -noinput -buildfile build.xml
 #        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}\netbeans\netbeans
