@@ -61,6 +61,7 @@ jobs:
         Expand-Archive -Path "netbeans.zip" -DestinationPath "${{ github.workspace }}\netbeans"
         
         dir ${{ github.workspace }}\netbeans
+        dir ${{ github.workspace }}\netbeans\netbeans
 
     - name: Build with Ant
       run: >-
