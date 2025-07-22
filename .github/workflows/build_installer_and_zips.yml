@@ -66,8 +66,8 @@ jobs:
     - name: Build with Ant
       run: >-
         ant -noinput -buildfile build.xml
-        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}/netbeans
-        -Dnbplatform.default.harness.dir=${{ github.workspace }}/netbeans/harness
+        -Dnbplatform.default.netbeans.dest.dir=${{ github.workspace }}\netbeans
+        -Dnbplatform.default.harness.dir=${{ github.workspace }}\netbeans\harness
         windows-installer
 
     - name: Upload Windows Installer
