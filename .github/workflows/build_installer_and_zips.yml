@@ -27,7 +27,7 @@ jobs:
       id: nbenv
       shell: pwsh
       run: |
-        echo "NETBEANS_VERSION=26" >> $env:GITHUB_OUTPUT
+        echo "NETBEANS_VERSION=27" >> $env:GITHUB_OUTPUT
 
     - name: Cache NetBeans distribution
       uses: actions/cache@v4
@@ -134,7 +134,7 @@ jobs:
     - uses: cjmach/setup-netbeans-action@v2.1
       name: Setup NetBeans distribution
       with:
-        version: '26'
+        version: '27'
 
     - name: Build with Ant
       run: >-
@@ -201,7 +201,7 @@ jobs:
       id: nbenv
       shell: bash
       run: |
-        echo "NETBEANS_VERSION=26" >> "${GITHUB_OUTPUT}"
+        echo "NETBEANS_VERSION=27" >> "${GITHUB_OUTPUT}"
 
     - name: Cache NetBeans distribution
       uses: actions/cache@v4
