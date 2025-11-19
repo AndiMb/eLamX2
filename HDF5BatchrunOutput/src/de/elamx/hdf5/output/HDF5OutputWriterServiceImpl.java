@@ -64,7 +64,7 @@ public class HDF5OutputWriterServiceImpl implements HDF5OutputWriterService {
 
         if (inputFile != null) {
             try {
-                hdf5writer.string().write("input file", FileUtils.readFileToString(inputFile));
+                hdf5writer.string().write("input file", FileUtils.readFileToString(inputFile, (String)null));
             } catch (IOException ex) {
                 Logger.getLogger(HDF5OutputWriterServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }

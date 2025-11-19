@@ -44,7 +44,7 @@ public class FailureTypeShortNameHandler {
         return instance;
     }
     
-    private final Map<Integer, String> shortNameMap = new HashMap();
+    private final Map<Integer, String> shortNameMap = new HashMap<>();
 
     private FailureTypeShortNameHandler() {
         shortNameMap.put(ReserveFactor.FIBER_FAILURE, "FF");

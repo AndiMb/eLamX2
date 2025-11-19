@@ -25,7 +25,7 @@
  */
 package de.elamx.laminate.addFailureCriteriaLSDYNA;
 
-/** Die Klasse ist die Implementierung von LSDYNA Daimler Pinho in 2D
+/* Die Klasse ist die Implementierung von LSDYNA Daimler Pinho in 2D
  *
  * @author Tim Dorau
  */

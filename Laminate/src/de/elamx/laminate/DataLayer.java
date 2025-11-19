@@ -173,25 +173,6 @@ public class DataLayer extends Layer {
     }
 
     /**
-     * Liefert die Z-Position der Lage im Laminat
-     *
-     * @return z-Position der Lage im Laminat
-     */
-    /*public double getZm() {
-     return zm;
-     }*/
-    /**
-     * Setzen der z-Position der Lage im Laminat.
-     *
-     * @param zm z-Position der Lage im Laminat
-     */
-    /*public void setZm(double zm) {
-     double oldZm = this.zm;
-     this.zm = zm;
-     firePropertyChange(PROP_ZM, oldZm, this.zm);
-     }*/
-
-    /**
      * Liefert das Versagenskriterium zurück.
      *
      * @return Versagenskriterium
